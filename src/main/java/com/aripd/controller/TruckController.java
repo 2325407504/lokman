@@ -19,7 +19,7 @@ import com.aripd.service.TruckService;
 @RequestMapping("/truck")
 public class TruckController {
 	
-	protected static Logger logger = Logger.getLogger("controller");
+	protected static Logger logger4J = Logger.getLogger(TruckController.class);
 	
 	@Resource(name="truckService")
 	private TruckService truckService;
@@ -27,14 +27,17 @@ public class TruckController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/list")
 	public String listAction(Model model) {
+		logger4J.debug("Received request to show all persons page");
+    	
 		model.addAttribute("entities", truckService.getAll());
+		
 		return "truck/list";
 	}
 
 	@Secured("ROLE_ADMIN")
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-    	logger.debug("Received request to show add page");
+		logger4J.debug("Received request to show add page");
     
     	model.addAttribute("truckAttribute", new Truck());
 
@@ -59,7 +62,7 @@ public class TruckController {
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     public String _____updateAction(@ModelAttribute("truckAttribute") Truck truck, 
     		@PathVariable Long id, Model model) {
-    	logger.debug("Received request to update person");
+		logger4J.debug("Received request to update person");
     
     	// The "personAttribute" model has been passed to the controller from the JSP
     	// We use the name "personAttribute" because the JSP uses that name
@@ -82,6 +85,8 @@ public class TruckController {
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String delete(@RequestParam(value="id", required=true) Long id, 
     										Model model) {
+		logger4J.debug(this.getClass() + "Deleted");
+		
 		truckService.delete(id);
 		
 		model.addAttribute("id", id);

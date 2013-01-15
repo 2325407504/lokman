@@ -3,6 +3,8 @@ package com.aripd.service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.aripd.domain.Role;
 import com.aripd.repository.UserRepository;
 
 /**
@@ -47,7 +50,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 					accountNonExpired,
 					credentialsNonExpired,
 					accountNonLocked,
-					getAuthorities(domainUser.getRole().getRole()));
+					getAuthorities(domainUser.getRoles()));
 			
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -56,11 +59,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 	
 	/**
 	 * Retrieves a collection of {@link GrantedAuthority} based on a numerical role
-	 * @param role the numerical role
+	 * @param set the numerical role
 	 * @return a collection of {@link GrantedAuthority
 	 */
-	public Collection<? extends GrantedAuthority> getAuthorities(Integer role) {
-		List<GrantedAuthority> authList = getGrantedAuthorities(getRoles(role));
+	public Collection<? extends GrantedAuthority> getAuthorities(Set<Role> set) {
+		List<GrantedAuthority> authList = getGrantedAuthorities(getRoles(set));
 		return authList;
 	}
 	
@@ -69,9 +72,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 	 * @param role the numerical role
 	 * @return list of roles as as a list of {@link String}
 	 */
-	public List<String> getRoles(Integer role) {
+	public List<String> getRoles(Set<Role> set) {
 		List<String> roles = new ArrayList<String>();
 		
+		for (Role role : set) {
+			roles.add(role.getCode());
+		}
+		/*
 		if (role.intValue() == 1) {
 			roles.add("ROLE_USER");
 			roles.add("ROLE_ADMIN");
@@ -79,6 +86,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		} else if (role.intValue() == 2) {
 			roles.add("ROLE_USER");
 		}
+		*/
 		
 		return roles;
 	}

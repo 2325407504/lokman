@@ -7,7 +7,6 @@
 		  <li><a href="#"><spring:message code="label.truck"></spring:message></a> <span class="divider">/</span></li>
 		  <li class="active"><spring:message code="button.new"></spring:message></li>
 		</ul>
-
 		<c:url var="saveUrl" value="/truck/save" />
 		<form:form modelAttribute="truckAttribute" action="${saveUrl}" method="post">
 			<form:hidden path="id" />
@@ -21,7 +20,6 @@
 				</div>
 			</fieldset>
 		</form:form>
-
 	</div>
 </div>
 

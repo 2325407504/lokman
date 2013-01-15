@@ -11,7 +11,8 @@
 			<thead>
 				<tr>
 					<th><spring:message code="label.id"></spring:message></th>
-					<th><spring:message code="label.role"></spring:message></th>
+					<th><spring:message code="label.code"></spring:message></th>
+					<th><spring:message code="label.name"></spring:message></th>
 					<th></th>
 				</tr>
 			</thead>
@@ -21,7 +22,8 @@
 					<c:url var="deleteUrl" value="/role/delete?id=${role.id}" />
 					<tr>
 						<td><c:out value="${role.id}" /></td>
-						<td><c:out value="${role.role}" /></td>
+						<td><c:out value="${role.code}" /></td>
+						<td><c:out value="${role.name}" /></td>
 						<td>
 							<a class="btn btn-mini" href="${editUrl}">Edit</a>
 							<a class="btn btn-mini" href="${deleteUrl}">Delete</a>

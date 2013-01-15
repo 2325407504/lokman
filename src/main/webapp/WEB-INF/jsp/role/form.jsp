@@ -9,11 +9,18 @@
 		</ul>
 		<c:url var="saveUrl" value="/role/save" />
 		<form:form modelAttribute="roleAttribute" action="${saveUrl}" method="post">
+			<form:errors path="*" cssClass="error-block" element="div" />
 			<form:hidden path="id" />
 			<fieldset>
 				<div class="form-row">
-					<label for="role"><spring:message code="label.role"></spring:message></label>
-					<span class="input"><form:input path="role" /></span>
+					<label for="code"><spring:message code="label.code"></spring:message></label>
+					<span class="input"><form:input path="code" /></span>
+					<form:errors cssClass="error-field" path="code" />
+				</div>
+				<div class="form-row">
+					<label for="name"><spring:message code="label.name"></spring:message></label>
+					<span class="input"><form:input path="name" /></span>
+					<form:errors cssClass="error-field" path="name" />
 				</div>
 				<div class="form-actions">
 					<button class="btn btn-primary" type="submit"><spring:message code="button.save"></spring:message></button>

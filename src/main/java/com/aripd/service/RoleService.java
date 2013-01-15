@@ -14,31 +14,33 @@ import com.aripd.repository.RoleRepository;
 @Transactional
 public class RoleService {
 
-	protected static Logger logger = Logger.getLogger("service");
+	protected static Logger logger4J = Logger.getLogger(RoleService.class);
 
 	@Autowired
 	private RoleRepository repository;
 
 	public Role get(Long id) {
-		logger.debug("Retrieving person based on his id");
+		logger4J.debug("Retrieving person based on his id");
 		return repository.findOne(id);
 	}
 
 	public List<Role> getAll() {
-		logger.debug("Retrieving all persons");
+		logger4J.debug("Retrieving all persons");
 		return repository.findAll();
 	}
 
 	public Boolean save(Role role) {
-		Role existing = repository.findOne(role.getId());
-		if (existing != null)
-			return false;
+		//Role existing = repository.findOneByCode(role.getCode());
+		//if (existing != null)
+			//return false;
 
 		Role saved = repository.save(role);
-		if (saved == null)
+		if (saved == null) {
+			logger4J.debug("Save error");
 			return false;
-
-		logger.debug("Adding new person");
+		}
+		
+		logger4J.debug("Saved");
 		return true;
 	}
 
@@ -47,13 +49,14 @@ public class RoleService {
 		if (existing == null)
 			return false;
 
-		existing.setRole(role.getRole());
+		existing.setCode(role.getCode());
+		existing.setName(role.getName());
 
 		Role saved = repository.save(existing);
 		if (saved == null)
 			return false;
 
-		logger.debug("Editing existing person");
+		logger4J.debug("Editing existing person");
 		return true;
 	}
 
@@ -71,7 +74,7 @@ public class RoleService {
 		if (deleted != null)
 			return false;
 
-		logger.debug("Deleting existing person");
+		logger4J.debug("Deleting existing person");
 		return true;
 	}
 

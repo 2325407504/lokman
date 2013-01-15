@@ -14,23 +14,23 @@ import com.aripd.repository.TruckRepository;
 @Transactional
 public class TruckService {
 
-	protected static Logger logger = Logger.getLogger("service");
+	protected static Logger logger4J = Logger.getLogger(TruckService.class);
 
 	@Autowired
 	private TruckRepository repository;
 	
 	public Truck get(Long id) {
-		logger.debug("Retrieving person based on his id");
+		logger4J.debug("Retrieving person based on his id");
 		return repository.findOne(id);
 	}
 
 	public Truck getOneByPlate(String plate) {
-		logger.debug("Retrieving person based on his plate");
+		logger4J.debug("Retrieving person based on his plate");
 		return repository.findOneByPlate(plate);
 	}
 
 	public List<Truck> getAll() {
-		logger.debug("Retrieving all persons");
+		logger4J.debug("Retrieving all persons");
 		return repository.findAll();
 	}
 
@@ -43,7 +43,7 @@ public class TruckService {
 		if (saved == null)
 			return false;
 
-		logger.debug("Adding new person");
+		logger4J.debug("Adding new person");
 		return true;
 	}
 	
@@ -56,7 +56,7 @@ public class TruckService {
 		if (saved == null)
 			return false;
 
-		logger.debug("Adding new person");
+		logger4J.debug("Adding new person");
 		return true;
 	}
 
@@ -72,7 +72,7 @@ public class TruckService {
 		if (saved == null)
 			return false;
 
-		logger.debug("Editing existing person");
+		logger4J.debug("Editing existing person");
 		return true;
 	}
 
@@ -90,7 +90,7 @@ public class TruckService {
 		if (deleted != null)
 			return false;
 
-		logger.debug("Deleting existing person");
+		logger4J.debug("Deleting existing person");
 		return true;
 	}
 

@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 @Entity(name="role")
 public class Role {
@@ -13,26 +12,32 @@ public class Role {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@OneToOne
-	private User user;
-	private Integer role;
+	private String code;
 	
+	private String name;
+
 	public Long getId() {
 		return id;
 	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public User getUser() {
-		return user;
+
+	public void setCode(String code) {
+		this.code = code;
 	}
-	public void setUser(User user) {
-		this.user = user;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	public Integer getRole() {
-		return role;
-	}
-	public void setRole(Integer role) {
-		this.role = role;
-	}
+
 }
