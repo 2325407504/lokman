@@ -35,7 +35,7 @@ public class RoleController {
 		if (logger4J.isDebugEnabled()) {
 			logger4J.debug("Received request to show all records");
 		}
-		model.addAttribute("entities", roleService.getAll());
+		model.addAttribute("roleAttribute", roleService.getAll());
 		return "role/list";
 	}
 

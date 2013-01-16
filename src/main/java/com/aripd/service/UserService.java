@@ -75,9 +75,8 @@ public class UserService {
 		if (existing == null)
 			return false;
 
-		// Only firstName, lastName, and role fields are updatable
-		existing.setFirstName(user.getFirstName());
-		existing.setLastName(user.getLastName());
+		existing.setFirstname(user.getFirstname());
+		existing.setLastname(user.getLastname());
 
 		User saved = repository.save(existing);
 		if (saved == null)

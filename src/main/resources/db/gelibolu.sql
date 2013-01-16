@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 16, 2013 at 11:52 AM
+-- Generation Time: Jan 16, 2013 at 09:58 PM
 -- Server version: 5.5.28
 -- PHP Version: 5.3.10-1ubuntu3.4
 
@@ -36,6 +36,19 @@ CREATE TABLE IF NOT EXISTS `address` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `driver`
+--
+
+CREATE TABLE IF NOT EXISTS `driver` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(255) DEFAULT NULL,
+  `lastname` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `role`
 --
 
@@ -44,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `role` (
   `code` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `role`
@@ -66,16 +79,7 @@ CREATE TABLE IF NOT EXISTS `truck` (
   `plate` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `plate` (`plate`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
-
---
--- Dumping data for table `truck`
---
-
-INSERT INTO `truck` (`id`, `plate`) VALUES
-(1, '34R232weV864'),
-(2, '41VweRedw468'),
-(4, 'ede1wedwed2');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -85,19 +89,19 @@ INSERT INTO `truck` (`id`, `plate`) VALUES
 
 CREATE TABLE IF NOT EXISTS `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `firstName` varchar(255) DEFAULT NULL,
-  `lastName` varchar(255) DEFAULT NULL,
+  `firstname` varchar(255) DEFAULT NULL,
+  `lastname` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `firstName`, `lastName`, `password`, `username`) VALUES
+INSERT INTO `user` (`id`, `firstname`, `lastname`, `password`, `username`) VALUES
 (1, NULL, NULL, '21232f297a57a5a743894a0e4a801fc3', 'john'),
 (2, NULL, NULL, 'ee11cbb19052e40b07aac0ca060c23ee', 'jane'),
 (3, NULL, NULL, '127870930d65c57ee65fcc47f2170d38', 'mike');

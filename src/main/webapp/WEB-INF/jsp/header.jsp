@@ -24,6 +24,10 @@
 				<c:url value="/" var="homeUrl" />
 				<a class="brand" href="${homeUrl}">Project</a>
 				<%@ include file="/WEB-INF/jsp/menu.jsp" %>
+				<div class="pull-right">
+					<a href="?language=en_US">English</a>
+					<a href="?language=tr_TR">Türkçe</a>
+				</div>
 			</div>
 		</div>
 	</div>

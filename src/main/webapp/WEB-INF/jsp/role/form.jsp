@@ -3,7 +3,7 @@
 <div class="container">
 	<div class="span12">
 		<ul class="breadcrumb">
-		  <li><a href="#"><spring:message code="label.home"></spring:message></a> <span class="divider">/</span></li>
+		  <li><a href="#"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
 		  <li><a href="#"><spring:message code="label.role"></spring:message></a> <span class="divider">/</span></li>
 		  <li class="active"><spring:message code="button.new"></spring:message></li>
 		</ul>

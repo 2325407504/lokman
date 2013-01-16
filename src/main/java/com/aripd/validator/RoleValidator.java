@@ -13,7 +13,6 @@ public class RoleValidator {
 
 	public boolean supports(Class clazz) {
 		return Role.class.isAssignableFrom(clazz);
-
 	}
 
 	public void validate(Object target, Errors errors) {

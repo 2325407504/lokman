@@ -3,7 +3,7 @@
 <div class="container">
 	<div class="span12">
 		<ul class="breadcrumb">
-		  <li><a href="#"><spring:message code="label.home"></spring:message></a> <span class="divider">/</span></li>
+		  <li><a href="#"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
 		  <li><a href="#"><spring:message code="label.user"></spring:message></a> <span class="divider">/</span></li>
 		  <li class="active"><spring:message code="button.new"></spring:message></li>
 		</ul>
@@ -13,12 +13,12 @@
 			<form:hidden path="id" />
 			<fieldset>
 				<div class="form-row">
-					<label for="firstName"><spring:message code="label.firstname"></spring:message></label>
-					<span><form:input path="firstName" /></span>
+					<label for="firstname"><spring:message code="Firstname"></spring:message></label>
+					<span><form:input path="firstname" /></span>
 				</div>       
 				<div class="form-row">
-					<label for="lastName"><spring:message code="label.lastname"></spring:message></label>
-					<span><form:input path="lastName" /></span>
+					<label for="lastname"><spring:message code="Lastname"></spring:message></label>
+					<span><form:input path="lastname" /></span>
 				</div>
 				<div class="form-row">
 					<label for="username"><spring:message code="label.username"></spring:message></label>

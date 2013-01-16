@@ -28,8 +28,12 @@
 	
 	<mvc:resources mapping="/resources/**" location="/resources/" /> 
  	
- 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource" p:basename="classpath:locale/messages" />
-		
+ 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource" p:basename="classpath:locale/messages"/>
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" p:defaultLocale="tr_TR"/>
+ 	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="language"/>
+ 	</mvc:interceptors>
+
  	<!-- Imports logging configuration -->
 	<import resource="trace-context.xml"/>
 	

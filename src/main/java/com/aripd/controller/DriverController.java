@@ -13,71 +13,67 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.aripd.domain.User;
-import com.aripd.service.RoleService;
-import com.aripd.service.UserService;
-import com.aripd.validator.UserValidator;
+import com.aripd.domain.Driver;
+import com.aripd.service.DriverService;
+import com.aripd.validator.DriverValidator;
 
 @Controller
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/driver")
+public class DriverController {
 	
-	protected static Logger logger4J = Logger.getLogger(UserController.class);
+	protected static Logger logger4J = Logger.getLogger(DriverController.class);
 	
-	@Resource(name="userService")
-	private UserService userService;
+	@Resource(name="driverService")
+	private DriverService driverService;
 	
-	@Resource(name = "userValidator")
-	private UserValidator userValidator;
+	@Resource(name = "driverValidator")
+	private DriverValidator driverValidator;
 
-	@Resource(name="roleService")
-	private RoleService roleService;
-	
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/list")
 	public String listAction(Model model) {
-		logger4J.debug("Received request to show all persons page");
-
-		model.addAttribute("userAttribute", userService.getAll());
-		
-		return "user/list";
+		if (logger4J.isDebugEnabled()) {
+			logger4J.debug("Received request to show all records");
+		}
+		model.addAttribute("driverAttribute", driverService.getAll());
+		return "driver/list";
 	}
 
 	@Secured("ROLE_ADMIN")
-	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String newAction(Model model) {
-		logger4J.debug("Received request to show add new record");
-		model.addAttribute("userAttribute", new User());
-		return "user/form";
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public String newAction(Model model) {
+		logger4J.debug("Received request to show add page");
+    	model.addAttribute("driverAttribute", new Driver());
+    	return "driver/form";
 	}
 
 	@Secured("ROLE_ADMIN")
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
 		logger4J.debug("Received request to show edit existing record");
-    	model.addAttribute("userAttribute", userService.get(id));
-    	return "user/form";
+    	model.addAttribute("driverAttribute", driverService.getOne(id));
+    	return "driver/form";
 	}
 
 	@Secured("ROLE_ADMIN")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAction(@ModelAttribute("userAttribute") User user, Errors errors) {
-		userValidator.validate(user, errors);
+    public String saveAction(@ModelAttribute("driverAttribute") Driver driver, Errors errors) {
+		driverValidator.validate(driver, errors);
 		if (errors.hasErrors()) {
-			return "/user/form";
+			return "/driver/form";
 		}
 		
 		logger4J.debug("Received request to save existing record");
-		userService.save(user);
-		return "redirect:/user/list";
+		driverService.save(driver);
+		return "redirect:/driver/list";
 	}
-	
+
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
 	public String delete(@RequestParam(value = "id", required = true) Long id) {
 		logger4J.debug("Received request to delete existing record");
-		userService.delete(id);
-		return "redirect:/user/list";
+		driverService.delete(id);
+		return "redirect:/driver/list";
 	}
 
 }

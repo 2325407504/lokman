@@ -3,7 +3,7 @@
 <div class="container">
 	<div class="span12">
 		<ul class="breadcrumb">
-		  <li class="active"><spring:message code="label.home"></spring:message></li>
+		  <li class="active"><spring:message code="Home"></spring:message></li>
 		</ul>
 		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean et velit et sem 
 		fermentum viverra. Duis fringilla consequat lectus, et rhoncus mauris porta ut. Cum 

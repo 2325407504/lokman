@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.aripd.domain.Truck;
 import com.aripd.service.TruckService;
+import com.aripd.validator.TruckValidator;
 
 @Controller
 @RequestMapping("/truck")
@@ -24,13 +26,16 @@ public class TruckController {
 	@Resource(name="truckService")
 	private TruckService truckService;
 	
+	@Resource(name = "truckValidator")
+	private TruckValidator truckValidator;
+	
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/list")
 	public String listAction(Model model) {
-		logger4J.debug("Received request to show all persons page");
-    	
-		model.addAttribute("entities", truckService.getAll());
-		
+		if (logger4J.isDebugEnabled()) {
+			logger4J.debug("Received request to show all records");
+		}    	
+		model.addAttribute("truckAttribute", truckService.getAll());
 		return "truck/list";
 	}
 
@@ -38,22 +43,27 @@ public class TruckController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
 		logger4J.debug("Received request to show add page");
-    
     	model.addAttribute("truckAttribute", new Truck());
-
     	return "truck/form";
 	}
 
 	@Secured("ROLE_ADMIN")
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
+		logger4J.debug("Received request to show edit existing record");
     	model.addAttribute("truckAttribute", truckService.get(id));
     	return "truck/form";
 	}
 
 	@Secured("ROLE_ADMIN")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAction(@ModelAttribute("truckAttribute") Truck truck) {
+    public String saveAction(@ModelAttribute("truckAttribute") Truck truck, Errors errors) {
+		truckValidator.validate(truck, errors);
+		if (errors.hasErrors()) {
+			return "/truck/form";
+		}
+		
+		logger4J.debug("Received request to save existing record");
 		truckService.save(truck);
 		return "redirect:/truck/list";
 	}
@@ -76,21 +86,16 @@ public class TruckController {
     	truckService.update(truck);
     	
     	// Retrieve all persons and attach to model
-    	model.addAttribute("entities", truckService.getAll());
+    	model.addAttribute("truckAttribute", truckService.getAll());
     	
 		return "redirect:/truck/list";
 	}
 
 	@Secured("ROLE_ADMIN")
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String delete(@RequestParam(value="id", required=true) Long id, 
-    										Model model) {
-		logger4J.debug(this.getClass() + "Deleted");
-		
+	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+	public String delete(@RequestParam(value = "id", required = true) Long id) {
+		logger4J.debug("Received request to delete existing record");
 		truckService.delete(id);
-		
-		model.addAttribute("id", id);
-    	
 		return "redirect:/truck/list";
 	}
 

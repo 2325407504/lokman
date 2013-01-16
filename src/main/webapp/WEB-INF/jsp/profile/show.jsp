@@ -3,16 +3,16 @@
 <div class="container">
 	<div class="span12">
 		<ul class="breadcrumb">
-		  <li><a href="#"><spring:message code="label.home"></spring:message></a> <span class="divider">/</span></li>
+		  <li><a href="#"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
 		  <li class="active"><spring:message code="Profile"></spring:message></li>
 		</ul>
 		<dl class="dl-horizontal">
 			<dt><spring:message code="Username"></spring:message></dt>
 			<dd><c:out value="${userAttribute.username}" /></dd>
 			<dt><spring:message code="Firstname"></spring:message></dt>
-			<dd><c:out value="${userAttribute.firstName}" /></dd>
+			<dd><c:out value="${userAttribute.firstname}" /></dd>
 			<dt><spring:message code="Lastname"></spring:message></dt>
-			<dd><c:out value="${userAttribute.lastName}" /></dd>
+			<dd><c:out value="${userAttribute.lastname}" /></dd>
 		</dl>
 		
 		<c:url var="editUrl" value="/profile/edit"/>

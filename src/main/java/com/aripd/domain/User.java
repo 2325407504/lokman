@@ -20,8 +20,8 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private String firstName;
-	private String lastName;
+	private String firstname;
+	private String lastname;
 	
 	@Column(unique=true)
 	private String username;
@@ -47,12 +47,12 @@ public class User {
 		return id;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public String getLastname() {
+		return lastname;
 	}
 
 	public String getUsername() {
@@ -75,12 +75,12 @@ public class User {
 		this.id = id;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
 	public void setUsername(String username) {

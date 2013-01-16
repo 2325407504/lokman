@@ -3,7 +3,7 @@
 <div class="container">
 	<div class="span12">
 		<ul class="breadcrumb">
-		  <li><a href="#"><spring:message code="label.home"></spring:message></a> <span class="divider">/</span></li>
+		  <li><a href="#"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
 		  <li class="active"><spring:message code="label.roles"></spring:message></li>
 		</ul>
 		<table class="table">
@@ -17,7 +17,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${entities}" var="role">
+				<c:forEach items="${roleAttribute}" var="role">
 					<c:url var="editUrl" value="/role/edit/${role.id}" />
 					<tr>
 						<td><c:out value="${role.id}" /></td>
@@ -31,6 +31,10 @@
 			</tbody>
 		</table>
 		
+		<c:if test="${empty roleAttribute}">
+		No records found. 
+		</c:if>
+
 		<c:url var="addUrl" value="/role/new"/>
 		<div class="form-actions">
 			<a class="btn" href="${addUrl}"><spring:message code="button.new"></spring:message></a>

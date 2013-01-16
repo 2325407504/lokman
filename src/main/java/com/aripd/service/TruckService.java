@@ -65,7 +65,6 @@ public class TruckService {
 		if (existing == null)
 			return false;
 
-		// Only firstName, lastName, and role fields are updatable
 		existing.setPlate(truck.getPlate());
 
 		Truck saved = repository.save(existing);
