@@ -17,7 +17,6 @@ public class UserValidator {
 	}
 
 	public void validate(Object target, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "roles", "required", "Roles is required!");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "required", "Username is required!");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "required", "Password is required!");
 		//ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword", "required", "Password confirmation is required!");

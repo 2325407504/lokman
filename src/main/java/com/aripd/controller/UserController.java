@@ -49,18 +49,11 @@ public class UserController {
 	}
 
 	@Secured("ROLE_ADMIN")
-    @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String newAction(Model model) {
-		logger4J.debug("Received request to show add page");
-    
-    	List<Role> roles = roleService.getAll();
-    	Set set = new HashSet(roles);
-    	
-    	User user = new User();
-    	user.setRoles(set);
-    	model.addAttribute("user", user);
-
-    	return "user/form";
+	@RequestMapping(value = "/new", method = RequestMethod.GET)
+	public String newAction(Model model) {
+		logger4J.debug("Received request to show add new record");
+		model.addAttribute("userAttribute", new User());
+		return "user/form";
 	}
 
 	@Secured("ROLE_ADMIN")

@@ -1,5 +1,4 @@
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <div class="container">
 	<div class="span12">
@@ -13,13 +12,6 @@
 			<form:errors path="*" cssClass="error-block" element="div" />
 			<form:hidden path="id" />
 			<fieldset>
-				<div class="form-row">
-					<label for="roles"><spring:message code="label.roles"></spring:message></label>
-					<form:select path="roles" multiple="false">
-						<form:options items="${user.roles}" itemLabel="name" itemValue="id" />
-					</form:select>
-					<form:errors cssClass="error-field" path="roles" />
-				</div>
 				<div class="form-row">
 					<label for="firstName"><spring:message code="label.firstname"></spring:message></label>
 					<span><form:input path="firstName" /></span>
@@ -39,10 +31,20 @@
 					<form:errors cssClass="error-field" path="password" />
 				</div>
 				<div class="form-actions">
+					<c:if test="${ !empty userAttribute.id }">
+					<a class="btn btn-danger" href="javascript:$('#form-${userAttribute.id}').submit();"><spring:message code="button.delete"></spring:message></a>
+					</c:if>
 					<button class="btn btn-primary" type="submit"><spring:message code="button.save"></spring:message></button>
 				</div>
 			</fieldset>
 		</form:form>
+		
+		<c:if test="${ !empty userAttribute.id }">
+		<c:url var="deleteUrl" value="/user/delete?id=${userAttribute.id}" />
+		<form:form id="form-${userAttribute.id}" modelAttribute="userAttribute" action="${deleteUrl}" method="delete">
+			<form:hidden path="id" />
+		</form:form>
+		</c:if>
 	</div>
 </div>
 

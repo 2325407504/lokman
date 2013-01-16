@@ -19,14 +19,12 @@
 			<tbody>
 				<c:forEach items="${entities}" var="user">
 					<c:url var="editUrl" value="/user/edit/${user.id}" />
-					<c:url var="deleteUrl" value="/user/delete?id=${user.id}" />
 					<tr>
 						<td><c:out value="${user.username}" /></td>
 						<td><c:out value="${user.firstName}" /></td>
 						<td><c:out value="${user.lastName}" /></td>
 						<td>
 							<a class="btn btn-mini" href="${editUrl}">Edit</a>
-							<a class="btn btn-mini" href="${deleteUrl}">Delete</a>
 						</td>
 					</tr>
 				</c:forEach>

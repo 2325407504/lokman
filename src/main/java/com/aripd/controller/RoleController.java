@@ -69,9 +69,8 @@ public class RoleController {
 	}
 
 	@Secured("ROLE_ADMIN")
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String delete(@RequestParam(value = "id", required = true) Long id,
-			Model model) {
+	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+	public String delete(@RequestParam(value = "id", required = true) Long id) {
 		logger4J.debug("Received request to delete existing record");
 		roleService.delete(id);
 		return "redirect:/role/list";

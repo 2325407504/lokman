@@ -23,10 +23,20 @@
 					<form:errors cssClass="error-field" path="name" />
 				</div>
 				<div class="form-actions">
+					<c:if test="${ !empty roleAttribute.id }">
+					<a class="btn btn-danger" href="javascript:$('#form-${roleAttribute.id}').submit();"><spring:message code="button.delete"></spring:message></a>
+					</c:if>
 					<button class="btn btn-primary" type="submit"><spring:message code="button.save"></spring:message></button>
 				</div>
 			</fieldset>
 		</form:form>
+		
+		<c:if test="${ !empty roleAttribute.id }">
+		<c:url var="deleteUrl" value="/role/delete?id=${roleAttribute.id}" />
+		<form:form id="form-${roleAttribute.id}" modelAttribute="roleAttribute" action="${deleteUrl}" method="delete">
+			<form:hidden path="id" />
+		</form:form>
+		</c:if>
 	</div>
 </div>
 
