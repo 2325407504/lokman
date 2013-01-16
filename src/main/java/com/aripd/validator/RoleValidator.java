@@ -17,8 +17,8 @@ public class RoleValidator {
 	}
 
 	public void validate(Object target, Errors errors) {
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "code", "required", "Code is required!");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "required", "Name is required!");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "code", "required", "It is required!");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "required", "It is required!");
 
 		Role role = (Role) target;
 		/*

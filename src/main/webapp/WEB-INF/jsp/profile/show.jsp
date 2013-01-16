@@ -6,14 +6,14 @@
 		  <li><a href="#"><spring:message code="label.home"></spring:message></a> <span class="divider">/</span></li>
 		  <li class="active"><spring:message code="Profile"></spring:message></li>
 		</ul>
-		<table class="table">
-			<tbody>
-				<tr>
-					<td><spring:message code="Username"></spring:message></td>
-					<td><c:out value="${userAttribute.username}" /></td>
-				</tr>
-			</tbody>
-		</table>
+		<dl class="dl-horizontal">
+			<dt><spring:message code="Username"></spring:message></dt>
+			<dd><c:out value="${userAttribute.username}" /></dd>
+			<dt><spring:message code="Firstname"></spring:message></dt>
+			<dd><c:out value="${userAttribute.firstName}" /></dd>
+			<dt><spring:message code="Lastname"></spring:message></dt>
+			<dd><c:out value="${userAttribute.lastName}" /></dd>
+		</dl>
 		
 		<c:url var="editUrl" value="/profile/edit"/>
 		<div class="form-actions">

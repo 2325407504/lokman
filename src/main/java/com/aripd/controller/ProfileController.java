@@ -36,17 +36,19 @@ public class ProfileController {
 	
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public String showAction(Model model) {
-		User user = (User) (SecurityContextHolder.getContext()).getAuthentication().getPrincipal();
-		
 		logger4J.debug("Received request to show add new record");
-		model.addAttribute("userAttribute", user);
+		model.addAttribute("userAttribute", userService.getActiveUser());
 		return "profile/show";
 	}
 
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String editAction(@PathVariable Long id, Model model) {
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public String editAction(Model model) {
+		User securityUser = (User) (SecurityContextHolder.getContext()).getAuthentication().getPrincipal();
+		
+		com.aripd.domain.User user = userService.getOneByUsername(securityUser.getUsername());
+		
 		logger4J.debug("Received request to show edit existing record");
-    	model.addAttribute("userAttribute", userService.get(id));
+    	model.addAttribute("userAttribute", user);
     	return "profile/form";
 	}
 

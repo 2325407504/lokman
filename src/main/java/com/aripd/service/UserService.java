@@ -1,9 +1,12 @@
 package com.aripd.service;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +25,31 @@ public class UserService {
 	public User get(Long id) {
 		logger4J.debug("Retrieving person based on his id");
 		return repository.findOne(id);
+	}
+
+	public User getOneByUsername(String username) {
+		logger4J.debug("Retrieving person based on his username");
+		return repository.findOneByUsername(username);
+	}
+
+	@PreAuthorize("isFullyAuthenticated()")
+	public User getActiveUser() {
+		org.springframework.security.core.userdetails.User securityUser = (org.springframework.security.core.userdetails.User) (SecurityContextHolder.getContext()).getAuthentication().getPrincipal();
+		return getOneByUsername(securityUser.getUsername());
+	}
+
+	@PreAuthorize("isFullyAuthenticated()")
+	public boolean hasUsername(String username) {
+		List<User> list = repository.findAll();
+		list.remove(getActiveUser());
+		
+		Iterator<User> iterator = list.iterator();
+		while (iterator.hasNext()) {
+			if (iterator.next().getUsername().equals(username)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public List<User> getAll() {
