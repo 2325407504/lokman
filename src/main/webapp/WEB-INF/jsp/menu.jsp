@@ -7,6 +7,7 @@
 <c:url value="/" var="homeUrl" />
 <c:url value="/login" var="loginUrl" />
 <c:url value="/logout" var="logoutUrl" />
+<c:url value="/profile/show" var="profile_show" />
 <c:url value="/role/list" var="role_list" />
 <c:url value="/user/list" var="user_list" />
 <c:url value="/truck/list" var="truck_list" />
@@ -21,6 +22,7 @@
 		<li><a href="${user_list}"><spring:message code="label.users"></spring:message></a></li>
 		<li><a href="${truck_list}"><spring:message code="label.trucks"></spring:message></a></li>
 		</sec:authorize>
+		<li><a href="${profile_show}"><spring:message code="Profile"></spring:message></a></li>
 		<li><a href="${logoutUrl}"><spring:message code="button.logout"></spring:message> (<%= request.getUserPrincipal().getName() %>)</a></li>
 		</sec:authorize>
 

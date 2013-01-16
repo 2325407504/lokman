@@ -3,7 +3,9 @@ package com.aripd.controller;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -11,18 +13,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.aripd.domain.User;
 import com.aripd.service.RoleService;
 import com.aripd.service.UserService;
 import com.aripd.validator.UserValidator;
 
 @Controller
-@RequestMapping("/user")
-public class UserController {
+@PreAuthorize("isFullyAuthenticated()")
+@RequestMapping("/profile")
+public class ProfileController {
 	
-	protected static Logger logger4J = Logger.getLogger(UserController.class);
+	protected static Logger logger4J = Logger.getLogger(ProfileController.class);
 	
 	@Resource(name="userService")
 	private UserService userService;
@@ -33,59 +34,32 @@ public class UserController {
 	@Resource(name="roleService")
 	private RoleService roleService;
 	
-	@Secured("ROLE_ADMIN")
-	@RequestMapping(value="/list")
-	public String listAction(Model model) {
-		logger4J.debug("Received request to show all persons page");
-
-		model.addAttribute("entities", userService.getAll());
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public String showAction(Model model) {
+		User user = (User) (SecurityContextHolder.getContext()).getAuthentication().getPrincipal();
 		
-		return "user/list";
-	}
-
-	@Secured("ROLE_ADMIN")
-	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String newAction(Model model) {
 		logger4J.debug("Received request to show add new record");
-		model.addAttribute("userAttribute", new User());
-		return "user/form";
+		model.addAttribute("userAttribute", user);
+		return "profile/show";
 	}
 
-	@Secured("ROLE_ADMIN")
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
 		logger4J.debug("Received request to show edit existing record");
     	model.addAttribute("userAttribute", userService.get(id));
-    	return "user/form";
+    	return "profile/form";
 	}
 
-	@Secured("ROLE_ADMIN")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAction(@ModelAttribute("userAttribute") User user, Errors errors) {
+    public String saveAction(@ModelAttribute("userAttribute") com.aripd.domain.User user, Errors errors) {
 		userValidator.validate(user, errors);
 		if (errors.hasErrors()) {
-			return "/user/form";
+			return "/profile/form";
 		}
 		
 		logger4J.debug("Received request to save existing record");
 		userService.save(user);
-		return "redirect:/user/list";
+		return "redirect:/profile/list";
 	}
 	
-	@Secured("ROLE_ADMIN")
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public String delete(@RequestParam(value="id", required=true) Long id, 
-    										Model model) {
-   
-		logger4J.debug("Received request to delete existing person");
-		
-		// Call PersonService to do the actual deleting
-		userService.delete(id);
-		
-		// Add id reference to Model
-		model.addAttribute("id", id);
-    	
-		return "redirect:/user/list";
-	}
-
 }
