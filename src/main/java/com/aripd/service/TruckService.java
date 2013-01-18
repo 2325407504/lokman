@@ -19,7 +19,7 @@ public class TruckService {
 	@Autowired
 	private TruckRepository repository;
 	
-	public Truck get(Long id) {
+	public Truck getOne(Long id) {
 		logger4J.debug("Retrieving person based on his id");
 		return repository.findOne(id);
 	}

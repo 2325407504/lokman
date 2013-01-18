@@ -51,7 +51,7 @@ public class RoleController {
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editAction(@PathVariable Long id, Model model) {
 		logger4J.debug("Received request to show edit existing record");
-		model.addAttribute("roleAttribute", roleService.get(id));
+		model.addAttribute("roleAttribute", roleService.getOne(id));
 		return "role/form";
 	}
 

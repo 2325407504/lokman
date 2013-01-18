@@ -12,6 +12,7 @@
 				<tr>
 					<th><spring:message code="Firstname"></spring:message></th>
 					<th><spring:message code="Lastname"></spring:message></th>
+					<th><spring:message code="Phone Number"></spring:message></th>
 					<th></th>
 				</tr>
 			</thead>
@@ -21,6 +22,7 @@
 					<tr>
 						<td><c:out value="${driver.firstname}" /></td>
 						<td><c:out value="${driver.lastname}" /></td>
+						<td><c:out value="${driver.phonenumber}" /></td>
 						<td>
 							<a class="btn btn-mini" href="${editUrl}">Edit</a>
 						</td>

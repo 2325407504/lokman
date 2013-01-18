@@ -1,12 +1,13 @@
 package com.aripd.controller;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.aripd.domain.User;
 import com.aripd.service.RoleService;
 import com.aripd.service.UserService;
-import com.aripd.validator.UserValidator;
 
 @Controller
 @RequestMapping("/user")
@@ -27,9 +27,6 @@ public class UserController {
 	@Resource(name="userService")
 	private UserService userService;
 	
-	@Resource(name = "userValidator")
-	private UserValidator userValidator;
-
 	@Resource(name="roleService")
 	private RoleService roleService;
 	
@@ -55,15 +52,15 @@ public class UserController {
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
 		logger4J.debug("Received request to show edit existing record");
-    	model.addAttribute("userAttribute", userService.get(id));
+    	model.addAttribute("userAttribute", userService.getOne(id));
     	return "user/form";
 	}
 
 	@Secured("ROLE_ADMIN")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAction(@ModelAttribute("userAttribute") User user, Errors errors) {
-		userValidator.validate(user, errors);
-		if (errors.hasErrors()) {
+    public String saveAction(@ModelAttribute("userAttribute") @Valid User user, BindingResult result) {
+		if (result.hasErrors()) {
+			logger4J.error(result);
 			return "/user/form";
 		}
 		

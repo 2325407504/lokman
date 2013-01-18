@@ -1,6 +1,7 @@
 package com.aripd.controller;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -8,15 +9,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.aripd.service.RoleService;
 import com.aripd.service.UserService;
-import com.aripd.validator.UserValidator;
 
 @Controller
 @PreAuthorize("isFullyAuthenticated()")
@@ -28,9 +27,6 @@ public class ProfileController {
 	@Resource(name="userService")
 	private UserService userService;
 	
-	@Resource(name = "userValidator")
-	private UserValidator userValidator;
-
 	@Resource(name="roleService")
 	private RoleService roleService;
 	
@@ -53,9 +49,9 @@ public class ProfileController {
 	}
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAction(@ModelAttribute("userAttribute") com.aripd.domain.User user, Errors errors) {
-		userValidator.validate(user, errors);
-		if (errors.hasErrors()) {
+    public String saveAction(@ModelAttribute("userAttribute") @Valid com.aripd.domain.User user, BindingResult result) {
+		if (result.hasErrors()) {
+			logger4J.error(result);
 			return "/profile/form";
 		}
 		

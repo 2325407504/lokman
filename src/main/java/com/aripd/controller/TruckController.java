@@ -51,7 +51,7 @@ public class TruckController {
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
 		logger4J.debug("Received request to show edit existing record");
-    	model.addAttribute("truckAttribute", truckService.get(id));
+    	model.addAttribute("truckAttribute", truckService.getOne(id));
     	return "truck/form";
 	}
 

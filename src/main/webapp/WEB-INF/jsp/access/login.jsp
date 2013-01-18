@@ -4,7 +4,7 @@
 	<div class="span12">
 		<form class="login-form" action="j_spring_security_check" method="post" >
 			<fieldset>
-				<legend><spring:message code="label.login" text="label.login"></spring:message></legend>
+				<legend><spring:message code="Login" text="Login"></spring:message></legend>
 				
 				<p>
 				<label for="j_username"><spring:message code="Username" text="Username"></spring:message></label>
@@ -23,7 +23,7 @@
 				</label>
 				</p>
 				
-				<p><button class="btn" type="submit"><spring:message code="button.login" text="button.login"></spring:message></button></p>
+				<p><button class="btn" type="submit"><spring:message code="Login" text="Login"></spring:message></button></p>
 			</fieldset>
 		</form>
 		<p class="message">${message}</p>

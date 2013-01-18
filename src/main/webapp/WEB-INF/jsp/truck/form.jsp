@@ -13,15 +13,15 @@
 			<form:hidden path="id" />
 			<fieldset>
 				<div class="form-row">
-					<label for="plate"><spring:message code="Plate"></spring:message></label>
+					<form:label path="plate"><spring:message code="Plate"></spring:message></form:label>
 					<span class="input"><form:input path="plate" /></span>
 					<form:errors cssClass="error-field" path="plate" />
 				</div>
 				<div class="form-actions">
 					<c:if test="${ !empty truckAttribute.id }">
-					<a class="btn btn-danger" href="javascript:$('#form-${truckAttribute.id}').submit();"><spring:message code="button.delete"></spring:message></a>
+					<a class="btn btn-danger" href="javascript:$('#form-${truckAttribute.id}').submit();"><spring:message code="Delete"></spring:message></a>
 					</c:if>
-					<button class="btn btn-primary" type="submit"><spring:message code="button.save"></spring:message></button>
+					<button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
 				</div>
 			</fieldset>
 		</form:form>

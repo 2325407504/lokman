@@ -13,11 +13,13 @@
 			<dd><c:out value="${userAttribute.firstname}" /></dd>
 			<dt><spring:message code="Lastname"></spring:message></dt>
 			<dd><c:out value="${userAttribute.lastname}" /></dd>
+			<dt><spring:message code="E-mail Address"></spring:message></dt>
+			<dd><c:out value="${userAttribute.email}" /></dd>
 		</dl>
 		
 		<c:url var="editUrl" value="/profile/edit"/>
 		<div class="form-actions">
-			<a class="btn" href="${editUrl}"><spring:message code="button.edit"></spring:message></a>
+			<a class="btn" href="${editUrl}"><spring:message code="Edit"></spring:message></a>
 		</div>
 
 	</div>

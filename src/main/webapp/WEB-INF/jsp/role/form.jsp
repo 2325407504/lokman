@@ -13,20 +13,20 @@
 			<form:hidden path="id" />
 			<fieldset>
 				<div class="form-row">
-					<label for="code"><spring:message code="label.code"></spring:message></label>
+					<form:label path="code"><spring:message code="Code"></spring:message></form:label>
 					<span class="input"><form:input path="code" /></span>
 					<form:errors cssClass="error-field" path="code" />
 				</div>
 				<div class="form-row">
-					<label for="name"><spring:message code="label.name"></spring:message></label>
+					<form:label path="name"><spring:message code="label.name"></spring:message></form:label>
 					<span class="input"><form:input path="name" /></span>
 					<form:errors cssClass="error-field" path="name" />
 				</div>
 				<div class="form-actions">
 					<c:if test="${ !empty roleAttribute.id }">
-					<a class="btn btn-danger" href="javascript:$('#form-${roleAttribute.id}').submit();"><spring:message code="button.delete"></spring:message></a>
+					<a class="btn btn-danger" href="javascript:$('#form-${roleAttribute.id}').submit();"><spring:message code="Delete"></spring:message></a>
 					</c:if>
-					<button class="btn btn-primary" type="submit"><spring:message code="button.save"></spring:message></button>
+					<button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
 				</div>
 			</fieldset>
 		</form:form>

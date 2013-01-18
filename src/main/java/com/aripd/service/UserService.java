@@ -22,7 +22,7 @@ public class UserService {
 	@Autowired
 	private UserRepository repository;
 
-	public User get(Long id) {
+	public User getOne(Long id) {
 		logger4J.debug("Retrieving person based on his id");
 		return repository.findOne(id);
 	}

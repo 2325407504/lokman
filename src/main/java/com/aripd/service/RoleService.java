@@ -19,7 +19,7 @@ public class RoleService {
 	@Autowired
 	private RoleRepository repository;
 
-	public Role get(Long id) {
+	public Role getOne(Long id) {
 		logger4J.debug("Retrieving person based on his id");
 		return repository.findOne(id);
 	}

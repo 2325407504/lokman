@@ -11,14 +11,8 @@ import com.aripd.domain.Truck;
 @Transactional
 public class TruckValidator {
 
-	public boolean supports(Class clazz) {
-		return Truck.class.isAssignableFrom(clazz);
-	}
-	
-	public void validate(Object target, Errors errors) {
+	public void validate(Truck truck, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "plate", "required", "It is required!");
-
-        Truck truck = (Truck) target;		
 	}
 
 }

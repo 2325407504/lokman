@@ -23,7 +23,7 @@
 	<context:component-scan base-package="com.aripd" />
 
 	<!-- Configures the annotation-driven Spring MVC Controller programming model.
-	Note that, with Spring 3.0, this tag works in Servlet MVC only!  -->
+	Note that, with Spring 3.1, this tag works in Servlet MVC only!  -->
 	<mvc:annotation-driven /> 
 	
 	<mvc:resources mapping="/resources/**" location="/resources/" /> 

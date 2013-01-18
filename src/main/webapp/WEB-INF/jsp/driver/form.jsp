@@ -13,20 +13,25 @@
 			<form:hidden path="id" />
 			<fieldset>
 				<div class="form-row">
-					<label for="firstname"><spring:message code="Firstname"></spring:message></label>
+					<form:label path="firstname"><spring:message code="Firstname"></spring:message></form:label>
 					<span><form:input path="firstname" /></span>
 					<form:errors cssClass="error-field" path="firstname" />
 				</div>       
 				<div class="form-row">
-					<label for="lastname"><spring:message code="Lastname"></spring:message></label>
+					<form:label path="lastname"><spring:message code="Lastname"></spring:message></form:label>
 					<span><form:input path="lastname" /></span>
 					<form:errors cssClass="error-field" path="lastname" />
 				</div>
+				<div class="form-row">
+					<form:label path="phonenumber"><spring:message code="Phone Number"></spring:message></form:label>
+					<span><form:input path="phonenumber" /></span>
+					<form:errors cssClass="error-field" path="phonenumber" />
+				</div>
 				<div class="form-actions">
 					<c:if test="${ !empty driverAttribute.id }">
-					<a class="btn btn-danger" href="javascript:$('#form-${driverAttribute.id}').submit();"><spring:message code="button.delete"></spring:message></a>
+					<a class="btn btn-danger" href="javascript:$('#form-${driverAttribute.id}').submit();"><spring:message code="Delete"></spring:message></a>
 					</c:if>
-					<button class="btn btn-primary" type="submit"><spring:message code="button.save"></spring:message></button>
+					<button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
 				</div>
 			</fieldset>
 		</form:form>

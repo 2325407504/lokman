@@ -6,30 +6,35 @@
 		  <li><a href="#"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
 		  <li class="active"><spring:message code="Profile"></spring:message></li>
 		</ul>
-		<c:url var="saveUrl" value="/user/save" />
+		<c:url var="saveUrl" value="/profile/save" />
 		<form:form modelAttribute="userAttribute" action="${saveUrl}" method="post">
 			<form:errors path="*" cssClass="error-block" element="div" />
 			<fieldset>
 				<div class="form-row">
-					<label for="firstname"><spring:message code="Firstname"></spring:message></label>
+					<form:label path="firstname"><spring:message code="Firstname"></spring:message></form:label>
 					<span><form:input path="firstname" /></span>
 				</div>       
 				<div class="form-row">
-					<label for="lastname"><spring:message code="Lastname"></spring:message></label>
+					<form:label path="lastname"><spring:message code="Lastname"></spring:message></form:label>
 					<span><form:input path="lastname" /></span>
 				</div>
 				<div class="form-row">
-					<label for="username"><spring:message code="Username"></spring:message></label>
+					<form:label path="email"><spring:message code="E-mail Address"></spring:message></form:label>
+					<span><form:input path="email" /></span>
+					<form:errors cssClass="error-field" path="email" />
+				</div>
+				<div class="form-row">
+					<form:label path="username"><spring:message code="Username"></spring:message></form:label>
 					<span><form:input path="username" /></span>
 					<form:errors cssClass="error-field" path="username" />
 				</div>
 				<div class="form-row">
-					<label for="password"><spring:message code="Password"></spring:message></label>
+					<form:label path="password"><spring:message code="Password"></spring:message></form:label>
 					<span><form:password path="password" /></span>
 					<form:errors cssClass="error-field" path="password" />
 				</div>
 				<div class="form-actions">
-					<button class="btn btn-primary" type="submit"><spring:message code="button.save"></spring:message></button>
+					<button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
 				</div>
 			</fieldset>
 		</form:form>

@@ -10,8 +10,8 @@
 			<caption><spring:message code="label.roles"></spring:message></caption>
 			<thead>
 				<tr>
-					<th><spring:message code="label.id"></spring:message></th>
-					<th><spring:message code="label.code"></spring:message></th>
+					<th><spring:message code="Id"></spring:message></th>
+					<th><spring:message code="Code"></spring:message></th>
 					<th><spring:message code="label.name"></spring:message></th>
 					<th></th>
 				</tr>

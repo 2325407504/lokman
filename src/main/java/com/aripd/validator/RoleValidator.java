@@ -11,15 +11,10 @@ import com.aripd.domain.Role;
 @Transactional
 public class RoleValidator {
 
-	public boolean supports(Class clazz) {
-		return Role.class.isAssignableFrom(clazz);
-	}
-
-	public void validate(Object target, Errors errors) {
+	public void validate(Role role, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "code", "required", "It is required!");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "required", "It is required!");
 
-		Role role = (Role) target;
 		/*
 		if (role.getCode() == null || role.getCode().length() == 0) {
 			errors.rejectValue("code", "error.empty.code");
