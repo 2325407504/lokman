@@ -12,6 +12,7 @@
 <c:url value="/user/list" var="user_list" />
 <c:url value="/truck/list" var="truck_list" />
 <c:url value="/driver/list" var="driver_list" />
+<c:url value="/fms/index" var="fms_index" />
 
 <div class="nav-collapse collapse">
 	<ul class="nav">
@@ -23,6 +24,9 @@
 		<li><a href="${user_list}"><spring:message code="label.users"></spring:message></a></li>
 		<li><a href="${truck_list}"><spring:message code="Trucks"></spring:message></a></li>
 		<li><a href="${driver_list}"><spring:message code="Drivers"></spring:message></a></li>
+		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_USER')">
+		<li><a href="${fms_index}"><spring:message code="Field Management System" text="Field Management System"></spring:message></a></li>
 		</sec:authorize>
 		<li><a href="${profile_show}"><spring:message code="Profile"></spring:message></a></li>
 		<li><a href="${logoutUrl}"><spring:message code="button.logout"></spring:message> (<%= request.getUserPrincipal().getName() %>)</a></li>

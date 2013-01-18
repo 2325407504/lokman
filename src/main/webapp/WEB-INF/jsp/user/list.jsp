@@ -10,7 +10,7 @@
 			<caption><spring:message code="label.users"></spring:message></caption>
 			<thead>
 				<tr>
-					<th><spring:message code="label.username"></spring:message></th>
+					<th><spring:message code="Username"></spring:message></th>
 					<th><spring:message code="Firstname"></spring:message></th>
 					<th><spring:message code="Lastname"></spring:message></th>
 					<th></th>

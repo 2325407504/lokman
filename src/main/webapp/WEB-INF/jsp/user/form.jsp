@@ -21,12 +21,12 @@
 					<span><form:input path="lastname" /></span>
 				</div>
 				<div class="form-row">
-					<label for="username"><spring:message code="label.username"></spring:message></label>
+					<label for="username"><spring:message code="Username"></spring:message></label>
 					<span><form:input path="username" /></span>
 					<form:errors cssClass="error-field" path="username" />
 				</div>
 				<div class="form-row">
-					<label for="password"><spring:message code="label.password"></spring:message></label>
+					<label for="password"><spring:message code="Password"></spring:message></label>
 					<span><form:password path="password" /></span>
 					<form:errors cssClass="error-field" path="password" />
 				</div>
