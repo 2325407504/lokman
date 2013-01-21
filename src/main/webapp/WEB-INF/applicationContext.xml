@@ -24,7 +24,7 @@
 
 	<!-- Configures the annotation-driven Spring MVC Controller programming model.
 	Note that, with Spring 3.1, this tag works in Servlet MVC only!  -->
-	<mvc:annotation-driven /> 
+	<mvc:annotation-driven conversion-service="conversionService"/> 
 	
 	<mvc:resources mapping="/resources/**" location="/resources/" /> 
  	
@@ -42,5 +42,14 @@
 	
 	<bean id="deployProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean"
         p:location="/WEB-INF/spring.properties" />
+        
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="converters">
+			<list>
+				<bean class="com.aripd.converter.TruckConverter"></bean>
+				<bean class="com.aripd.converter.DriverConverter"></bean>
+			</list>
+		</property>
+	</bean>
 
 </beans>

@@ -14,12 +14,12 @@
 			<fieldset>
 				<div class="form-row">
 					<form:label path="truck"><spring:message code="Truck" text="Truck"></spring:message></form:label>
-					<form:select path="truck" multiple="false" items="${trucks}" itemLabel="plate" itemValue="id"/>
+					<form:select path="truck.id" multiple="false" items="${trucks}" itemLabel="plate" itemValue="id"/>
 					<form:errors cssClass="error-field" path="truck" />
 				</div>       
 				<div class="form-row">
 					<form:label path="driver"><spring:message code="Driver" text="Driver"></spring:message></form:label>
-					<form:select path="driver" multiple="false" items="${drivers}" itemLabel="fullname" itemValue="id"/>
+					<form:select path="driver.id" multiple="false" items="${drivers}" itemLabel="fullname" itemValue="id"/>
 					<form:errors cssClass="error-field" path="driver" />
 				</div>       
 				<div class="form-row">
