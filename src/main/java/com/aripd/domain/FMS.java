@@ -1,5 +1,7 @@
 package com.aripd.domain;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -52,19 +56,24 @@ public class FMS {
 	@Column(columnDefinition = "TEXT")
 	private String remark;
 
-	@DateTimeFormat(style="SS")
-	@Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@NotNull
+	private Date publishedAt;
+
+	@DateTimeFormat(style = "SS")
+	@Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
 	private DateTime updatedAt;
-	
-	@DateTimeFormat(style="SS")
-	@Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
+
+	@DateTimeFormat(style = "SS")
+	@Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
 	private DateTime createdAt;
-	
+
 	@PreUpdate
 	public void setPreUpdate() {
 		setUpdatedAt(new DateTime());
 	}
-	
+
 	public FMS() {
 		setCreatedAt(new DateTime());
 		setUpdatedAt(new DateTime());
@@ -112,6 +121,10 @@ public class FMS {
 
 	public String getRemark() {
 		return remark;
+	}
+
+	public Date getPublishedAt() {
+		return publishedAt;
 	}
 
 	public DateTime getUpdatedAt() {
@@ -164,6 +177,10 @@ public class FMS {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public void setPublishedAt(Date publishedAt) {
+		this.publishedAt = publishedAt;
 	}
 
 	public void setUpdatedAt(DateTime updatedAt) {
