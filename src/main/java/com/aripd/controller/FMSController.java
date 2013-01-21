@@ -1,6 +1,8 @@
 package com.aripd.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -11,8 +13,10 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot3D;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
+import org.jfree.data.jdbc.JDBCCategoryDataset;
 import org.jfree.util.Rotation;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -36,20 +40,20 @@ import com.googlecode.charts4j.Slice;
 @Controller
 @RequestMapping("/fms")
 public class FMSController {
-	
+
 	protected static Logger logger4J = Logger.getLogger(FMSController.class);
-	
-	@Resource(name="fmsService")
+
+	@Resource(name = "fmsService")
 	private FMSService fmsService;
-	
-	@Resource(name="truckService")
+
+	@Resource(name = "truckService")
 	private TruckService truckService;
-	
-	@Resource(name="driverService")
+
+	@Resource(name = "driverService")
 	private DriverService driverService;
-	
+
 	@Secured("ROLE_USER")
-	@RequestMapping(value="/list")
+	@RequestMapping(value = "/list")
 	public String listAction(Model model) {
 		if (logger4J.isDebugEnabled()) {
 			logger4J.debug("Received request to show all records");
@@ -59,39 +63,37 @@ public class FMSController {
 	}
 
 	@Secured("ROLE_USER")
-    @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String newAction(Model model) {
+	@RequestMapping(value = "/new", method = RequestMethod.GET)
+	public String newAction(Model model) {
 		logger4J.debug("Received request to show add page");
 		model.addAttribute("trucks", truckService.getAll());
 		model.addAttribute("drivers", driverService.getAll());
-    	model.addAttribute("fmsAttribute", new FMS());
-    	return "fms/form";
+		model.addAttribute("fmsAttribute", new FMS());
+		return "fms/form";
 	}
 
 	@Secured("ROLE_USER")
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String editAction(@PathVariable Long id, Model model) {
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public String editAction(@PathVariable Long id, Model model) {
 		logger4J.debug("Received request to show edit existing record");
 		model.addAttribute("trucks", truckService.getAll());
 		model.addAttribute("drivers", driverService.getAll());
-    	model.addAttribute("fmsAttribute", fmsService.getOne(id));
-    	return "fms/form";
+		model.addAttribute("fmsAttribute", fmsService.getOne(id));
+		return "fms/form";
 	}
 
 	@Secured("ROLE_USER")
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAction(
-    		@ModelAttribute("fmsAttribute") @Valid FMS formData, 
-    		BindingResult result, 
-    		Model model
-    ) {
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String saveAction(
+			@ModelAttribute("fmsAttribute") @Valid FMS formData,
+			BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			logger4J.error(result);
 			model.addAttribute("trucks", truckService.getAll());
 			model.addAttribute("drivers", driverService.getAll());
 			return "/fms/form";
 		}
-		
+
 		logger4J.debug("Received request to save existing record");
 		fmsService.save(formData);
 		return "redirect:/fms/list";
@@ -109,17 +111,22 @@ public class FMSController {
 	@RequestMapping(value = "/report", method = RequestMethod.GET)
 	public String report(Model model) {
 		Slice s1 = Slice.newSlice(15, Color.newColor("CACACA"), "Mac", "Mac");
-		Slice s2 = Slice.newSlice(50, Color.newColor("DF7417"), "Windows", "Windows");
-		Slice s3 = Slice.newSlice(25, Color.newColor("951800"), "Linux", "Linux");
-		Slice s4 = Slice.newSlice(10, Color.newColor("01A1DB"), "Others", "Others");
-		
+		Slice s2 = Slice.newSlice(50, Color.newColor("DF7417"), "Windows",
+				"Windows");
+		Slice s3 = Slice.newSlice(25, Color.newColor("951800"), "Linux",
+				"Linux");
+		Slice s4 = Slice.newSlice(10, Color.newColor("01A1DB"), "Others",
+				"Others");
+
+		List<FMS> data = fmsService.getAll();
+
 		PieChart pieChart = GCharts.newPieChart(s1, s2, s3, s4);
 		pieChart.setTitle("Google Pie Chart", Color.BLACK, 15);
 		pieChart.setSize(720, 360);
 		pieChart.setThreeD(true);
-		
+
 		model.addAttribute("pieUrl", pieChart.toURLString());
-		
+
 		return "fms/report";
 	}
 
@@ -128,20 +135,48 @@ public class FMSController {
 	public void report2(HttpServletResponse response) {
 		response.setContentType("image/png");
 		PieDataset pdSet = createDataSet();
-		
+
 		JFreeChart chart = createChart(pdSet, "JFreeChart Pie Chart");
-		
+
 		try {
-			ChartUtilities.writeChartAsPNG(response.getOutputStream(), chart, 750, 400);
+			ChartUtilities.writeChartAsPNG(response.getOutputStream(), chart,
+					750, 400);
 			response.getOutputStream().close();
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
-		catch (IOException ex) {
+	}
+
+	@Secured("ROLE_USER")
+	@RequestMapping(value = "/report3", method = RequestMethod.GET)
+	public void report3(HttpServletResponse response) {
+		response.setContentType("image/png");
+		String query = "SELECT id, loadTon FROM fms";
+		JDBCCategoryDataset dataset = null;
+		try {
+			dataset = new JDBCCategoryDataset(
+					"jdbc:mysql://localhost:3306/gelibolu", "com.mysql.jdbc.Driver",
+					"root", "1q2w3e4r");
+			dataset.executeQuery(query);
+		} catch (ClassNotFoundException ex) {
+			ex.printStackTrace();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		JFreeChart chart = ChartFactory.createBarChart3D("Database Driven JFreeChart", "id", "loadTon",
+				dataset, PlotOrientation.VERTICAL, true, true, false);
+		try {
+			//ChartUtilities.saveChartAsJPEG(new File("C:/chart.jpg"), chart, 400, 300);
+			ChartUtilities.writeChartAsPNG(response.getOutputStream(), chart, 400, 300);
+			response.getOutputStream().close();
+		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
 	}
 
 	private JFreeChart createChart(PieDataset pdSet, String title) {
-		JFreeChart chart = ChartFactory.createPieChart3D(title, pdSet, true, true, false);
+		JFreeChart chart = ChartFactory.createPieChart3D(title, pdSet, true,
+				true, false);
 		PiePlot3D plot = (PiePlot3D) chart.getPlot();
 		plot.setStartAngle(290);
 		plot.setDirection(Rotation.CLOCKWISE);

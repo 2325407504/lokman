@@ -18,6 +18,7 @@
 					<th><spring:message code="Ending km" text="Ending km"></spring:message></th>
 					<th><spring:message code="Fuel consumption in TL" text="Fuel consumption in TL"></spring:message></th>
 					<th><spring:message code="Fuel consumption in liter" text="Fuel consumption in liter"></spring:message></th>
+					<th><spring:message code="Load Tonne" text="Load Tonne"></spring:message></th>
 					<th></th>
 				</tr>
 			</thead>
@@ -33,6 +34,7 @@
 						<td><c:out value="${fms.endingKm}" /></td>
 						<td><c:out value="${fms.fuelTL}" /></td>
 						<td><c:out value="${fms.fuelLiter}" /></td>
+						<td><c:out value="${fms.loadTon}" /></td>
 						<td>
 							<a class="btn btn-mini" href="${editUrl}">Edit</a>
 						</td>
