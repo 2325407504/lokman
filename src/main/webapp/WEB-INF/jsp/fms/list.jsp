@@ -11,6 +11,7 @@
 			<thead>
 				<tr>
 					<th><spring:message code="Id" text="Id"></spring:message></th>
+					<th><spring:message code="Datetime" text="Datetime"></spring:message></th>
 					<th><spring:message code="Starting km" text="Starting km"></spring:message></th>
 					<th><spring:message code="Ending km" text="Ending km"></spring:message></th>
 					<th><spring:message code="Fuel consumption in TL" text="Fuel consumption in TL"></spring:message></th>
@@ -23,6 +24,7 @@
 					<c:url var="editUrl" value="/fms/edit/${fms.id}" />
 					<tr>
 						<td><c:out value="${fms.id}" /></td>
+						<td><spring:eval expression="fms.createdAt" /></td>
 						<td><c:out value="${fms.startingKm}" /></td>
 						<td><c:out value="${fms.endingKm}" /></td>
 						<td><c:out value="${fms.fuelTL}" /></td>

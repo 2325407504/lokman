@@ -6,8 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.PreUpdate;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -53,13 +52,23 @@ public class FMS {
 	@Column(columnDefinition = "TEXT")
 	private String remark;
 
-	@DateTimeFormat(style="S-")
+	@DateTimeFormat(style="SS")
 	@Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
 	private DateTime updatedAt;
 	
-	@DateTimeFormat(style="S-")
+	@DateTimeFormat(style="SS")
 	@Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
 	private DateTime createdAt;
+	
+	@PreUpdate
+	public void setPreUpdate() {
+		setUpdatedAt(new DateTime());
+	}
+	
+	public FMS() {
+		setCreatedAt(new DateTime());
+		setUpdatedAt(new DateTime());
+	}
 
 	public Long getId() {
 		return id;
