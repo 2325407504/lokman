@@ -6,9 +6,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity(name = "fms")
 public class FMS {
@@ -27,7 +33,7 @@ public class FMS {
 
 	@NotNull
 	private Integer startingKm;
-	
+
 	@NotNull
 	private Integer endingKm;
 
@@ -37,7 +43,7 @@ public class FMS {
 	@Min(value = 0, message = "Length must be greater than or equal to 3")
 	@Max(value = 100, message = "Length must be less than or equal to 8")
 	private Double fuelTL;
-	
+
 	@NotNull
 	private Integer fuelLiter;
 
@@ -46,6 +52,14 @@ public class FMS {
 
 	@Column(columnDefinition = "TEXT")
 	private String remark;
+
+	@DateTimeFormat(style="S-")
+	@Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
+	private DateTime updatedAt;
+	
+	@DateTimeFormat(style="S-")
+	@Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
+	private DateTime createdAt;
 
 	public Long getId() {
 		return id;
@@ -91,6 +105,14 @@ public class FMS {
 		return remark;
 	}
 
+	public DateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public DateTime getCreatedAt() {
+		return createdAt;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -133,6 +155,14 @@ public class FMS {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public void setUpdatedAt(DateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public void setCreatedAt(DateTime createdAt) {
+		this.createdAt = createdAt;
 	}
 
 }
