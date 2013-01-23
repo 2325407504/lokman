@@ -26,8 +26,9 @@
 	Note that, with Spring 3.1, this tag works in Servlet MVC only!  -->
 	<mvc:annotation-driven conversion-service="conversionService"/> 
 	
-	<mvc:resources mapping="/resources/**" location="/resources/" /> 
+	<mvc:resources mapping="/resources/**" location="/resources/" />
  	
+	<!-- I18n and L10n -->
  	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource" p:basename="classpath:locale/messages"/>
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" p:defaultLocale="tr_TR"/>
  	<mvc:interceptors>
@@ -43,13 +44,38 @@
 	<bean id="deployProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean"
         p:location="/WEB-INF/spring.properties" />
         
+	<!-- Converters -->
 	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="converters">
 			<list>
-				<bean class="com.aripd.converter.TruckConverter"></bean>
-				<bean class="com.aripd.converter.DriverConverter"></bean>
+				<bean class="com.aripd.project.lokman.converter.TruckConverter"></bean>
+				<bean class="com.aripd.project.lokman.converter.DriverConverter"></bean>
 			</list>
 		</property>
 	</bean>
+
+	<!-- RESTful -->
+	<bean id="xstreamMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller"/>
+	<bean id="xmlMessageConverter" class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
+		<constructor-arg ref="xstreamMarshaller"/>
+		<property name="supportedMediaTypes" value="application/xml"/>
+	</bean>
+	<bean id="jsonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+		<property name="prefixJson" value="false"/>
+		<property name="supportedMediaTypes" value="application/json"/>
+	</bean>
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="xmlMessageConverter"/>
+				<ref bean="jsonHttpMessageConverter"/>
+			</list>
+		</property>
+	</bean>
+
+	<!-- initializing data to realize some test -->
+	<beans>
+		<bean id="initDataService" class="com.aripd.common.service.InitDataService" init-method="init" />
+	</beans>
 
 </beans>

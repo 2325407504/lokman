@@ -9,7 +9,7 @@
 <c:url value="/logout" var="logoutUrl" />
 <c:url value="/profile/show" var="profile_show" />
 <c:url value="/role/list" var="role_list" />
-<c:url value="/user/list" var="user_list" />
+<c:url value="/account/list" var="account_list" />
 <c:url value="/truck/list" var="truck_list" />
 <c:url value="/driver/list" var="driver_list" />
 <c:url value="/fms/list" var="fms_list" />
@@ -21,7 +21,7 @@
 		<sec:authorize access="isAuthenticated()">
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 		<li><a href="${role_list}"><spring:message code="label.roles"></spring:message></a></li>
-		<li><a href="${user_list}"><spring:message code="label.users"></spring:message></a></li>
+		<li><a href="${account_list}"><spring:message code="label.users"></spring:message></a></li>
 		<li><a href="${truck_list}"><spring:message code="Trucks"></spring:message></a></li>
 		<li><a href="${driver_list}"><spring:message code="Drivers"></spring:message></a></li>
 		</sec:authorize>

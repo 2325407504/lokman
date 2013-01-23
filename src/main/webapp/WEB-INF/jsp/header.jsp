@@ -8,6 +8,8 @@
 		<title></title>
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
 		<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="/gelibolu/resources/dataTables/css/demo_page.css" />
+		<link rel="stylesheet" href="/gelibolu/resources/dataTables/css/demo_table.css" />
 		<style>
 		body { padding-top: 60px; }
 		.error { color: red; }

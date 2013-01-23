@@ -24,6 +24,8 @@
 		<hibernate.entitymanager.version>3.6.3.Final</hibernate.entitymanager.version>
 		<hibernate.jpa-api.version>2.0-cr-1</hibernate.jpa-api.version>
 		<c3p0.version>0.9.1.2</c3p0.version>
+		
+		<commons-codec.version>1.7</commons-codec.version>
 
 		<querydsl.version>2.2.5</querydsl.version>
 		<slf4j.version>1.6.1</slf4j.version>
@@ -328,6 +330,42 @@
 			<version>1.0.14</version>
 		</dependency>
 
+
+
+		<!-- Utils -->
+		<!-- RESTful -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.11</version>
+		</dependency>
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.4.3</version>
+		</dependency>
+		<!-- QRCode -->
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<!-- Codec -->
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>${commons-codec.version}</version>
+		</dependency>
 
 	</dependencies>
 

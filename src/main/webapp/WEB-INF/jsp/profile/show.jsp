@@ -8,13 +8,13 @@
 		</ul>
 		<dl class="dl-horizontal">
 			<dt><spring:message code="Username"></spring:message></dt>
-			<dd><c:out value="${userAttribute.username}" /></dd>
-			<dt><spring:message code="Firstname"></spring:message></dt>
-			<dd><c:out value="${userAttribute.firstname}" /></dd>
-			<dt><spring:message code="Lastname"></spring:message></dt>
-			<dd><c:out value="${userAttribute.lastname}" /></dd>
+			<dd><c:out value="${profileAttribute.username}" /></dd>
+			<dt><spring:message code="FirstName"></spring:message></dt>
+			<dd><c:out value="${profileAttribute.firstName}" /></dd>
+			<dt><spring:message code="LastName"></spring:message></dt>
+			<dd><c:out value="${profileAttribute.lastName}" /></dd>
 			<dt><spring:message code="E-mail Address"></spring:message></dt>
-			<dd><c:out value="${userAttribute.email}" /></dd>
+			<dd><c:out value="${profileAttribute.email}" /></dd>
 		</dl>
 		
 		<c:url var="editUrl" value="/profile/edit"/>

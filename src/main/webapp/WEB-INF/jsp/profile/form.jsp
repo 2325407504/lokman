@@ -7,16 +7,16 @@
 		  <li class="active"><spring:message code="Profile"></spring:message></li>
 		</ul>
 		<c:url var="saveUrl" value="/profile/save" />
-		<form:form modelAttribute="userAttribute" action="${saveUrl}" method="post">
+		<form:form modelAttribute="profileAttribute" action="${saveUrl}" method="post">
 			<form:errors path="*" cssClass="error-block" element="div" />
 			<fieldset>
 				<div class="form-row">
-					<form:label path="firstname"><spring:message code="Firstname"></spring:message></form:label>
-					<span><form:input path="firstname" /></span>
+					<form:label path="firstName"><spring:message code="FirstName"></spring:message></form:label>
+					<span><form:input path="firstName" /></span>
 				</div>       
 				<div class="form-row">
-					<form:label path="lastname"><spring:message code="Lastname"></spring:message></form:label>
-					<span><form:input path="lastname" /></span>
+					<form:label path="lastName"><spring:message code="LastName"></spring:message></form:label>
+					<span><form:input path="lastName" /></span>
 				</div>
 				<div class="form-row">
 					<form:label path="email"><spring:message code="E-mail Address"></spring:message></form:label>

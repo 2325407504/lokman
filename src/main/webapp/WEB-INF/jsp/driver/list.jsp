@@ -10,8 +10,8 @@
 			<caption><spring:message code="Drivers"></spring:message></caption>
 			<thead>
 				<tr>
-					<th><spring:message code="Firstname"></spring:message></th>
-					<th><spring:message code="Lastname"></spring:message></th>
+					<th><spring:message code="FirstName"></spring:message></th>
+					<th><spring:message code="LastName"></spring:message></th>
 					<th><spring:message code="Phone Number"></spring:message></th>
 					<th></th>
 				</tr>
@@ -20,8 +20,8 @@
 				<c:forEach items="${driverAttribute}" var="driver">
 					<c:url var="editUrl" value="/driver/edit/${driver.id}" />
 					<tr>
-						<td><c:out value="${driver.firstname}" /></td>
-						<td><c:out value="${driver.lastname}" /></td>
+						<td><c:out value="${driver.firstName}" /></td>
+						<td><c:out value="${driver.lastName}" /></td>
 						<td><c:out value="${driver.phonenumber}" /></td>
 						<td>
 							<a class="btn btn-mini" href="${editUrl}">Edit</a>
