@@ -1,9 +1,5 @@
 package com.aripd.project.lokman.domain;
 
-import static org.apache.commons.lang.builder.EqualsBuilder.reflectionEquals;
-import static org.apache.commons.lang.builder.HashCodeBuilder.reflectionHashCode;
-import static org.apache.commons.lang.builder.ToStringBuilder.reflectionToString;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -83,21 +79,6 @@ public class Driver {
 
 	public void setFmss(Collection<FMS> fmss) {
 		this.fmss = fmss;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		return reflectionEquals(this, obj);
-	}
-
-	@Override
-	public int hashCode() {
-		return reflectionHashCode(this);
-	}
-
-	@Override
-	public String toString() {
-		return reflectionToString(this);
 	}
 
 }

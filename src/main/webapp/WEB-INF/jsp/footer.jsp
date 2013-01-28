@@ -3,6 +3,7 @@
 		<script type="text/javascript" src="//code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
 		<script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/gelibolu/resources/dataTables/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="/gelibolu/resources/js/master.js"></script>
 		<script>
 		$(function() {
 			$("#datepicker").datepicker({

@@ -12,7 +12,7 @@
 				<tr>
 					<th><spring:message code="Username"></spring:message></th>
 					<th><spring:message code="FirstName"></spring:message></th>
-					<th><spring:message code="Lastname"></spring:message></th>
+					<th><spring:message code="LastName"></spring:message></th>
 					<th><spring:message code="E-mail Address"></spring:message></th>
 					<th></th>
 				</tr>
@@ -37,7 +37,7 @@
 		No records found. 
 		</c:if>
 
-		<c:url var="addUrl" value="/user/new"/>
+		<c:url var="addUrl" value="/account/new"/>
 		<div class="form-actions">
 			<a class="btn" href="${addUrl}"><spring:message code="button.new"></spring:message></a>
 		</div>

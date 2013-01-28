@@ -1,15 +1,19 @@
 ARIPD = {
 	all : function() {
-		ARIPD.quicksand();
+		//ARIPD.quicksand();
 
 		// ARIPD.headerPull();
-		ARIPD.scrollTop();
+		//ARIPD.scrollTop();
 
 		// ARIPD.loadScript(url, callback);
-		ARIPD.loadScript('/themes/default/assets/js/SocialShare.js', function() { /*alert('SocialShare loaded');*/ });
+		//ARIPD.loadScript('/themes/default/assets/js/SocialShare.js', function() { /*alert('SocialShare loaded');*/ });
 
-		ARIPD.slider();
-		ARIPD.tagCloud();
+		//ARIPD.slider();
+		//ARIPD.tagCloud();
+		
+		if ($("#j_username")) {
+			$("#j_username").focus();
+		}
 
 	},
 
