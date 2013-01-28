@@ -18,13 +18,13 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${userAttribute}" var="user">
-					<c:url var="editUrl" value="/user/edit/${user.id}" />
+				<c:forEach items="${accountAttribute}" var="account">
+					<c:url var="editUrl" value="/user/edit/${account.id}" />
 					<tr>
-						<td><c:out value="${user.username}" /></td>
-						<td><c:out value="${user.firstName}" /></td>
-						<td><c:out value="${user.lastName}" /></td>
-						<td><c:out value="${user.email}" /></td>
+						<td><c:out value="${account.username}" /></td>
+						<td><c:out value="${account.firstName}" /></td>
+						<td><c:out value="${account.lastName}" /></td>
+						<td><c:out value="${account.email}" /></td>
 						<td>
 							<a class="btn btn-mini" href="${editUrl}">Edit</a>
 						</td>
@@ -33,7 +33,7 @@
 			</tbody>
 		</table>
 		
-		<c:if test="${empty userAttribute}">
+		<c:if test="${empty accountAttribute}">
 		No records found. 
 		</c:if>
 

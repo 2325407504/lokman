@@ -57,17 +57,12 @@ public class AccountService {
 		return repository.findAll();
 	}
 
-	public Boolean save(Account account) {
+	public Account save(Account account) {
 		//User existing = repository.findOneByUsername(account.getUsername());
 		//if (existing != null)
 			//return false;
 
-		Account saved = repository.save(account);
-		if (saved == null)
-			return false;
-
-		logger4J.debug("Adding new person");
-		return true;
+		return repository.save(account);
 	}
 
 	public Boolean update(Account account) {

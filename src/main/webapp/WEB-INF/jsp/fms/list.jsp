@@ -67,7 +67,7 @@
 			</c:if>
 			
 			<c:url var="addUrl" value="/fms/new" />
-			<c:url var="exportUrl" value="/fms/export" />
+			<c:url var="exportUrl" value="/fms/export/xls" />
 			<div class="form-actions">
 				<a class="btn" href="${addUrl}"><spring:message code="button.new"></spring:message></a>
 				<a class="btn" href="${exportUrl}"><spring:message code="Export"></spring:message></a>

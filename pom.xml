@@ -24,7 +24,7 @@
 		<hibernate.entitymanager.version>3.6.3.Final</hibernate.entitymanager.version>
 		<hibernate.jpa-api.version>2.0-cr-1</hibernate.jpa-api.version>
 		<c3p0.version>0.9.1.2</c3p0.version>
-		
+
 		<commons-codec.version>1.7</commons-codec.version>
 
 		<querydsl.version>2.2.5</querydsl.version>
@@ -365,6 +365,12 @@
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 			<version>${commons-codec.version}</version>
+		</dependency>
+		<!-- Export -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.9</version>
 		</dependency>
 
 	</dependencies>
