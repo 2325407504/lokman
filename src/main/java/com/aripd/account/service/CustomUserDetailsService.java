@@ -39,7 +39,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	 */
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
-			Account account = repository.findOneByUsername(username);
+			Account account = repository.findByUsernameOrEmail(username, username);
 			
 			Collection<GrantedAuthority> grantedAuthorities = toGrantedAuthorities(accountHelper.getCodes(account));
 			boolean enabled = account.getIsEnabled();

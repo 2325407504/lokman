@@ -32,17 +32,30 @@ public class InitDataService {
 		Role userRole = getRole("ROLE_USER");
 
 		/* A user with admin right */
-		Account admin = new Account();
-		admin.setUsername("john");
-		admin.setFirstName("John");
-		admin.setLastName("Doe");
-		admin.setEmail("admin@mail.com");
-		admin.setPassword(DigestUtils.md5Hex("admin"));
-		admin.setIsEnabled(true);
-		this.userRepository.save(admin);
-		admin.getRoles().add(adminRole);
-		admin.getRoles().add(userRole);
-		this.userRepository.save(admin);
+		Account admin1 = new Account();
+		admin1.setUsername("cem");
+		admin1.setFirstName("Cem");
+		admin1.setLastName("ARIPD");
+		admin1.setEmail("cem@aripd.com");
+		admin1.setPassword(DigestUtils.md5Hex("cem"));
+		admin1.setIsEnabled(true);
+		this.userRepository.save(admin1);
+		admin1.getRoles().add(adminRole);
+		admin1.getRoles().add(userRole);
+		this.userRepository.save(admin1);
+
+		/* A user with admin right */
+		Account admin2 = new Account();
+		admin2.setUsername("john");
+		admin2.setFirstName("John");
+		admin2.setLastName("Doe");
+		admin2.setEmail("admin@mail.com");
+		admin2.setPassword(DigestUtils.md5Hex("admin"));
+		admin2.setIsEnabled(true);
+		this.userRepository.save(admin2);
+		admin2.getRoles().add(adminRole);
+		admin2.getRoles().add(userRole);
+		this.userRepository.save(admin2);
 
 		/* A user with no admin right */
 		Account user = new Account();
