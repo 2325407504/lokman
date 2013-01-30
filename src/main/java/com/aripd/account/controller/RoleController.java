@@ -21,7 +21,7 @@ import com.aripd.account.validator.RoleValidator;
 @RequestMapping("/role")
 public class RoleController {
 
-	protected static Logger logger4J = Logger.getLogger(RoleController.class);
+	protected static Logger logger = Logger.getLogger(RoleController.class);
 
 	@Resource(name = "roleService")
 	private RoleService roleService;
@@ -32,8 +32,8 @@ public class RoleController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String listAction(Model model) {
-		if (logger4J.isDebugEnabled()) {
-			logger4J.debug("Received request to show all records");
+		if (logger.isDebugEnabled()) {
+			logger.debug("Received request to show all records");
 		}
 		model.addAttribute("roleAttribute", roleService.getAll());
 		return "role/list";
@@ -42,7 +42,7 @@ public class RoleController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String newAction(Model model) {
-		logger4J.debug("Received request to show add new record");
+		logger.debug("Received request to show add new record");
 		model.addAttribute("roleAttribute", new Role());
 		return "role/form";
 	}
@@ -50,7 +50,7 @@ public class RoleController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editAction(@PathVariable Long id, Model model) {
-		logger4J.debug("Received request to show edit existing record");
+		logger.debug("Received request to show edit existing record");
 		model.addAttribute("roleAttribute", roleService.getOne(id));
 		return "role/form";
 	}
@@ -63,7 +63,7 @@ public class RoleController {
 			return "/role/form";
 		}
 		
-		logger4J.debug("Received request to save existing record");
+		logger.debug("Received request to save existing record");
 		roleService.save(role);
 		return "redirect:/role/list";
 	}
@@ -71,7 +71,7 @@ public class RoleController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
 	public String delete(@RequestParam(value = "id", required = true) Long id) {
-		logger4J.debug("Received request to delete existing record");
+		logger.debug("Received request to delete existing record");
 		roleService.delete(id);
 		return "redirect:/role/list";
 	}

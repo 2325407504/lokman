@@ -8,14 +8,14 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 
 public class Writer {
 
-	protected static Logger logger4J = Logger.getLogger(Writer.class);
+	protected static Logger logger = Logger.getLogger(Writer.class);
 
 	/**
 	 * Writes the report to the output stream
 	 */
 	public static void write(HttpServletResponse response, HSSFSheet worksheet) {
 
-		logger4J.debug("Writing report to the stream");
+		logger.debug("Writing report to the stream");
 		try {
 			// Retrieve the output stream
 			ServletOutputStream outputStream = response.getOutputStream();
@@ -25,7 +25,7 @@ public class Writer {
 			outputStream.flush();
 
 		} catch (Exception e) {
-			logger4J.error("Unable to write report to the output stream");
+			logger.error("Unable to write report to the output stream");
 		}
 	}
 

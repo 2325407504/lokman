@@ -12,6 +12,7 @@ import com.aripd.account.domain.Account;
 import com.aripd.account.domain.Role;
 import com.aripd.account.repository.AccountRepository;
 import com.aripd.account.repository.RoleRepository;
+import com.aripd.project.lokman.service.TruckDataService;
 
 /**
  * Data initialization service
@@ -19,7 +20,7 @@ import com.aripd.account.repository.RoleRepository;
 @Service("initDataService")
 public class InitDataService {
 
-	protected static Logger logger4J = Logger.getLogger(TruckDataService.class);
+	protected static Logger logger = Logger.getLogger(InitDataService.class);
 
 	@Autowired
 	AccountRepository userRepository;
@@ -73,7 +74,7 @@ public class InitDataService {
 		List<Account> listUsers = new ArrayList<Account>();
 		Account aUser;
 		for (int i = 0; i < 100; i++) {
-			logger4J.debug("Adding a new record");
+			logger.debug("Adding a new record");
 			aUser = new Account();
 			aUser.setUsername("user" + i);
 			aUser.setFirstName("FirstName_" + i);

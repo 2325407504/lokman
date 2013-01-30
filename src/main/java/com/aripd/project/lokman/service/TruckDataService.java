@@ -1,4 +1,4 @@
-package com.aripd.common.service;
+package com.aripd.project.lokman.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import com.aripd.project.lokman.repository.TruckRepository;
 @Service
 public class TruckDataService {
 
-	protected static Logger logger4J = Logger.getLogger(TruckDataService.class);
+	protected static Logger logger = Logger.getLogger(TruckDataService.class);
 
 	@Autowired
 	TruckRepository repository;
@@ -24,7 +24,7 @@ public class TruckDataService {
 		List<Truck> trucks = new ArrayList<Truck>();
 		Truck truck;
 		for (int i = 0; i < 100; i++) {
-			logger4J.debug("Adding a new record");
+			logger.debug("Adding a new record");
 			truck = new Truck();
 			truck.setPlate("34RV"+i);
 			trucks.add(truck);

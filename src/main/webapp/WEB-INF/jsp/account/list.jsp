@@ -19,7 +19,7 @@
 			</thead>
 			<tbody>
 				<c:forEach items="${accountAttribute}" var="account">
-					<c:url var="editUrl" value="/user/edit/${account.id}" />
+					<c:url var="editUrl" value="/account/edit/${account.id}" />
 					<tr>
 						<td><c:out value="${account.username}" /></td>
 						<td><c:out value="${account.firstName}" /></td>

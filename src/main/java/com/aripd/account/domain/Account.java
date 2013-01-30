@@ -66,9 +66,9 @@ public class Account {
 	@Email(message = "It is not a valid format")
 	private String email;
 
-	@NotNull
+	@Nullable
 	@Column(nullable = true, unique = false)
-	private Boolean isEnabled;
+	private Boolean isEnabled = false;
 
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")

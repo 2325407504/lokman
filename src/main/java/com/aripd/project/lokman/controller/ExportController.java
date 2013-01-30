@@ -15,7 +15,7 @@ import com.aripd.project.lokman.service.ExportService;
 @RequestMapping("/fms")
 public class ExportController {
 
-	protected static Logger logger4J = Logger.getLogger(ExportController.class);
+	protected static Logger logger = Logger.getLogger(ExportController.class);
 
 	@Resource(name = "exportService")
 	private ExportService exportService;
@@ -29,7 +29,7 @@ public class ExportController {
 	@RequestMapping(value = "/export/xls", method = RequestMethod.GET)
 	public void getXLS(HttpServletResponse response, Model model)
 			throws ClassNotFoundException {
-		logger4J.debug("Received request to export report as an XLS");
+		logger.debug("Received request to export report as an XLS");
 
 		// Delegate to exportService. Make sure to pass an instance of
 		// HttpServletResponse

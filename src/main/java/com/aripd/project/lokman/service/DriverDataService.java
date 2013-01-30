@@ -1,4 +1,4 @@
-package com.aripd.common.service;
+package com.aripd.project.lokman.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import com.aripd.project.lokman.repository.DriverRepository;
 @Service
 public class DriverDataService {
 
-	protected static Logger logger4J = Logger.getLogger(DriverDataService.class);
+	protected static Logger logger = Logger.getLogger(DriverDataService.class);
 
 	@Autowired
 	DriverRepository repository;
@@ -24,7 +24,7 @@ public class DriverDataService {
 		List<Driver> drivers = new ArrayList<Driver>();
 		Driver driver;
 		for (int i = 0; i < 100; i++) {
-			logger4J.debug("Adding a new record");
+			logger.debug("Adding a new record");
 			driver = new Driver();
 			driver.setFirstName("Firstname"+i);
 			driver.setLastName("Lastname"+i);

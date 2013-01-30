@@ -21,7 +21,7 @@ import com.aripd.project.lokman.validator.TruckValidator;
 @RequestMapping("/truck")
 public class TruckController {
 	
-	protected static Logger logger4J = Logger.getLogger(TruckController.class);
+	protected static Logger logger = Logger.getLogger(TruckController.class);
 	
 	@Resource(name="truckService")
 	private TruckService truckService;
@@ -32,8 +32,8 @@ public class TruckController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/list")
 	public String listAction(Model model) {
-		if (logger4J.isDebugEnabled()) {
-			logger4J.debug("Received request to show all records");
+		if (logger.isDebugEnabled()) {
+			logger.debug("Received request to show all records");
 		}    	
 		model.addAttribute("truckAttribute", truckService.getAll());
 		return "truck/list";
@@ -42,7 +42,7 @@ public class TruckController {
 	@Secured("ROLE_ADMIN")
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-		logger4J.debug("Received request to show add page");
+		logger.debug("Received request to show add page");
     	model.addAttribute("truckAttribute", new Truck());
     	return "truck/form";
 	}
@@ -50,7 +50,7 @@ public class TruckController {
 	@Secured("ROLE_ADMIN")
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
-		logger4J.debug("Received request to show edit existing record");
+		logger.debug("Received request to show edit existing record");
     	model.addAttribute("truckAttribute", truckService.getOne(id));
     	return "truck/form";
 	}
@@ -63,38 +63,15 @@ public class TruckController {
 			return "/truck/form";
 		}
 		
-		logger4J.debug("Received request to save existing record");
+		logger.debug("Received request to save existing record");
 		truckService.save(truck);
-		return "redirect:/truck/list";
-	}
-
-	@Secured("ROLE_ADMIN")
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    public String _____updateAction(@ModelAttribute("truckAttribute") Truck truck, 
-    		@PathVariable Long id, Model model) {
-		logger4J.debug("Received request to update person");
-    
-    	// The "personAttribute" model has been passed to the controller from the JSP
-    	// We use the name "personAttribute" because the JSP uses that name
-    	
-    	// We manually assign the id because we disabled it in the JSP page
-    	// When a field is disabled it will not be included in the ModelAttribute
-    	truck.setId(id);
-    	
-    	// Delegate to PersonService for editing
-    	// We show the all persons page again after updating the person
-    	truckService.update(truck);
-    	
-    	// Retrieve all persons and attach to model
-    	model.addAttribute("truckAttribute", truckService.getAll());
-    	
 		return "redirect:/truck/list";
 	}
 
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
 	public String delete(@RequestParam(value = "id", required = true) Long id) {
-		logger4J.debug("Received request to delete existing record");
+		logger.debug("Received request to delete existing record");
 		truckService.delete(id);
 		return "redirect:/truck/list";
 	}

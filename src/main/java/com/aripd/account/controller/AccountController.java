@@ -22,7 +22,7 @@ import com.aripd.account.service.RoleService;
 @RequestMapping("/account")
 public class AccountController {
 	
-	protected static Logger logger4J = Logger.getLogger(AccountController.class);
+	protected static Logger logger = Logger.getLogger(AccountController.class);
 	
 	@Resource(name="accountService")
 	private AccountService accountService;
@@ -33,17 +33,23 @@ public class AccountController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/list")
 	public String listAction(Model model) {
-		logger4J.debug("Received request to show all persons page");
-
+		logger.debug("Received request to show records");
 		model.addAttribute("accountAttribute", accountService.getAll());
-		
 		return "account/list";
 	}
 
 	@Secured("ROLE_ADMIN")
+    @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+    public String showAction(@PathVariable Long id, Model model) {
+		logger.debug("Received request to show record");
+    	model.addAttribute("account", accountService.getOne(id));
+    	return "account/show";
+	}
+	
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String newAction(Model model) {
-		logger4J.debug("Received request to show add new record");
+		logger.debug("Received request to show add new record");
 		model.addAttribute("accountAttribute", new Account());
 		return "account/form";
 	}
@@ -51,7 +57,7 @@ public class AccountController {
 	@Secured("ROLE_ADMIN")
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
-		logger4J.debug("Received request to show edit existing record");
+		logger.debug("Received request to show edit existing record");
     	model.addAttribute("accountAttribute", accountService.getOne(id));
     	return "account/form";
 	}
@@ -60,11 +66,11 @@ public class AccountController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(@ModelAttribute("accountAttribute") @Valid Account account, BindingResult result) {
 		if (result.hasErrors()) {
-			logger4J.error(result);
+			logger.error(result);
 			return "/account/form";
 		}
 		
-		logger4J.debug("Received request to save existing record");
+		logger.debug("Received request to save existing record");
 		accountService.save(account);
 		return "redirect:/account/list";
 	}
@@ -72,7 +78,7 @@ public class AccountController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
 	public String delete(@RequestParam(value = "id", required = true) Long id) {
-		logger4J.debug("Received request to delete existing record");
+		logger.debug("Received request to delete existing record");
 		accountService.delete(id);
 		return "redirect:/account/list";
 	}

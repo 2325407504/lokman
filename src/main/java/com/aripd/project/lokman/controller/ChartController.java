@@ -30,7 +30,7 @@ import com.googlecode.charts4j.Slice;
 @RequestMapping("/fms")
 public class ChartController {
 
-	protected static Logger logger4J = Logger.getLogger(ChartController.class);
+	protected static Logger logger = Logger.getLogger(ChartController.class);
 
 	@Secured("ROLE_USER")
 	@RequestMapping(value = "/report", method = RequestMethod.GET)

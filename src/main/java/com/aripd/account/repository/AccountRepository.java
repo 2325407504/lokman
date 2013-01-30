@@ -11,6 +11,7 @@ import com.aripd.account.domain.Account;
 public interface AccountRepository extends JpaRepository<Account, Long> {
 	
 	Account findOneByUsername(String username);
+	
 	Account findByUsernameOrEmail(String username, String email);
 	
 	Page<Account> findByUsernameLike(String username, Pageable pageable);

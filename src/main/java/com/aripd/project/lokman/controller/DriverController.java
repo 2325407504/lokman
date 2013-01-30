@@ -21,7 +21,7 @@ import com.aripd.project.lokman.validator.DriverValidator;
 @RequestMapping("/driver")
 public class DriverController {
 	
-	protected static Logger logger4J = Logger.getLogger(DriverController.class);
+	protected static Logger logger = Logger.getLogger(DriverController.class);
 	
 	@Resource(name="driverService")
 	private DriverService driverService;
@@ -32,8 +32,8 @@ public class DriverController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/list")
 	public String listAction(Model model) {
-		if (logger4J.isDebugEnabled()) {
-			logger4J.debug("Received request to show all records");
+		if (logger.isDebugEnabled()) {
+			logger.debug("Received request to show all records");
 		}
 		model.addAttribute("driverAttribute", driverService.getAll());
 		return "driver/list";
@@ -42,7 +42,7 @@ public class DriverController {
 	@Secured("ROLE_ADMIN")
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-		logger4J.debug("Received request to show add page");
+		logger.debug("Received request to show add page");
     	model.addAttribute("driverAttribute", new Driver());
     	return "driver/form";
 	}
@@ -50,7 +50,7 @@ public class DriverController {
 	@Secured("ROLE_ADMIN")
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
-		logger4J.debug("Received request to show edit existing record");
+		logger.debug("Received request to show edit existing record");
     	model.addAttribute("driverAttribute", driverService.getOne(id));
     	return "driver/form";
 	}
@@ -63,7 +63,7 @@ public class DriverController {
 			return "/driver/form";
 		}
 		
-		logger4J.debug("Received request to save existing record");
+		logger.debug("Received request to save existing record");
 		driverService.save(driver);
 		return "redirect:/driver/list";
 	}
@@ -71,7 +71,7 @@ public class DriverController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
 	public String delete(@RequestParam(value = "id", required = true) Long id) {
-		logger4J.debug("Received request to delete existing record");
+		logger.debug("Received request to delete existing record");
 		driverService.delete(id);
 		return "redirect:/driver/list";
 	}

@@ -22,7 +22,7 @@ import com.aripd.qrcode.service.impl.QRCodeServiceImpl.FormatImage;
 @RequestMapping("/qrcode")
 public class QRCodeController {
 
-	protected static Logger logger4J = Logger.getLogger(QRCodeController.class);
+	protected static Logger logger = Logger.getLogger(QRCodeController.class);
 
 	@Resource(name = "qrCodeService")
 	private QRCodeService qrCodeService;
@@ -37,7 +37,7 @@ public class QRCodeController {
 		qrCodeService.writeQRCodeToStream(key, 200, 200, byteArrayOutputStream,
 				formatImage, 9);
 
-		logger4J.info("Se ha generado el array de este tamaÃ±o "
+		logger.info("Se ha generado el array de este tamaÃ±o "
 				+ byteArrayOutputStream.size());
 
 		HttpHeaders responseHeaders = new HttpHeaders();
@@ -52,7 +52,7 @@ public class QRCodeController {
 
 		responseHeaders.setContentLength(byteArrayOutputStream.size());
 
-		logger4J.info("El ToString de responseHeaders es "
+		logger.info("El ToString de responseHeaders es "
 				+ responseHeaders.toString());
 
 		return new ResponseEntity<byte[]>(

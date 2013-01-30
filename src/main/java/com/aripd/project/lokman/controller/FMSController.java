@@ -37,7 +37,7 @@ import com.aripd.project.lokman.service.TruckService;
 @RequestMapping("/fms")
 public class FMSController {
 
-	protected static Logger logger4J = Logger.getLogger(FMSController.class);
+	protected static Logger logger = Logger.getLogger(FMSController.class);
 
 	@Resource(name = "fmsService")
 	private FMSService fmsService;
@@ -111,8 +111,8 @@ public class FMSController {
 	@Secured("ROLE_USER")
 	@RequestMapping(value = "/list")
 	public String listAction(Model model) {
-		if (logger4J.isDebugEnabled()) {
-			logger4J.debug("Received request to show all records");
+		if (logger.isDebugEnabled()) {
+			logger.debug("Received request to show all records");
 		}
 		model.addAttribute("fmsAttribute", fmsService.getAll());
 		return "fms/list";
@@ -121,7 +121,7 @@ public class FMSController {
 	@Secured("ROLE_USER")
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String newAction(Model model) {
-		logger4J.debug("Received request to show add page");
+		logger.debug("Received request to show add page");
 		model.addAttribute("trucks", truckService.getAll());
 		model.addAttribute("drivers", driverService.getAll());
 		model.addAttribute("fmsAttribute", new FMS());
@@ -131,7 +131,7 @@ public class FMSController {
 	@Secured("ROLE_USER")
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editAction(@PathVariable Long id, Model model) {
-		logger4J.debug("Received request to show edit existing record");
+		logger.debug("Received request to show edit existing record");
 		model.addAttribute("trucks", truckService.getAll());
 		model.addAttribute("drivers", driverService.getAll());
 		model.addAttribute("fmsAttribute", fmsService.getOne(id));
@@ -144,26 +144,26 @@ public class FMSController {
 			@ModelAttribute("fmsAttribute") @Valid FMS formData,
 			BindingResult result, Model model, Principal principal) {
 		if (result.hasErrors()) {
-			logger4J.error(result);
+			logger.error(result);
 			model.addAttribute("trucks", truckService.getAll());
 			model.addAttribute("drivers", driverService.getAll());
 			return "/fms/form";
 		}
 
-		logger4J.debug("Received request to save existing record");
+		logger.debug("Received request to save existing record");
 
 		Account account = accountService.getOneByUsername(principal.getName());
 		formData.setAccount(account);
 
-		fmsService.saveOne(formData);
+		fmsService.save(formData);
 		return "redirect:/fms/list";
 	}
 
 	@Secured("ROLE_USER")
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
 	public String delete(@RequestParam(value = "id", required = true) Long id) {
-		logger4J.debug("Received request to delete existing record");
-		fmsService.deleteOne(id);
+		logger.debug("Received request to delete existing record");
+		fmsService.delete(id);
 		return "redirect:/fms/list";
 	}
 

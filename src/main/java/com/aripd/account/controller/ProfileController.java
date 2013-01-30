@@ -23,7 +23,7 @@ import com.aripd.account.service.RoleService;
 @RequestMapping("/profile")
 public class ProfileController {
 	
-	protected static Logger logger4J = Logger.getLogger(ProfileController.class);
+	protected static Logger logger = Logger.getLogger(ProfileController.class);
 	
 	@Resource(name="accountService")
 	private AccountService accountService;
@@ -33,7 +33,7 @@ public class ProfileController {
 	
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public String showAction(Model model) {
-		logger4J.debug("Received request to show add new record");
+		logger.debug("Received request to show add new record");
 		model.addAttribute("profileAttribute", accountService.getActiveUser());
 		return "profile/show";
 	}
@@ -44,7 +44,7 @@ public class ProfileController {
 		
 		Account account = accountService.getOneByUsername(securityUser.getUsername());
 		
-		logger4J.debug("Received request to show edit existing record");
+		logger.debug("Received request to show edit existing record");
     	model.addAttribute("profileAttribute", account);
     	return "profile/form";
 	}
@@ -52,11 +52,11 @@ public class ProfileController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(@ModelAttribute("profileAttribute") @Valid Account account, BindingResult result) {
 		if (result.hasErrors()) {
-			logger4J.error(result);
+			logger.error(result);
 			return "/profile/form";
 		}
 		
-		logger4J.debug("Received request to save existing record");
+		logger.debug("Received request to save existing record");
 		accountService.save(account);
 		return "redirect:/profile/list";
 	}

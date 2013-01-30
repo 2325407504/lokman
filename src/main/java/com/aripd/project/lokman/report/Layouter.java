@@ -14,7 +14,7 @@ import org.apache.poi.ss.usermodel.Font;
 
 public class Layouter {
 
-	protected static Logger logger4J = Logger.getLogger(Layouter.class);
+	protected static Logger logger = Logger.getLogger(Layouter.class);
 
 	/**
 	 * Builds the report layout.

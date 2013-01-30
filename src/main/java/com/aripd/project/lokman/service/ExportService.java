@@ -24,7 +24,7 @@ import com.aripd.project.lokman.repository.FMSRepository;
 @Transactional
 public class ExportService {
 
-	protected static Logger logger4J = Logger.getLogger(ExportService.class);
+	protected static Logger logger = Logger.getLogger(ExportService.class);
 
 	@Autowired
 	private FMSRepository repository;
@@ -44,7 +44,7 @@ public class ExportService {
 	 */
 	public void exportXLS(HttpServletResponse response)
 			throws ClassNotFoundException {
-		logger4J.debug("Exporting Excel report");
+		logger.debug("Exporting Excel report");
 
 		// 1. Create new workbook
 		HSSFWorkbook workbook = new HSSFWorkbook();
