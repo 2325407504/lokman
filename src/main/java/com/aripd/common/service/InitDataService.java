@@ -12,7 +12,6 @@ import com.aripd.account.domain.Account;
 import com.aripd.account.domain.Role;
 import com.aripd.account.repository.AccountRepository;
 import com.aripd.account.repository.RoleRepository;
-import com.aripd.project.lokman.service.TruckDataService;
 
 /**
  * Data initialization service

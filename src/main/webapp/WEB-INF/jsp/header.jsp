@@ -28,8 +28,14 @@
 				<a class="brand" href="${homeUrl}">Project</a>
 				<%@ include file="/WEB-INF/jsp/menu.jsp" %>
 				<div class="pull-right">
-					<a href="?language=en_US">English</a>
-					<a href="?language=tr_TR">Türkçe</a>
+					<c:set var="localeCode" value="${pageContext.response.locale}" />
+					<c:set var="availLanguages" value="tr_TR,en_US" />
+					<c:if test="${!fn:contains(availLanguages,localeCode)}">
+						<c:set var="localeCode" value="tr_TR" />
+					</c:if>
+					<c:forEach items="${availLanguages}" var="lang">
+						<a href="?language=${lang}" class="label <c:if test="${fn:contains(localeCode, lang)}">label-info</c:if>">${lang}</a>
+					</c:forEach>
 				</div>
 			</div>
 		</div>

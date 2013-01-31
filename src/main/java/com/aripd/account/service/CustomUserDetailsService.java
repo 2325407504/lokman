@@ -62,7 +62,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	}
 	
 	public static Collection<GrantedAuthority> toGrantedAuthorities(List<String> roles) {
-		List<GrantedAuthority> result = new ArrayList();
+		List<GrantedAuthority> result = new ArrayList<GrantedAuthority>();
 
 		for (String role : roles) {
 			result.add(new SimpleGrantedAuthority(role));
