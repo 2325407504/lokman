@@ -1,4 +1,4 @@
-package com.aripd.common.datatables;
+package com.aripd.common.dto;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * "aiSortCol":[0], "asSortDir":["asc"],
  * "abSortable":[true,true,true,true,true,true,true] }
  */
-public class DataTablesRequest implements Serializable {
+public class DataTablesRequestDto implements Serializable {
 
 	private static final long serialVersionUID = 2436065137605669813L;
 
@@ -64,7 +64,7 @@ public class DataTablesRequest implements Serializable {
 	@JsonProperty(value = "abSortable")
 	public List<Boolean> sortableColumns;
 
-	public DataTablesRequest() {
+	public DataTablesRequestDto() {
 	}
 
 	@Override

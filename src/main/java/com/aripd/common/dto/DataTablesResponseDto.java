@@ -1,4 +1,4 @@
-package com.aripd.common.datatables;
+package com.aripd.common.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * The data tables response.
  */
-public class DataTablesResponse<T> implements Serializable {
+public class DataTablesResponseDto<T> implements Serializable {
 
 	private static final long serialVersionUID = -7453970926109773978L;
 
@@ -28,7 +28,7 @@ public class DataTablesResponse<T> implements Serializable {
 	@JsonProperty(value = "aaData")
 	public List<T> data = new ArrayList<T>();
 
-	public DataTablesResponse() {
+	public DataTablesResponseDto() {
 	}
 
 }

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.aripd.account.domain.Account;
+import com.aripd.account.dto.AccountDto;
+import com.aripd.account.exception.AccountNotFoundException;
 import com.aripd.account.service.AccountService;
 import com.aripd.account.service.RoleService;
 
@@ -64,20 +66,20 @@ public class AccountController {
 
 	@Secured("ROLE_ADMIN")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAction(@ModelAttribute("accountAttribute") @Valid Account account, BindingResult result) {
+    public String saveAction(@ModelAttribute("accountAttribute") @Valid AccountDto formData, BindingResult result) throws AccountNotFoundException {
 		if (result.hasErrors()) {
 			logger.error(result);
 			return "/account/form";
 		}
 		
 		logger.debug("Received request to save existing record");
-		accountService.save(account);
+		accountService.save(formData);
 		return "redirect:/account/list";
 	}
 	
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-	public String delete(@RequestParam(value = "id", required = true) Long id) {
+	public String delete(@RequestParam(value = "id", required = true) Long id) throws AccountNotFoundException {
 		logger.debug("Received request to delete existing record");
 		accountService.delete(id);
 		return "redirect:/account/list";

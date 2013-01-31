@@ -1,12 +1,13 @@
 package com.aripd.account.controller;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.aripd.account.domain.Role;
+import com.aripd.account.dto.RoleDto;
+import com.aripd.account.exception.RoleNotFoundException;
 import com.aripd.account.service.RoleService;
 import com.aripd.account.validator.RoleValidator;
 
@@ -57,20 +60,20 @@ public class RoleController {
 
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveAction(@ModelAttribute("roleAttribute") Role role, Errors errors) {
-		roleValidator.validate(role, errors);
-		if (errors.hasErrors()) {
+	public String saveAction(@ModelAttribute("roleAttribute") @Valid RoleDto formData, BindingResult result) throws RoleNotFoundException {
+		if (result.hasErrors()) {
+			logger.error(result);
 			return "/role/form";
 		}
 		
 		logger.debug("Received request to save existing record");
-		roleService.save(role);
+		roleService.save(formData);
 		return "redirect:/role/list";
 	}
 
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-	public String delete(@RequestParam(value = "id", required = true) Long id) {
+	public String delete(@RequestParam(value = "id", required = true) Long id) throws RoleNotFoundException {
 		logger.debug("Received request to delete existing record");
 		roleService.delete(id);
 		return "redirect:/role/list";

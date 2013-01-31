@@ -2,55 +2,115 @@ package com.aripd.account.service.impl;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aripd.account.domain.Role;
+import com.aripd.account.dto.RoleDto;
+import com.aripd.account.exception.RoleNotFoundException;
 import com.aripd.account.repository.RoleRepository;
 import com.aripd.account.service.RoleService;
 
+/**
+ * This implementation of the RoleService interface communicates with the
+ * database by using a Spring Data JPA repository.
+ * 
+ * @author aripd.com
+ */
 @Service("roleService")
 @Transactional
 public class RoleServiceImpl implements RoleService {
 
 	protected static Logger logger = Logger.getLogger(RoleServiceImpl.class);
 
-	@Autowired
+	@Resource
 	private RoleRepository repository;
 
+	/**
+	 * This setter method should be used only by unit tests.
+	 * 
+	 * @param repository
+	 */
+	protected void setRoleRepository(RoleRepository repository) {
+		this.repository = repository;
+	}
+	
 	public Role getOne(Long id) {
-		logger.debug("Retrieving person based on his id");
+		logger.debug("Retrieving role based on his id");
 		return repository.findOne(id);
 	}
 
 	public List<Role> getAll() {
-		logger.debug("Retrieving all persons");
+		logger.debug("Retrieving all roles");
 		return repository.findAll();
 	}
 
-	public Role save(Role role) {
+	public Role save(RoleDto formData) throws RoleNotFoundException {
+		if (formData.getId() == null)
+			return this.create(formData);
+		else
+			return this.update(formData);
+	}
+
+	@Transactional
+	@Override
+	public Role create(RoleDto created) {
+		logger.debug("Creating a new role with information: " + created);
+
+		Role role = Role.getBuilder(created.getCode(),
+				created.getName()).build();
+
 		return repository.save(role);
 	}
 
-	public Role update(Role role) {
-		Role existing = repository.findOne(role.getId());
+	@Transactional(rollbackFor = RoleNotFoundException.class)
+	@Override
+	public Role delete(Long id) throws RoleNotFoundException {
+		logger.debug("Deleting role with id: " + id);
 
-		existing.setCode(role.getCode());
-		existing.setName(role.getName());
+		Role deleted = repository.findOne(id);
 
-		return repository.save(existing);
+		if (deleted == null) {
+			logger.debug("No accoutn found with id: " + id);
+			throw new RoleNotFoundException();
+		}
+
+		repository.delete(deleted);
+		return deleted;
 	}
 
-	public Role delete(Long id) {
-		Role role = repository.findOne(id);
-		repository.delete(id);
+	@Transactional(readOnly = true)
+	@Override
+	public List<Role> findAll() {
+		logger.debug("Finding all roles");
+		return repository.findAll();
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public Role findById(Long id) {
+		logger.debug("Finding role by id: " + id);
+		return repository.findOne(id);
+	}
+
+	@Transactional(rollbackFor = RoleNotFoundException.class)
+	@Override
+	public Role update(RoleDto updated) throws RoleNotFoundException {
+		logger.debug("Updating role with information: " + updated);
+
+		Role role = repository.findOne(updated.getId());
+
+		if (role == null) {
+			logger.debug("No role found with id: " + updated.getId());
+			throw new RoleNotFoundException();
+		}
+
+		role.update(updated.getCode(), updated.getName());
+
 		return role;
-	}
-
-	public Role create(Role role) {
-		return repository.save(role);
 	}
 
 }

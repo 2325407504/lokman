@@ -25,7 +25,7 @@ public class AccountHelper implements EntityHelper<Account> {
 	@Override
 	public Account copyFrom(final Account entity) {
 		Account copy = new Account();
-		copy.setId(entity.getId());
+		//copy.setId(entity.getId());
 		copy.setFirstName(entity.getFirstName());
 		copy.setLastName(entity.getLastName());
 		copy.setEmail(entity.getEmail());

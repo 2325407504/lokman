@@ -1,15 +1,11 @@
 package com.aripd.account.domain;
 
 import static javax.persistence.CascadeType.PERSIST;
-import static org.apache.commons.lang.builder.EqualsBuilder.reflectionEquals;
-import static org.apache.commons.lang.builder.HashCodeBuilder.reflectionHashCode;
-import static org.apache.commons.lang.builder.ToStringBuilder.reflectionToString;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,19 +14,23 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.persistence.Transient;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
-
+/**
+ * An entity class which contains the information of a single account.
+ * 
+ * @author aripd.com
+ */
 @Entity
 @Table(name = "account")
 public class Account {
@@ -39,41 +39,31 @@ public class Account {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@NotNull
-	@Size(min = 1, max = 100)
+	@Column(name = "creation_time", nullable = false)
+	private Date creationTime;
+
+	@Column(name = "modification_time", nullable = false)
+	private Date modificationTime;
+
 	@Column(nullable = true, unique = false)
-	//@Pattern(regexp = "[a-z-A-Z]*", message = "First name has invalid characters")
 	private String firstName;
 
-	@NotEmpty
-	@Size(min = 1, max = 100)
 	@Column(nullable = true, unique = false)
-	//@Pattern(regexp = "[a-z-A-Z]*", message = "Last name has invalid characters")
 	private String lastName;
 
-	@NotNull
-	@Size(min = 1, max = 100)
 	@Column(nullable = false, unique = false)
 	private String password;
 
 	@Column(unique = true)
-	@Size(min = 3, max = 8)
 	private String username;
 
-	@NotNull
-	@Size(min = 1, max = 50)
 	@Column(nullable = false, unique = true)
-	@Email(message = "It is not a valid format")
 	private String email;
 
-	@Nullable
 	@Column(nullable = true, unique = false)
 	private Boolean isEnabled = false;
 
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Past(message = "Date of birth must be the past")
-	@Nullable
 	private Date dateOfBirth = null;
 
 	@JoinTable(name = "account_role", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -85,18 +75,123 @@ public class Account {
 		return (roles == null) ? roles = new ArrayList<Role>() : roles;
 	}
 
-	// @Transient
-	// public List<String> getRoleNames() {
-	// List<String> roleNames = new ArrayList<String>();
-	//
-	// for (Role role : getRoles()) {
-	// roleNames.add(role.getRoleName());
-	// }
-	// return roleNames;
-	// }
+	/**
+     * Gets a builder which is used to create Account objects.
+     * @param firstName   The first name of the created account.
+     * @param lastName    The last name of the created account.
+	 * @param email       The email of the created account.
+	 * @param username    The username of the created account.
+	 * @param password    The password of the created account.
+	 * @param dateOfBirth The dateOfBirth of the created account.
+     * @return  A new Builder instance.
+     */
+    public static Builder getBuilder(String firstName, String lastName, String email, String username, String password, Date dateOfBirth) {
+        return new Builder(firstName, lastName, email, username, password, dateOfBirth);
+    }
+    
+    /**
+     * Gets the full name of the account.
+     * @return  The full name of the account.
+     */
+    @Transient
+    public String getName() {
+        StringBuilder name = new StringBuilder();
+        
+        name.append(firstName);
+        name.append(" ");
+        name.append(lastName);
+        
+        return name.toString();
+    }
 
+    public void update(String firstName, String lastName, String email, String username, String password, Date dateOfBirth) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.dateOfBirth = dateOfBirth;
+    }
+    
+    @PreUpdate
+    public void preUpdate() {
+        modificationTime = new Date();
+    }
+    
+    @PrePersist
+    public void prePersist() {
+        Date now = new Date();
+        creationTime = now;
+        modificationTime = now;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
+
+    /**
+     * A Builder class used to create new Account objects.
+     */
+    public static class Builder {
+        Account built;
+
+        /**
+         * Creates a new Builder instance.
+         * @param firstName   The first name of the created Account object.
+         * @param lastName    The last name of the created Account object.
+         * @param email       The email of the created Account object.
+         * @param username    The username of the created Account object.
+         * @param password    The password of the created Account object.
+         * @param dateOfBirth The date of birth of the created Account object.
+         */
+        Builder(String firstName, String lastName, String email, String username, String password, Date dateOfBirth) {
+            built = new Account();
+            built.firstName = firstName;
+            built.lastName = lastName;
+            built.email = email;
+            built.username = username;
+            built.password = DigestUtils.md5Hex(password);
+            built.dateOfBirth = dateOfBirth;
+        }
+
+        /**
+         * Builds the new Account object.
+         * @return  The created Account object.
+         */
+        public Account build() {
+            return built;
+        }
+    }
+    
+	@Override
+	public boolean equals(Object obj) {
+		return EqualsBuilder.reflectionEquals(this, obj);
+	}
+
+	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
+	}
+
+	/**
+     * This setter method should only be used by unit tests.
+     * @param id
+     */
+	public /*protected*/ void setId(Long id) {
+        this.id = id;
+    }
+    
 	public Long getId() {
 		return id;
+	}
+
+	public Date getCreationTime() {
+		return creationTime;
+	}
+
+	public Date getModificationTime() {
+		return modificationTime;
 	}
 
 	public String getFirstName() {
@@ -127,8 +222,12 @@ public class Account {
 		return dateOfBirth;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setCreationTime(Date creationTime) {
+		this.creationTime = creationTime;
+	}
+
+	public void setModificationTime(Date modificationTime) {
+		this.modificationTime = modificationTime;
 	}
 
 	public void setFirstName(String firstName) {
@@ -161,21 +260,6 @@ public class Account {
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		return reflectionEquals(this, obj);
-	}
-
-	@Override
-	public int hashCode() {
-		return reflectionHashCode(this);
-	}
-
-	@Override
-	public String toString() {
-		return reflectionToString(this);
 	}
 
 }

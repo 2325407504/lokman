@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.aripd.account.domain.Account;
 import com.aripd.account.service.AccountService;
-import com.aripd.common.datatables.DataTablesRequest;
-import com.aripd.common.datatables.DataTablesResponse;
+import com.aripd.common.dto.DataTablesRequestDto;
+import com.aripd.common.dto.DataTablesResponseDto;
 import com.aripd.project.lokman.domain.FMS;
 import com.aripd.project.lokman.service.DriverService;
 import com.aripd.project.lokman.service.FMSService;
@@ -54,12 +54,12 @@ public class FMSController {
 	@Secured("ROLE_USER")
 	@RequestMapping(value = "/data", method = RequestMethod.POST)
 	public @ResponseBody
-	DataTablesResponse<Map<String, Object>> getData(@RequestBody DataTablesRequest dtReq,
+	DataTablesResponseDto<Map<String, Object>> getData(@RequestBody DataTablesRequestDto dtReq,
 			HttpServletResponse response) {
 		//return new DataTablesResponse<Object>();
 		
 		/**/
-		DataTablesResponse<Map<String, Object>> dtRes = new DataTablesResponse<Map<String, Object>>();
+		DataTablesResponseDto<Map<String, Object>> dtRes = new DataTablesResponseDto<Map<String, Object>>();
 		
 		List<FMS> fmsList = fmsService.getAll();
 		List<Map<String,Object>> listDataTable = new ArrayList<Map<String, Object>>();
