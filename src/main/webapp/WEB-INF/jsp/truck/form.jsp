@@ -5,7 +5,7 @@
 		<ul class="breadcrumb">
 		  <li><a href="#"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
 		  <li><a href="#"><spring:message code="Truck"></spring:message></a> <span class="divider">/</span></li>
-		  <li class="active"><spring:message code="button.new"></spring:message></li>
+		  <li class="active"><spring:message code="New entry"></spring:message></li>
 		</ul>
 		<c:url var="saveUrl" value="/truck/save" />
 		<form:form modelAttribute="truckAttribute" action="${saveUrl}" method="post">

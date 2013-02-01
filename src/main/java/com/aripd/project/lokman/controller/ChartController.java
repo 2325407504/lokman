@@ -32,9 +32,9 @@ public class ChartController {
 
 	protected static Logger logger = Logger.getLogger(ChartController.class);
 
-	@Secured("ROLE_USER")
-	@RequestMapping(value = "/report", method = RequestMethod.GET)
-	public String report(Model model) {
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(value = "/report1", method = RequestMethod.GET)
+	public String report1(Model model) {
 		Slice s1 = Slice.newSlice(15, Color.newColor("CACACA"), "Mac", "Mac");
 		Slice s2 = Slice.newSlice(50, Color.newColor("DF7417"), "Windows",
 				"Windows");
@@ -53,7 +53,7 @@ public class ChartController {
 		return "fms/report";
 	}
 
-	@Secured("ROLE_USER")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/report2", method = RequestMethod.GET)
 	public void report2(HttpServletResponse response) {
 		response.setContentType("image/png");
@@ -70,7 +70,7 @@ public class ChartController {
 		}
 	}
 
-	@Secured("ROLE_USER")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/report3", method = RequestMethod.GET)
 	public void report3(HttpServletResponse response) {
 		response.setContentType("image/png");
@@ -79,7 +79,7 @@ public class ChartController {
 		try {
 			dataset = new JDBCCategoryDataset(
 					"jdbc:mysql://localhost:3306/gelibolu",
-					"com.mysql.jdbc.Driver", "root", "1q2w3e4r");
+					"com.mysql.jdbc.Driver", "root", "");
 			dataset.executeQuery(query);
 		} catch (ClassNotFoundException ex) {
 			ex.printStackTrace();
@@ -87,17 +87,45 @@ public class ChartController {
 			ex.printStackTrace();
 		}
 		JFreeChart chart = ChartFactory.createBarChart3D(
-				"Database Driven JFreeChart", "publishedAt", "loadTon",
+				"Yükleme/Üretim Miktarları", "Tarih", "Üretim Miktarı",
 				dataset, PlotOrientation.VERTICAL, true, true, false);
 		try {
 			ChartUtilities.writeChartAsPNG(response.getOutputStream(), chart,
-					400, 300);
+					1170, 300);
 			response.getOutputStream().close();
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
 	}
 
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(value = "/report4", method = RequestMethod.GET)
+	public void report4(HttpServletResponse response) {
+		response.setContentType("image/png");
+		String query = "SELECT publishedAt, fuelLiter FROM fms ORDER BY publishedAt ASC";
+		JDBCCategoryDataset dataset = null;
+		try {
+			dataset = new JDBCCategoryDataset(
+					"jdbc:mysql://localhost:3306/gelibolu",
+					"com.mysql.jdbc.Driver", "root", "");
+			dataset.executeQuery(query);
+		} catch (ClassNotFoundException ex) {
+			ex.printStackTrace();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		JFreeChart chart = ChartFactory.createBarChart3D(
+				"Yakıt Tüketimi", "Tarih", "Tüketim Miktarı",
+				dataset, PlotOrientation.VERTICAL, true, true, false);
+		try {
+			ChartUtilities.writeChartAsPNG(response.getOutputStream(), chart,
+					1170, 300);
+			response.getOutputStream().close();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
+	
 	private JFreeChart createChart(PieDataset pdSet, String title) {
 		JFreeChart chart = ChartFactory.createPieChart3D(title, pdSet, true,
 				true, false);

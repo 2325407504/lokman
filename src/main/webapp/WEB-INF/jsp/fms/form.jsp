@@ -5,9 +5,8 @@
 		<ul class="breadcrumb">
 		  <li><a href="#"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
 		  <li><a href="#"><spring:message code="Field Management System"></spring:message></a> <span class="divider">/</span></li>
-		  <li class="active"><spring:message code="button.new"></spring:message></li>
+		  <li class="active"><spring:message code="New entry"></spring:message></li>
 		</ul>
-		<div id="datepicker"></div>
 		<c:url var="saveUrl" value="/fms/save" />
 		<form:form modelAttribute="fmsAttribute" action="${saveUrl}" method="post">
 			<form:errors path="*" cssClass="error-block" element="div" />
@@ -15,7 +14,7 @@
 			<fieldset>
 				<div class="form-row">
 					<form:label path="publishedAt"><spring:message code="Published at" text="Published at"></spring:message></form:label>
-					<span><form:input type="date" path="publishedAt" /></span>
+					<span><form:input type="text" path="publishedAt" /></span>
 					<form:errors cssClass="error-field" path="publishedAt" />
 				</div>       
 				<div class="form-row">

@@ -1,7 +1,5 @@
 package com.aripd.project.lokman.domain;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -62,10 +58,10 @@ public class FMS {
 	@Column(columnDefinition = "TEXT")
 	private String remark;
 
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@NotNull
-	private Date publishedAt;
+	@DateTimeFormat(style = "S-")
+	@Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+	@Column(columnDefinition = "DATE", nullable = false)
+	private DateTime publishedAt;
 
 	@DateTimeFormat(style = "SS")
 	@Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
@@ -133,7 +129,7 @@ public class FMS {
 		return remark;
 	}
 
-	public Date getPublishedAt() {
+	public DateTime getPublishedAt() {
 		return publishedAt;
 	}
 
@@ -193,7 +189,7 @@ public class FMS {
 		this.remark = remark;
 	}
 
-	public void setPublishedAt(Date publishedAt) {
+	public void setPublishedAt(DateTime publishedAt) {
 		this.publishedAt = publishedAt;
 	}
 

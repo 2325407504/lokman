@@ -12,6 +12,7 @@ import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +33,7 @@ import com.aripd.project.lokman.domain.FMS;
 import com.aripd.project.lokman.service.DriverService;
 import com.aripd.project.lokman.service.FMSService;
 import com.aripd.project.lokman.service.TruckService;
+import com.aripd.project.lokman.validator.FMSValidator;
 
 @Controller
 @RequestMapping("/fms")
@@ -39,6 +41,9 @@ public class FMSController {
 
 	protected static Logger logger = Logger.getLogger(FMSController.class);
 
+	@Autowired
+	private FMSValidator fmsValidator;
+	
 	@Resource(name = "fmsService")
 	private FMSService fmsService;
 
@@ -109,6 +114,12 @@ public class FMSController {
 	}
 
 	@Secured("ROLE_USER")
+	@RequestMapping(value = "/chart")
+	public String chartAction(Model model) {
+		return "fms/chart";
+	}
+
+	@Secured("ROLE_USER")
 	@RequestMapping(value = "/list")
 	public String listAction(Model model) {
 		if (logger.isDebugEnabled()) {
@@ -141,8 +152,9 @@ public class FMSController {
 	@Secured("ROLE_USER")
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveAction(
-			@ModelAttribute("fmsAttribute") @Valid FMS formData,
+			@ModelAttribute("fmsAttribute") /*@Valid*/ FMS formData,
 			BindingResult result, Model model, Principal principal) {
+		fmsValidator.validate(formData, result);
 		if (result.hasErrors()) {
 			logger.error(result);
 			model.addAttribute("trucks", truckService.getAll());

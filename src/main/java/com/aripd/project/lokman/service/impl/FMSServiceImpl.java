@@ -3,6 +3,7 @@ package com.aripd.project.lokman.service.impl;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,10 @@ public class FMSServiceImpl implements FMSService {
 		FMS fms = repository.findOne(id);
 		repository.delete(id);
 		return fms;
+	}
+
+	public List<FMS> findByPublishedAt(DateTime publishedAt) {
+		return repository.findByPublishedAt(publishedAt);
 	}
 
 }

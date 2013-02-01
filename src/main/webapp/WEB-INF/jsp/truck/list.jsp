@@ -28,12 +28,12 @@
 		</table>
 		
 		<c:if test="${empty truckAttribute}">
-		No records found. 
+		<spring:message code="No records found"></spring:message>
 		</c:if>
 		
 		<c:url var="addUrl" value="/truck/new" />
 		<div class="form-actions">
-			<a class="btn" href="${addUrl}"><spring:message code="button.new"></spring:message></a>
+			<a class="btn" href="${addUrl}"><spring:message code="New entry"></spring:message></a>
 		</div>
 
 	</div>

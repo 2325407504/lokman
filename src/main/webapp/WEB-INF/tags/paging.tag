@@ -10,7 +10,7 @@ Usage: <aripd:paging pagedListHolder="${pagedListHolder}" pagedLink="${pagedLink
 <link href="css/pagination.css" rel="stylesheet" type="text/css"/>
 <c:if test="${pagedListHolder.pageCount > 1}">
 <c:if test="${!pagedListHolder.firstPage}">
-<span class="pagingItem"><a href="<%= StringUtils.replace(pagedLink, "~", String.valueOf(pagedListHolder.getPage()-1)) %>"><</a></span>
+<span class="pagingItem"><a href="<%= StringUtils.replace(pagedLink, "~", String.valueOf(pagedListHolder.getPage()-1)) %>">&lsaquo;</a></span>
 </c:if>
 <c:if test="${pagedListHolder.firstLinkedPage > 0}">
 <span class="pagingItem"><a href="<%= StringUtils.replace(pagedLink, "~", "0") %>">1</a></span>
@@ -35,6 +35,6 @@ Usage: <aripd:paging pagedListHolder="${pagedListHolder}" pagedLink="${pagedLink
 <span class="pagingItem"><a href="<%= StringUtils.replace(pagedLink, "~", String.valueOf(pagedListHolder.getPageCount()-1)) %>">${pagedListHolder.pageCount}</a></span>
 </c:if>
 <c:if test="${!pagedListHolder.lastPage}">
-<span class="pagingItem"><a href="<%= StringUtils.replace(pagedLink, "~", String.valueOf(pagedListHolder.getPage()+1)) %>">></a></span>
+<span class="pagingItem"><a href="<%= StringUtils.replace(pagedLink, "~", String.valueOf(pagedListHolder.getPage()+1)) %>">&rsaquo;</a></span>
 </c:if>
 </c:if>

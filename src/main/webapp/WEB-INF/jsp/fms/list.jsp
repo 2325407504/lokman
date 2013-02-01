@@ -5,12 +5,12 @@
 		<div class="span12">
 			<ul class="breadcrumb">
 			  <li><a href="#"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
-			  <li class="active"><spring:message code="Field Management System"></spring:message></li>
+			  <li class="active"><spring:message code="Field Management System" text="Field Management System"></spring:message></li>
 			</ul>
 		</div>
 	</div>
 	<div class="row">
-		<div class="span8">
+		<div class="span12">
 		
 			<!-- table id="example">
 				<thead>
@@ -26,11 +26,11 @@
 			</table-->
 			
 			<table class="table">
-				<caption><spring:message code="Field Management System"></spring:message></caption>
+				<caption><spring:message code="Field Management System" text="Field Management System"></spring:message></caption>
 				<thead>
 					<tr>
 						<th><spring:message code="Id" text="Id"></spring:message></th>
-						<th><spring:message code="Datetime" text="Datetime"></spring:message></th>
+						<th><spring:message code="Date" text="Date"></spring:message></th>
 						<th><spring:message code="Truck" text="Truck"></spring:message></th>
 						<th><spring:message code="Driver" text="Driver"></spring:message></th>
 						<th><spring:message code="Starting km" text="Starting km"></spring:message></th>
@@ -63,22 +63,18 @@
 			</table>
 			
 			<c:if test="${empty fmsAttribute}">
-			No records found. 
+			<spring:message code="No records found"></spring:message>
 			</c:if>
 			
 			<c:url var="addUrl" value="/fms/new" />
 			<c:url var="exportUrl" value="/fms/export/xls" />
+			<c:url var="chartUrl" value="/fms/chart" />
 			<div class="form-actions">
-				<a class="btn" href="${addUrl}"><spring:message code="button.new"></spring:message></a>
+				<a class="btn" href="${addUrl}"><spring:message code="New entry"></spring:message></a>
 				<a class="btn" href="${exportUrl}"><spring:message code="Export"></spring:message></a>
+				<a class="btn" href="${chartUrl}"><spring:message code="Chart"></spring:message></a>
 			</div>
 			
-		</div>
-		<div class="span4">
-			<div>
-				<c:url var="chartUrl" value="/fms/report3" />
-				<img src="${chartUrl}" alt="">
-			</div>
 		</div>
 	</div>
 </div>
