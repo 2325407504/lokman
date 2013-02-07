@@ -8,14 +8,9 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,6 +21,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.aripd.common.entity.BaseEntity;
+
 /**
  * An entity class which contains the information of a single account.
  * 
@@ -33,17 +30,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  */
 @Entity
 @Table(name = "account")
-public class Account {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-
-	@Column(name = "creation_time", nullable = false)
-	private Date creationTime;
-
-	@Column(name = "modification_time", nullable = false)
-	private Date modificationTime;
+public class Account extends BaseEntity {
 
 	@Column(nullable = true, unique = false)
 	private String firstName;
@@ -113,18 +100,6 @@ public class Account {
         this.dateOfBirth = dateOfBirth;
     }
     
-    @PreUpdate
-    public void preUpdate() {
-        modificationTime = new Date();
-    }
-    
-    @PrePersist
-    public void prePersist() {
-        Date now = new Date();
-        creationTime = now;
-        modificationTime = now;
-    }
-
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
@@ -174,26 +149,6 @@ public class Account {
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
-	/**
-     * This setter method should only be used by unit tests.
-     * @param id
-     */
-	public /*protected*/ void setId(Long id) {
-        this.id = id;
-    }
-    
-	public Long getId() {
-		return id;
-	}
-
-	public Date getCreationTime() {
-		return creationTime;
-	}
-
-	public Date getModificationTime() {
-		return modificationTime;
-	}
-
 	public String getFirstName() {
 		return firstName;
 	}
@@ -220,14 +175,6 @@ public class Account {
 
 	public Date getDateOfBirth() {
 		return dateOfBirth;
-	}
-
-	public void setCreationTime(Date creationTime) {
-		this.creationTime = creationTime;
-	}
-
-	public void setModificationTime(Date modificationTime) {
-		this.modificationTime = modificationTime;
 	}
 
 	public void setFirstName(String firstName) {

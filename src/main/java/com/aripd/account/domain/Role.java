@@ -1,19 +1,14 @@
 package com.aripd.account.domain;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+
+import com.aripd.common.entity.BaseEntity;
 
 /**
  * An entity class which contains the information of a single role.
@@ -22,17 +17,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  */
 @Entity
 @Table(name = "role")
-public class Role {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-
-	@Column(name = "creation_time", nullable = false)
-	private Date creationTime;
-
-	@Column(name = "modification_time", nullable = false)
-	private Date modificationTime;
+public class Role extends BaseEntity {
 
 	@Column(nullable = false, unique = true)
 	private String code;
@@ -61,18 +46,6 @@ public class Role {
         this.name = name;
     }
     
-    @PreUpdate
-    public void preUpdate() {
-        modificationTime = new Date();
-    }
-    
-    @PrePersist
-    public void prePersist() {
-        Date now = new Date();
-        creationTime = now;
-        modificationTime = now;
-    }
-
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
@@ -114,40 +87,12 @@ public class Role {
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
-	/**
-     * This setter method should only be used by unit tests.
-     * @param id
-     */
-	public /*protected*/ void setId(Long id) {
-        this.id = id;
-    }
-
-	public Long getId() {
-		return id;
-	}
-
-	public Date getCreationTime() {
-		return creationTime;
-	}
-
-	public Date getModificationTime() {
-		return modificationTime;
-	}
-
 	public String getCode() {
 		return code;
 	}
 
 	public String getName() {
 		return name;
-	}
-
-	public void setCreationTime(Date creationTime) {
-		this.creationTime = creationTime;
-	}
-
-	public void setModificationTime(Date modificationTime) {
-		this.modificationTime = modificationTime;
 	}
 
 	public void setCode(String code) {

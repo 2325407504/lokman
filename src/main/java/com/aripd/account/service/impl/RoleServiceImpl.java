@@ -5,6 +5,9 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +29,8 @@ public class RoleServiceImpl implements RoleService {
 
 	protected static Logger logger = Logger.getLogger(RoleServiceImpl.class);
 
+	private static final int PAGE_SIZE = 5;
+	
 	@Resource
 	private RoleRepository repository;
 
@@ -41,6 +46,12 @@ public class RoleServiceImpl implements RoleService {
 	public Role getOne(Long id) {
 		logger.debug("Retrieving role based on his id");
 		return repository.findOne(id);
+	}
+
+	public Page<Role> getAll(Integer pageNumber) {
+		PageRequest pageRequest =
+	            new PageRequest(pageNumber - 1, PAGE_SIZE, Sort.Direction.ASC, "id");
+		return repository.findAll(pageRequest);
 	}
 
 	public List<Role> getAll() {

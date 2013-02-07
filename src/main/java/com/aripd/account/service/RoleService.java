@@ -2,6 +2,8 @@ package com.aripd.account.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.aripd.account.domain.Role;
 import com.aripd.account.dto.RoleDto;
 import com.aripd.account.exception.RoleNotFoundException;
@@ -15,6 +17,8 @@ public interface RoleService {
 
 	public Role getOne(Long id);
 
+	public Page<Role> getAll(Integer pageNumber);
+	
 	public List<Role> getAll();
 
 	public Role save(RoleDto formData) throws RoleNotFoundException;

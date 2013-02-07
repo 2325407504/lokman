@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +32,22 @@ public class RoleController {
 
 	@Resource(name = "roleValidator")
 	private RoleValidator roleValidator;
+
+	@RequestMapping(value = "/page-{pageNumber}", method = RequestMethod.GET)
+	public String getPages(@PathVariable Integer pageNumber, Model model) {
+	    Page<Role> page = roleService.getAll(pageNumber);
+	    
+	    int current = page.getNumber() + 1;
+	    int begin = Math.max(1, current - 5);
+	    int end = Math.min(begin + 10, page.getTotalPages());
+	    
+	    model.addAttribute("roleAttribute", page);
+	    model.addAttribute("beginIndex", begin);
+	    model.addAttribute("endIndex", end);
+	    model.addAttribute("currentIndex", current);
+	    
+	    return "role/page";
+	}
 
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
