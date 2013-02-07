@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:p="http://www.springframework.org/schema/p" 
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
@@ -12,40 +10,66 @@
 		http://www.springframework.org/schema/mvc 
 		http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
 	">
-			
-	<context:property-placeholder properties-ref="deployProperties" />
+
+	<context:property-placeholder
+		properties-ref="deployProperties" />
 
 	<!-- Activates various annotations to be detected in bean classes -->
 	<context:annotation-config />
 
-	<!-- Scans the classpath for annotated components that will be auto-registered as Spring beans.
-	 For example @Controller and @Service. Make sure to set the correct base-package -->
+	<!-- Scans the classpath for annotated components that will be auto-registered 
+		as Spring beans. For example @Controller and @Service. Make sure to set the 
+		correct base-package -->
 	<context:component-scan base-package="com.aripd" />
 
-	<!-- Configures the annotation-driven Spring MVC Controller programming model.
-	Note that, with Spring 3.1, this tag works in Servlet MVC only!  -->
-	<mvc:annotation-driven conversion-service="conversionService"/> 
-	
-	<mvc:resources mapping="/resources/**" location="/resources/" />
- 	
-	<!-- I18n and L10n -->
- 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource" p:basename="classpath:locale/messages"/>
-	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" p:defaultLocale="tr_TR"/>
- 	<mvc:interceptors>
-		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="language"/>
- 	</mvc:interceptors>
+	<!-- Configures the annotation-driven Spring MVC Controller programming 
+		model. Note that, with Spring 3.1, this tag works in Servlet MVC only! -->
+	<mvc:annotation-driven conversion-service="conversionService" />
 
- 	<!-- Imports logging configuration -->
-	<import resource="trace-context.xml"/>
-	
+	<mvc:interceptors>
+		<ref bean="localeChangeInterceptor"/>
+		<ref bean="themeChangeInterceptor"/>
+		<bean class="com.aripd.common.interceptor.TestInterceptor" />
+		<bean class="com.aripd.common.interceptor.ExecuteTimeInterceptor" />
+		<!-- bean class="com.aripd.common.interceptor.MaintenanceInterceptor">
+			<property name="maintenanceStartTime" value="1" />
+			<property name="maintenanceEndTime" value="2" />
+			<property name="maintenanceMapping" value="/SpringMVC/maintenance.htm" />
+		</bean-->
+	</mvc:interceptors>
+
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+
+	<!-- Application Message Bundle -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+		p:basename="classpath:locale/messages" />
+		
+	<!-- Locale Change Interceptor and Resolver definition -->
+	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="language" />
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver"
+		p:defaultLocale="tr_TR" />
+
+	<!-- Theme Change Interceptor and Resolver definition -->
+	<bean id="themeChangeInterceptor" class="org.springframework.web.servlet.theme.ThemeChangeInterceptor" p:paramName="theme" />
+	<bean id="themeResolver" class="org.springframework.web.servlet.theme.CookieThemeResolver">
+		<property name="defaultThemeName" value="default" />
+	</bean>
+
+	<!-- Imports logging configuration -->
+	<import resource="trace-context.xml" />
+
 	<!-- Imports datasource configuration -->
-	<import resource="spring-data.xml"/>
-	
-	<bean id="deployProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean"
-        p:location="/WEB-INF/spring.properties" />
-        
+	<import resource="spring-data.xml" />
+
+	<bean id="deployProperties"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean"
+		p:location="/WEB-INF/spring.properties" />
+
 	<!-- Converters -->
-	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+	<bean id="conversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="converters">
 			<list>
 				<bean class="com.aripd.project.lokman.converter.TruckConverter"></bean>
@@ -55,29 +79,35 @@
 	</bean>
 
 	<!-- RESTful -->
-	<bean id="xstreamMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller"/>
-	<bean id="xmlMessageConverter" class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
-		<constructor-arg ref="xstreamMarshaller"/>
-		<property name="supportedMediaTypes" value="application/xml"/>
+	<bean id="xstreamMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller" />
+	<bean id="xmlMessageConverter"
+		class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
+		<constructor-arg ref="xstreamMarshaller" />
+		<property name="supportedMediaTypes" value="application/xml" />
 	</bean>
-	<bean id="jsonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
-		<property name="prefixJson" value="false"/>
-		<property name="supportedMediaTypes" value="application/json"/>
+	<bean id="jsonHttpMessageConverter"
+		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+		<property name="prefixJson" value="false" />
+		<property name="supportedMediaTypes" value="application/json" />
 	</bean>
-	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="messageConverters">
 			<list>
-				<ref bean="xmlMessageConverter"/>
-				<ref bean="jsonHttpMessageConverter"/>
+				<ref bean="xmlMessageConverter" />
+				<ref bean="jsonHttpMessageConverter" />
 			</list>
 		</property>
 	</bean>
 
 	<!-- initializing data to realize some test -->
 	<beans>
-		<bean id="initDataService" init-method="init" class="com.aripd.common.service.InitDataService"/>
-		<bean init-method="init" class="com.aripd.project.lokman.service.TruckDataService"/>
-		<bean init-method="init" class="com.aripd.project.lokman.service.DriverDataService"/>
+		<bean id="initDataService" init-method="init"
+			class="com.aripd.common.service.InitDataService" />
+		<bean init-method="init"
+			class="com.aripd.project.lokman.service.TruckDataService" />
+		<bean init-method="init"
+			class="com.aripd.project.lokman.service.DriverDataService" />
 	</beans>
 
 </beans>
