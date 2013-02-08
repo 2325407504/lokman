@@ -27,7 +27,7 @@ import com.googlecode.charts4j.PieChart;
 import com.googlecode.charts4j.Slice;
 
 @Controller
-@RequestMapping("/fms")
+@RequestMapping("/trip")
 public class ChartController {
 
 	protected static Logger logger = Logger.getLogger(ChartController.class);
@@ -50,7 +50,7 @@ public class ChartController {
 
 		model.addAttribute("pieUrl", pieChart.toURLString());
 
-		return "fms/report";
+		return "trip/report";
 	}
 
 	@Secured("ROLE_ADMIN")
@@ -74,7 +74,7 @@ public class ChartController {
 	@RequestMapping(value = "/report3", method = RequestMethod.GET)
 	public void report3(HttpServletResponse response) {
 		response.setContentType("image/png");
-		String query = "SELECT publishedAt, loadTon FROM fms ORDER BY publishedAt ASC";
+		String query = "SELECT publishedAt, loadWeightInTonne FROM trip ORDER BY publishedAt ASC";
 		JDBCCategoryDataset dataset = null;
 		try {
 			dataset = new JDBCCategoryDataset(
@@ -98,34 +98,6 @@ public class ChartController {
 		}
 	}
 
-	@Secured("ROLE_ADMIN")
-	@RequestMapping(value = "/report4", method = RequestMethod.GET)
-	public void report4(HttpServletResponse response) {
-		response.setContentType("image/png");
-		String query = "SELECT publishedAt, fuelLiter FROM fms ORDER BY publishedAt ASC";
-		JDBCCategoryDataset dataset = null;
-		try {
-			dataset = new JDBCCategoryDataset(
-					"jdbc:mysql://localhost:3306/gelibolu",
-					"com.mysql.jdbc.Driver", "root", "");
-			dataset.executeQuery(query);
-		} catch (ClassNotFoundException ex) {
-			ex.printStackTrace();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-		JFreeChart chart = ChartFactory.createBarChart3D(
-				"Yakıt Tüketimi", "Tarih", "Tüketim Miktarı",
-				dataset, PlotOrientation.VERTICAL, true, true, false);
-		try {
-			ChartUtilities.writeChartAsPNG(response.getOutputStream(), chart,
-					1170, 300);
-			response.getOutputStream().close();
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-	}
-	
 	private JFreeChart createChart(PieDataset pdSet, String title) {
 		JFreeChart chart = ChartFactory.createPieChart3D(title, pdSet, true,
 				true, false);

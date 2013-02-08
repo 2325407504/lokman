@@ -32,6 +32,8 @@ import com.aripd.common.entity.BaseEntity;
 @Table(name = "account")
 public class Account extends BaseEntity {
 
+	private static final long serialVersionUID = 5410601898024568036L;
+
 	@Column(nullable = true, unique = false)
 	private String firstName;
 

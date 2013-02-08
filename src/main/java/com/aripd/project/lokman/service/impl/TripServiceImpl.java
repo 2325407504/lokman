@@ -9,29 +9,31 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aripd.project.lokman.domain.FMS;
-import com.aripd.project.lokman.repository.FMSRepository;
-import com.aripd.project.lokman.service.FMSService;
+import com.aripd.common.dto.PagingCriteria;
+import com.aripd.common.dto.ResultSet;
+import com.aripd.project.lokman.domain.Trip;
+import com.aripd.project.lokman.repository.TripRepository;
+import com.aripd.project.lokman.service.TripService;
 
-@Service("fmsService")
+@Service("tripService")
 @Transactional
-public class FMSServiceImpl implements FMSService {
+public class TripServiceImpl implements TripService {
 
-	protected static Logger logger = Logger.getLogger(FMSServiceImpl.class);
+	protected static Logger logger = Logger.getLogger(TripServiceImpl.class);
 	
 	@Autowired
-	private FMSRepository repository;
+	private TripRepository repository;
 	
-	public FMS getOne(Long id) {
+	public Trip getOne(Long id) {
 		logger.debug("Retrieving person based on his id");
 		return repository.findOne(id);
 	}
 
-	//public Page<FMS> findByNameStartsWith(@Param("name") String name, Pageable pageable) {
+	//public Page<Trip> findByNameStartsWith(@Param("name") String name, Pageable pageable) {
 		//return null;
 	//}
 	
-	public List<FMS> getAll() {
+	public List<Trip> getAll() {
 		logger.debug("Retrieving all persons");
 		return repository.findAll(sortByLastNameAsc());
 	}
@@ -47,18 +49,26 @@ public class FMSServiceImpl implements FMSService {
         return new Sort(Sort.Direction.DESC, "publishedAt");
     }
     
-	public FMS save(FMS fms) {
-		return repository.save(fms);
+	public Trip save(Trip trip) {
+		return repository.save(trip);
 	}
 	
-	public FMS delete(Long id) {
-		FMS fms = repository.findOne(id);
+	public Trip delete(Long id) {
+		Trip trip = repository.findOne(id);
 		repository.delete(id);
-		return fms;
+		return trip;
 	}
 
-	public List<FMS> findByPublishedAt(DateTime publishedAt) {
+	public List<Trip> findByPublishedAt(DateTime publishedAt) {
 		return repository.findByPublishedAt(publishedAt);
+	}
+
+	@Override
+	public ResultSet<Trip> getRecords(PagingCriteria criteria) {
+		List<Trip> rows = repository.findAll();
+		Long totalRecords = 10L;
+		Long totalDisplayRecords = 10L;
+		return new ResultSet<Trip>(rows, totalRecords, totalDisplayRecords);
 	}
 
 }

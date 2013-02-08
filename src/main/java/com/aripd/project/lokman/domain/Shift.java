@@ -3,29 +3,26 @@ package com.aripd.project.lokman.domain;
 import java.util.Calendar;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.aripd.account.domain.Account;
+import com.aripd.common.entity.BaseEntity;
 
 @Entity(name = "shift")
-public class Shift {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+public class Shift extends BaseEntity {
 
 	@ManyToOne
 	private Account account;
 	
 	@NotNull
 	@DateTimeFormat(iso = ISO.NONE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar startedAt;
 
 	@NotNull
@@ -42,14 +39,6 @@ public class Shift {
 	
 	@NotNull
 	private Integer productionInTonne;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public Account getAccount() {
 		return account;

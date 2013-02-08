@@ -24,7 +24,11 @@
 
 	<!-- Configures the annotation-driven Spring MVC Controller programming 
 		model. Note that, with Spring 3.1, this tag works in Servlet MVC only! -->
-	<mvc:annotation-driven conversion-service="conversionService" />
+	<mvc:annotation-driven conversion-service="conversionService" validator="validator">
+		<mvc:argument-resolvers>
+			<bean class="com.aripd.common.utils.TableParamArgumentResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
 
 	<mvc:interceptors>
 		<ref bean="localeChangeInterceptor"/>
@@ -39,6 +43,10 @@
 	</mvc:interceptors>
 
 	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<!-- mvc:resources mapping="/i/**" location="WEB-INF/images/" />
+	<mvc:resources mapping="/c/**" location="WEB-INF/css/" />
+	<mvc:resources mapping="/s/**" location="WEB-INF/scripts/" />
+	<mvc:resources mapping="/favicon.ico" location="WEB-INF/images/favicon.ico" /-->
 
 	<!-- Application Message Bundle -->
 	<bean id="messageSource"
@@ -76,6 +84,11 @@
 				<bean class="com.aripd.project.lokman.converter.DriverConverter"></bean>
 			</list>
 		</property>
+	</bean>
+	
+	<!-- Validator Message Source -->
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="validationMessageSource" ref="messageSource"/>
 	</bean>
 
 	<!-- RESTful -->

@@ -34,7 +34,8 @@ public class ExecuteTimeInterceptor extends HandlerInterceptorAdapter {
 		long executeTime = endTime - startTime;
 
 		// modified the exisitng modelAndView
-		modelAndView.addObject("executeTime", executeTime);
+		// TODO datatables kullanırken ve ajax da haa veriyor ve sayfa yüklenirken sorun çıkabiliyor
+		//modelAndView.addObject("executeTime", executeTime);
 
 		// log it
 		if (logger.isDebugEnabled()) {

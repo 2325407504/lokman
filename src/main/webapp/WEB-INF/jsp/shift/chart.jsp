@@ -5,14 +5,14 @@
 		<div class="span12">
 			<ul class="breadcrumb">
 			  <li><a href="#"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
-			  <li class="active"><spring:message code="Field Management System"></spring:message></li>
+			  <li class="active"><spring:message code="Trip Tracking"></spring:message></li>
 			</ul>
 		</div>
 	</div>
 	<div class="row">
 		<div class="span12">
 			<div>
-				<c:url var="chartUrl" value="/fms/report3" />
+				<c:url var="chartUrl" value="/trip/report3" />
 				<img src="${chartUrl}" alt="">
 			</div>
 		</div>

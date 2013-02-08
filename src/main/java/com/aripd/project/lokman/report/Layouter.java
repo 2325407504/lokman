@@ -64,11 +64,11 @@ public class Layouter {
 		HSSFRow rowTitle = worksheet.createRow((short) startRowIndex);
 		rowTitle.setHeight((short) 500);
 		HSSFCell cellTitle = rowTitle.createCell(startColIndex);
-		cellTitle.setCellValue("Sales Report");
+		cellTitle.setCellValue("Trip Report");
 		cellTitle.setCellStyle(cellStyleTitle);
 
 		// Create merged region for the report title
-		worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 5));
+		worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 3));
 
 		// Create date header
 		HSSFRow dateTitle = worksheet.createRow((short) startRowIndex + 1);
@@ -111,24 +111,16 @@ public class Layouter {
 		cell1.setCellStyle(headerCellStyle);
 
 		HSSFCell cell2 = rowHeader.createCell(startColIndex + 1);
-		cell2.setCellValue("Brand");
+		cell2.setCellValue("Driver");
 		cell2.setCellStyle(headerCellStyle);
 
 		HSSFCell cell3 = rowHeader.createCell(startColIndex + 2);
-		cell3.setCellValue("Model");
+		cell3.setCellValue("Truck");
 		cell3.setCellStyle(headerCellStyle);
 
 		HSSFCell cell4 = rowHeader.createCell(startColIndex + 3);
-		cell4.setCellValue("Max Power");
+		cell4.setCellValue("loadWeightInTonne");
 		cell4.setCellStyle(headerCellStyle);
-
-		HSSFCell cell5 = rowHeader.createCell(startColIndex + 4);
-		cell5.setCellValue("Price");
-		cell5.setCellStyle(headerCellStyle);
-
-		HSSFCell cell6 = rowHeader.createCell(startColIndex + 5);
-		cell6.setCellValue("Efficiency");
-		cell6.setCellStyle(headerCellStyle);
 	}
 
 }

@@ -8,7 +8,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.ss.usermodel.CellStyle;
 
-import com.aripd.project.lokman.domain.FMS;
+import com.aripd.project.lokman.domain.Trip;
 
 public class FillManager {
 
@@ -24,7 +24,7 @@ public class FillManager {
 	 *            the data source
 	 */
 	public static void fillReport(HSSFSheet worksheet, int startRowIndex,
-			int startColIndex, List<FMS> datasource) {
+			int startColIndex, List<Trip> datasource) {
 		// Row offset
 		startRowIndex += 2;
 
@@ -55,18 +55,9 @@ public class FillManager {
 
 			// Retrieve the maximum power value
 			HSSFCell cell4 = row.createCell(startColIndex + 3);
-			cell4.setCellValue(datasource.get(i - 2).getLoadTon());
+			cell4.setCellValue(datasource.get(i - 2).getLoadWeightInTonne());
 			cell4.setCellStyle(bodyCellStyle);
 
-			// Retrieve the price value
-			HSSFCell cell5 = row.createCell(startColIndex + 4);
-			cell5.setCellValue(datasource.get(i - 2).getFuelLiter());
-			cell5.setCellStyle(bodyCellStyle);
-
-			// Retrieve the efficiency value
-			HSSFCell cell6 = row.createCell(startColIndex + 5);
-			cell6.setCellValue(datasource.get(i - 2).getFuelTL());
-			cell6.setCellStyle(bodyCellStyle);
 		}
 	}
 

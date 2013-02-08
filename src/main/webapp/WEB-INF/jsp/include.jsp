@@ -4,3 +4,4 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="aripd" tagdir="/WEB-INF/tags"%> 
+<%@ taglib prefix="datatables" tagdir="/WEB-INF/tags/datatables" %>

@@ -5,17 +5,14 @@ import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-@Entity(name = "truck")
-public class Truck {
+import com.aripd.common.entity.BaseEntity;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+@Entity(name = "truck")
+public class Truck extends BaseEntity {
+
+	private static final long serialVersionUID = 6697864974198990570L;
 
 	private boolean active;
 
@@ -23,14 +20,10 @@ public class Truck {
 	private String plate;
 
 	@OneToMany(mappedBy = "truck")
-	private Collection<FMS> fmss;
+	private Collection<Trip> trips;
 
 	public Truck() {
-		fmss = new ArrayList<FMS>();
-	}
-
-	public Long getId() {
-		return id;
+		trips = new ArrayList<Trip>();
 	}
 
 	public boolean isActive() {
@@ -41,12 +34,8 @@ public class Truck {
 		return plate;
 	}
 
-	public Collection<FMS> getFmss() {
-		return fmss;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public Collection<Trip> getFmss() {
+		return trips;
 	}
 
 	public void setActive(boolean active) {
@@ -57,8 +46,8 @@ public class Truck {
 		this.plate = plate;
 	}
 
-	public void setFmss(Collection<FMS> fmss) {
-		this.fmss = fmss;
+	public void setFmss(Collection<Trip> trips) {
+		this.trips = trips;
 	}
 
 }

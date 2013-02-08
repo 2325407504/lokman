@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.aripd.project.lokman.service.ExportService;
 
 @Controller
-@RequestMapping("/fms")
+@RequestMapping("/trip")
 public class ExportController {
 
 	protected static Logger logger = Logger.getLogger(ExportController.class);

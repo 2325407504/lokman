@@ -30,6 +30,11 @@ public class InitDataService {
 	public void init() {
 		Role adminRole = getRole("ROLE_ADMIN");
 		Role userRole = getRole("ROLE_USER");
+		Role role1 = getRole("ROLE_L1");
+		Role role2 = getRole("ROLE_L2");
+		Role role3 = getRole("ROLE_L3");
+		Role role4 = getRole("ROLE_L4");
+		Role role5 = getRole("ROLE_L5");
 
 		/* A user with admin right */
 		Account admin1 = new Account();

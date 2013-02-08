@@ -4,17 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-@Entity(name = "driver")
-public class Driver {
+import com.aripd.common.entity.BaseEntity;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+@Entity(name = "driver")
+public class Driver extends BaseEntity {
 
 	private boolean active;
 
@@ -27,14 +22,10 @@ public class Driver {
 	}
 
 	@OneToMany(mappedBy = "driver")
-	private Collection<FMS> fmss;
+	private Collection<Trip> trips;
 
 	public Driver() {
-		fmss = new ArrayList<FMS>();
-	}
-
-	public Long getId() {
-		return id;
+		trips = new ArrayList<Trip>();
 	}
 
 	public boolean isActive() {
@@ -53,12 +44,8 @@ public class Driver {
 		return phonenumber;
 	}
 
-	public Collection<FMS> getFmss() {
-		return fmss;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public Collection<Trip> getFmss() {
+		return trips;
 	}
 
 	public void setActive(boolean active) {
@@ -77,8 +64,8 @@ public class Driver {
 		this.phonenumber = phonenumber;
 	}
 
-	public void setFmss(Collection<FMS> fmss) {
-		this.fmss = fmss;
+	public void setFmss(Collection<Trip> trips) {
+		this.trips = trips;
 	}
 
 }

@@ -11,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aripd.project.lokman.domain.FMS;
+import com.aripd.project.lokman.domain.Trip;
 import com.aripd.project.lokman.report.FillManager;
 import com.aripd.project.lokman.report.Layouter;
 import com.aripd.project.lokman.report.Writer;
-import com.aripd.project.lokman.repository.FMSRepository;
+import com.aripd.project.lokman.repository.TripRepository;
 
 /**
  * Service for processing Apache POI-based reports
@@ -27,7 +27,7 @@ public class ExportService {
 	protected static Logger logger = Logger.getLogger(ExportService.class);
 
 	@Autowired
-	private FMSRepository repository;
+	private TripRepository repository;
 
 	/**
 	 * Exports for Excel format. It does the following steps:
@@ -50,7 +50,7 @@ public class ExportService {
 		HSSFWorkbook workbook = new HSSFWorkbook();
 
 		// 2. Create new worksheet
-		HSSFSheet worksheet = workbook.createSheet("POI Worksheet");
+		HSSFSheet worksheet = workbook.createSheet("Trip Report");
 
 		// 3. Define starting indices for rows and columns
 		int startRowIndex = 0;
@@ -79,7 +79,7 @@ public class ExportService {
 	/**
 	 * Retrieves the datasource as as simple Java List
 	 */
-	private List<FMS> getDatasource() {
+	private List<Trip> getDatasource() {
 		return repository.findAll();
 	}
 

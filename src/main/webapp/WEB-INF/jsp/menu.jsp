@@ -12,7 +12,8 @@
 <c:url value="/account/list" var="account_list" />
 <c:url value="/truck/list" var="truck_list" />
 <c:url value="/driver/list" var="driver_list" />
-<c:url value="/fms/list" var="fms_list" />
+<c:url value="/trip/list" var="trip_tracking_list" />
+<c:url value="/freight_bill/list" var="freight_bill_list" />
 <c:url value="/shift/list" var="shift_list" />
 
 <div class="nav-collapse collapse">
@@ -27,7 +28,8 @@
 		<li><a href="${driver_list}"><spring:message code="Drivers"></spring:message></a></li>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_USER')">
-		<li><a href="${fms_list}"><spring:message code="Field Management System" text="Field Management System"></spring:message></a></li>
+		<li><a href="${trip_tracking_list}"><spring:message code="Trip Tracking" text="Trip Tracking"></spring:message></a></li>
+		<li><a href="${freight_bill_list}"><spring:message code="Freight Bill" text="Freight Bill"></spring:message></a></li>
 		<li><a href="${shift_list}"><spring:message code="Shifts" text="Shifts"></spring:message></a></li>
 		</sec:authorize>
 		<li><a href="${profile_show}"><spring:message code="Profile"></spring:message></a></li>
