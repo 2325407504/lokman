@@ -79,7 +79,7 @@ public class ChartController {
 		try {
 			dataset = new JDBCCategoryDataset(
 					"jdbc:mysql://localhost:3306/gelibolu",
-					"com.mysql.jdbc.Driver", "root", "");
+					"com.mysql.jdbc.Driver", "root", "root");
 			dataset.executeQuery(query);
 		} catch (ClassNotFoundException ex) {
 			ex.printStackTrace();

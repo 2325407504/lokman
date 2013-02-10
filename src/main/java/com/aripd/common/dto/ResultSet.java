@@ -7,10 +7,10 @@ import com.aripd.common.entity.BaseEntity;
 
 public final class ResultSet<T extends BaseEntity> {
 	private final List<T> rows;
-	private final Long totalDisplayRecords;
+	private final Integer totalDisplayRecords;
 	private final Long totalRecords;
 
-	public ResultSet(List<T> rows, Long totalRecords, Long totalDisplayRecords) {
+	public ResultSet(List<T> rows, Long totalRecords, Integer totalDisplayRecords) {
 		this.rows = rows;
 		this.totalRecords = totalRecords;
 		this.totalDisplayRecords = totalDisplayRecords;
@@ -20,7 +20,7 @@ public final class ResultSet<T extends BaseEntity> {
 		return Collections.unmodifiableList(rows);
 	}
 
-	public Long getTotalDisplayRecords() {
+	public Integer getTotalDisplayRecords() {
 		return totalDisplayRecords;
 	}
 

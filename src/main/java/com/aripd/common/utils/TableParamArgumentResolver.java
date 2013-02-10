@@ -16,6 +16,7 @@ import com.aripd.common.dto.TableParam;
 public class TableParamArgumentResolver implements WebArgumentResolver {
 
 	private static final String S_ECHO = "sEcho";
+	private static final String S_SEARCH = "sSearch";
 	private static final String I_DISPLAY_START = "iDisplayStart";
 	private static final String I_DISPLAY_LENGTH = "iDisplayLength";
 	private static final String I_SORTING_COLS = "iSortingCols";
@@ -34,6 +35,7 @@ public class TableParamArgumentResolver implements WebArgumentResolver {
 					.getNativeRequest();
 
 			String sEcho = httpRequest.getParameter(S_ECHO);
+			String sSearch = httpRequest.getParameter(S_SEARCH);
 			String sDisplayStart = httpRequest.getParameter(I_DISPLAY_START);
 			String sDisplayLength = httpRequest.getParameter(I_DISPLAY_LENGTH);
 			String sSortingCols = httpRequest.getParameter(I_SORTING_COLS);
@@ -54,7 +56,7 @@ public class TableParamArgumentResolver implements WebArgumentResolver {
 				sortFields.add(new SortField(sColName, sSortDir));
 			}
 
-			PagingCriteria pc = new PagingCriteria(iDisplayStart,
+			PagingCriteria pc = new PagingCriteria(sSearch, iDisplayStart,
 					iDisplayLength, iEcho, sortFields);
 
 			return pc;

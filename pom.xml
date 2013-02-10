@@ -5,7 +5,7 @@
 	<artifactId>gelibolu</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-security Maven Webapp</name>
+	<name>gelibolu Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -27,7 +27,7 @@
 
 		<commons-codec.version>1.7</commons-codec.version>
 
-		<querydsl.version>2.2.5</querydsl.version>
+		<querydsl.version>2.9.0</querydsl.version>
 		<slf4j.version>1.6.1</slf4j.version>
 		<log4j.version>1.2.14</log4j.version>
 
@@ -89,6 +89,13 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-oxm</artifactId>
+			<version>${spring.core.version}</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
 			<version>${spring.core.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
@@ -345,11 +352,6 @@
 		<!-- Utils -->
 		<!-- RESTful -->
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>2.1.2</version>
-		</dependency>
-		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.11</version>
@@ -400,6 +402,7 @@
 		<finalName>gelibolu</finalName>
 
 		<plugins>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -433,6 +436,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 		</plugins>
 
 	</build>

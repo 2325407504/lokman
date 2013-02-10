@@ -7,22 +7,19 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title></title>
 		
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
+		<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="/gelibolu/resources/dataTables/DT_bootstrap.css" />
+		<link rel="stylesheet" href="/gelibolu/resources/css/master.css" />
+
 		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
-		<script type="text/javascript" src="/gelibolu/resources/dt/jquery.dataTables.js"></script>
-		<script type="text/javascript" src="/gelibolu/resources/dt/DT_bootstrap.js"></script>
+		<script type="text/javascript" src="/gelibolu/resources/dataTables/jquery.dataTables.js"></script>
+		<script type="text/javascript" src="/gelibolu/resources/dataTables/DT_bootstrap.js"></script>
+		<script type="text/javascript" src="/gelibolu/resources/js/master.js"></script>
 		
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
-		<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
-		<link rel="stylesheet" href="/gelibolu/resources/dt/DT_bootstrap.css" />
-
-		<style>
-		body { padding-top: 60px; }
-		.error { color: red; }
-		</style>
-
 	</head>
 	<body>
 	<div class="navbar navbar-inverse navbar-fixed-top">
