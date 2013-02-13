@@ -39,7 +39,8 @@
 		<filter-name>springSecurityFilterChain</filter-name>
 		<servlet-name>spring</servlet-name>
 	</filter-mapping>
-	
+
+	<!-- Spring Context Configuration' s Path definition -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
@@ -47,11 +48,23 @@
 		/WEB-INF/applicationContext.xml
 		</param-value>
 	</context-param>
-	
+
+	<!-- The Bootstrap listener to start up and shut down Spring's root WebApplicationContext. 
+		It is registered to Servlet Container -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
+	<listener>
+		<listener-class>
+			org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+
+	<!-- Project Stage Level -->
+	<context-param>
+		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-value>Development</param-value>
+	</context-param>
+
 	<servlet>
 		<servlet-name>spring</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -60,5 +73,17 @@
 		<servlet-name>spring</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
+
+	<!-- JSF Servlet is defined to container -->
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.jsf</url-pattern>
+		<url-pattern>*.faces</url-pattern>
+	</servlet-mapping>
+
 </web-app>

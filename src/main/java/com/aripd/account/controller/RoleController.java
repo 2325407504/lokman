@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.aripd.account.domain.Role;
-import com.aripd.account.dto.RoleDto;
-import com.aripd.account.exception.RoleNotFoundException;
 import com.aripd.account.service.RoleService;
 import com.aripd.account.validator.RoleValidator;
 
@@ -49,7 +47,7 @@ public class RoleController {
 	    return "role/page";
 	}
 
-	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_SUPERADMIN")
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String listAction(Model model) {
 		if (logger.isDebugEnabled()) {
@@ -59,7 +57,7 @@ public class RoleController {
 		return "role/list";
 	}
 
-	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_SUPERADMIN")
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String newAction(Model model) {
 		logger.debug("Received request to show add new record");
@@ -67,7 +65,7 @@ public class RoleController {
 		return "role/form";
 	}
 
-	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_SUPERADMIN")
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editAction(@PathVariable Long id, Model model) {
 		logger.debug("Received request to show edit existing record");
@@ -75,22 +73,22 @@ public class RoleController {
 		return "role/form";
 	}
 
-	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_SUPERADMIN")
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveAction(@ModelAttribute("roleAttribute") @Valid RoleDto formData, BindingResult result) throws RoleNotFoundException {
+	public String saveAction(@ModelAttribute("roleAttribute") @Valid Role role, BindingResult result) {
 		if (result.hasErrors()) {
 			logger.error(result);
 			return "/role/form";
 		}
 		
 		logger.debug("Received request to save existing record");
-		roleService.save(formData);
+		roleService.save(role);
 		return "redirect:/role/list";
 	}
 
-	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_SUPERADMIN")
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-	public String delete(@RequestParam(value = "id", required = true) Long id) throws RoleNotFoundException {
+	public String delete(@RequestParam(value = "id", required = true) Long id) {
 		logger.debug("Received request to delete existing record");
 		roleService.delete(id);
 		return "redirect:/role/list";

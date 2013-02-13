@@ -8,8 +8,7 @@ import com.aripd.common.entity.BaseEntity;
 
 public class ControllerUtils {
 
-	public static <T extends BaseEntity> WebResultSet<T> getWebResultSet(
-			PagingCriteria pc, ResultSet<T> rs) {
+	public static <T extends BaseEntity> WebResultSet<T> getWebResultSet(PagingCriteria pc, ResultSet<T> rs) {
 		return new DataTablesResultSet<T>(pc, rs);
 	}
 

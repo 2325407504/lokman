@@ -2,7 +2,6 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
  
 <%@attribute name="path" required="true" type="java.lang.String"%>
 <%@attribute name="cssClass" required="false" type="java.lang.String"%>
@@ -19,35 +18,33 @@
   <c:set var="icon" value='<i class="${icon}"></i>'/>
 </c:if>
  
-<spring:bind path="${path}">
-  <div class="control-group ${status.error ? 'error' : '' }">
-    <label class="control-label" for="${path}">
-      ${label}
-      <c:if test="${required}">
-        <span class="required"> *</span>
-      </c:if>
-    </label>
-    <div class="controls">
-      <c:choose>
-        <c:when test="${prepend}">
-          <div class="input-prepend">
-            <span class="add-on">${icon}</span>
-            <form:input path="${path}" cssClass="${empty cssClass ? 'input-xlarge' : cssClass}"/>
-          </div>
-        </c:when>
-        <c:when test="${append}">
-          <div class="input-append">
-            <form:input path="${path}" cssClass="${empty cssClass ? 'input-xlarge' : cssClass}"/>
-            <span class="add-on">${icon}</span>
-          </div>
-        </c:when>
-        <c:otherwise>
+<div class="control-group ${status.error ? 'error' : '' }">
+  <label class="control-label" for="${path}">
+    ${label}
+    <c:if test="${required}">
+      <span class="required"> *</span>
+    </c:if>
+  </label>
+  <div class="controls">
+    <c:choose>
+      <c:when test="${prepend}">
+        <div class="input-prepend">
+          <span class="add-on">${icon}</span>
           <form:input path="${path}" cssClass="${empty cssClass ? 'input-xlarge' : cssClass}"/>
-        </c:otherwise>
-      </c:choose>
-      <c:if test="${status.error}">
-          <span class="help-inline">${status.errorMessage}</span>
-      </c:if>
-    </div>
+        </div>
+      </c:when>
+      <c:when test="${append}">
+        <div class="input-append">
+          <form:input path="${path}" cssClass="${empty cssClass ? 'input-xlarge' : cssClass}"/>
+          <span class="add-on">${icon}</span>
+        </div>
+      </c:when>
+      <c:otherwise>
+        <form:input path="${path}" cssClass="${empty cssClass ? 'input-xlarge' : cssClass}"/>
+      </c:otherwise>
+    </c:choose>
+    <c:if test="${status.error}">
+        <span class="help-inline">${status.errorMessage}</span>
+    </c:if>
   </div>
-</spring:bind>
+</div>

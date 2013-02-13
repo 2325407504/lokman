@@ -13,12 +13,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.aripd.account.domain.Account;
-import com.aripd.account.dto.AccountDto;
-import com.aripd.account.exception.AccountNotFoundException;
 import com.aripd.account.service.AccountService;
 import com.aripd.account.service.RoleService;
+import com.aripd.common.dto.PagingCriteria;
+import com.aripd.common.dto.ResultSet;
+import com.aripd.common.dto.TableParam;
+import com.aripd.common.dto.WebResultSet;
+import com.aripd.common.utils.ControllerUtils;
 
 @Controller
 @RequestMapping("/account")
@@ -32,7 +36,15 @@ public class AccountController {
 	@Resource(name="roleService")
 	private RoleService roleService;
 	
-	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_SUPERADMIN")
+	@RequestMapping(value = "/get", method = RequestMethod.GET)
+	public @ResponseBody
+	WebResultSet<Account> getDataTables(@TableParam PagingCriteria criteria) {
+		ResultSet<Account> resultset = this.accountService.getRecords(criteria);
+		return ControllerUtils.getWebResultSet(criteria, resultset);
+	}
+
+	@Secured("ROLE_SUPERADMIN")
 	@RequestMapping(value="/list")
 	public String listAction(Model model) {
 		logger.debug("Received request to show records");
@@ -40,15 +52,15 @@ public class AccountController {
 		return "account/list";
 	}
 
-	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_SUPERADMIN")
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
     public String showAction(@PathVariable Long id, Model model) {
-		logger.debug("Received request to show record");
-    	model.addAttribute("account", accountService.getOne(id));
+		logger.debug("Received request to show existing record");
+    	model.addAttribute("accountAttribute", accountService.getOne(id));
     	return "account/show";
 	}
 	
-	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_SUPERADMIN")
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String newAction(Model model) {
 		logger.debug("Received request to show add new record");
@@ -56,7 +68,7 @@ public class AccountController {
 		return "account/form";
 	}
 
-	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_SUPERADMIN")
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
 		logger.debug("Received request to show edit existing record");
@@ -64,22 +76,22 @@ public class AccountController {
     	return "account/form";
 	}
 
-	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_SUPERADMIN")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAction(@ModelAttribute("accountAttribute") @Valid AccountDto formData, BindingResult result) throws AccountNotFoundException {
+    public String saveAction(@ModelAttribute("accountAttribute") @Valid Account account, BindingResult result) {
 		if (result.hasErrors()) {
 			logger.error(result);
 			return "/account/form";
 		}
 		
 		logger.debug("Received request to save existing record");
-		accountService.save(formData);
+		accountService.save(account);
 		return "redirect:/account/list";
 	}
 	
-	@Secured("ROLE_ADMIN")
+	@Secured("ROLE_SUPERADMIN")
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-	public String delete(@RequestParam(value = "id", required = true) Long id) throws AccountNotFoundException {
+	public String delete(@RequestParam(value = "id", required = true) Long id) {
 		logger.debug("Received request to delete existing record");
 		accountService.delete(id);
 		return "redirect:/account/list";

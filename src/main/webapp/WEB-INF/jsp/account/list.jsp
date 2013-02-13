@@ -1,48 +1,21 @@
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
 
-<div class="container">
-	<div class="span12">
-		<ul class="breadcrumb">
-		  <li><a href="#"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
-		  <li class="active"><spring:message code="label.users"></spring:message></li>
-		</ul>
-		<table class="table">
-			<caption><spring:message code="label.users"></spring:message></caption>
-			<thead>
-				<tr>
-					<th><spring:message code="Username"></spring:message></th>
-					<th><spring:message code="FirstName"></spring:message></th>
-					<th><spring:message code="LastName"></spring:message></th>
-					<th><spring:message code="E-mail Address"></spring:message></th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${accountAttribute}" var="account">
-					<c:url var="editUrl" value="/account/edit/${account.id}" />
-					<tr>
-						<td><c:out value="${account.username}" /></td>
-						<td><c:out value="${account.firstName}" /></td>
-						<td><c:out value="${account.lastName}" /></td>
-						<td><c:out value="${account.email}" /></td>
-						<td>
-							<a class="btn btn-mini" href="${editUrl}">Edit</a>
-						</td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-		
-		<c:if test="${empty accountAttribute}">
-		<spring:message code="No records found"></spring:message>
-		</c:if>
+<spring:url value="/" var="homeUrl" />
 
-		<c:url var="addUrl" value="/account/new"/>
-		<div class="form-actions">
-			<a class="btn" href="${addUrl}"><spring:message code="New entry"></spring:message></a>
-		</div>
+<ul class="breadcrumb">
+  <li><a href="${homeUrl}"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
+  <li class="active"><spring:message code="Accounts"></spring:message></li>
+	<spring:url var="addUrl" value="/account/new" />
+	<li class="pull-right">
+		<a class="btn btn-mini" href="${addUrl}"><spring:message code="New Entry"></spring:message></a>
+	</li>
+</ul>
 
-	</div>
-</div>
+<aripd:datatables datasource="/account/get" id="accounts" dataUrlShow="/account/show" dataUrlEdit="/account/edit">
+	<aripd:column label="Action" field="id"/>
+	<aripd:column label="Username" field="username"/>
+	<aripd:column label="Fullname" field="name"/>
+	<aripd:column label="E-mail Address" field="email"/>
+</aripd:datatables>
 
 <%@ include file="/WEB-INF/jsp/footer.jsp" %>

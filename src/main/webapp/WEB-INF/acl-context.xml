@@ -47,11 +47,11 @@
         <constructor-arg ref="auditLogger"/>
     </bean>
     
-    <!-- A MySQL datasource with pooling capabalities for the ACL module -->
+    <!-- A MySQL datasource with pooling capabilities for the ACL module -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		 destroy-method="close"
 		 p:driverClass="com.mysql.jdbc.Driver"
-		 p:jdbcUrl="jdbc:mysql://localhost:3306/test"
+		 p:jdbcUrl="jdbc:mysql://localhost:3306/acl"
 		 p:user="root"
 		 p:password="root"
 		 p:acquireIncrement="5"

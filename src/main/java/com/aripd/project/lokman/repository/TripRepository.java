@@ -15,6 +15,4 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
 	
 	List<Trip> findByTruck(Truck truck);
 	
-	List<Trip> findByPublishedAt(DateTime publishedAt);
-
 }

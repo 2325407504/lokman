@@ -6,12 +6,12 @@ import com.aripd.project.lokman.domain.Driver;
 
 public interface DriverService {
 
-	public Driver getOne(Long id);
+	Driver getOne(Long id);
 	
-	public List<Driver> getAll();
+	List<Driver> getAll();
 	
-	public Driver save(Driver driver);
+	Driver save(Driver driver);
 	
-	public Driver delete(Long id);
+	Driver delete(Long id);
 	
 }

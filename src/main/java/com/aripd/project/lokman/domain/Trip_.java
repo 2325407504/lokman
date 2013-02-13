@@ -12,5 +12,7 @@ import com.aripd.common.entity.BaseEntity_;
  */
 @StaticMetamodel(Trip.class)
 public class Trip_ extends BaseEntity_ {
+	
 	public static volatile SingularAttribute<Trip, String> remark;
+	
 }

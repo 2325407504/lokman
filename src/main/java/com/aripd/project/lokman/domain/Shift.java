@@ -17,6 +17,8 @@ import com.aripd.common.entity.BaseEntity;
 @Entity(name = "shift")
 public class Shift extends BaseEntity {
 
+	private static final long serialVersionUID = 9033830210110272840L;
+
 	@ManyToOne
 	private Account account;
 	
@@ -94,6 +96,10 @@ public class Shift extends BaseEntity {
 
 	public void setProductionInTonne(Integer productionInTonne) {
 		this.productionInTonne = productionInTonne;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
 }

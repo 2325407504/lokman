@@ -1,0 +1,18 @@
+(function($) {
+	$.timepicker.regional['en'] = {
+		timeOnlyTitle: 'Choose Time',
+		timeText: 'Time',
+		hourText: 'Hour',
+		minuteText: 'Minute',
+		secondText: 'Second',
+		millisecText: 'Millisecond',
+		timezoneText: 'Time Zone',
+		currentText: 'Now',
+		closeText: 'Done',
+		timeFormat: 'HH:mm',
+		amNames: ['AM', 'A'],
+		pmNames: ['PM', 'P'],
+		isRTL: false
+	};
+	$.timepicker.setDefaults($.timepicker.regional['en']);
+})(jQuery);

@@ -1,9 +1,17 @@
 package com.aripd.account.service.impl;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.apache.log4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,10 +20,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aripd.account.domain.Account;
-import com.aripd.account.dto.AccountDto;
-import com.aripd.account.exception.AccountNotFoundException;
 import com.aripd.account.repository.AccountRepository;
 import com.aripd.account.service.AccountService;
+import com.aripd.common.dto.PagingCriteria;
+import com.aripd.common.dto.ResultSet;
+import com.aripd.common.dto.SortField;
+import com.aripd.account.domain.Account_;
 
 /**
  * This implementation of the AccountService interface communicates with the
@@ -29,17 +39,11 @@ public class AccountServiceImpl implements AccountService {
 
 	protected static Logger logger = Logger.getLogger(AccountServiceImpl.class);
 
+	@PersistenceContext
+    private EntityManager em;
+	
 	@Resource
 	private AccountRepository repository;
-
-	/**
-	 * This setter method should be used only by unit tests.
-	 * 
-	 * @param repository
-	 */
-	protected void setAccountRepository(AccountRepository repository) {
-		this.repository = repository;
-	}
 
 	public Account getOne(Long id) {
 		logger.debug("Retrieving account based on id");
@@ -77,40 +81,12 @@ public class AccountServiceImpl implements AccountService {
 		return repository.findAll();
 	}
 
-	public Account save(AccountDto formData) throws AccountNotFoundException {
-		if (formData.getId() == null)
-			return this.create(formData);
-		else
-			return this.update(formData);
+	public Account save(Account formData) {
+		return repository.save(formData);
 	}
 
-	@Transactional
-	@Override
-	public Account create(AccountDto created) {
-		logger.debug("Creating a new account with information: " + created);
-
-		Account account = Account.getBuilder(created.getFirstName(),
-				created.getLastName(), created.getEmail(),
-				created.getUsername(), created.getPassword(),
-				created.getDateOfBirth()).build();
-
-		return repository.save(account);
-	}
-
-	@Transactional(rollbackFor = AccountNotFoundException.class)
-	@Override
-	public Account delete(Long id) throws AccountNotFoundException {
-		logger.debug("Deleting account with id: " + id);
-
-		Account deleted = repository.findOne(id);
-
-		if (deleted == null) {
-			logger.debug("No accoutn found with id: " + id);
-			throw new AccountNotFoundException();
-		}
-
-		repository.delete(deleted);
-		return deleted;
+	public void delete(Long id) {
+		repository.delete(id);
 	}
 
 	@Transactional(readOnly = true)
@@ -122,26 +98,49 @@ public class AccountServiceImpl implements AccountService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public Account findById(Long id) {
-		logger.debug("Finding account by id: " + id);
-		return repository.findOne(id);
-	}
+	public ResultSet<Account> getRecords(PagingCriteria criteria) {
+		Integer displaySize = criteria.getDisplaySize();
+		Integer displayStart = criteria.getDisplayStart();
+		Integer pageNumber = criteria.getPageNumber();
+		String search = criteria.getSearch();
+		List<SortField> sortFields = criteria.getSortFields();
 
-	@Transactional(rollbackFor = AccountNotFoundException.class)
-	@Override
-	public Account update(AccountDto updated) throws AccountNotFoundException {
-		logger.debug("Updating account with information: " + updated);
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Account> cq = cb.createQuery(Account.class);
+		Root<Account> root = cq.from(Account.class);
 
-		Account account = repository.findOne(updated.getId());
-
-		if (account == null) {
-			logger.debug("No account found with id: " + updated.getId());
-			throw new AccountNotFoundException();
+		// Filtering and Searching
+		List<Predicate> predicateList = new ArrayList<Predicate>();
+		
+		if ((search != null) && (!(search.isEmpty()))) {
+			//Predicate predicate = cb.equal(account.get(Account_.remark), search);
+			Predicate predicate = cb.like(root.get(Account_.username), "%"+search+"%");
+			predicateList.add(predicate);
 		}
+		
+		Predicate[] predicates = new Predicate[predicateList.size()];
+		predicateList.toArray(predicates);
+		cq.where(predicates);
 
-		account.update(updated.getFirstName(), updated.getLastName(), updated.getEmail(), updated.getUsername(), updated.getPassword(), updated.getDateOfBirth());
+		// Sorting
+		for (SortField sortField : sortFields) {
+			String field = sortField.getField();
+			String direction = sortField.getDirection().getDirection();
+			if (direction.equalsIgnoreCase("asc"))
+				cq.orderBy(cb.asc(root.get(field)));
+			else if (direction.equalsIgnoreCase("desc"))
+				cq.orderBy(cb.desc(root.get(field)));
+		}
+		
+		Long totalRecords = (long) em.createQuery(cq).getResultList().size();
 
-		return account;
+		// Pagination
+		TypedQuery<Account> typedQuery = em.createQuery(cq);
+		typedQuery = typedQuery.setFirstResult(displayStart);
+		typedQuery = typedQuery.setMaxResults(displaySize);
+		List<Account> resultList = typedQuery.getResultList();
+
+		return new ResultSet<Account>(resultList, totalRecords, displaySize);
 	}
 
 }

@@ -8,8 +8,8 @@ public final class PagingCriteria {
 	private final String search;
 	private final Integer displayStart;
 	private final Integer displaySize;
-	private final List<SortField> sortFields;
 	private final Integer pageNumber;
+	private final List<SortField> sortFields;
 
 	public PagingCriteria(String search, Integer displayStart, Integer displaySize,
 			Integer pageNumber, List<SortField> sortFields) {

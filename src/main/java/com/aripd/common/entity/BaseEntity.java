@@ -68,12 +68,4 @@ public abstract class BaseEntity implements Serializable {
 		return id;
 	}
 
-	/**
-     * This setter method should only be used by unit tests.
-     * @param id
-     */
-	public/*protected*/ void setId(Long id) {
-		this.id = id;
-	}
-
 }

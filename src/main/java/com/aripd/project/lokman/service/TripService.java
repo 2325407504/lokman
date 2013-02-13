@@ -2,7 +2,7 @@ package com.aripd.project.lokman.service;
 
 import java.util.List;
 
-import org.joda.time.DateTime;
+import javax.servlet.http.HttpServletResponse;
 
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
@@ -10,16 +10,18 @@ import com.aripd.project.lokman.domain.Trip;
 
 public interface TripService {
 
-	public Trip getOne(Long id);
-	
-	public List<Trip> getAll();
-	
-	public Trip save(Trip trip);
-	
-	public Trip delete(Long id);
+	Trip getOne(Long id);
 
-	public List<Trip> findByPublishedAt(DateTime publishedAt);
+	List<Trip> getAll();
 
-	public ResultSet<Trip> getRecords(PagingCriteria criteria);
+	Trip save(Trip trip);
+	
+	void saveOrUpdate(Trip trip);
+
+	Trip delete(Long id);
+
+	ResultSet<Trip> getRecords(PagingCriteria criteria);
+	
+	void exportXLS(HttpServletResponse response);
 
 }

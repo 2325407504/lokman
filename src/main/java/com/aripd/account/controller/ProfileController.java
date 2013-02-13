@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.aripd.account.domain.Account;
-import com.aripd.account.dto.AccountDto;
-import com.aripd.account.exception.AccountNotFoundException;
 import com.aripd.account.service.AccountService;
 import com.aripd.account.service.RoleService;
 
@@ -52,14 +50,14 @@ public class ProfileController {
 	}
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAction(@ModelAttribute("profileAttribute") @Valid AccountDto formData, BindingResult result) throws AccountNotFoundException {
+    public String saveAction(@ModelAttribute("profileAttribute") @Valid Account account, BindingResult result) {
 		if (result.hasErrors()) {
 			logger.error(result);
 			return "/profile/form";
 		}
 		
 		logger.debug("Received request to save existing record");
-		accountService.save(formData);
+		accountService.save(account);
 		return "redirect:/profile/list";
 	}
 	

@@ -2,6 +2,24 @@ body {
 	padding-top: 60px;
 }
 
+footer {
+	background-color: rgb(245, 245, 245);
+	padding: 7px;
+	margin: 7px;
+}
+
 .error {
 	color: red;
+}
+
+.date_range_filter {
+	width: 2.5em;
+}
+
+.text_filter {
+	width: 5em;
+}
+
+.ui-widget {
+	font-size: 12px !important;
 }

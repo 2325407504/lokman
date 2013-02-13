@@ -1,0 +1,104 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Welcome to OTV_JSF_Spring_Hibernate_Project</title>
+</h:head>
+<h:body>
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north" size="30">
+			<h:outputText value="Company" />
+		</p:layoutUnit>
+		<p:layoutUnit position="south" size="30">
+			<h:outputText value="Copyright" />
+		</p:layoutUnit>
+		<p:layoutUnit position="west" size="300">
+			<p:menu>
+				<p:submenu label="Mail">
+					<p:menuitem value="Gmail" url="http://www.google.com" />
+					<p:menuitem value="Hotmail" url="http://www.hotmail.com" />
+					<p:menuitem value="Yahoo Mail" url="http://mail.yahoo.com" />
+				</p:submenu>
+				<p:submenu label="Videos">
+					<p:menuitem value="Youtube" url="http://www.youtube.com" />
+					<p:menuitem value="Break" url="http://www.break.com" />
+					<p:menuitem value="Metacafe" url="http://www.metacafe.com" />
+				</p:submenu>
+				<p:submenu label="Social Networks">
+					<p:menuitem value="Facebook" url="http://www.facebook.com" />
+					<p:menuitem value="MySpace" url="http://www.myspace.com" />
+				</p:submenu>
+			</p:menu>
+		</p:layoutUnit>
+		<p:layoutUnit position="center">
+
+			<h:form id="form">
+
+				<p:dataTable var="trip" value="#{tripMB.lazyModel}" paginator="true"
+					rows="10"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+					rowsPerPageTemplate="5,10,15" selectionMode="single"
+					selection="#{tripMB.selectedTrip}" id="tripTable" lazy="true">
+
+					<p:ajax event="rowSelect" listener="#{tripMB.onRowSelect}"
+						update=":form:display" oncomplete="tripDialog.show()" />
+
+					<p:column headerText="driver" sortBy="#{trip.driver.fullname}"
+						filterBy="#{trip.driver.fullname}">
+						<h:outputText value="#{trip.driver.fullname}" />
+					</p:column>
+
+					<p:column headerText="truck" sortBy="#{trip.truck.plate}"
+						filterBy="#{trip.truck.plate}">
+						<h:outputText value="#{trip.truck.plate}" />
+					</p:column>
+
+					<p:column headerText="startingPoint" sortBy="#{trip.startingPoint}"
+						filterBy="#{trip.startingPoint}">
+						<h:outputText value="#{trip.startingPoint}" />
+					</p:column>
+
+					<p:column headerText="remark" sortBy="#{trip.remark}"
+						filterBy="#{trip.remark}">
+						<h:outputText value="#{trip.remark}" />
+					</p:column>
+
+					<p:column headerText="loadWeightInTonne"
+						sortBy="#{trip.loadWeightInTonne}"
+						filterBy="#{trip.loadWeightInTonne}">
+						<h:outputText value="#{trip.loadWeightInTonne}" />
+					</p:column>
+				</p:dataTable>
+
+				<p:dialog header="Trip Detail" widgetVar="tripDialog"
+					resizable="false" showEffect="explode" hideEffect="explode">
+
+					<h:panelGrid id="display" columns="2" cellpadding="4">
+						<h:outputText value="driver" />
+						<h:outputText value="#{tripMB.selectedTrip.driver.fullname}"
+							style="font-weight:bold" />
+
+						<h:outputText value="truck" />
+						<h:outputText value="#{tripMB.selectedTrip.truck.plate}"
+							style="font-weight:bold" />
+
+						<h:outputText value="startingPoint" />
+						<h:outputText value="#{tripMB.selectedTrip.startingPoint}"
+							style="font-weight:bold" />
+
+						<h:outputText value="remark" />
+						<h:outputText value="#{tripMB.selectedTrip.remark}"
+							style="font-weight:bold" />
+
+						<h:outputText value="loadWeightInTonne" />
+						<h:outputText value="#{tripMB.selectedTrip.loadWeightInTonne}"
+							style="font-weight:bold" />
+					</h:panelGrid>
+				</p:dialog>
+
+			</h:form>
+￼		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>

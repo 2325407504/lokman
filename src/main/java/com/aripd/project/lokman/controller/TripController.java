@@ -3,6 +3,7 @@ package com.aripd.project.lokman.controller;
 import java.security.Principal;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,9 +60,9 @@ public class TripController {
 
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	public @ResponseBody
-	WebResultSet<Trip> getCustomers(@TableParam PagingCriteria criteria) {
-		ResultSet<Trip> customers = this.tripService.getRecords(criteria);
-		return ControllerUtils.getWebResultSet(criteria, customers);
+	WebResultSet<Trip> getDataTables(@TableParam PagingCriteria criteria) {
+		ResultSet<Trip> resultset = this.tripService.getRecords(criteria);
+		return ControllerUtils.getWebResultSet(criteria, resultset);
 	}
 
 	@Secured("ROLE_USER")
@@ -72,6 +73,14 @@ public class TripController {
 		}
 		model.addAttribute("tripAttribute", tripService.getAll());
 		return "trip/list";
+	}
+
+	@Secured("ROLE_USER")
+	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+	public String showAction(@PathVariable Long id, Model model) {
+		logger.debug("Received request to show existing record");
+		model.addAttribute("tripAttribute", tripService.getOne(id));
+		return "trip/show";
 	}
 
 	@Secured("ROLE_USER")
@@ -113,6 +122,7 @@ public class TripController {
 		formData.setAccount(account);
 
 		tripService.save(formData);
+		//tripService.saveOrUpdate(formData);
 		return "redirect:/trip/list";
 	}
 
@@ -122,6 +132,18 @@ public class TripController {
 		logger.debug("Received request to delete existing record");
 		tripService.delete(id);
 		return "redirect:/trip/list";
+	}
+
+	/**
+	 * Exports the report as an Excel format.
+	 * <p>
+	 * Make sure this method doesn't return any model. Otherwise, you'll get an
+	 * "IllegalStateException: getOutputStream() has already been called for this response"
+	 */
+	@RequestMapping(value = "/export/xls", method = RequestMethod.GET)
+	public void getXLS(HttpServletResponse response, Model model) {
+		logger.debug("Received request to export report as an XLS");
+		tripService.exportXLS(response);
 	}
 
 }

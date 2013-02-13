@@ -2,59 +2,61 @@ package com.aripd.project.lokman.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.aripd.account.domain.Account;
 import com.aripd.common.entity.BaseEntity;
+import com.aripd.common.utils.ARIPDJodaDateTimeSerializer;
 
 @Entity
 @Table(name = "trip")
 public class Trip extends BaseEntity implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8215609876889575062L;
 
-	@ManyToOne
 	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(nullable = false, insertable = true, updatable = false)
 	private Account account;
 
 	@ManyToOne
-	@JsonIgnore
 	private Truck truck;
 
 	@ManyToOne
-	@JsonIgnore
 	private Driver driver;
 
 	private String startingPoint;
 
 	private Integer startingKm;
 
-	private String startingTime;
+	@JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
+	@Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+	@Column(columnDefinition = "TIMESTAMP")
+	private DateTime startingTime;
 
 	private String endingPoint;
 
 	private Integer endingKm;
 
-	private String endingTime;
+	@JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
+	@Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+	@Column(columnDefinition = "TIMESTAMP")
+	private DateTime endingTime;
 
 	private Integer loadWeightInTonne;
 
 	@Column(columnDefinition = "TEXT", nullable = true)
 	private String remark;
-
-	// @Temporal(TemporalType.DATE)
-	@DateTimeFormat(style = "S-")
-	@Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
-	@Column(columnDefinition = "DATE", nullable = false)
-	private DateTime publishedAt;
 
 	public Account getAccount() {
 		return account;
@@ -96,11 +98,11 @@ public class Trip extends BaseEntity implements Serializable {
 		this.startingKm = startingKm;
 	}
 
-	public String getStartingTime() {
+	public DateTime getStartingTime() {
 		return startingTime;
 	}
 
-	public void setStartingTime(String startingTime) {
+	public void setStartingTime(DateTime startingTime) {
 		this.startingTime = startingTime;
 	}
 
@@ -120,11 +122,11 @@ public class Trip extends BaseEntity implements Serializable {
 		this.endingKm = endingKm;
 	}
 
-	public String getEndingTime() {
+	public DateTime getEndingTime() {
 		return endingTime;
 	}
 
-	public void setEndingTime(String endingTime) {
+	public void setEndingTime(DateTime endingTime) {
 		this.endingTime = endingTime;
 	}
 
@@ -142,14 +144,6 @@ public class Trip extends BaseEntity implements Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
-	}
-
-	public DateTime getPublishedAt() {
-		return publishedAt;
-	}
-
-	public void setPublishedAt(DateTime publishedAt) {
-		this.publishedAt = publishedAt;
 	}
 
 }

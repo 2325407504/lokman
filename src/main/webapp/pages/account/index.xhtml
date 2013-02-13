@@ -1,0 +1,104 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Welcome to OTV_JSF_Spring_Hibernate_Project</title>
+</h:head>
+<h:body>
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north" size="30">
+			<h:outputText value="Company" />
+		</p:layoutUnit>
+		<p:layoutUnit position="south" size="30">
+			<h:outputText value="Copyright" />
+		</p:layoutUnit>
+		<p:layoutUnit position="west" size="300">
+			<p:menu>
+				<p:submenu label="Mail">
+					<p:menuitem value="Gmail" url="http://www.google.com" />
+					<p:menuitem value="Hotmail" url="http://www.hotmail.com" />
+					<p:menuitem value="Yahoo Mail" url="http://mail.yahoo.com" />
+				</p:submenu>
+				<p:submenu label="Videos">
+					<p:menuitem value="Youtube" url="http://www.youtube.com" />
+					<p:menuitem value="Break" url="http://www.break.com" />
+					<p:menuitem value="Metacafe" url="http://www.metacafe.com" />
+				</p:submenu>
+				<p:submenu label="Social Networks">
+					<p:menuitem value="Facebook" url="http://www.facebook.com" />
+					<p:menuitem value="MySpace" url="http://www.myspace.com" />
+				</p:submenu>
+			</p:menu>
+		</p:layoutUnit>
+		<p:layoutUnit position="east" size="200">
+			<h:outputText value="Right Content" />
+		</p:layoutUnit>
+		<p:layoutUnit position="center">
+
+			<h:form id="form">
+
+				<p:dataTable var="account" value="#{accountMB.lazyModel}"
+					paginator="true" rows="10"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+					rowsPerPageTemplate="5,10,15" selectionMode="single"
+					selection="#{accountMB.selectedAccount}" id="accountTable"
+					lazy="true">
+
+					<p:ajax event="rowSelect" listener="#{accountMB.onRowSelect}"
+						update=":form:display" oncomplete="accountDialog.show()" />
+
+					<p:column headerText="Username" sortBy="#{account.username}"
+						filterBy="#{account.username}">
+						<h:outputText value="#{account.username}" />
+					</p:column>
+
+					<p:column headerText="First Name" sortBy="#{account.firstName}"
+						filterBy="#{account.firstName}">
+						<h:outputText value="#{account.firstName}" />
+					</p:column>
+
+					<p:column headerText="Last Name" sortBy="#{account.lastName}"
+						filterBy="#{account.lastName}">
+						<h:outputText value="#{account.lastName}" />
+					</p:column>
+
+					<p:column headerText="Email" sortBy="#{account.email}"
+						filterBy="#{account.email}">
+						<h:outputText value="#{account.email}" />
+					</p:column>
+				</p:dataTable>
+
+				<p:dialog header="Account Detail" widgetVar="accountDialog"
+					resizable="false" showEffect="explode" hideEffect="explode">
+
+					<h:panelGrid id="display" columns="2" cellpadding="4">
+
+						<f:facet name="header">
+							<p:graphicImage
+								value="/images/accounts/#{accountMB.selectedAccount.username}.jpg" />
+						</f:facet>
+
+						<h:outputText value="Username:" />
+						<h:outputText value="#{accountMB.selectedAccount.username}"
+							style="font-weight:bold" />
+
+						<h:outputText value="First Name:" />
+						<h:outputText value="#{accountMB.selectedAccount.firstName}"
+							style="font-weight:bold" />
+
+						<h:outputText value="Last Name:" />
+						<h:outputText value="#{accountMB.selectedAccount.lastName}"
+							style="font-weight:bold" />
+
+						<h:outputText value="Email:" />
+						<h:outputText value="#{accountMB.selectedAccount.email}"
+							style="font-weight:bold" />
+					</h:panelGrid>
+				</p:dialog>
+
+			</h:form>
+￼		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>

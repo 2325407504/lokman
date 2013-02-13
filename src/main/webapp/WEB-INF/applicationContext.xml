@@ -115,12 +115,11 @@
 
 	<!-- initializing data to realize some test -->
 	<beans>
-		<bean id="initDataService" init-method="init"
-			class="com.aripd.common.service.InitDataService" />
-		<bean init-method="init"
-			class="com.aripd.project.lokman.service.TruckDataService" />
-		<bean init-method="init"
-			class="com.aripd.project.lokman.service.DriverDataService" />
+		<bean id="initDataService" init-method="init" class="com.aripd.common.service.InitDataService" />
+		<bean init-method="init" class="com.aripd.project.lokman.service.TruckDataService" />
+		<bean init-method="init" class="com.aripd.project.lokman.service.DriverDataService" />
+		<bean init-method="init" class="com.aripd.project.lokman.service.SubcontractorDataService" />
+		<bean init-method="init" class="com.aripd.project.lokman.service.QuotaDataService" />
 	</beans>
 
 </beans>

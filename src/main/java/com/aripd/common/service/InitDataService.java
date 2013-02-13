@@ -28,6 +28,7 @@ public class InitDataService {
 	RoleRepository roleRepository;
 
 	public void init() {
+		Role superadminRole = getRole("ROLE_SUPERADMIN");
 		Role adminRole = getRole("ROLE_ADMIN");
 		Role userRole = getRole("ROLE_USER");
 		Role role1 = getRole("ROLE_L1");
@@ -45,6 +46,7 @@ public class InitDataService {
 		admin1.setPassword(DigestUtils.md5Hex("cem"));
 		admin1.setIsEnabled(true);
 		this.userRepository.save(admin1);
+		admin1.getRoles().add(superadminRole);
 		admin1.getRoles().add(adminRole);
 		admin1.getRoles().add(userRole);
 		this.userRepository.save(admin1);
@@ -74,7 +76,7 @@ public class InitDataService {
 		user.getRoles().add(userRole);
 		this.userRepository.save(user);
 
-		// add 100 more users without roles (To test pagination)
+		/* users no any right */
 		List<Account> listUsers = new ArrayList<Account>();
 		Account aUser;
 		for (int i = 0; i < 100; i++) {
