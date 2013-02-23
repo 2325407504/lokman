@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aripd.account.domain.Role;
 import com.aripd.account.service.RoleService;
@@ -75,7 +76,11 @@ public class RoleController {
 
 	@Secured("ROLE_SUPERADMIN")
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveAction(@ModelAttribute("roleAttribute") @Valid Role role, BindingResult result) {
+	public String saveAction(
+			final RedirectAttributes redirectAttributes,
+			@ModelAttribute("roleAttribute") @Valid Role role, 
+			BindingResult result
+	) {
 		if (result.hasErrors()) {
 			logger.error(result);
 			return "/role/form";
@@ -83,14 +88,19 @@ public class RoleController {
 		
 		logger.debug("Received request to save existing record");
 		roleService.save(role);
+		redirectAttributes.addFlashAttribute("message", "Successfully saved..");
 		return "redirect:/role/list";
 	}
 
 	@Secured("ROLE_SUPERADMIN")
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-	public String delete(@RequestParam(value = "id", required = true) Long id) {
+	public String delete(
+			final RedirectAttributes redirectAttributes,
+			@RequestParam(value = "id", required = true) Long id
+	) {
 		logger.debug("Received request to delete existing record");
 		roleService.delete(id);
+		redirectAttributes.addFlashAttribute("message", "Successfully deleted..");
 		return "redirect:/role/list";
 	}
 
