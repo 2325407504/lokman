@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.aripd.account.domain.Account;
 import com.aripd.account.service.IAccountService;
 import com.aripd.account.service.IRoleService;
+import com.aripd.account.validator.AccountValidator;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.TableParam;
@@ -36,6 +37,9 @@ public class AccountController {
 	@Resource(name="roleService")
 	private IRoleService roleService;
 	
+	@Resource(name = "accountValidator")
+	private AccountValidator accountValidator;
+	
 	@Secured("ROLE_SUPERADMIN")
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	public @ResponseBody
@@ -48,7 +52,7 @@ public class AccountController {
 	@RequestMapping(value="/list")
 	public String listAction(Model model) {
 		logger.debug("Received request to show records");
-		model.addAttribute("accountAttribute", accountService.getAll());
+		model.addAttribute("accountAttribute", accountService.findAll());
 		return "account/list";
 	}
 
@@ -56,7 +60,7 @@ public class AccountController {
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
     public String showAction(@PathVariable Long id, Model model) {
 		logger.debug("Received request to show existing record");
-    	model.addAttribute("accountAttribute", accountService.getOne(id));
+    	model.addAttribute("accountAttribute", accountService.findOne(id));
     	return "account/show";
 	}
 	
@@ -72,7 +76,7 @@ public class AccountController {
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
 		logger.debug("Received request to show edit existing record");
-    	model.addAttribute("accountAttribute", accountService.getOne(id));
+    	model.addAttribute("accountAttribute", accountService.findOne(id));
     	return "account/form";
 	}
 

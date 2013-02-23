@@ -20,11 +20,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aripd.account.domain.Account;
+import com.aripd.account.domain.Account_;
 import com.aripd.account.repository.AccountRepository;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.SortField;
-import com.aripd.account.domain.Account_;
 
 @Service
 @Transactional(readOnly = true)
@@ -38,27 +38,32 @@ public class AccountService implements IAccountService {
 	@Resource
 	private AccountRepository repository;
 
-	public Account getOne(Long id) {
+	public List<Account> findAll() {
+		logger.debug("Retrieving all accounts");
+		return repository.findAll();
+	}
+
+	public Account findOne(Long id) {
 		logger.debug("Retrieving account based on id");
 		return repository.findOne(id);
 	}
 
-	public Account getOneByUsername(String username) {
+	public Account findOneByUsername(String username) {
 		logger.debug("Retrieving account based on username");
 		return repository.findOneByUsername(username);
 	}
 
 	@PreAuthorize("isFullyAuthenticated()")
-	public Account getActiveUser() {
+	public Account findCurrentUser() {
 		org.springframework.security.core.userdetails.User securityUser = (org.springframework.security.core.userdetails.User) (SecurityContextHolder
 				.getContext()).getAuthentication().getPrincipal();
-		return getOneByUsername(securityUser.getUsername());
+		return this.findOneByUsername(securityUser.getUsername());
 	}
 
 	@PreAuthorize("isFullyAuthenticated()")
 	public boolean hasUsername(String username) {
 		List<Account> list = repository.findAll();
-		list.remove(getActiveUser());
+		list.remove(this.findCurrentUser());
 
 		Iterator<Account> iterator = list.iterator();
 		while (iterator.hasNext()) {
@@ -67,11 +72,6 @@ public class AccountService implements IAccountService {
 			}
 		}
 		return false;
-	}
-
-	public List<Account> getAll() {
-		logger.debug("Retrieving all accounts");
-		return repository.findAll();
 	}
 
 	@Transactional
@@ -85,12 +85,6 @@ public class AccountService implements IAccountService {
 	}
 
 	@Override
-	public List<Account> findAll() {
-		logger.debug("Finding all accounts");
-		return repository.findAll();
-	}
-
-	@Override
 	public ResultSet<Account> getRecords(PagingCriteria criteria) {
 		Integer displaySize = criteria.getDisplaySize();
 		Integer displayStart = criteria.getDisplayStart();
@@ -101,13 +95,16 @@ public class AccountService implements IAccountService {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Account> cq = cb.createQuery(Account.class);
 		Root<Account> root = cq.from(Account.class);
+		//Join<Account, Customer> root = cq.from(Account.class).join(Account_.customer);
 
 		// Filtering and Searching
 		List<Predicate> predicateList = new ArrayList<Predicate>();
 		
 		if ((search != null) && (!(search.isEmpty()))) {
-			//Predicate predicate = cb.equal(account.get(Account_.remark), search);
-			Predicate predicate = cb.like(root.get(Account_.username), "%"+search+"%");
+			Predicate predicate1 = cb.like(root.get(Account_.username), "%"+search+"%");
+			Predicate predicate2 = cb.like(root.get(Account_.email), "%"+search+"%");
+			//Predicate predicate3 = cb.like(root.get(Account_.customer), "%"+search+"%");
+			Predicate predicate = cb.or(predicate1, predicate2);
 			predicateList.add(predicate);
 		}
 		

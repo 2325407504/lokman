@@ -24,7 +24,7 @@
 		<label class="label">
 			<spring:message code="Date" text="Date"></spring:message>
 		</label>
-		<spring:eval expression="accountAttribute.dateOfBirth" />
+		<spring:eval expression="accountAttribute.customer.dateOfBirth" />
 	</li>
 	<li>
 		<label class="label">
@@ -36,7 +36,7 @@
 		<label class="label">
 			<spring:message code="Fullname"></spring:message>
 		</label>
-		${accountAttribute.name}
+		${accountAttribute.customer.fullname}
 	</li>
 	<li>
 		<label class="label">

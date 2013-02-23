@@ -10,5 +10,7 @@ import javax.persistence.metamodel.StaticMetamodel;
  */
 @StaticMetamodel(BaseEntity.class)
 public class BaseEntity_ {
+
 	public static volatile SingularAttribute<BaseEntity, Long> id;
+
 }

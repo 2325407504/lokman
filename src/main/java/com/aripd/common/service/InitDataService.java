@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aripd.account.domain.Account;
+import com.aripd.account.domain.Customer;
 import com.aripd.account.domain.Role;
 import com.aripd.account.repository.AccountRepository;
 import com.aripd.account.repository.RoleRepository;
@@ -39,9 +40,8 @@ public class InitDataService {
 
 		/* A user with admin right */
 		Account admin1 = new Account();
+		admin1.setCustomer(new Customer("Cem", "ARIPD"));
 		admin1.setUsername("cem");
-		admin1.setFirstName("Cem");
-		admin1.setLastName("ARIPD");
 		admin1.setEmail("cem@aripd.com");
 		admin1.setPassword(DigestUtils.md5Hex("cem"));
 		admin1.setActive(true);
@@ -53,9 +53,8 @@ public class InitDataService {
 
 		/* A user with admin right */
 		Account admin2 = new Account();
+		admin2.setCustomer(new Customer("John", "Doe"));
 		admin2.setUsername("john");
-		admin2.setFirstName("John");
-		admin2.setLastName("Doe");
 		admin2.setEmail("admin@mail.com");
 		admin2.setPassword(DigestUtils.md5Hex("admin"));
 		admin2.setActive(true);
@@ -66,9 +65,8 @@ public class InitDataService {
 
 		/* A user with no admin right */
 		Account user = new Account();
+		user.setCustomer(new Customer("Jane", "Doe"));
 		user.setUsername("jane");
-		user.setFirstName("Jane");
-		user.setLastName("Doe");
 		user.setEmail("user@mail.com");
 		user.setPassword(DigestUtils.md5Hex("user"));
 		user.setActive(true);
@@ -82,9 +80,8 @@ public class InitDataService {
 		for (int i = 0; i < 100; i++) {
 			logger.debug("Adding a new record");
 			aUser = new Account();
+			aUser.setCustomer(new Customer("FirstName_" + i, "LastName_" + i));
 			aUser.setUsername("user" + i);
-			aUser.setFirstName("FirstName_" + i);
-			aUser.setLastName("LastName_" + i);
 			aUser.setEmail("User_" + i + "@mail.com");
 			aUser.setPassword(DigestUtils.md5Hex("user"));
 			aUser.setActive(true);

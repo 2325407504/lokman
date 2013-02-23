@@ -28,7 +28,7 @@ public class AccountManagedBean implements Serializable {
 
 	@PostConstruct
     private void init() {
-		lazyModel = new LazyAccountDataModel(accountService.getAll());
+		lazyModel = new LazyAccountDataModel(accountService.findAll());
     }
 	
 	public void setAccountService(IAccountService accountService) {

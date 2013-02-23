@@ -14,5 +14,7 @@ import com.aripd.common.entity.BaseEntity_;
 public class Account_ extends BaseEntity_ {
 
 	public static volatile SingularAttribute<Account, String> username;
+	public static volatile SingularAttribute<Account, String> email;
+	public static volatile SingularAttribute<Account, Customer> customer;
 
 }

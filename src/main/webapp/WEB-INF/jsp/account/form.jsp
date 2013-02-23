@@ -14,14 +14,14 @@
 	<form:hidden path="id" />
 	<fieldset>
 		<div class="form-row">
-			<form:label path="firstName"><spring:message code="FirstName"></spring:message></form:label>
-			<span><form:input path="firstName" /></span>
-			<form:errors cssClass="error-field" path="firstName" />
+			<form:label path="customer.firstName"><spring:message code="FirstName"></spring:message></form:label>
+			<span><form:input path="customer.firstName" /></span>
+			<form:errors cssClass="error-field" path="customer.firstName" />
 		</div>       
 		<div class="form-row">
-			<form:label path="lastName"><spring:message code="LastName"></spring:message></form:label>
-			<span><form:input path="lastName" /></span>
-			<form:errors cssClass="error-field" path="lastName" />
+			<form:label path="customer.lastName"><spring:message code="LastName"></spring:message></form:label>
+			<span><form:input path="customer.lastName" /></span>
+			<form:errors cssClass="error-field" path="customer.lastName" />
 		</div>
 		<div class="form-row">
 			<form:label path="email"><spring:message code="E-mail Address"></spring:message></form:label>
@@ -39,9 +39,9 @@
 			<form:errors cssClass="error-field" path="password" />
 		</div>
 		<div class="form-row">
-			<form:label path="dateOfBirth"><spring:message code="Date of birth"></spring:message></form:label>
-			<span><form:input type="date" path="dateOfBirth" /></span>
-			<form:errors cssClass="error-field" path="dateOfBirth" />
+			<form:label path="customer.dateOfBirth"><spring:message code="Date of birth"></spring:message></form:label>
+			<span><form:input type="date" path="customer.dateOfBirth" /></span>
+			<form:errors cssClass="error-field" path="customer.dateOfBirth" />
 		</div>
 		<div class="form-actions">
 			<c:if test="${ !empty accountAttribute.id }">

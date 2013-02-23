@@ -5,19 +5,16 @@ import static javax.persistence.CascadeType.PERSIST;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.aripd.common.entity.BaseEntity;
 
@@ -26,12 +23,6 @@ import com.aripd.common.entity.BaseEntity;
 public class Account extends BaseEntity {
 
 	private static final long serialVersionUID = 5410601898024568036L;
-
-	@Column(nullable = true, unique = false)
-	private String firstName;
-
-	@Column(nullable = true, unique = false)
-	private String lastName;
 
 	@Column(nullable = false, unique = false)
 	private String password;
@@ -45,47 +36,16 @@ public class Account extends BaseEntity {
 	@Column(nullable = true, unique = false)
 	private boolean active = false;
 
-	// @Temporal(TemporalType.DATE)
-	@DateTimeFormat(style = "S-")
-	@Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
-	@Column(columnDefinition = "DATE", nullable = true)
-	private DateTime dateOfBirth = null;
-
 	@JsonIgnore
 	@JoinTable(name = "account_role", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	@ManyToMany(cascade = PERSIST)
-	private List<Role> roles = new ArrayList<Role>();
-
-    @Transient
-    public String getName() {
-        StringBuilder name = new StringBuilder();
-        
-        name.append(firstName);
-        name.append(" ");
-        name.append(lastName);
-        
-        return name.toString();
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	@ManyToMany(cascade = CascadeType.ALL)
+	private List<Role> roles;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Customer customer;
+	
+	public Account() {
+		roles = new ArrayList<Role>();
 	}
 
 	public String getPassword() {
@@ -112,14 +72,6 @@ public class Account extends BaseEntity {
 		this.email = email;
 	}
 
-	public DateTime getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(DateTime dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
 	public List<Role> getRoles() {
 		return roles;
 	}
@@ -138,6 +90,14 @@ public class Account extends BaseEntity {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 }

@@ -34,7 +34,7 @@ public class ProfileController {
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public String showAction(Model model) {
 		logger.debug("Received request to show add new record");
-		model.addAttribute("profileAttribute", accountService.getActiveUser());
+		model.addAttribute("profileAttribute", accountService.findCurrentUser());
 		return "profile/show";
 	}
 
@@ -42,7 +42,7 @@ public class ProfileController {
     public String editAction(Model model) {
 		User securityUser = (User) (SecurityContextHolder.getContext()).getAuthentication().getPrincipal();
 		
-		Account account = accountService.getOneByUsername(securityUser.getUsername());
+		Account account = accountService.findOneByUsername(securityUser.getUsername());
 		
 		logger.debug("Received request to show edit existing record");
     	model.addAttribute("profileAttribute", account);

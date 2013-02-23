@@ -122,7 +122,7 @@ public class ForwardingController {
 
 		logger.debug("Received request to save existing record");
 
-		Account account = accountService.getOneByUsername(principal.getName());
+		Account account = accountService.findOneByUsername(principal.getName());
 		formData.setAccount(account);
 
 		forwardingService.save(formData);

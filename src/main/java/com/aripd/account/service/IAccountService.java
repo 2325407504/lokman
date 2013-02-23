@@ -8,21 +8,19 @@ import com.aripd.common.dto.ResultSet;
 
 public interface IAccountService {
 
-	Account getOne(Long id);
+	List<Account> findAll();
 
-	Account getOneByUsername(String username);
+	Account findOne(Long id);
 
-	Account getActiveUser();
+	Account findOneByUsername(String username);
+
+	Account findCurrentUser();
 
 	boolean hasUsername(String username);
-
-	List<Account> getAll();
 
 	Account save(Account account);
 
 	void delete(Long id);
-
-	List<Account> findAll();
 
 	ResultSet<Account> getRecords(PagingCriteria criteria);
 
