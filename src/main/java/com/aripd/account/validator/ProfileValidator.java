@@ -9,7 +9,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 
 import com.aripd.account.domain.Account;
-import com.aripd.account.service.AccountService;
+import com.aripd.account.service.IAccountService;
 import com.aripd.common.validator.EmailValidator;
 
 @Service("profileValidator")
@@ -17,7 +17,7 @@ import com.aripd.common.validator.EmailValidator;
 public class ProfileValidator {
 
 	@Resource(name="accountService")
-	private AccountService accountService;
+	private IAccountService accountService;
 	
 	public void validate(Account account, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "required", "It is required!");

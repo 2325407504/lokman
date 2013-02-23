@@ -21,11 +21,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.aripd.common.entity.BaseEntity;
 
-/**
- * An entity class which contains the information of a single account.
- * 
- * @author aripd.com
- */
 @Entity
 @Table(name = "account")
 public class Account extends BaseEntity {
@@ -48,7 +43,7 @@ public class Account extends BaseEntity {
 	private String email;
 
 	@Column(nullable = true, unique = false)
-	private Boolean isEnabled = false;
+	private boolean active = false;
 
 	// @Temporal(TemporalType.DATE)
 	@DateTimeFormat(style = "S-")
@@ -117,14 +112,6 @@ public class Account extends BaseEntity {
 		this.email = email;
 	}
 
-	public Boolean getIsEnabled() {
-		return isEnabled;
-	}
-
-	public void setIsEnabled(Boolean isEnabled) {
-		this.isEnabled = isEnabled;
-	}
-
 	public DateTime getDateOfBirth() {
 		return dateOfBirth;
 	}
@@ -143,6 +130,14 @@ public class Account extends BaseEntity {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 }

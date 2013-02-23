@@ -11,7 +11,7 @@ import javax.faces.bean.RequestScoped;
 import org.primefaces.model.LazyDataModel;
 
 import com.aripd.account.domain.Account;
-import com.aripd.account.service.AccountService;
+import com.aripd.account.service.IAccountService;
 
 @ManagedBean(name = "accountMB")
 @RequestScoped
@@ -20,7 +20,7 @@ public class AccountManagedBean implements Serializable {
 	private static final long serialVersionUID = -9198450701472451939L;
 
 	@ManagedProperty(value = "#{accountService}")
-	private AccountService accountService;
+	private IAccountService accountService;
 
 	private LazyDataModel<Account> lazyModel;
 	private Account selectedAccount;
@@ -31,7 +31,7 @@ public class AccountManagedBean implements Serializable {
 		lazyModel = new LazyAccountDataModel(accountService.getAll());
     }
 	
-	public void setAccountService(AccountService accountService) {
+	public void setAccountService(IAccountService accountService) {
 		this.accountService = accountService;
 	}
 

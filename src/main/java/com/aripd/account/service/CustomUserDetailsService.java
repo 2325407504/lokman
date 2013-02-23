@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aripd.account.domain.Account;
-import com.aripd.account.helper.AccountHelper;
+import com.aripd.account.domain.Role;
 import com.aripd.account.repository.AccountRepository;
 
 /**
@@ -29,9 +29,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Autowired
 	private AccountRepository repository;
 
-	@Autowired
-	private AccountHelper accountHelper;
-	
 	/**
 	 * Returns a populated {@link UserDetails} object. 
 	 * The username is first retrieved from the database and then mapped to 
@@ -41,8 +38,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 		try {
 			Account account = repository.findByUsernameOrEmail(username, username);
 			
-			Collection<GrantedAuthority> grantedAuthorities = toGrantedAuthorities(accountHelper.getCodes(account));
-			boolean enabled = account.getIsEnabled();
+			Collection<GrantedAuthority> grantedAuthorities = toGrantedAuthorities(this.getCodes(account));
+			boolean enabled = account.isActive();
 			boolean accountNonExpired = true;
 			boolean credentialsNonExpired = true;
 			boolean accountNonLocked = true;
@@ -71,4 +68,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 		return result;
 	}
 	
+	public List<String> getCodes(final Account account) {
+		List<String> roleNames = new ArrayList<String>();
+
+		for (Role role : account.getRoles()) {
+			roleNames.add(role.getCode());
+		}
+		return roleNames;
+	}
+
 }

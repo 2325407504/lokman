@@ -44,7 +44,7 @@ public class InitDataService {
 		admin1.setLastName("ARIPD");
 		admin1.setEmail("cem@aripd.com");
 		admin1.setPassword(DigestUtils.md5Hex("cem"));
-		admin1.setIsEnabled(true);
+		admin1.setActive(true);
 		this.userRepository.save(admin1);
 		admin1.getRoles().add(superadminRole);
 		admin1.getRoles().add(adminRole);
@@ -58,7 +58,7 @@ public class InitDataService {
 		admin2.setLastName("Doe");
 		admin2.setEmail("admin@mail.com");
 		admin2.setPassword(DigestUtils.md5Hex("admin"));
-		admin2.setIsEnabled(true);
+		admin2.setActive(true);
 		this.userRepository.save(admin2);
 		admin2.getRoles().add(adminRole);
 		admin2.getRoles().add(userRole);
@@ -71,7 +71,7 @@ public class InitDataService {
 		user.setLastName("Doe");
 		user.setEmail("user@mail.com");
 		user.setPassword(DigestUtils.md5Hex("user"));
-		user.setIsEnabled(true);
+		user.setActive(true);
 		this.userRepository.save(user);
 		user.getRoles().add(userRole);
 		this.userRepository.save(user);
@@ -87,7 +87,7 @@ public class InitDataService {
 			aUser.setLastName("LastName_" + i);
 			aUser.setEmail("User_" + i + "@mail.com");
 			aUser.setPassword(DigestUtils.md5Hex("user"));
-			aUser.setIsEnabled(true);
+			aUser.setActive(true);
 			listUsers.add(aUser);
 		}
 		this.userRepository.save(listUsers);

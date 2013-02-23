@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.aripd.account.service.AccountService;
+import com.aripd.account.service.IAccountService;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.TableParam;
@@ -56,7 +56,7 @@ public class UatfController {
 	private DriverService driverService;
 
 	@Resource(name = "accountService")
-	private AccountService accountService;
+	private IAccountService accountService;
 
 	@Secured("ROLE_USER")
 	@RequestMapping(value = "/get/{forwarding_id}", method = RequestMethod.GET)

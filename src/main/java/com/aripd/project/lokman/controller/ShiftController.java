@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.aripd.account.domain.Account;
-import com.aripd.account.service.AccountService;
+import com.aripd.account.service.IAccountService;
 import com.aripd.project.lokman.domain.Shift;
 import com.aripd.project.lokman.service.ShiftService;
 
@@ -31,7 +31,7 @@ public class ShiftController {
 	private ShiftService shiftService;
 
 	@Resource(name = "accountService")
-	private AccountService accountService;
+	private IAccountService accountService;
 
 	@Secured("ROLE_USER")
 	@RequestMapping(value = "/list")

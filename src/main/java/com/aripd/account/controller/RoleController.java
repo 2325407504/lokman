@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aripd.account.domain.Role;
-import com.aripd.account.service.RoleService;
+import com.aripd.account.service.IRoleService;
 import com.aripd.account.validator.RoleValidator;
 
 @Controller
@@ -27,7 +27,7 @@ public class RoleController {
 	protected static Logger logger = Logger.getLogger(RoleController.class);
 
 	@Resource(name = "roleService")
-	private RoleService roleService;
+	private IRoleService roleService;
 
 	@Resource(name = "roleValidator")
 	private RoleValidator roleValidator;

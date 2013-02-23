@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.aripd.account.domain.Account;
-import com.aripd.account.service.AccountService;
+import com.aripd.account.service.IAccountService;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.TableParam;
@@ -59,7 +59,7 @@ public class ForwardingController {
 	private DriverService driverService;
 
 	@Resource(name = "accountService")
-	private AccountService accountService;
+	private IAccountService accountService;
 
 	@Secured("ROLE_USER")
 	@RequestMapping(value = "/get", method = RequestMethod.GET)

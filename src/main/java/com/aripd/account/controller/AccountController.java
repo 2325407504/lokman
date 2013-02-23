@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.aripd.account.domain.Account;
-import com.aripd.account.service.AccountService;
-import com.aripd.account.service.RoleService;
+import com.aripd.account.service.IAccountService;
+import com.aripd.account.service.IRoleService;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.TableParam;
@@ -31,10 +31,10 @@ public class AccountController {
 	protected static Logger logger = Logger.getLogger(AccountController.class);
 	
 	@Resource(name="accountService")
-	private AccountService accountService;
+	private IAccountService accountService;
 	
 	@Resource(name="roleService")
-	private RoleService roleService;
+	private IRoleService roleService;
 	
 	@Secured("ROLE_SUPERADMIN")
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
