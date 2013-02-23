@@ -1,11 +1,11 @@
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
 
 <spring:url value="/" var="homeUrl" />
+<spring:url var="addUrl" value="/account/new" />
 
 <ul class="breadcrumb">
   <li><a href="${homeUrl}"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
   <li class="active"><spring:message code="Accounts"></spring:message></li>
-	<spring:url var="addUrl" value="/account/new" />
 	<li class="pull-right">
 		<a class="btn btn-mini" href="${addUrl}"><spring:message code="New Entry"></spring:message></a>
 	</li>

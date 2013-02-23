@@ -1,17 +1,24 @@
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
 
-<spring:url value="/" var="homeUrl" />
+<spring:url var="homeUrl" value="/" />
+<spring:url var="tripList" value="/trip/list" />
+<spring:url var="tripNew" value="/trip/new" />
+<spring:url var="tripExport" value="/trip/export/xls" />
+<spring:url var="tripChart" value="/trip/chart" />
 
-<ul class="breadcrumb">
-  <li><a href="${homeUrl}"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
-  <li class="active"><spring:message code="Trip Tracking" text="Trip Tracking"></spring:message></li>
-	<spring:url var="addUrl" value="/trip/new" />
-	<spring:url var="exportUrl" value="/trip/export/xls" />
-	<spring:url var="chartUrl" value="/trip/chart" />
-	<li class="pull-right">
-		<a class="btn btn-mini" href="${addUrl}"><spring:message code="New Entry"></spring:message></a>
-		<a class="btn btn-mini" href="${exportUrl}"><spring:message code="Export"></spring:message></a>
-		<a class="btn btn-mini" href="${chartUrl}"><spring:message code="Chart"></spring:message></a>
+<ul class="nav nav-tabs">
+	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
+	<li class="active"><a href="${tripList}"><spring:message code="Trip Tracking" text="Trip Tracking"></spring:message></a></li>
+	<li class=""><a href="${tripNew}"><spring:message code="New Entry"></spring:message></a></li>
+	<li class="dropdown">
+		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+			<spring:message code="Export"></spring:message>
+			<b class="caret"></b>
+		</a>
+		<ul class="dropdown-menu">
+			<li><a href="${tripExport}"><spring:message code="Export"></spring:message></a></li>
+			<li><a href="${tripChart}"><spring:message code="Chart"></spring:message></a></li>
+		</ul>
 	</li>
 </ul>
 

@@ -1,13 +1,12 @@
 package com.aripd.account.domain;
 
-import static javax.persistence.CascadeType.PERSIST;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -38,12 +37,12 @@ public class Account extends BaseEntity {
 
 	@JsonIgnore
 	@JoinTable(name = "account_role", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Role> roles;
-	
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Customer customer;
-	
+
 	public Account() {
 		roles = new ArrayList<Role>();
 	}

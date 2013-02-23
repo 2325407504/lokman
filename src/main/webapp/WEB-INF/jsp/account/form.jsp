@@ -12,6 +12,7 @@
 <form:form modelAttribute="accountAttribute" action="${saveUrl}" method="post">
 	<form:errors path="*" cssClass="error-block" element="div" />
 	<form:hidden path="id" />
+	<form:hidden path="customer.id" />
 	<fieldset>
 		<div class="form-row">
 			<form:label path="customer.firstName"><spring:message code="FirstName"></spring:message></form:label>

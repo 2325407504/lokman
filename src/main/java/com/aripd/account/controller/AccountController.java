@@ -4,7 +4,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,22 +25,22 @@ import com.aripd.common.dto.TableParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.utils.ControllerUtils;
 
+@PreAuthorize("hasRole('ROLE_SUPERADMIN')")
 @Controller
 @RequestMapping("/account")
 public class AccountController {
-	
+
 	protected static Logger logger = Logger.getLogger(AccountController.class);
-	
-	@Resource(name="accountService")
+
+	@Resource(name = "accountService")
 	private IAccountService accountService;
-	
-	@Resource(name="roleService")
+
+	@Resource(name = "roleService")
 	private IRoleService roleService;
-	
+
 	@Resource(name = "accountValidator")
 	private AccountValidator accountValidator;
-	
-	@Secured("ROLE_SUPERADMIN")
+
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	public @ResponseBody
 	WebResultSet<Account> getDataTables(@TableParam PagingCriteria criteria) {
@@ -48,23 +48,18 @@ public class AccountController {
 		return ControllerUtils.getWebResultSet(criteria, resultset);
 	}
 
-	@Secured("ROLE_SUPERADMIN")
-	@RequestMapping(value="/list")
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String listAction(Model model) {
-		logger.debug("Received request to show records");
-		model.addAttribute("accountAttribute", accountService.findAll());
 		return "account/list";
 	}
 
-	@Secured("ROLE_SUPERADMIN")
-    @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
-    public String showAction(@PathVariable Long id, Model model) {
+	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+	public String showAction(@PathVariable Long id, Model model) {
 		logger.debug("Received request to show existing record");
-    	model.addAttribute("accountAttribute", accountService.findOne(id));
-    	return "account/show";
+		model.addAttribute("accountAttribute", accountService.findOne(id));
+		return "account/show";
 	}
-	
-	@Secured("ROLE_SUPERADMIN")
+
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String newAction(Model model) {
 		logger.debug("Received request to show add new record");
@@ -72,28 +67,27 @@ public class AccountController {
 		return "account/form";
 	}
 
-	@Secured("ROLE_SUPERADMIN")
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String editAction(@PathVariable Long id, Model model) {
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public String editAction(@PathVariable Long id, Model model) {
 		logger.debug("Received request to show edit existing record");
-    	model.addAttribute("accountAttribute", accountService.findOne(id));
-    	return "account/form";
+		model.addAttribute("accountAttribute", accountService.findOne(id));
+		return "account/form";
 	}
 
-	@Secured("ROLE_SUPERADMIN")
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAction(@ModelAttribute("accountAttribute") @Valid Account account, BindingResult result) {
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String saveAction(
+			@ModelAttribute("accountAttribute") @Valid Account account,
+			BindingResult result) {
 		if (result.hasErrors()) {
 			logger.error(result);
 			return "/account/form";
 		}
-		
+
 		logger.debug("Received request to save existing record");
 		accountService.save(account);
 		return "redirect:/account/list";
 	}
-	
-	@Secured("ROLE_SUPERADMIN")
+
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
 	public String delete(@RequestParam(value = "id", required = true) Long id) {
 		logger.debug("Received request to delete existing record");

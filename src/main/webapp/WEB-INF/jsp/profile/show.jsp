@@ -15,9 +15,9 @@
 	<dt><spring:message code="Username"></spring:message></dt>
 	<dd><c:out value="${profileAttribute.username}" /></dd>
 	<dt><spring:message code="FirstName"></spring:message></dt>
-	<dd><c:out value="${profileAttribute.firstName}" /></dd>
+	<dd><c:out value="${profileAttribute.customer.firstName}" /></dd>
 	<dt><spring:message code="LastName"></spring:message></dt>
-	<dd><c:out value="${profileAttribute.lastName}" /></dd>
+	<dd><c:out value="${profileAttribute.customer.lastName}" /></dd>
 	<dt><spring:message code="E-mail Address"></spring:message></dt>
 	<dd><c:out value="${profileAttribute.email}" /></dd>
 </dl>

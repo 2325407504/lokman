@@ -74,8 +74,12 @@
 	</div>
 	<div class="container">
 		<div class="row">
-			<div class="span2">
+			<sec:authorize access="isAuthenticated()">
+			<div class="span3">
 				<%@ include file="/WEB-INF/jsp/sidebar.jsp" %>
 			</div>
-			<div class="span10">
-		
+			<div class="span9">
+			</sec:authorize>
+			<sec:authorize access="isAnonymous()">
+			<div class="span12">
+			</sec:authorize>

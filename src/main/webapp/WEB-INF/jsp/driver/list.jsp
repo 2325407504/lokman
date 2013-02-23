@@ -16,6 +16,7 @@
 	<caption><spring:message code="Drivers"></spring:message></caption>
 	<thead>
 		<tr>
+			<th><spring:message code="Id"></spring:message></th>
 			<th><spring:message code="FirstName"></spring:message></th>
 			<th><spring:message code="LastName"></spring:message></th>
 			<th><spring:message code="Phone Number"></spring:message></th>
@@ -26,6 +27,7 @@
 		<c:forEach items="${driverAttribute}" var="driver">
 			<spring:url var="editUrl" value="/driver/edit/${driver.id}" />
 			<tr>
+				<td><c:out value="${driver.id}" /></td>
 				<td><c:out value="${driver.firstName}" /></td>
 				<td><c:out value="${driver.lastName}" /></td>
 				<td><c:out value="${driver.phonenumber}" /></td>

@@ -41,7 +41,6 @@ public class ProfileController {
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String editAction(Model model) {
 		User securityUser = (User) (SecurityContextHolder.getContext()).getAuthentication().getPrincipal();
-		
 		Account account = accountService.findOneByUsername(securityUser.getUsername());
 		
 		logger.debug("Received request to show edit existing record");
@@ -50,15 +49,23 @@ public class ProfileController {
 	}
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAction(@ModelAttribute("profileAttribute") @Valid Account account, BindingResult result) {
+    public String saveAction(
+    		@ModelAttribute("profileAttribute") @Valid Account account, 
+    		BindingResult result) {
 		if (result.hasErrors()) {
 			logger.error(result);
 			return "/profile/form";
 		}
 		
+		User securityUser = (User) (SecurityContextHolder.getContext()).getAuthentication().getPrincipal();
+		Account acc = accountService.findOneByUsername(securityUser.getUsername());
+		
+		account.setId(acc.getId());
+		account.getCustomer().setId(acc.getCustomer().getId());
+		
 		logger.debug("Received request to save existing record");
 		accountService.save(account);
-		return "redirect:/profile/list";
+		return "redirect:/profile/show";
 	}
 	
 }

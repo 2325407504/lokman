@@ -16,6 +16,7 @@
 	<caption><spring:message code="Trucks"></spring:message></caption>
 	<thead>
 		<tr>
+			<th><spring:message code="Id"></spring:message></th>
 			<th><spring:message code="Plate"></spring:message></th>
 			<th></th>
 		</tr>
@@ -24,6 +25,7 @@
 		<c:forEach items="${truckAttribute}" var="truck">
 			<spring:url var="editUrl" value="/truck/edit/${truck.id}" />
 			<tr>
+				<td><c:out value="${truck.id}" /></td>
 				<td><c:out value="${truck.plate}" /></td>
 				<td>
 					<a class="btn btn-mini" href="${editUrl}">Edit</a>

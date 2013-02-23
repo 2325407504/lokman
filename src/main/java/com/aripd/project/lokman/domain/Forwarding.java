@@ -1,6 +1,5 @@
 package com.aripd.project.lokman.domain;
 
-import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -23,9 +22,12 @@ import com.aripd.common.utils.ARIPDJodaDateSerializer;
 
 @Entity
 @Table(name = "forwarding")
-public class Forwarding extends BaseEntity implements Serializable {
+public class Forwarding extends BaseEntity {
 
 	private static final long serialVersionUID = 7142407700649461014L;
+
+	@Column(nullable = false)
+	private boolean submitted = false;
 
 	@JsonIgnore
 	@ManyToOne
@@ -167,6 +169,14 @@ public class Forwarding extends BaseEntity implements Serializable {
 
 	public void setUatfs(Set<Uatf> uatfs) {
 		this.uatfs = uatfs;
+	}
+
+	public boolean isSubmitted() {
+		return submitted;
+	}
+
+	public void setSubmitted(boolean submitted) {
+		this.submitted = submitted;
 	}
 
 }

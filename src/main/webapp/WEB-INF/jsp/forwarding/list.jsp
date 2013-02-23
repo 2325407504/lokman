@@ -1,25 +1,24 @@
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
 
-<spring:url value="/" var="homeUrl" />
+<spring:url var="homeUrl" value="/" />
+<spring:url var="forwardingList" value="/forwarding/list" />
+<spring:url var="forwardingNew" value="/forwarding/new" />
+<spring:url var="forwardingExport" value="/forwarding/export/xls" />
+<spring:url var="uatfExport" value="/uatf/export/xls" />
 
-<ul class="breadcrumb">
-  <li><a href="${homeUrl}"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
-  <li class="active"><spring:message code="Forwarding Tracking" text="Forwarding Tracking"></spring:message></li>
-	<li class="pull-right">
-		<spring:url var="addUrl" value="/forwarding/new" />
-		<spring:url var="exportUrl" value="/forwarding/export/xls" />
-		<spring:url var="uatfExportUrl" value="/uatf/export/xls" />
-		<a class="btn btn-mini" href="${addUrl}"><spring:message code="New Entry"></spring:message></a>
-		<div class="btn-group">
-			<a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
-				<spring:message code="Export"></spring:message>
-				<span class="caret"></span>
-			</a>
-			<ul class="dropdown-menu">
-				<li><a href="${exportUrl}"><spring:message code="Waybill" text="Waybill"></spring:message></a></li>
-				<li><a href="${uatfExportUrl}"><spring:message code="UATF" text="UATF"></spring:message></a></li>
-			</ul>
-		</div>
+<ul class="nav nav-tabs">
+	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
+	<li class="active"><a href="${forwardingList}"><spring:message code="Forwarding Tracking" text="Forwarding Tracking"></spring:message></a></li>
+	<li class=""><a href="${forwardingNew}"><spring:message code="New Entry"></spring:message></a></li>
+	<li class="dropdown">
+		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+			<spring:message code="Export"></spring:message>
+			<b class="caret"></b>
+		</a>
+		<ul class="dropdown-menu">
+			<li><a href="${forwardingExport}"><spring:message code="Waybill" text="Waybill"></spring:message></a></li>
+			<li><a href="${uatfExport}"><spring:message code="UATF" text="UATF"></spring:message></a></li>
+		</ul>
 	</li>
 </ul>
 

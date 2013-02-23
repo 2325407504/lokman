@@ -44,6 +44,12 @@
 		</label>
 		${accountAttribute.email}
 	</li>
+	<li>
+		<label class="label">
+			<spring:message code="Roles"></spring:message>
+		</label>
+		<c:forEach var="role" items="${accountAttribute.roles}"><span class="label label-success">${role.name}</span>&nbsp;</c:forEach>
+	</li>
 </ul>
 
 <%@ include file="/WEB-INF/jsp/footer.jsp" %>

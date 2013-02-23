@@ -3,11 +3,13 @@ package com.aripd.project.lokman.controller;
 import java.security.Principal;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aripd.account.domain.Account;
 import com.aripd.account.service.IAccountService;
@@ -34,11 +37,13 @@ import com.aripd.project.lokman.service.SubcontractorService;
 import com.aripd.project.lokman.service.UatfService;
 import com.aripd.project.lokman.validator.ForwardingValidator;
 
+@PreAuthorize("hasRole('ROLE_USER')")
 @Controller
 @RequestMapping("/forwarding")
 public class ForwardingController {
 
-	protected static Logger logger = Logger.getLogger(ForwardingController.class);
+	protected static Logger logger = Logger
+			.getLogger(ForwardingController.class);
 
 	@Autowired
 	private ForwardingValidator forwardingValidator;
@@ -61,56 +66,60 @@ public class ForwardingController {
 	@Resource(name = "accountService")
 	private IAccountService accountService;
 
-	@Secured("ROLE_USER")
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	public @ResponseBody
 	WebResultSet<Forwarding> getDataTables(@TableParam PagingCriteria criteria) {
-		ResultSet<Forwarding> resultset = this.forwardingService.getDataTables(criteria);
+		ResultSet<Forwarding> resultset = this.forwardingService
+				.getDataTables(criteria);
 		return ControllerUtils.getWebResultSet(criteria, resultset);
 	}
 
-	@Secured("ROLE_USER")
 	@RequestMapping(value = "/list")
 	public String listAction(Model model) {
 		return "forwarding/list";
 	}
 
-	@Secured("ROLE_USER")
 	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
 	public String showAction(@PathVariable Long id, Model model) {
-		logger.debug("Received request to show existing record");
 		model.addAttribute("uatfAttribute", new Uatf());
 		model.addAttribute("forwardingAttribute", forwardingService.getOne(id));
 		return "forwarding/show";
 	}
 
-	@Secured("ROLE_USER")
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String newAction(Model model) {
-		logger.debug("Received request to show add page");
+		model.addAttribute("uatfAttribute", new Uatf());
 		model.addAttribute("quotas", quotaService.getAll());
 		model.addAttribute("subcontractors", subcontractorService.getAll());
-		model.addAttribute("drivers", driverService.getAll());
 		model.addAttribute("forwardingAttribute", new Forwarding());
 		return "forwarding/form";
 	}
 
-	@Secured("ROLE_USER")
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-	public String editAction(@PathVariable Long id, Model model) {
-		logger.debug("Received request to show edit existing record");
+	public String editAction(
+			final RedirectAttributes redirectAttributes,
+			HttpServletRequest request,
+			@PathVariable Long id, 
+			Model model) {
+		Forwarding forwarding = forwardingService.getOne(id);
+		if (forwarding.isSubmitted() && request.isUserInRole("ROLE_USER")) {
+			redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+			return "redirect:/forwarding/list";
+		}
+		model.addAttribute("uatfAttribute", new Uatf());
 		model.addAttribute("quotas", quotaService.getAll());
 		model.addAttribute("subcontractors", subcontractorService.getAll());
-		model.addAttribute("drivers", driverService.getAll());
 		model.addAttribute("forwardingAttribute", forwardingService.getOne(id));
 		return "forwarding/form";
 	}
 
-	@Secured("ROLE_USER")
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveAction(
+			final RedirectAttributes redirectAttributes,
 			@ModelAttribute("forwardingAttribute")/* @Valid */Forwarding formData,
-			BindingResult result, Model model, Principal principal) {
+			BindingResult result, 
+			Model model, 
+			Principal principal) {
 		forwardingValidator.validate(formData, result);
 		if (result.hasErrors()) {
 			logger.error(result);
@@ -126,10 +135,10 @@ public class ForwardingController {
 		formData.setAccount(account);
 
 		forwardingService.save(formData);
+		redirectAttributes.addFlashAttribute("message", "Successfully saved..");
 		return "redirect:/forwarding/list";
 	}
 
-	@Secured("ROLE_USER")
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
 	public String delete(@RequestParam(value = "id", required = true) Long id) {
 		logger.debug("Received request to delete existing record");

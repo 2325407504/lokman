@@ -1,79 +1,105 @@
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
 
-<spring:url value="/" var="homeUrl" />
-<spring:url value="/trip/list" var="trip_list" />
+<spring:url var="homeUrl" value="/" />
+<spring:url var="tripList" value="/trip/list" />
+<spring:url var="tripShow" value="/trip/show/${tripAttribute.id}" />
+<spring:url var="tripEdit" value="/trip/edit/${tripAttribute.id}" />
+<spring:url var="tripNew" value="/trip/new" />
+<spring:url var="tripExport" value="/trip/export/xls" />
+<spring:url var="tripChart" value="/trip/chart" />
+<spring:url var="tripSave" value="/trip/save" />
 
-<ul class="breadcrumb">
-  <li><a href="${homeUrl}"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
-  <li><a href="${trip_list}"><spring:message code="Trip Tracking"></spring:message></a> <span class="divider">/</span></li>
+<ul class="nav nav-tabs">
+	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
+	<li class=""><a href="${tripList}"><spring:message code="Trip Tracking" text="Trip Tracking"></spring:message></a></li>
 	<c:choose>
 		<c:when test="${ !empty tripAttribute.id }">
-			<li class="active"><spring:message code="Entry No"></spring:message>: ${tripAttribute.id}</li>
+			<li class="active"><a href="${tripEdit}"><spring:message code="Entry No"></spring:message>: ${tripAttribute.id}</a></li>
 		</c:when>
 		<c:otherwise>
-			<li class="active"><spring:message code="New Entry"></spring:message></li>
+			<li class="active"><a href="${tripNew}"><spring:message code="New Entry"></spring:message></a></li>
 		</c:otherwise>
 	</c:choose>
+	<li class="dropdown">
+		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+			<spring:message code="Export"></spring:message>
+			<b class="caret"></b>
+		</a>
+		<ul class="dropdown-menu">
+			<li><a href="${tripExport}"><spring:message code="Export"></spring:message></a></li>
+			<li><a href="${tripChart}"><spring:message code="Chart"></spring:message></a></li>
+		</ul>
+	</li>
 </ul>
-<spring:url var="saveUrl" value="/trip/save" />
-<form:form modelAttribute="tripAttribute" action="${saveUrl}" method="post">
-	<form:errors path="*" cssClass="error-block" element="div" />
-	<form:hidden path="id" />
-	<fieldset>
-		<div class="form-row">
-			<form:label path="truck"><spring:message code="Truck" text="Truck"></spring:message></form:label>
-			<form:select path="truck.id" multiple="false" items="${trucks}" itemLabel="plate" itemValue="id"/>
-			<form:errors cssClass="error-field" path="truck" />
-		</div>
-		<div class="form-row">
-			<form:label path="driver"><spring:message code="Driver" text="Driver"></spring:message></form:label>
-			<form:select path="driver.id" multiple="false" items="${drivers}" itemLabel="fullname" itemValue="id"/>
-			<form:errors cssClass="error-field" path="driver" />
-		</div>
-		<div class="form-row">
-			<form:label path="startingPoint"><spring:message code="Starting Point" text="Starting Point"></spring:message></form:label>
-			<span><form:input path="startingPoint" /></span>
-			<form:errors cssClass="error-field" path="startingPoint" />
-		</div>
-		<div class="form-row">
-			<form:label path="startingKm"><spring:message code="Starting km" text="Starting km"></spring:message></form:label>
-			<span><form:input path="startingKm" /></span>
-			<form:errors cssClass="error-field" path="startingKm" />
-		</div>
-		<div class="form-row">
-			<form:label path="startingTime"><spring:message code="Starting Time" text="Starting Time"></spring:message></form:label>
-			<span><form:input type="datetime" path="startingTime" /></span>
-			<form:errors cssClass="error-field" path="startingTime" />
-		</div>
-		<div class="form-row">
-			<form:label path="endingPoint"><spring:message code="Ending Point" text="Ending Point"></spring:message></form:label>
-			<span><form:input path="endingPoint" /></span>
-			<form:errors cssClass="error-field" path="endingPoint" />
-		</div>
-		<div class="form-row">
-			<form:label path="endingKm"><spring:message code="Ending km" text="Ending km"></spring:message></form:label>
-			<span><form:input path="endingKm" /></span>
-			<form:errors cssClass="error-field" path="endingKm" />
-		</div>
-		<div class="form-row">
-			<form:label path="endingTime"><spring:message code="Ending Time" text="Ending Time"></spring:message></form:label>
-			<span><form:input type="datetime" path="endingTime" /></span>
-			<form:errors cssClass="error-field" path="endingTime" />
-		</div>
-		<aripd:input path="loadWeightInTonne" label="loadWeightInTonne"/>
-		<div class="control-group">
-			<form:label path="remark" class="control-label"><spring:message code="Remark" text="Remark"></spring:message></form:label>
-			<div class="controls"><form:textarea path="remark" /></div>
-			<form:errors cssClass="error-field" path="remark" />
-		</div>
-		<div class="form-actions">
-			<c:if test="${ !empty tripAttribute.id }">
-			<a class="btn btn-danger" href="javascript:$('#form-${tripAttribute.id}').submit();"><spring:message code="Delete"></spring:message></a>
-			</c:if>
-			<button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
-		</div>
-	</fieldset>
-</form:form>
+
+<div class="row-fluid">
+	<div class="span12">
+		<form:form modelAttribute="tripAttribute" action="${tripSave}" method="post">
+			<form:errors path="*" cssClass="error-block" element="div" />
+			<form:hidden path="id" />
+			<fieldset>
+				<div class="form-row">
+					<form:label path="submitted"><spring:message code="Submitted" text="Submitted"></spring:message></form:label>
+					<span><form:checkbox path="submitted" /></span>
+					<form:errors cssClass="error-field" path="submitted" />
+				</div>
+				<div class="form-row">
+					<form:label path="truck"><spring:message code="Truck" text="Truck"></spring:message></form:label>
+					<form:select multiple="false" path="truck.id" items="${trucks}" itemLabel="plate" itemValue="id" />
+					<form:errors cssClass="error-field" path="truck" />
+				</div>
+				<div class="form-row">
+					<form:label path="driver"><spring:message code="Driver" text="Driver"></spring:message></form:label>
+					<form:select path="driver.id" multiple="false" items="${drivers}" itemLabel="fullname" itemValue="id" />
+					<form:errors cssClass="error-field" path="driver" />
+				</div>
+				<div class="form-row">
+					<form:label path="startingPoint"><spring:message code="Starting Point" text="Starting Point"></spring:message></form:label>
+					<span><form:input path="startingPoint" /></span>
+					<form:errors cssClass="error-field" path="startingPoint" />
+				</div>
+				<div class="form-row">
+					<form:label path="startingKm"><spring:message code="Starting km" text="Starting km"></spring:message></form:label>
+					<span><form:input path="startingKm" /></span>
+					<form:errors cssClass="error-field" path="startingKm" />
+				</div>
+				<div class="form-row">
+					<form:label path="startingTime"><spring:message code="Starting Time" text="Starting Time"></spring:message></form:label>
+					<span><form:input type="datetime" path="startingTime" /></span>
+					<form:errors cssClass="error-field" path="startingTime" />
+				</div>
+				<div class="form-row">
+					<form:label path="endingPoint"><spring:message code="Ending Point" text="Ending Point"></spring:message></form:label>
+					<span><form:input path="endingPoint" /></span>
+					<form:errors cssClass="error-field" path="endingPoint" />
+				</div>
+				<div class="form-row">
+					<form:label path="endingKm"><spring:message code="Ending km" text="Ending km"></spring:message></form:label>
+					<span><form:input path="endingKm" /></span>
+					<form:errors cssClass="error-field" path="endingKm" />
+				</div>
+				<div class="form-row">
+					<form:label path="endingTime"><spring:message code="Ending Time" text="Ending Time"></spring:message></form:label>
+					<span><form:input type="datetime" path="endingTime" /></span>
+					<form:errors cssClass="error-field" path="endingTime" />
+				</div>
+				<aripd:input path="loadWeightInTonne" label="loadWeightInTonne"/>
+				<div class="control-group">
+					<form:label path="remark" class="control-label"><spring:message code="Remark" text="Remark"></spring:message></form:label>
+					<div class="controls"><form:textarea path="remark" /></div>
+					<form:errors cssClass="error-field" path="remark" />
+				</div>
+				<div class="form-actions">
+					<c:if test="${ !empty tripAttribute.id }">
+					<a class="btn btn-danger" href="javascript:$('#form-${tripAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete"></spring:message></a>
+					<button class="btn btn-inverse" type="submit" name="action" value="submit"><i class="icon-envelope icon-white"></i> <spring:message code="Save and Submit"></spring:message></button>
+					</c:if>
+					<button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
+				</div>
+			</fieldset>
+		</form:form>
+	</div>
+</div>
 
 <c:if test="${ !empty tripAttribute.id }">
 <spring:url var="deleteUrl" value="/trip/delete?id=${tripAttribute.id}" />

@@ -30,15 +30,22 @@ $(document).ready(function() {
 		"bProcessing": true,
 		"bServerSide": true,
 		"fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+			<c:if test="${not empty dataUrlShow or not empty dataUrlEdit or not empty dataUrlDelete}">
 			$('td:eq(${actionColumn})', nRow).html('');
 			<c:if test="${not empty dataUrlShow}">
 				$('td:eq(${actionColumn})', nRow).append( '<a href="<spring:url value="${dataUrlShow}" />/'+aData.id+'"><i class="icon-list-alt"></i></a>&nbsp;' );
 			</c:if>
-			<c:if test="${not empty dataUrlEdit}">
-				$('td:eq(${actionColumn})', nRow).append( '<a href="<spring:url value="${dataUrlEdit}" />/'+aData.id+'"><i class="icon-pencil"></i></a>&nbsp;' );
-			</c:if>
+			if (aData.submitted) {
+				$(nRow).addClass('success');
+			}
+			else if (!aData.submitted) {
+				<c:if test="${not empty dataUrlEdit}">
+					$('td:eq(${actionColumn})', nRow).append( '<a href="<spring:url value="${dataUrlEdit}" />/'+aData.id+'"><i class="icon-pencil"></i></a>&nbsp;' );
+				</c:if>
+			}
 			<c:if test="${not empty dataUrlDelete}">
 				$('td:eq(${actionColumn})', nRow).append( '<form style="display:inline" method="POST" action="<spring:url value="${dataUrlDelete}" />/'+aData.id+'"><button type="submit"><i class="icon-remove"></i></button></form>&nbsp;' );
+			</c:if>
 			</c:if>
 		},
 		"oLanguage": {

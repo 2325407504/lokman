@@ -1,7 +1,5 @@
 package com.aripd.project.lokman.domain;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -10,7 +8,7 @@ import com.aripd.common.entity.BaseEntity;
 
 @Entity
 @Table(name = "quota")
-public class Quota extends BaseEntity implements Serializable {
+public class Quota extends BaseEntity {
 
 	private static final long serialVersionUID = -6317556886179089841L;
 

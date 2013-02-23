@@ -108,7 +108,7 @@ public class UatfController {
 		formData.setForwarding(forwardingService.getOne(forwarding_id));
 
 		uatfService.save(formData);
-		return "redirect:/forwarding/show/"+forwarding_id;
+		return "redirect:/forwarding/edit/"+forwarding_id;
 	}
 
 	@Secured("ROLE_USER")
@@ -117,7 +117,7 @@ public class UatfController {
 		logger.debug("Received request to delete existing record");
 		Uatf uatf = uatfService.getOne(id);
 		uatfService.delete(id);
-		return "redirect:/forwarding/show/"+uatf.getForwarding().getId();
+		return "redirect:/forwarding/edit/"+uatf.getForwarding().getId();
 	}
 
 	/**

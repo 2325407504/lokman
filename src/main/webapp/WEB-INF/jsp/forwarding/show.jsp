@@ -1,28 +1,40 @@
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
 
-<spring:url value="/" var="homeUrl" />
-<spring:url value="/forwarding/list" var="forwarding_list" />
+<spring:url var="homeUrl" value="/" />
+<spring:url var="forwardingList" value="/forwarding/list" />
+<spring:url var="forwardingShow" value="/forwarding/show/${forwardingAttribute.id}" />
+<spring:url var="forwardingEdit" value="/forwarding/edit/${forwardingAttribute.id}" />
+<spring:url var="forwardingNew" value="/forwarding/new" />
+<spring:url var="forwardingExport" value="/forwarding/export/xls" />
+<spring:url var="uatfExport" value="/uatf/export/xls" />
 
-<ul class="breadcrumb">
-  <li><a href="${homeUrl}"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
-  <li><a href="${forwarding_list}"><spring:message code="Forwarding Tracking"></spring:message></a> <span class="divider">/</span></li>
-	<li class="active"><spring:message code="Entry No"></spring:message>: ${forwardingAttribute.id}</li>
-	<li class="pull-right">
-		<spring:url var="editUrl" value="/forwarding/edit/${forwardingAttribute.id}" />
-		<a class="btn btn-mini" href="${editUrl}"><spring:message code="Edit"></spring:message></a>
+<ul class="nav nav-tabs">
+	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
+	<li class=""><a href="${forwardingList}"><spring:message code="Forwarding Tracking" text="Forwarding Tracking"></spring:message></a></li>
+	<li class="active"><a href="${forwardingShow}"><spring:message code="Entry No"></spring:message>: ${forwardingAttribute.id}</a></li>
+	<li class=""><a href="${forwardingNew}"><spring:message code="New Entry"></spring:message></a></li>
+	<li class="dropdown">
+		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+			<spring:message code="Export"></spring:message>
+			<b class="caret"></b>
+		</a>
+		<ul class="dropdown-menu">
+			<li><a href="${forwardingExport}"><spring:message code="Waybill" text="Waybill"></spring:message></a></li>
+			<li><a href="${uatfExport}"><spring:message code="UATF" text="UATF"></spring:message></a></li>
+		</ul>
 	</li>
 </ul>
 
-<div class="row">
+<c:if test="${forwardingAttribute.submitted}">
+<div class="alert alert-error"><spring:message code="You cannot edit this record anymore"></spring:message></div>
+</c:if>
+<c:if test="${!forwardingAttribute.submitted}">
+<div class="alert alert-info"><a href="${forwardingEdit}"><i class="icon-pencil"></i> <spring:message code="Edit"></spring:message></a></div>
+</c:if>
+
+<div class="row-fluid">
 	<div class="span4">
-		
 		<ul class="unstyled">
-			<li>
-				<label class="label">
-					<spring:message code="Id" text="Id"></spring:message>
-				</label>
-				${forwardingAttribute.id}
-			</li>
 			<li>
 				<label class="label">
 					<spring:message code="Waybill No" text="Waybill No"></spring:message>
@@ -85,33 +97,13 @@
 			</li>
 		</ul>
 	</div>
-	<div class="span6">
-		<spring:url var="saveUrl" value="/uatf/save/${forwardingAttribute.id}" />
-		
-		<fmt:message key="Code" var="Code"/>
-		<fmt:message key="Company" var="Company"/>
-		<fmt:message key="County" var="County"/>
-		<fmt:message key="City" var="City"/>
-		
-		<form:form modelAttribute="uatfAttribute" action="${saveUrl}" method="post" class="form-inline">
-			<form:errors path="*" cssClass="error-block" element="div" />
-			<form:input path="code" cssClass="input-small" placeholder="${Code}" />
-			<form:input path="company" cssClass="input-small" placeholder="${Company}" />
-			<form:input path="county" cssClass="input-small" placeholder="${County}" />
-			<form:input path="city" cssClass="input-small" placeholder="${City}" />
-			<button class="btn" type="submit"><i class="icon-ok"></i></button>
-		</form:form>
-		
-		<hr>
-
-		<aripd:datatables datasource="/uatf/get/${forwardingAttribute.id}" id="uatfs" dataUrlDelete="/uatf/delete" actionColumn="4">
+	<div class="span8">
+		<aripd:datatables datasource="/uatf/get/${forwardingAttribute.id}" id="uatfs">
 			<aripd:column label="Code" field="code"/>
 			<aripd:column label="Company" field="company"/>
 			<aripd:column label="County" field="county"/>
 			<aripd:column label="City" field="city"/>
-			<aripd:column label="Action" field="id"/>
 		</aripd:datatables>
-
 	</div>
 </div>
 

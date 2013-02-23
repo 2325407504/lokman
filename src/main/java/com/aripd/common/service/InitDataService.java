@@ -29,14 +29,14 @@ public class InitDataService {
 	RoleRepository roleRepository;
 
 	public void init() {
-		Role superadminRole = getRole("ROLE_SUPERADMIN");
-		Role adminRole = getRole("ROLE_ADMIN");
-		Role userRole = getRole("ROLE_USER");
-		Role role1 = getRole("ROLE_L1");
-		Role role2 = getRole("ROLE_L2");
-		Role role3 = getRole("ROLE_L3");
-		Role role4 = getRole("ROLE_L4");
-		Role role5 = getRole("ROLE_L5");
+		Role superadminRole = getRole("ROLE_SUPERADMIN", "Süper Yönetici");
+		Role adminRole = getRole("ROLE_ADMIN", "Yönetici");
+		Role userRole = getRole("ROLE_USER", "Kullanıcı");
+		Role role1 = getRole("ROLE_L1", "Rol1");
+		Role role2 = getRole("ROLE_L2", "Rol2");
+		Role role3 = getRole("ROLE_L3", "Rol3");
+		Role role4 = getRole("ROLE_L4", "Rol4");
+		Role role5 = getRole("ROLE_L5", "Rol5");
 
 		/* A user with admin right */
 		Account admin1 = new Account();
@@ -90,11 +90,12 @@ public class InitDataService {
 		this.userRepository.save(listUsers);
 	}
 
-	private Role getRole(final String roleCode) {
-		Role result = roleRepository.findOneByCode(roleCode);
+	private Role getRole(final String code, final String name) {
+		Role result = roleRepository.findOneByCode(code);
 		if (result == null) {
 			result = new Role();
-			result.setCode(roleCode);
+			result.setCode(code);
+			result.setName(name);
 			roleRepository.save(result);
 		}
 		return result;

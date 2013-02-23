@@ -3,11 +3,12 @@ package com.aripd.project.lokman.controller;
 import java.security.Principal;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aripd.account.domain.Account;
 import com.aripd.account.service.IAccountService;
@@ -31,6 +33,7 @@ import com.aripd.project.lokman.service.TripService;
 import com.aripd.project.lokman.service.TruckService;
 import com.aripd.project.lokman.validator.TripValidator;
 
+@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_USER')")
 @Controller
 @RequestMapping("/trip")
 public class TripController {
@@ -52,7 +55,6 @@ public class TripController {
 	@Resource(name = "accountService")
 	private IAccountService accountService;
 
-	@Secured("ROLE_USER")
 	@RequestMapping(value = "/chart")
 	public String chartAction(Model model) {
 		return "trip/chart";
@@ -65,7 +67,6 @@ public class TripController {
 		return ControllerUtils.getWebResultSet(criteria, resultset);
 	}
 
-	@Secured("ROLE_USER")
 	@RequestMapping(value = "/list")
 	public String listAction(Model model) {
 		if (logger.isDebugEnabled()) {
@@ -75,7 +76,6 @@ public class TripController {
 		return "trip/list";
 	}
 
-	@Secured("ROLE_USER")
 	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
 	public String showAction(@PathVariable Long id, Model model) {
 		logger.debug("Received request to show existing record");
@@ -83,7 +83,6 @@ public class TripController {
 		return "trip/show";
 	}
 
-	@Secured("ROLE_USER")
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String newAction(Model model) {
 		logger.debug("Received request to show add page");
@@ -93,21 +92,31 @@ public class TripController {
 		return "trip/form";
 	}
 
-	@Secured("ROLE_USER")
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-	public String editAction(@PathVariable Long id, Model model) {
+	public String editAction(
+			final RedirectAttributes redirectAttributes,
+			HttpServletRequest request,
+			@PathVariable Long id, 
+			Model model) {
+		Trip trip = tripService.getOne(id);
+		if (trip.isSubmitted() && request.isUserInRole("ROLE_USER")) {
+			redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+			return "redirect:/trip/list";
+		}
 		logger.debug("Received request to show edit existing record");
 		model.addAttribute("trucks", truckService.getAll());
 		model.addAttribute("drivers", driverService.getAll());
-		model.addAttribute("tripAttribute", tripService.getOne(id));
+		model.addAttribute("tripAttribute", trip);
 		return "trip/form";
 	}
 
-	@Secured("ROLE_USER")
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveAction(
+			final RedirectAttributes redirectAttributes,
 			@ModelAttribute("tripAttribute")/* @Valid */Trip formData,
-			BindingResult result, Model model, Principal principal) {
+			BindingResult result, 
+			Model model, 
+			Principal principal) {
 		tripValidator.validate(formData, result);
 		if (result.hasErrors()) {
 			logger.error(result);
@@ -122,11 +131,10 @@ public class TripController {
 		formData.setAccount(account);
 
 		tripService.save(formData);
-		//tripService.saveOrUpdate(formData);
+		redirectAttributes.addFlashAttribute("message", "Successfully saved..");
 		return "redirect:/trip/list";
 	}
 
-	@Secured("ROLE_USER")
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
 	public String delete(@RequestParam(value = "id", required = true) Long id) {
 		logger.debug("Received request to delete existing record");

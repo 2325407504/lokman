@@ -16,6 +16,7 @@
 	<caption><spring:message code="Subcontractors"></spring:message></caption>
 	<thead>
 		<tr>
+			<th><spring:message code="Id"></spring:message></th>
 			<th><spring:message code="Name"></spring:message></th>
 			<th></th>
 		</tr>
@@ -24,6 +25,7 @@
 		<c:forEach items="${subcontractorAttribute}" var="subcontractor">
 			<spring:url var="editUrl" value="/subcontractor/edit/${subcontractor.id}" />
 			<tr>
+				<td><c:out value="${subcontractor.id}" /></td>
 				<td><c:out value="${subcontractor.name}" /></td>
 				<td>
 					<a class="btn btn-mini" href="${editUrl}">Edit</a>
