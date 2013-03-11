@@ -21,6 +21,8 @@
 <spring:url value="/trip/list" var="trip_tracking_list" />
 <spring:url value="/forwarding/list" var="forwarding_list" />
 
+<spring:url value="/user/trip/list" var="account_trip_tracking_list" />
+<spring:url value="/user/forwarding/list" var="account_forwarding_list" />
     
 <div class="well">
 	
@@ -29,12 +31,13 @@
 			<div class="accordion-group">
 				<div class="accordion-heading">
 					<a class="accordion-toggle nav-header" data-toggle="collapse" data-parent="#accordion2" href="#collapse1">
-						<spring:message code="User Management"></spring:message>
+						Süper admin
 					</a>
 				</div>
 				<div id="collapse1" class="accordion-body in collapse">
 					<div class="accordion-inner">
-						<ul class="unstyled">
+						<ul class="nav nav-list">
+							<li class="nav-header"><spring:message code="User Management"></spring:message></li>
 							<li><a href="${role_list}"><spring:message code="Roles"></spring:message></a></li>
 							<li><a href="${account_list}"><spring:message code="Accounts"></spring:message></a></li>
 						</ul>
@@ -42,37 +45,42 @@
 				</div>
 			</div>
 		</sec:authorize>
-		<sec:authorize access="hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')">
+		<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
 			<div class="accordion-group">
 				<div class="accordion-heading">
 					<a class="accordion-toggle nav-header" data-toggle="collapse" data-parent="#accordion2" href="#collapse2">
-						<spring:message code="Settings"></spring:message>
+						Admin
 					</a>
 				</div>
 				<div id="collapse2" class="accordion-body in collapse">
 					<div class="accordion-inner">
-						<ul class="unstyled">
+						<ul class="nav nav-list">
+							<li class="nav-header"><spring:message code="Settings"></spring:message></li>
 							<li><a href="${truck_list}"><spring:message code="Trucks"></spring:message></a></li>
 							<li><a href="${driver_list}"><spring:message code="Drivers"></spring:message></a></li>
 							<li><a href="${subcontractor_list}"><spring:message code="Subcontractors"></spring:message></a></li>
 							<li><a href="${quota_list}"><spring:message code="Quotas"></spring:message></a></li>
+							<li class="nav-header">Logistics</li>
+							<li><a href="${trip_tracking_list}"><spring:message code="Trip Tracking" text="Trip Tracking"></spring:message></a></li>
+							<li><a href="${forwarding_list}"><spring:message code="Forwarding Tracking" text="Forwarding Tracking"></spring:message></a></li>
 						</ul>
 					</div>
 				</div>
 			</div>
 		</sec:authorize>
-		<sec:authorize access="hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN', 'ROLE_USER')">
+		<sec:authorize access="hasAnyRole('ROLE_USER')">
 			<div class="accordion-group">
 				<div class="accordion-heading">
 					<a class="accordion-toggle nav-header" data-toggle="collapse" data-parent="#accordion2" href="#collapse3">
-						Logistics
+						User
 					</a>
 				</div>
 				<div id="collapse3" class="accordion-body in collapse">
 					<div class="accordion-inner">
-						<ul class="unstyled">
-							<li><a href="${trip_tracking_list}"><spring:message code="Trip Tracking" text="Trip Tracking"></spring:message></a></li>
-							<li><a href="${forwarding_list}"><spring:message code="Forwarding Tracking" text="Forwarding Tracking"></spring:message></a></li>
+						<ul class="nav nav-list">
+							<li class="nav-header">Logistics</li>
+							<li><a href="${account_trip_tracking_list}"><spring:message code="Trip Tracking" text="Trip Tracking"></spring:message></a></li>
+							<li><a href="${account_forwarding_list}"><spring:message code="Forwarding Tracking" text="Forwarding Tracking"></spring:message></a></li>
 						</ul>
 					</div>
 				</div>

@@ -5,9 +5,9 @@
 <spring:url var="tripShow" value="/trip/show/${tripAttribute.id}" />
 <spring:url var="tripEdit" value="/trip/edit/${tripAttribute.id}" />
 <spring:url var="tripNew" value="/trip/new" />
+<spring:url var="tripSave" value="/trip/save" />
 <spring:url var="tripExport" value="/trip/export/xls" />
 <spring:url var="tripChart" value="/trip/chart" />
-<spring:url var="tripSave" value="/trip/save" />
 
 <ul class="nav nav-tabs">
 	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
@@ -42,6 +42,11 @@
 					<form:label path="submitted"><spring:message code="Submitted" text="Submitted"></spring:message></form:label>
 					<span><form:checkbox path="submitted" /></span>
 					<form:errors cssClass="error-field" path="submitted" />
+				</div>
+				<div class="form-row">
+					<form:label path="account"><spring:message code="Account" text="Account"></spring:message></form:label>
+					<form:select multiple="false" path="account.id" items="${accounts}" itemLabel="customer.fullname" itemValue="id" />
+					<form:errors cssClass="error-field" path="account" />
 				</div>
 				<div class="form-row">
 					<form:label path="truck"><spring:message code="Truck" text="Truck"></spring:message></form:label>
@@ -92,7 +97,6 @@
 				<div class="form-actions">
 					<c:if test="${ !empty tripAttribute.id }">
 					<a class="btn btn-danger" href="javascript:$('#form-${tripAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete"></spring:message></a>
-					<button class="btn btn-inverse" type="submit" name="action" value="submit"><i class="icon-envelope icon-white"></i> <spring:message code="Save and Submit"></spring:message></button>
 					</c:if>
 					<button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
 				</div>
@@ -147,4 +151,5 @@ endDateTextBox.datetimepicker({
 });
 //-->
 </script>
+
 <%@ include file="/WEB-INF/jsp/footer.jsp" %>

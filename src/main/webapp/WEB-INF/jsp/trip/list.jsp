@@ -24,6 +24,7 @@
 
 <aripd:datatables datasource="/trip/get" id="trips" dataUrlShow="/trip/show" dataUrlEdit="/trip/edit">
 	<aripd:column label="Action" field="id"/>
+	<aripd:column label="Account" field="account.username"/>
 	<aripd:column label="Truck" field="truck.plate"/>
 	<aripd:column label="Driver" field="driver.fullname"/>
 	<aripd:column label="Starting Point" field="startingPoint"/>

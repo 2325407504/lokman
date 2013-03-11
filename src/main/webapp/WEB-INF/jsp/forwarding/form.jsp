@@ -45,6 +45,11 @@
 					<form:errors cssClass="error-field" path="submitted" />
 				</div>
 				<div class="form-row">
+					<form:label path="account"><spring:message code="Account" text="Account"></spring:message></form:label>
+					<form:select multiple="false" path="account.id" items="${accounts}" itemLabel="customer.fullname" itemValue="id" />
+					<form:errors cssClass="error-field" path="account" />
+				</div>
+				<div class="form-row">
 					<form:label path="waybillNo"><spring:message code="Waybill No" text="Waybill No"></spring:message></form:label>
 					<span><form:input type="text" path="waybillNo" /></span>
 					<form:errors cssClass="error-field" path="waybillNo" />
@@ -60,14 +65,14 @@
 					<form:errors cssClass="error-field" path="plate" />
 				</div>
 				<div class="form-row">
-					<form:label path="startingAt"><spring:message code="Starting At" text="Starting At"></spring:message></form:label>
-					<span><form:input type="text" path="startingAt" /></span>
-					<form:errors cssClass="error-field" path="startingAt" />
+					<form:label path="startingTime"><spring:message code="Starting Time"></spring:message></form:label>
+					<span><form:input type="text" path="startingTime" /></span>
+					<form:errors cssClass="error-field" path="startingTime" />
 				</div>
 				<div class="form-row">
-					<form:label path="endingAt"><spring:message code="Ending At" text="Ending At"></spring:message></form:label>
-					<span><form:input type="text" path="endingAt" /></span>
-					<form:errors cssClass="error-field" path="endingAt" />
+					<form:label path="endingTime"><spring:message code="Ending Time"></spring:message></form:label>
+					<span><form:input type="text" path="endingTime" /></span>
+					<form:errors cssClass="error-field" path="endingTime" />
 				</div>
 				<div class="form-row">
 					<form:label path="endingPoint"><spring:message code="Ending Point" text="Ending Point"></spring:message></form:label>
@@ -98,7 +103,6 @@
 					<c:if test="${ !empty forwardingAttribute.id }">
 					<a class="btn btn-danger" href="javascript:$('#form-${forwardingAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete"></spring:message></a>
 					</c:if>
-					<button class="btn btn-inverse" type="submit" name="action" value="submit"><i class="icon-envelope icon-white"></i> <spring:message code="Save and Submit"></spring:message></button>
 					<button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
 				</div>
 			</fieldset>
@@ -139,5 +143,45 @@
 		</c:if>
 	</div>
 </div>
+
+<script type="text/javascript">
+<!--
+var startDateTextBox = $('#startingTime');
+var endDateTextBox = $('#endingTime');
+
+startDateTextBox.datetimepicker({ 
+	onClose: function(dateText, inst) {
+		if (endDateTextBox.val() != '') {
+			var testStartDate = startDateTextBox.datetimepicker('getDate');
+			var testEndDate = endDateTextBox.datetimepicker('getDate');
+			if (testStartDate > testEndDate)
+				endDateTextBox.datetimepicker('setDate', testStartDate);
+		}
+		else {
+			endDateTextBox.val(dateText);
+		}
+	},
+	onSelect: function (selectedDateTime){
+		endDateTextBox.datetimepicker('option', 'minDate', startDateTextBox.datetimepicker('getDate') );
+	}
+});
+endDateTextBox.datetimepicker({ 
+	onClose: function(dateText, inst) {
+		if (startDateTextBox.val() != '') {
+			var testStartDate = startDateTextBox.datetimepicker('getDate');
+			var testEndDate = endDateTextBox.datetimepicker('getDate');
+			if (testStartDate > testEndDate)
+				startDateTextBox.datetimepicker('setDate', testEndDate);
+		}
+		else {
+			startDateTextBox.val(dateText);
+		}
+	},
+	onSelect: function (selectedDateTime){
+		startDateTextBox.datetimepicker('option', 'maxDate', endDateTextBox.datetimepicker('getDate') );
+	}
+});
+//-->
+</script>
 
 <%@ include file="/WEB-INF/jsp/footer.jsp" %>

@@ -27,9 +27,9 @@ INSERT INTO `acl_sid` (`id`, `principal`, `sid`) VALUES
 --
 
 INSERT INTO `acl_class` (`id`, `class`) VALUES
-(1, 'org.krams.tutorial.domain.AdminPost'),
-(2, 'org.krams.tutorial.domain.PersonalPost'),
-(3, 'org.krams.tutorial.domain.PublicPost');
+(1, 'com.aripd.project.lgk.domain.Forwarding'),
+(2, 'com.aripd.project.lgk.domain.Trip'),
+(3, 'com.aripd.project.lgk.domain.Driver');
 
 --
 -- Dumping data for table `acl_object_identity`

@@ -13,8 +13,10 @@ import com.aripd.common.entity.BaseEntity_;
 @StaticMetamodel(Account.class)
 public class Account_ extends BaseEntity_ {
 
+	public static volatile SingularAttribute<Account, String> password;
 	public static volatile SingularAttribute<Account, String> username;
 	public static volatile SingularAttribute<Account, String> email;
+	public static volatile SingularAttribute<Account, Boolean> active;
 	public static volatile SingularAttribute<Account, Customer> customer;
 
 }

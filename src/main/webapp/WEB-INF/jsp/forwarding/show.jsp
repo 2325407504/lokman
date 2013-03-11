@@ -4,6 +4,7 @@
 <spring:url var="forwardingList" value="/forwarding/list" />
 <spring:url var="forwardingShow" value="/forwarding/show/${forwardingAttribute.id}" />
 <spring:url var="forwardingEdit" value="/forwarding/edit/${forwardingAttribute.id}" />
+<spring:url var="forwardingSubmit" value="/forwarding/submit/${forwardingAttribute.id}" />
 <spring:url var="forwardingNew" value="/forwarding/new" />
 <spring:url var="forwardingExport" value="/forwarding/export/xls" />
 <spring:url var="uatfExport" value="/uatf/export/xls" />
@@ -26,15 +27,28 @@
 </ul>
 
 <c:if test="${forwardingAttribute.submitted}">
-<div class="alert alert-error"><spring:message code="You cannot edit this record anymore"></spring:message></div>
+<div class="alert alert-error">
+	<spring:message code="The record submitted by user"></spring:message>
+	<a href="${forwardingEdit}"><i class="icon-pencil"></i> <spring:message code="Edit"></spring:message></a>
+	<a href="${forwardingSubmit}"><i class="icon-envelope"></i> <spring:message code="Draw Back"></spring:message></a>
+</div>
 </c:if>
 <c:if test="${!forwardingAttribute.submitted}">
-<div class="alert alert-info"><a href="${forwardingEdit}"><i class="icon-pencil"></i> <spring:message code="Edit"></spring:message></a></div>
+<div class="alert alert-info">
+	<a href="${forwardingEdit}"><i class="icon-pencil"></i> <spring:message code="Edit"></spring:message></a>
+	<a href="${forwardingSubmit}"><i class="icon-envelope"></i> <spring:message code="Submit"></spring:message></a>
+</div>
 </c:if>
 
 <div class="row-fluid">
 	<div class="span4">
 		<ul class="unstyled">
+			<li>
+				<label class="label">
+					<spring:message code="Account" text="Account"></spring:message>
+				</label>
+				${forwardingAttribute.account.customer.fullname}
+			</li>
 			<li>
 				<label class="label">
 					<spring:message code="Waybill No" text="Waybill No"></spring:message>
@@ -55,15 +69,15 @@
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Starting At" text="Starting At"></spring:message>
+					<spring:message code="Starting Time"></spring:message>
 				</label>
-				<spring:eval expression="forwardingAttribute.startingAt" />
+				<spring:eval expression="forwardingAttribute.startingTime" />
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Ending At" text="Ending At"></spring:message>
+					<spring:message code="Ending Time"></spring:message>
 				</label>
-				<spring:eval expression="forwardingAttribute.endingAt" />
+				<spring:eval expression="forwardingAttribute.endingTime" />
 			</li>
 			<li>
 				<label class="label">

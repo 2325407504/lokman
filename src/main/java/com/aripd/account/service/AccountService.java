@@ -13,7 +13,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.apache.log4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -30,8 +29,6 @@ import com.aripd.common.dto.SortField;
 @Transactional(readOnly = true)
 public class AccountService implements IAccountService {
 
-	protected static Logger logger = Logger.getLogger(AccountService.class);
-
 	@PersistenceContext
     private EntityManager em;
 	
@@ -39,17 +36,14 @@ public class AccountService implements IAccountService {
 	private AccountRepository repository;
 
 	public List<Account> findAll() {
-		logger.debug("Retrieving all accounts");
 		return repository.findAll();
 	}
 
 	public Account findOne(Long id) {
-		logger.debug("Retrieving account based on id");
 		return repository.findOne(id);
 	}
 
 	public Account findOneByUsername(String username) {
-		logger.debug("Retrieving account based on username");
 		return repository.findOneByUsername(username);
 	}
 

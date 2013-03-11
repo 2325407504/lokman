@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +18,6 @@ import com.aripd.account.repository.RoleRepository;
  */
 @Service("initDataService")
 public class InitDataService {
-
-	protected static Logger logger = Logger.getLogger(InitDataService.class);
 
 	@Autowired
 	AccountRepository userRepository;
@@ -78,7 +75,6 @@ public class InitDataService {
 		List<Account> listUsers = new ArrayList<Account>();
 		Account aUser;
 		for (int i = 0; i < 100; i++) {
-			logger.debug("Adding a new record");
 			aUser = new Account();
 			aUser.setCustomer(new Customer("FirstName_" + i, "LastName_" + i));
 			aUser.setUsername("user" + i);
@@ -86,6 +82,11 @@ public class InitDataService {
 			aUser.setPassword(DigestUtils.md5Hex("user"));
 			aUser.setActive(true);
 			listUsers.add(aUser);
+		}
+		this.userRepository.save(listUsers);
+		
+		for (Account account : listUsers) {
+			account.getRoles().add(userRole);
 		}
 		this.userRepository.save(listUsers);
 	}

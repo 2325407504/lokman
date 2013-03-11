@@ -80,8 +80,8 @@
 		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="converters">
 			<list>
-				<bean class="com.aripd.project.lokman.converter.TruckConverter"></bean>
-				<bean class="com.aripd.project.lokman.converter.DriverConverter"></bean>
+				<bean class="com.aripd.project.lgk.converter.TruckConverter"></bean>
+				<bean class="com.aripd.project.lgk.converter.DriverConverter"></bean>
 			</list>
 		</property>
 	</bean>
@@ -116,10 +116,10 @@
 	<!-- initializing data to realize some test -->
 	<beans>
 		<bean id="initDataService" init-method="init" class="com.aripd.common.service.InitDataService" />
-		<bean init-method="init" class="com.aripd.project.lokman.service.TruckDataService" />
-		<bean init-method="init" class="com.aripd.project.lokman.service.DriverDataService" />
-		<bean init-method="init" class="com.aripd.project.lokman.service.SubcontractorDataService" />
-		<bean init-method="init" class="com.aripd.project.lokman.service.QuotaDataService" />
+		<bean init-method="init" class="com.aripd.project.lgk.service.TruckDataService" />
+		<bean init-method="init" class="com.aripd.project.lgk.service.DriverDataService" />
+		<bean init-method="init" class="com.aripd.project.lgk.service.SubcontractorDataService" />
+		<bean init-method="init" class="com.aripd.project.lgk.service.QuotaDataService" />
 	</beans>
 
 </beans>

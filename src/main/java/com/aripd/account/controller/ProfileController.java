@@ -18,8 +18,8 @@ import com.aripd.account.domain.Account;
 import com.aripd.account.service.IAccountService;
 import com.aripd.account.service.IRoleService;
 
-@Controller
 @PreAuthorize("isFullyAuthenticated()")
+@Controller
 @RequestMapping("/profile")
 public class ProfileController {
 	

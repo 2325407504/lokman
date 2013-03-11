@@ -3,6 +3,8 @@ package com.aripd.account.domain;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
+import org.joda.time.DateTime;
+
 import com.aripd.common.entity.BaseEntity_;
 
 /**
@@ -15,5 +17,6 @@ public class Customer_ extends BaseEntity_ {
 
 	public static volatile SingularAttribute<Customer, String> firstName;
 	public static volatile SingularAttribute<Customer, String> lastName;
+	public static volatile SingularAttribute<Customer, DateTime> dateOfBirth;
 
 }

@@ -8,7 +8,6 @@ import java.util.List;
  * 
  * @see <a href="http://www.trirand.com/jqgridwiki/doku.php?id=wiki:retrieving_data#json_data">JSON Data</a>
  *
- * @author krams at {@link http://krams915@blogspot.com}
  */
 public class JqgridTableDto<T extends Object> {
 

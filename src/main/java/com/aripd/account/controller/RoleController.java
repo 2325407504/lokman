@@ -50,6 +50,13 @@ public class RoleController {
 		return "role/list";
 	}
 
+	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+	public String showAction(@PathVariable Long id, Model model) {
+		logger.debug("Received request to show existing record");
+		model.addAttribute("roleAttribute", roleService.findOne(id));
+		return "role/show";
+	}
+	
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String newAction(Model model) {
 		logger.debug("Received request to show add new record");

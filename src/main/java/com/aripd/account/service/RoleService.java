@@ -12,7 +12,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,8 +26,6 @@ import com.aripd.common.dto.SortField;
 @Transactional(readOnly = true)
 public class RoleService implements IRoleService {
 
-	protected static Logger logger = Logger.getLogger(RoleService.class);
-	
 	@PersistenceContext
     private EntityManager em;
 	
@@ -36,12 +33,10 @@ public class RoleService implements IRoleService {
 	private RoleRepository repository;
 
 	public List<Role> findAll() {
-		logger.debug("Finding all records");
 		return repository.findAll();
 	}
 
 	public Role findOne(Long id) {
-		logger.debug("Finding a record by id: " + id);
 		return repository.findOne(id);
 	}
 
