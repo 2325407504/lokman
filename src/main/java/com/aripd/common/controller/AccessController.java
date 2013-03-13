@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AccessController {
 
 	@RequestMapping("/login")
-	public String login(Model model, @RequestParam(required=false) String message) {
+	public String login(
+			@RequestParam(required=false) String message,
+			Model model) {
 		model.addAttribute("message", message);
 		return "access/login";
 	}

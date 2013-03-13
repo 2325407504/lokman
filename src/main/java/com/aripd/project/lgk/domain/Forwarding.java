@@ -63,7 +63,7 @@ public class Forwarding extends BaseEntity {
 	private Quota quota;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "forwarding", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "forwarding", cascade = CascadeType.REMOVE)
 	private Set<Uatf> uatfs;
 
 	public boolean isSubmitted() {

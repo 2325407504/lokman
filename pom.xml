@@ -127,17 +127,6 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<!-- JSF library -->
-		<dependency>
-			<groupId>com.sun.faces</groupId>
-			<artifactId>jsf-api</artifactId>
-			<version>2.1.6</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.faces</groupId>
-			<artifactId>jsf-impl</artifactId>
-			<version>2.1.6</version>
-		</dependency>
 		<!-- The JavaServer Pages Standard Tag Library (JSTL) encapsulates, as 
 			simple tags, core functionality common to many JSP applications. -->
 		<dependency>
@@ -418,13 +407,6 @@
 			<version>3.1</version>
 		</dependency>
 
-		<!-- Primefaces library -->
-		<dependency>
-			<groupId>org.primefaces</groupId>
-			<artifactId>primefaces</artifactId>
-			<version>3.5</version>
-		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -512,13 +494,6 @@
 			<id>jboss</id>
 			<name>JBoss repository</name>
 			<url>https://repository.jboss.org/nexus/content/repositories/releases</url>
-		</repository>
-
-		<repository>
-			<id>prime-repo</id>
-			<name>PrimeFaces Maven Repository</name>
-			<url>http://repository.primefaces.org</url>
-			<layout>default</layout>
 		</repository>
 
 	</repositories>

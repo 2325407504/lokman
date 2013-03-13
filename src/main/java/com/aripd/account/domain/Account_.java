@@ -1,5 +1,6 @@
 package com.aripd.account.domain;
 
+import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -18,5 +19,6 @@ public class Account_ extends BaseEntity_ {
 	public static volatile SingularAttribute<Account, String> email;
 	public static volatile SingularAttribute<Account, Boolean> active;
 	public static volatile SingularAttribute<Account, Customer> customer;
+	public static volatile ListAttribute<Account, Role> roles;
 
 }
