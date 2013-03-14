@@ -34,7 +34,7 @@
 	<spring:url value="/logout" var="logoutUrl" />
 	<spring:url value="/profile/show" var="profile_show" />
 	
-	<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
 				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -43,7 +43,7 @@
 					<span class="icon-bar"></span>
 				</a>
 				<spring:url value="/" var="homeUrl" />
-				<a class="brand" href="${homeUrl}">Project</a>
+				<a class="brand" href="${homeUrl}"><img alt="" src="http://lgk.com.tr/deco/lokmanlogo.png"></a>
 				<div class="nav-collapse collapse pull-right">
 					<ul class="nav">
 						<sec:authorize access="isAuthenticated()">
