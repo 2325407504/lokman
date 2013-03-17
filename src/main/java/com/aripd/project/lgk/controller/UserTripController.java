@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aripd.account.domain.Account;
-import com.aripd.account.service.IAccountService;
+import com.aripd.account.service.AccountService;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.TableParam;
@@ -30,7 +30,7 @@ import com.aripd.project.lgk.service.TripService;
 import com.aripd.project.lgk.service.TruckService;
 import com.aripd.project.lgk.validator.TripValidator;
 
-@PreAuthorize("hasAnyRole('ROLE_USER')")
+@PreAuthorize("hasRole('ROLE_USER')")
 @Controller
 @RequestMapping("/user/trip")
 public class UserTripController {
@@ -48,7 +48,7 @@ public class UserTripController {
 	private DriverService driverService;
 
 	@Resource(name = "accountService")
-	private IAccountService accountService;
+	private AccountService accountService;
 
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	public @ResponseBody
@@ -84,8 +84,13 @@ public class UserTripController {
 	}
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String newAction(Model model) {
-		model.addAttribute("trucks", truckService.findAll());
+	public String newAction(
+			Principal principal,
+			Model model) {
+		
+		Account account = accountService.findOneByUsername(principal.getName());
+
+		model.addAttribute("trucks", truckService.findByRegion(account.getRegion()));
 		model.addAttribute("drivers", driverService.findAll());
 		model.addAttribute("tripAttribute", new Trip());
 		return "/user/trip/form";
@@ -94,6 +99,7 @@ public class UserTripController {
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editAction(
 			final RedirectAttributes redirectAttributes,
+			Principal principal,
 			@PathVariable Long id, 
 			Model model) {
 		
@@ -102,7 +108,10 @@ public class UserTripController {
 			redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
 			return "redirect:/user/trip/list";
 		}
-		model.addAttribute("trucks", truckService.findAll());
+		
+		Account account = accountService.findOneByUsername(principal.getName());
+		
+		model.addAttribute("trucks", truckService.findByRegion(account.getRegion()));
 		model.addAttribute("drivers", driverService.findAll());
 		model.addAttribute("tripAttribute", trip);
 		return "/user/trip/form";
@@ -118,7 +127,8 @@ public class UserTripController {
 		
 		tripValidator.validate(formData, result);
 		if (result.hasErrors()) {
-			model.addAttribute("trucks", truckService.findAll());
+			Account account = accountService.findOneByUsername(principal.getName());
+			model.addAttribute("trucks", truckService.findByRegion(account.getRegion()));
 			model.addAttribute("drivers", driverService.findAll());
 			return "/user/trip/form";
 		}

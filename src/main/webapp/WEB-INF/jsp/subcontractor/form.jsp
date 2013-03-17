@@ -1,21 +1,36 @@
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
 
 <spring:url value="/" var="homeUrl" />
-<spring:url value="/subcontractor/list" var="subcontractor_list" />
+<spring:url var="subcontractorList" value="/subcontractor/list" />
+<spring:url var="subcontractorEdit" value="/subcontractor/edit/${subcontractorAttribute.id}" />
+<spring:url var="subcontractorNew" value="/subcontractor/new" />
+<spring:url var="subcontractorSave" value="/subcontractor/save" />
 
-<ul class="breadcrumb">
-  <li><a href="${homeUrl}"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
-  <li><a href="${subcontractor_list}"><spring:message code="Subcontractors"></spring:message></a> <span class="divider">/</span></li>
-  <li class="active"><spring:message code="New Entry"></spring:message></li>
+<ul class="nav nav-tabs">
+	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
+	<li class=""><a href="${subcontractorList}"><spring:message code="Subcontractors"></spring:message></a></li>
+	<c:choose>
+		<c:when test="${ !empty subcontractorAttribute.id }">
+			<li class="active"><a href="${subcontractorEdit}"><spring:message code="Entry No"></spring:message>: ${subcontractorAttribute.id}</a></li>
+		</c:when>
+		<c:otherwise>
+			<li class="active"><a href="${subcontractorNew}"><spring:message code="New Entry"></spring:message></a></li>
+		</c:otherwise>
+	</c:choose>
 </ul>
-<spring:url var="saveUrl" value="/subcontractor/save" />
-<form:form modelAttribute="subcontractorAttribute" action="${saveUrl}" method="post">
+
+<form:form modelAttribute="subcontractorAttribute" action="${subcontractorSave}" method="post">
 	<form:errors path="*" cssClass="error-block" element="div" />
 	<form:hidden path="id" />
 	<fieldset>
 		<div class="form-row">
+			<form:label path="region"><spring:message code="Region"></spring:message></form:label>
+			<form:select multiple="false" path="region.id" items="${regions}" itemLabel="name" itemValue="id" />
+			<form:errors cssClass="error-field" path="region" />
+		</div>
+		<div class="form-row">
 			<form:label path="name"><spring:message code="Name"></spring:message></form:label>
-			<span><form:input path="name" /></span>
+			<span class="input"><form:input path="name" /></span>
 			<form:errors cssClass="error-field" path="name" />
 		</div>
 		<div class="form-actions">

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aripd.account.domain.Account;
-import com.aripd.account.service.IAccountService;
+import com.aripd.account.service.AccountService;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.TableParam;
@@ -49,7 +49,7 @@ public class UserForwardingController {
 	private SubcontractorService subcontractorService;
 
 	@Resource(name = "accountService")
-	private IAccountService accountService;
+	private AccountService accountService;
 
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	public @ResponseBody
@@ -85,9 +85,13 @@ public class UserForwardingController {
 	}
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String newAction(Model model) {
+	public String newAction(
+			Principal principal,
+			Model model) {
+		Account account = accountService.findOneByUsername(principal.getName());
+		
 		model.addAttribute("quotas", quotaService.findAll());
-		model.addAttribute("subcontractors", subcontractorService.findAll());
+		model.addAttribute("subcontractors", subcontractorService.findByRegion(account.getRegion()));
 		model.addAttribute("forwardingAttribute", new Forwarding());
 		return "/user/forwarding/form";
 	}
@@ -95,6 +99,7 @@ public class UserForwardingController {
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String editAction(
 			final RedirectAttributes redirectAttributes,
+			Principal principal,
 			@PathVariable Long id, 
 			Model model) {
 		
@@ -104,9 +109,11 @@ public class UserForwardingController {
 			return "redirect:/user/forwarding/list";
 		}
 		
+		Account account = accountService.findOneByUsername(principal.getName());
+		
 		model.addAttribute("uatfAttribute", new Uatf());
 		model.addAttribute("quotas", quotaService.findAll());
-		model.addAttribute("subcontractors", subcontractorService.findAll());
+		model.addAttribute("subcontractors", subcontractorService.findByRegion(account.getRegion()));
 		model.addAttribute("forwardingAttribute", forwarding);
 		return "/user/forwarding/form";
 	}
@@ -121,8 +128,10 @@ public class UserForwardingController {
 		
 		forwardingValidator.validate(formData, result);
 		if (result.hasErrors()) {
+			Account account = accountService.findOneByUsername(principal.getName());
+			
 			model.addAttribute("quotas", quotaService.findAll());
-			model.addAttribute("subcontractors", subcontractorService.findAll());
+			model.addAttribute("subcontractors", subcontractorService.findByRegion(account.getRegion()));
 			return "/user/forwarding/form";
 		}
 

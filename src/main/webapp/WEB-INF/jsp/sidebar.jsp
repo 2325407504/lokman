@@ -13,16 +13,19 @@
 <spring:url value="/profile/show" var="profile_show" />
 <spring:url value="/role/list" var="role_list" />
 <spring:url value="/account/list" var="account_list" />
+<spring:url value="/region/list" var="region_list" />
 <spring:url value="/truck/list" var="truck_list" />
 <spring:url value="/driver/list" var="driver_list" />
 <spring:url value="/subcontractor/list" var="subcontractor_list" />
 <spring:url value="/quota/list" var="quota_list" />
 
+<spring:url value="/expense/list" var="expense_list" />
 <spring:url value="/trip/list" var="trip_tracking_list" />
 <spring:url value="/forwarding/list" var="forwarding_list" />
 
-<spring:url value="/user/trip/list" var="account_trip_tracking_list" />
-<spring:url value="/user/forwarding/list" var="account_forwarding_list" />
+<spring:url value="/user/expense/list" var="user_expense_list" />
+<spring:url value="/user/trip/list" var="user_trip_tracking_list" />
+<spring:url value="/user/forwarding/list" var="user_forwarding_list" />
     
 <div class="well">
 	
@@ -49,18 +52,21 @@
 			<div class="accordion-group">
 				<div class="accordion-heading">
 					<a class="accordion-toggle nav-header" data-toggle="collapse" data-parent="#accordion2" href="#collapse2">
-						Admin
+						<spring:message code="Admin"></spring:message>
 					</a>
 				</div>
 				<div id="collapse2" class="accordion-body in collapse">
 					<div class="accordion-inner">
 						<ul class="nav nav-list">
 							<li class="nav-header"><spring:message code="Settings"></spring:message></li>
+							<li><a href="${region_list}"><spring:message code="Regions"></spring:message></a></li>
 							<li><a href="${truck_list}"><spring:message code="Trucks"></spring:message></a></li>
 							<li><a href="${driver_list}"><spring:message code="Drivers"></spring:message></a></li>
 							<li><a href="${subcontractor_list}"><spring:message code="Subcontractors"></spring:message></a></li>
 							<li><a href="${quota_list}"><spring:message code="Quotas"></spring:message></a></li>
-							<li class="nav-header">Logistics</li>
+							<li class="nav-header"><spring:message code="Expenses"></spring:message></li>
+							<li><a href="${expense_list}"><spring:message code="Expenses"></spring:message></a></li>
+							<li class="nav-header"><spring:message code="Logistics"></spring:message></li>
 							<li><a href="${trip_tracking_list}"><spring:message code="Trip Tracking" text="Trip Tracking"></spring:message></a></li>
 							<li><a href="${forwarding_list}"><spring:message code="Forwarding Tracking" text="Forwarding Tracking"></spring:message></a></li>
 						</ul>
@@ -72,15 +78,17 @@
 			<div class="accordion-group">
 				<div class="accordion-heading">
 					<a class="accordion-toggle nav-header" data-toggle="collapse" data-parent="#accordion2" href="#collapse3">
-						User
+						<spring:message code="User"></spring:message>
 					</a>
 				</div>
 				<div id="collapse3" class="accordion-body in collapse">
 					<div class="accordion-inner">
 						<ul class="nav nav-list">
-							<li class="nav-header">Logistics</li>
-							<li><a href="${account_trip_tracking_list}"><spring:message code="Trip Tracking" text="Trip Tracking"></spring:message></a></li>
-							<li><a href="${account_forwarding_list}"><spring:message code="Forwarding Tracking" text="Forwarding Tracking"></spring:message></a></li>
+							<li class="nav-header"><spring:message code="Expenses"></spring:message></li>
+							<li><a href="${user_expense_list}"><spring:message code="Expenses"></spring:message></a></li>
+							<li class="nav-header"><spring:message code="Logistics"></spring:message></li>
+							<li><a href="${user_trip_tracking_list}"><spring:message code="Trip Tracking" text="Trip Tracking"></spring:message></a></li>
+							<li><a href="${user_forwarding_list}"><spring:message code="Forwarding Tracking" text="Forwarding Tracking"></spring:message></a></li>
 						</ul>
 					</div>
 				</div>

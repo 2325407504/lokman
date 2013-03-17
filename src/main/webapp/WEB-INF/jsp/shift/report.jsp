@@ -1,1 +1,0 @@
-<img alt="Google Pie Chart" src="${pieUrl}">

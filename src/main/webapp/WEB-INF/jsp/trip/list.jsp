@@ -10,6 +10,7 @@
 	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
 	<li class="active"><a href="${tripList}"><spring:message code="Trip Tracking" text="Trip Tracking"></spring:message></a></li>
 	<li class=""><a href="${tripNew}"><spring:message code="New Entry"></spring:message></a></li>
+	<li class=""><a href="#"><spring:message code="Import"></spring:message></a></li>
 	<li class="dropdown">
 		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 			<spring:message code="Export"></spring:message>

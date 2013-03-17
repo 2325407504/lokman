@@ -4,12 +4,19 @@ import java.math.BigDecimal;
 
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
 
 import org.joda.time.DateTime;
 
 import com.aripd.account.domain.Account;
 import com.aripd.common.entity.BaseEntity_;
 
+/**
+ * A meta model class used to create type safe queries.
+ * 
+ * @author cem
+ */
+@StaticMetamodel(Forwarding.class)
 public class Forwarding_ extends BaseEntity_ {
 
 	public static volatile SingularAttribute<Forwarding, Boolean> submitted;

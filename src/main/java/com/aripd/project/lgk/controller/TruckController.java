@@ -1,79 +1,98 @@
 package com.aripd.project.lgk.controller;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.aripd.common.dto.PagingCriteria;
+import com.aripd.common.dto.ResultSet;
+import com.aripd.common.dto.TableParam;
+import com.aripd.common.dto.WebResultSet;
+import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Truck;
+import com.aripd.project.lgk.service.RegionService;
 import com.aripd.project.lgk.service.TruckService;
-import com.aripd.project.lgk.validator.TruckValidator;
 
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @Controller
 @RequestMapping("/truck")
 public class TruckController {
 	
-	protected static Logger logger = Logger.getLogger(TruckController.class);
-	
 	@Resource(name="truckService")
 	private TruckService truckService;
 	
-	@Resource(name = "truckValidator")
-	private TruckValidator truckValidator;
+	@Resource(name="regionService")
+	private RegionService regionService;
+
+	@RequestMapping(value = "/get", method = RequestMethod.GET)
+	public @ResponseBody
+	WebResultSet<Truck> getDataTables(@TableParam PagingCriteria criteria) {
+		ResultSet<Truck> resultset = this.truckService.getRecords(criteria);
+		return ControllerUtils.getWebResultSet(criteria, resultset);
+	}
 	
-	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/list")
 	public String listAction(Model model) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("Received request to show all records");
-		}    	
-		model.addAttribute("truckAttribute", truckService.findAll());
 		return "truck/list";
 	}
 
-	@Secured("ROLE_ADMIN")
-    @RequestMapping(value = "/new", method = RequestMethod.GET)
+	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+	public String showAction(
+			@PathVariable Long id,
+			Model model) {
+		model.addAttribute("truckAttribute", truckService.findOne(id));
+		return "truck/show";
+	}
+
+	@RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-		logger.debug("Received request to show add page");
+		model.addAttribute("regions", regionService.findAll());
     	model.addAttribute("truckAttribute", new Truck());
     	return "truck/form";
 	}
 
-	@Secured("ROLE_ADMIN")
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
-		logger.debug("Received request to show edit existing record");
+		model.addAttribute("regions", regionService.findAll());
     	model.addAttribute("truckAttribute", truckService.findOne(id));
     	return "truck/form";
 	}
 
-	@Secured("ROLE_ADMIN")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAction(@ModelAttribute("truckAttribute") Truck truck, Errors errors) {
-		truckValidator.validate(truck, errors);
-		if (errors.hasErrors()) {
+    public String saveAction(
+			final RedirectAttributes redirectAttributes,
+    		@ModelAttribute("truckAttribute") @Valid Truck truck, 
+    		BindingResult result,
+    		Model model) {
+    	
+		if (result.hasErrors()) {
+			model.addAttribute("regions", regionService.findAll());
 			return "/truck/form";
 		}
 		
-		logger.debug("Received request to save existing record");
 		truckService.save(truck);
+		redirectAttributes.addFlashAttribute("message", "Successfully saved..");
 		return "redirect:/truck/list";
 	}
 
-	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-	public String delete(@RequestParam(value = "id", required = true) Long id) {
-		logger.debug("Received request to delete existing record");
+	public String delete(
+			final RedirectAttributes redirectAttributes,
+			@RequestParam(value = "id", required = true) Long id) {
 		truckService.delete(id);
+		redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
 		return "redirect:/truck/list";
 	}
-
+	
 }

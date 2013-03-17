@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.aripd.account.domain.Account;
-import com.aripd.account.service.IAccountService;
-import com.aripd.account.service.IRoleService;
+import com.aripd.account.service.AccountService;
+import com.aripd.account.service.RoleService;
 
 @PreAuthorize("isFullyAuthenticated()")
 @Controller
@@ -26,10 +26,10 @@ public class ProfileController {
 	protected static Logger logger = Logger.getLogger(ProfileController.class);
 	
 	@Resource(name="accountService")
-	private IAccountService accountService;
+	private AccountService accountService;
 	
 	@Resource(name="roleService")
-	private IRoleService roleService;
+	private RoleService roleService;
 	
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public String showAction(Model model) {

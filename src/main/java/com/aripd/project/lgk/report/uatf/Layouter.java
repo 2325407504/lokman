@@ -72,7 +72,7 @@ public class Layouter {
 		cellTitle.setCellStyle(cellStyleTitle);
 
 		// Create merged region for the report title
-		worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 10));
+		worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 9));
 
 		// Create date header
 		HSSFRow dateTitle = worksheet.createRow((short) startRowIndex + 1);

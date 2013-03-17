@@ -1,79 +1,98 @@
 package com.aripd.project.lgk.controller;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.aripd.common.dto.PagingCriteria;
+import com.aripd.common.dto.ResultSet;
+import com.aripd.common.dto.TableParam;
+import com.aripd.common.dto.WebResultSet;
+import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Subcontractor;
+import com.aripd.project.lgk.service.RegionService;
 import com.aripd.project.lgk.service.SubcontractorService;
-import com.aripd.project.lgk.validator.SubcontractorValidator;
 
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @Controller
 @RequestMapping("/subcontractor")
 public class SubcontractorController {
 	
-	protected static Logger logger = Logger.getLogger(SubcontractorController.class);
-	
 	@Resource(name="subcontractorService")
 	private SubcontractorService subcontractorService;
 	
-	@Resource(name = "subcontractorValidator")
-	private SubcontractorValidator subcontractorValidator;
+	@Resource(name="regionService")
+	private RegionService regionService;
 
-	@Secured("ROLE_ADMIN")
+	@RequestMapping(value = "/get", method = RequestMethod.GET)
+	public @ResponseBody
+	WebResultSet<Subcontractor> getDataTables(@TableParam PagingCriteria criteria) {
+		ResultSet<Subcontractor> resultset = this.subcontractorService.getRecords(criteria);
+		return ControllerUtils.getWebResultSet(criteria, resultset);
+	}
+
 	@RequestMapping(value="/list")
 	public String listAction(Model model) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("Received request to show all records");
-		}
-		model.addAttribute("subcontractorAttribute", subcontractorService.findAll());
 		return "subcontractor/list";
 	}
 
-	@Secured("ROLE_ADMIN")
+	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+	public String showAction(
+			@PathVariable Long id,
+			Model model) {
+		model.addAttribute("subcontractorAttribute", subcontractorService.findOne(id));
+		return "subcontractor/show";
+	}
+	
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-		logger.debug("Received request to show add page");
+		model.addAttribute("regions", regionService.findAll());
     	model.addAttribute("subcontractorAttribute", new Subcontractor());
     	return "subcontractor/form";
 	}
 
-	@Secured("ROLE_ADMIN")
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
-		logger.debug("Received request to show edit existing record");
+		model.addAttribute("regions", regionService.findAll());
     	model.addAttribute("subcontractorAttribute", subcontractorService.findOne(id));
     	return "subcontractor/form";
 	}
 
-	@Secured("ROLE_ADMIN")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAction(@ModelAttribute("subcontractorAttribute") Subcontractor subcontractor, Errors errors) {
-		subcontractorValidator.validate(subcontractor, errors);
-		if (errors.hasErrors()) {
+    public String saveAction(
+			final RedirectAttributes redirectAttributes,
+    		@ModelAttribute("subcontractorAttribute") @Valid Subcontractor subcontractor, 
+    		BindingResult result,
+    		Model model) {
+    	
+		if (result.hasErrors()) {
+			model.addAttribute("regions", regionService.findAll());
 			return "/subcontractor/form";
 		}
 		
-		logger.debug("Received request to save existing record");
 		subcontractorService.save(subcontractor);
+		redirectAttributes.addFlashAttribute("message", "Successfully saved..");
 		return "redirect:/subcontractor/list";
 	}
 
-	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-	public String delete(@RequestParam(value = "id", required = true) Long id) {
-		logger.debug("Received request to delete existing record");
+	public String delete(
+			final RedirectAttributes redirectAttributes,
+			@RequestParam(value = "id", required = true) Long id) {
 		subcontractorService.delete(id);
+		redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
 		return "redirect:/subcontractor/list";
 	}
-
+	
 }

@@ -16,7 +16,7 @@
 		http://www.springframework.org/schema/tx
 		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
 		http://www.springframework.org/schema/data/jpa 
-		http://www.springframework.org/schema/data/jpa/spring-jpa-1.1.xsd
+		http://www.springframework.org/schema/data/jpa/spring-jpa-1.2.xsd
 	">
       
 	<context:property-placeholder properties-ref="deployProperties" />

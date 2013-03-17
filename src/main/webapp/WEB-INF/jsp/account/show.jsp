@@ -13,43 +13,12 @@
 	</li>
 </ul>
 
-<ul class="unstyled">
-	<li>
-		<label class="label">
-			<spring:message code="Id" text="Id"></spring:message>
-		</label>
-		${accountAttribute.id}
-	</li>
-	<li>
-		<label class="label">
-			<spring:message code="Date" text="Date"></spring:message>
-		</label>
-		<spring:eval expression="accountAttribute.customer.dateOfBirth" />
-	</li>
-	<li>
-		<label class="label">
-			<spring:message code="Username"></spring:message>
-		</label>
-		${accountAttribute.username}
-	</li>
-	<li>
-		<label class="label">
-			<spring:message code="Fullname"></spring:message>
-		</label>
-		${accountAttribute.customer.fullname}
-	</li>
-	<li>
-		<label class="label">
-			<spring:message code="E-mail Address"></spring:message>
-		</label>
-		${accountAttribute.email}
-	</li>
-	<li>
-		<label class="label">
-			<spring:message code="Roles"></spring:message>
-		</label>
-		<c:forEach var="role" items="${accountAttribute.roles}"><span class="label label-success">${role.name}</span>&nbsp;</c:forEach>
-	</li>
-</ul>
+<c:forEach var="role" items="${accountAttribute.roles}"><span class="label label-success">${role.name}</span>&nbsp;</c:forEach>
+<aripd:description id="users">
+	<aripd:descriptionitem label="Username" field="${accountAttribute.username}"></aripd:descriptionitem>
+	<aripd:descriptionitem label="Fullname" field="${accountAttribute.customer.fullname}"></aripd:descriptionitem>
+	<aripd:descriptionitem label="E-mail Address" field="${accountAttribute.email}"></aripd:descriptionitem>
+	<aripd:descriptionitem label="Region" field="${accountAttribute.region.name}"></aripd:descriptionitem>
+</aripd:description>
 
 <%@ include file="/WEB-INF/jsp/footer.jsp" %>

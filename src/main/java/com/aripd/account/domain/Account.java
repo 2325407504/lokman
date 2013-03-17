@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.aripd.common.entity.BaseEntity;
+import com.aripd.project.lgk.domain.Region;
 
 @Entity
 @Table(name = "account")
@@ -23,6 +24,7 @@ public class Account extends BaseEntity {
 
 	private static final long serialVersionUID = 5410601898024568036L;
 
+	@JsonIgnore
 	@Column(nullable = false, unique = false)
 	private String password;
 
@@ -32,6 +34,7 @@ public class Account extends BaseEntity {
 	@Column(nullable = false, unique = true)
 	private String email;
 
+	@JsonIgnore
 	@Column(nullable = true, unique = false)
 	private boolean active = false;
 
@@ -43,6 +46,9 @@ public class Account extends BaseEntity {
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Customer customer;
 
+	@ManyToOne
+	private Region region;
+	
 	public Account() {
 		roles = new ArrayList<Role>();
 	}
@@ -97,6 +103,14 @@ public class Account extends BaseEntity {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+
+	public Region getRegion() {
+		return region;
+	}
+
+	public void setRegion(Region region) {
+		this.region = region;
 	}
 
 }

@@ -5,10 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.aripd.common.entity.BaseEntity;
 
 @Entity
@@ -23,14 +19,7 @@ public class Customer extends BaseEntity {
 	@Column(nullable = true, unique = false)
 	private String lastName;
 
-	// @Temporal(TemporalType.DATE)
-	@DateTimeFormat(style = "S-")
-	@Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
-	@Column(columnDefinition = "DATE", nullable = true)
-	private DateTime dateOfBirth = null;
-
 	public Customer() {
-		
 	}
 	
 	public Customer(String firstName, String lastName) {
@@ -67,14 +56,6 @@ public class Customer extends BaseEntity {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-
-	public DateTime getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(DateTime dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
 	}
 
 }

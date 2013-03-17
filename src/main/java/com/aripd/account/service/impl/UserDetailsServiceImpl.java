@@ -1,4 +1,4 @@
-package com.aripd.account.service;
+package com.aripd.account.service.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,9 +22,9 @@ import com.aripd.account.repository.AccountRepository;
  * A custom {@link UserDetailsService} where user information
  * is retrieved from a JPA repository
  */
-@Service("customUserDetailsService")
+@Service("userDetailsService")
 @Transactional(readOnly = true)
-public class CustomUserDetailsService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Autowired
 	private AccountRepository repository;

@@ -1,4 +1,4 @@
-package com.aripd.common.service;
+package com.aripd.account.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,18 +12,22 @@ import com.aripd.account.domain.Customer;
 import com.aripd.account.domain.Role;
 import com.aripd.account.repository.AccountRepository;
 import com.aripd.account.repository.RoleRepository;
+import com.aripd.project.lgk.repository.RegionRepository;
 
 /**
  * Data initialization service
  */
 @Service("initDataService")
-public class InitDataService {
+public class AccountDataService {
 
 	@Autowired
 	AccountRepository userRepository;
 
 	@Autowired
 	RoleRepository roleRepository;
+
+	@Autowired
+	RegionRepository regionRepository;
 
 	public void init() {
 		Role superadminRole = getRole("ROLE_SUPERADMIN", "Süper Yönetici");
@@ -35,8 +39,8 @@ public class InitDataService {
 		Role role4 = getRole("ROLE_L4", "Rol4");
 		Role role5 = getRole("ROLE_L5", "Rol5");
 
-		/* A user with admin right */
 		Account admin1 = new Account();
+		admin1.setRegion(regionRepository.findOne(1L));
 		admin1.setCustomer(new Customer("Cem", "ARIPD"));
 		admin1.setUsername("cem");
 		admin1.setEmail("cem@aripd.com");
@@ -48,8 +52,8 @@ public class InitDataService {
 		admin1.getRoles().add(userRole);
 		this.userRepository.save(admin1);
 
-		/* A user with admin right */
 		Account admin2 = new Account();
+		admin2.setRegion(regionRepository.findOne(1L));
 		admin2.setCustomer(new Customer("John", "Doe"));
 		admin2.setUsername("john");
 		admin2.setEmail("admin@mail.com");
@@ -60,8 +64,8 @@ public class InitDataService {
 		admin2.getRoles().add(userRole);
 		this.userRepository.save(admin2);
 
-		/* A user with no admin right */
 		Account user = new Account();
+		user.setRegion(regionRepository.findOne(1L));
 		user.setCustomer(new Customer("Jane", "Doe"));
 		user.setUsername("jane");
 		user.setEmail("user@mail.com");
@@ -76,6 +80,7 @@ public class InitDataService {
 		Account aUser;
 		for (int i = 0; i < 100; i++) {
 			aUser = new Account();
+			aUser.setRegion(regionRepository.findOne(2L));
 			aUser.setCustomer(new Customer("FirstName_" + i, "LastName_" + i));
 			aUser.setUsername("user" + i);
 			aUser.setEmail("User_" + i + "@mail.com");

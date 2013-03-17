@@ -26,7 +26,7 @@
 				login-page="/login" 
 				authentication-failure-url="/login/failure" 
 				default-target-url="/"/>
-		<remember-me user-service-ref="customUserDetailsService" key="e37f4b31-0c45-11dd-bd0b-0800200c9a66"/>
+		<remember-me user-service-ref="userDetailsService" key="e37f4b31-0c45-11dd-bd0b-0800200c9a66"/>
 		<logout 
 				invalidate-session="true" 
 				logout-success-url="/logout/success" 
@@ -35,7 +35,7 @@
 
 	<!-- Declare an authentication-manager to use a custom userDetailsService -->
 	<authentication-manager>
-		<authentication-provider user-service-ref="customUserDetailsService">
+		<authentication-provider user-service-ref="userDetailsService">
 			<password-encoder hash="md5">
 				<!-- salt-source system-wide="pk"/-->
 			</password-encoder>

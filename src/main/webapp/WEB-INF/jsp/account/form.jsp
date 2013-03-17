@@ -15,6 +15,11 @@
 	<form:hidden path="customer.id" />
 	<fieldset>
 		<div class="form-row">
+			<form:label path="region"><spring:message code="Region"></spring:message></form:label>
+			<form:select multiple="false" path="region.id" items="${regions}" itemLabel="name" itemValue="id" />
+			<form:errors cssClass="error-field" path="region" />
+		</div>
+		<div class="form-row">
 			<form:label path="customer.firstName"><spring:message code="FirstName"></spring:message></form:label>
 			<span><form:input path="customer.firstName" /></span>
 			<form:errors cssClass="error-field" path="customer.firstName" />
@@ -38,11 +43,6 @@
 			<form:label path="password"><spring:message code="Password"></spring:message></form:label>
 			<span><form:password path="password" /></span>
 			<form:errors cssClass="error-field" path="password" />
-		</div>
-		<div class="form-row">
-			<form:label path="customer.dateOfBirth"><spring:message code="Date of birth"></spring:message></form:label>
-			<span><form:input type="date" path="customer.dateOfBirth" /></span>
-			<form:errors cssClass="error-field" path="customer.dateOfBirth" />
 		</div>
 		<div class="form-actions">
 			<c:if test="${ !empty accountAttribute.id }">

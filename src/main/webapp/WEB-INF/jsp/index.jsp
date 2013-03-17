@@ -34,8 +34,6 @@
 </sec:authorize>
 
 <sec:authorize access="isAnonymous()">
-<!-- Carousel
-================================================== -->
 <div id="myCarousel" class="carousel slide">
 	<div class="carousel-inner">
 		<div class="item active">
@@ -71,7 +69,7 @@
 	</div>
 	<a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
 	<a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
-</div><!-- /.carousel -->
+</div>
 </sec:authorize>
 
 <%@ include file="/WEB-INF/jsp/footer.jsp" %>

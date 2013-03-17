@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aripd.account.domain.Account;
-import com.aripd.account.service.IAccountService;
+import com.aripd.account.service.AccountService;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.SortField;
@@ -44,7 +44,7 @@ public class ForwardingServiceImpl implements ForwardingService {
 	private ForwardingRepository repository;
 
 	@Resource(name = "accountService")
-	private IAccountService accountService;
+	private AccountService accountService;
 	
 	@Transactional(readOnly = true)
 	public Forwarding findOne(Long id) {

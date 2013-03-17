@@ -1,78 +1,92 @@
 package com.aripd.project.lgk.controller;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.aripd.common.dto.PagingCriteria;
+import com.aripd.common.dto.ResultSet;
+import com.aripd.common.dto.TableParam;
+import com.aripd.common.dto.WebResultSet;
+import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Quota;
 import com.aripd.project.lgk.service.QuotaService;
-import com.aripd.project.lgk.validator.QuotaValidator;
 
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @Controller
 @RequestMapping("/quota")
 public class QuotaController {
 	
-	protected static Logger logger = Logger.getLogger(QuotaController.class);
-	
 	@Resource(name="quotaService")
 	private QuotaService quotaService;
 	
-	@Resource(name = "quotaValidator")
-	private QuotaValidator quotaValidator;
+	@RequestMapping(value = "/get", method = RequestMethod.GET)
+	public @ResponseBody
+	WebResultSet<Quota> getDataTables(@TableParam PagingCriteria criteria) {
+		ResultSet<Quota> resultset = this.quotaService.getRecords(criteria);
+		return ControllerUtils.getWebResultSet(criteria, resultset);
+	}
 
-	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/list")
 	public String listAction(Model model) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("Received request to show all records");
-		}
-		model.addAttribute("quotaAttribute", quotaService.findAll());
 		return "quota/list";
 	}
 
-	@Secured("ROLE_ADMIN")
-    @RequestMapping(value = "/new", method = RequestMethod.GET)
+	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+	public String showAction(
+			@PathVariable Long id,
+			Model model) {
+		model.addAttribute("quotaAttribute", quotaService.findOne(id));
+		return "quota/show";
+	}
+
+	@RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-		logger.debug("Received request to show add page");
     	model.addAttribute("quotaAttribute", new Quota());
     	return "quota/form";
 	}
 
-	@Secured("ROLE_ADMIN")
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String editAction(@PathVariable Long id, Model model) {
-		logger.debug("Received request to show edit existing record");
+    public String editAction(
+    		@PathVariable Long id, 
+    		Model model) {
     	model.addAttribute("quotaAttribute", quotaService.findOne(id));
     	return "quota/form";
 	}
 
-	@Secured("ROLE_ADMIN")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAction(@ModelAttribute("quotaAttribute") Quota quota, Errors errors) {
-		quotaValidator.validate(quota, errors);
-		if (errors.hasErrors()) {
+    public String saveAction(
+			final RedirectAttributes redirectAttributes,
+    		@ModelAttribute("quotaAttribute") @Valid Quota quota, 
+			BindingResult result, 
+			Model model) {
+    	
+		if (result.hasErrors()) {
 			return "/quota/form";
 		}
 		
-		logger.debug("Received request to save existing record");
 		quotaService.save(quota);
+		redirectAttributes.addFlashAttribute("message", "Successfully saved..");
 		return "redirect:/quota/list";
 	}
 
-	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-	public String delete(@RequestParam(value = "id", required = true) Long id) {
-		logger.debug("Received request to delete existing record");
+	public String delete(
+			final RedirectAttributes redirectAttributes,
+			@RequestParam(value = "id", required = true) Long id) {
 		quotaService.delete(id);
+		redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
 		return "redirect:/quota/list";
 	}
 

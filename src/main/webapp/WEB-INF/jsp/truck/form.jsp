@@ -1,18 +1,33 @@
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
 
 <spring:url value="/" var="homeUrl" />
-<spring:url value="/truck/list" var="truck_list" />
+<spring:url var="truckList" value="/truck/list" />
+<spring:url var="truckEdit" value="/truck/edit/${truckAttribute.id}" />
+<spring:url var="truckNew" value="/truck/new" />
+<spring:url var="truckSave" value="/truck/save" />
 
-<ul class="breadcrumb">
-  <li><a href="${homeUrl}"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
-  <li><a href="${truck_list}"><spring:message code="Trucks"></spring:message></a> <span class="divider">/</span></li>
-  <li class="active"><spring:message code="New Entry"></spring:message></li>
+<ul class="nav nav-tabs">
+	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
+	<li class=""><a href="${truckList}"><spring:message code="Trucks"></spring:message></a></li>
+	<c:choose>
+		<c:when test="${ !empty truckAttribute.id }">
+			<li class="active"><a href="${truckEdit}"><spring:message code="Entry No"></spring:message>: ${truckAttribute.id}</a></li>
+		</c:when>
+		<c:otherwise>
+			<li class="active"><a href="${truckNew}"><spring:message code="New Entry"></spring:message></a></li>
+		</c:otherwise>
+	</c:choose>
 </ul>
-<spring:url var="saveUrl" value="/truck/save" />
-<form:form modelAttribute="truckAttribute" action="${saveUrl}" method="post">
+
+<form:form modelAttribute="truckAttribute" action="${truckSave}" method="post">
 	<form:errors path="*" cssClass="error-block" element="div" />
 	<form:hidden path="id" />
 	<fieldset>
+		<div class="form-row">
+			<form:label path="region"><spring:message code="Region"></spring:message></form:label>
+			<form:select multiple="false" path="region.id" items="${regions}" itemLabel="name" itemValue="id" />
+			<form:errors cssClass="error-field" path="region" />
+		</div>
 		<div class="form-row">
 			<form:label path="plate"><spring:message code="Plate"></spring:message></form:label>
 			<span class="input"><form:input path="plate" /></span>

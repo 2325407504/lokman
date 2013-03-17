@@ -44,11 +44,6 @@ public class AccountForm {
 	@Email(message = "It is not a valid format")
 	private String email;
 
-	@Nullable
-	@DateTimeFormat(iso=ISO.DATE)
-	@Past(message = "Date of birth must be the past")
-	private Date dateOfBirth = null;
-
 	public AccountForm() {
 	}
 
@@ -103,14 +98,6 @@ public class AccountForm {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
 	}
 
 }

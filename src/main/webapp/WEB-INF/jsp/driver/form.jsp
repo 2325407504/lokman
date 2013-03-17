@@ -1,15 +1,25 @@
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
 
 <spring:url value="/" var="homeUrl" />
-<spring:url value="/driver/list" var="driver_list" />
+<spring:url var="driverList" value="/driver/list" />
+<spring:url var="driverEdit" value="/driver/edit/${driverAttribute.id}" />
+<spring:url var="driverNew" value="/driver/new" />
+<spring:url var="driverSave" value="/driver/save" />
 
-<ul class="breadcrumb">
-  <li><a href="${homeUrl}"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
-  <li><a href="${driver_list}"><spring:message code="Drivers"></spring:message></a> <span class="divider">/</span></li>
-  <li class="active"><spring:message code="New Entry"></spring:message></li>
+<ul class="nav nav-tabs">
+	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
+	<li class=""><a href="${driverList}"><spring:message code="Drivers"></spring:message></a></li>
+	<c:choose>
+		<c:when test="${ !empty driverAttribute.id }">
+			<li class="active"><a href="${driverEdit}"><spring:message code="Entry No"></spring:message>: ${driverAttribute.id}</a></li>
+		</c:when>
+		<c:otherwise>
+			<li class="active"><a href="${driverNew}"><spring:message code="New Entry"></spring:message></a></li>
+		</c:otherwise>
+	</c:choose>
 </ul>
-<spring:url var="saveUrl" value="/driver/save" />
-<form:form modelAttribute="driverAttribute" action="${saveUrl}" method="post">
+
+<form:form modelAttribute="driverAttribute" action="${driverSave}" method="post">
 	<form:errors path="*" cssClass="error-block" element="div" />
 	<form:hidden path="id" />
 	<fieldset>
@@ -17,7 +27,7 @@
 			<form:label path="firstName"><spring:message code="FirstName"></spring:message></form:label>
 			<span><form:input path="firstName" /></span>
 			<form:errors cssClass="error-field" path="firstName" />
-		</div>       
+		</div>
 		<div class="form-row">
 			<form:label path="lastName"><spring:message code="LastName"></spring:message></form:label>
 			<span><form:input path="lastName" /></span>
