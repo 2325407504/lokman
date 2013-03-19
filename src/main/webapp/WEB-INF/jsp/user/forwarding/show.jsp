@@ -9,7 +9,7 @@
 
 <ul class="nav nav-tabs">
 	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-	<li class=""><a href="${forwardingList}"><spring:message code="Forwarding Tracking" text="Forwarding Tracking"></spring:message></a></li>
+	<li class=""><a href="${forwardingList}"><spring:message code="Forwardings"></spring:message></a></li>
 	<li class="active"><a href="${forwardingShow}"><spring:message code="Entry No"></spring:message>: ${forwardingAttribute.id}</a></li>
 	<li class=""><a href="${forwardingNew}"><spring:message code="New Entry"></spring:message></a></li>
 </ul>

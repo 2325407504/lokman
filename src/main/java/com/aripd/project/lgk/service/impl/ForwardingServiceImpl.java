@@ -1,8 +1,14 @@
 package com.aripd.project.lgk.service.impl;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -16,6 +22,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -198,6 +208,60 @@ public class ForwardingServiceImpl implements ForwardingService {
 		// 7. Write to the output stream
 		Writer.write(response, worksheet);
 
+	}
+
+	public void importXLS(String fileName) {
+		FileInputStream iStream = null;
+		HSSFWorkbook workbook = null;
+		try {
+			iStream = new FileInputStream(fileName);
+			workbook = new HSSFWorkbook(iStream);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		HSSFSheet worksheet = workbook.getSheetAt(0);
+		Iterator<Row> rows = worksheet.rowIterator();
+
+		List<Forwarding> forwardings = new ArrayList<Forwarding>();
+		Forwarding forwarding;
+		
+		//while (rows.hasNext()) {
+		for (int i = 3; i <= worksheet.getLastRowNum(); i++) {
+			//Row row = rows.next();
+			Row row = worksheet.getRow(i);
+			
+			String username = row.getCell(0).getStringCellValue();
+			String waybillNo = row.getCell(1).getStringCellValue();
+			String driver = row.getCell(2).getStringCellValue();
+			String plate = row.getCell(3).getStringCellValue();
+			String sStartingTime = row.getCell(4).getStringCellValue();
+			String sEndingTime = row.getCell(5).getStringCellValue();
+			String endingPoint = row.getCell(6).getStringCellValue();
+			Integer loadWeightInTonne = (int) row.getCell(7).getNumericCellValue();
+			BigDecimal shippingCost = new BigDecimal(row.getCell(8).getNumericCellValue());
+			
+			DateTimeFormatter formatter = DateTimeFormat.forStyle("MS").withLocale(Locale.GERMAN);
+			DateTime startingTime = formatter.parseDateTime(sStartingTime);
+			DateTime endingTime = formatter.parseDateTime(sEndingTime);
+			
+			forwarding = new Forwarding();
+			forwarding.setAccount(accountService.findOneByUsername(username));
+			forwarding.setWaybillNo(waybillNo);
+			forwarding.setDriver(driver);
+			forwarding.setPlate(plate);
+			forwarding.setStartingTime(startingTime);
+			forwarding.setEndingTime(endingTime);
+			forwarding.setEndingPoint(endingPoint);
+			forwarding.setLoadWeightInTonne(loadWeightInTonne);
+			forwarding.setShippingCost(shippingCost);
+			
+			forwardings.add(forwarding);
+		}
+		
+		repository.save(forwardings);
 	}
 
 }

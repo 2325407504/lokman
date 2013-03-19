@@ -10,6 +10,8 @@ public interface DriverService {
 
 	Driver findOne(Long id);
 	
+	Driver findOneByName(String name);
+	
 	List<Driver> findAll();
 	
 	Driver save(Driver driver);
@@ -19,5 +21,5 @@ public interface DriverService {
 	void delete(Driver driver);
 
 	ResultSet<Driver> getRecords(PagingCriteria criteria);
-	
+
 }

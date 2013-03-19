@@ -1,5 +1,9 @@
 package com.aripd.project.lgk.controller;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aripd.account.service.AccountService;
@@ -21,6 +26,7 @@ import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.TableParam;
 import com.aripd.common.dto.WebResultSet;
+import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Expense;
 import com.aripd.project.lgk.domain.Uatf;
@@ -50,9 +56,7 @@ public class ExpenseController {
 	}
 
 	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
-	public String showAction(
-			@PathVariable Long id,
-			Model model) {
+	public String showAction(@PathVariable Long id, Model model) {
 		model.addAttribute("expenseAttribute", expenseService.findOne(id));
 		return "expense/show";
 	}
@@ -65,9 +69,7 @@ public class ExpenseController {
 	}
 
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-	public String editAction(
-			@PathVariable Long id, 
-			Model model) {
+	public String editAction(@PathVariable Long id, Model model) {
 		model.addAttribute("uatfAttribute", new Uatf());
 		model.addAttribute("accounts", accountService.findAll());
 		model.addAttribute("expenseAttribute", expenseService.findOne(id));
@@ -75,12 +77,10 @@ public class ExpenseController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveAction(
-			final RedirectAttributes redirectAttributes,
+	public String saveAction(final RedirectAttributes redirectAttributes,
 			@ModelAttribute("expenseAttribute") @Valid Expense formData,
-			BindingResult result, 
-			Model model) {
-		
+			BindingResult result, Model model) {
+
 		if (result.hasErrors()) {
 			model.addAttribute("accounts", accountService.findAll());
 			return "/expense/form";
@@ -92,8 +92,7 @@ public class ExpenseController {
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-	public String delete(
-			final RedirectAttributes redirectAttributes,
+	public String delete(final RedirectAttributes redirectAttributes,
 			@RequestParam(value = "id", required = true) Long id) {
 		expenseService.delete(id);
 		redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
@@ -103,11 +102,11 @@ public class ExpenseController {
 	@RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)
 	public String submitAction(@PathVariable Long id) {
 		Expense expense = expenseService.findOne(id);
-		expense.setSubmitted(true^expense.isSubmitted());
+		expense.setSubmitted(true ^ expense.isSubmitted());
 		expenseService.save(expense);
-		return "redirect:/expense/show/"+id;
+		return "redirect:/expense/show/" + id;
 	}
-	
+
 	/**
 	 * Exports the report as an Excel format.
 	 * <p>
@@ -117,6 +116,56 @@ public class ExpenseController {
 	@RequestMapping(value = "/export/xls", method = RequestMethod.GET)
 	public void getXLS(HttpServletResponse response, Model model) {
 		expenseService.exportXLS(response);
+	}
+
+	@RequestMapping(value = "/import/xls", method = RequestMethod.GET)
+	public String importAction(Model model) {
+		model.addAttribute(new FileUploadBean());
+		return "expense/import";
+	}
+
+	@RequestMapping(value = "/import/xls", method = RequestMethod.POST)
+	public String importXLS(
+			final RedirectAttributes redirectAttributes,
+			FileUploadBean fileUploadBean, 
+			BindingResult result) {
+
+		if (result.hasErrors()) {
+			redirectAttributes.addFlashAttribute("message", "Hata oluştu");
+			return "redirect:/expense/import";
+		}
+
+		String fileName = null;
+		try {
+			MultipartFile file = fileUploadBean.getFile();
+			InputStream inputStream = null;
+			OutputStream outputStream = null;
+			if (file.getSize() > 0) {
+				inputStream = file.getInputStream();
+				if (file.getSize() > 1000000) {
+					redirectAttributes.addFlashAttribute("message", "Dosya boyutu büyük");
+					return "redirect:/expense/import";
+				}
+				
+				fileName = "/tmp/" + file.getOriginalFilename();
+				
+				outputStream = new FileOutputStream(fileName);
+
+				int readBytes = 0;
+				byte[] buffer = new byte[10000];
+				while ((readBytes = inputStream.read(buffer, 0, 10000)) != -1) {
+					outputStream.write(buffer, 0, readBytes);
+				}
+				outputStream.close();
+				inputStream.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		expenseService.importXLS(fileName);
+		redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
+		return "redirect:/expense/list";
 	}
 
 }

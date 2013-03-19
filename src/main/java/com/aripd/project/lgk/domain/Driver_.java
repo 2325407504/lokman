@@ -15,8 +15,7 @@ import com.aripd.common.entity.BaseEntity_;
 public class Driver_ extends BaseEntity_ {
 
 	public static volatile SingularAttribute<Driver, Boolean> active;
-	public static volatile SingularAttribute<Driver, String> firstName;
-	public static volatile SingularAttribute<Driver, String> lastName;
+	public static volatile SingularAttribute<Driver, String> name;
 	public static volatile SingularAttribute<Driver, String> phonenumber;
 	public static volatile ListAttribute<Driver, Trip> trips;
 

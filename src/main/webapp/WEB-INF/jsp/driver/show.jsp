@@ -14,8 +14,7 @@
 </ul>
 
 <aripd:description id="drivers">
-	<aripd:descriptionitem label="FirstName" field="${driverAttribute.firstName}"></aripd:descriptionitem>
-	<aripd:descriptionitem label="LastName" field="${driverAttribute.lastName}"></aripd:descriptionitem>
+	<aripd:descriptionitem label="Fullname" field="${driverAttribute.name}"></aripd:descriptionitem>
 	<aripd:descriptionitem label="Phone Number" field="${driverAttribute.phonenumber}"></aripd:descriptionitem>
 </aripd:description>
 

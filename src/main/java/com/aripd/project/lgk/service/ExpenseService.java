@@ -26,5 +26,7 @@ public interface ExpenseService {
 	ResultSet<Expense> getRecords(Principal principal, PagingCriteria criteria);
 
 	void exportXLS(HttpServletResponse response);
+	
+	void importXLS(String fileName);
 
 }

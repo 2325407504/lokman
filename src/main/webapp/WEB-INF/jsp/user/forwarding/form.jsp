@@ -10,7 +10,7 @@
 
 <ul class="nav nav-tabs">
 	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-	<li class=""><a href="${forwardingList}"><spring:message code="Forwarding Tracking" text="Forwarding Tracking"></spring:message></a></li>
+	<li class=""><a href="${forwardingList}"><spring:message code="Forwardings"></spring:message></a></li>
 	<c:choose>
 		<c:when test="${ !empty forwardingAttribute.id }">
 			<li class="active"><a href="${forwardingEdit}"><spring:message code="Entry No"></spring:message>: ${forwardingAttribute.id}</a></li>

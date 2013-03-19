@@ -24,14 +24,9 @@
 	<form:hidden path="id" />
 	<fieldset>
 		<div class="form-row">
-			<form:label path="firstName"><spring:message code="FirstName"></spring:message></form:label>
-			<span><form:input path="firstName" /></span>
-			<form:errors cssClass="error-field" path="firstName" />
-		</div>
-		<div class="form-row">
-			<form:label path="lastName"><spring:message code="LastName"></spring:message></form:label>
-			<span><form:input path="lastName" /></span>
-			<form:errors cssClass="error-field" path="lastName" />
+			<form:label path="name"><spring:message code="Fullname"></spring:message></form:label>
+			<span><form:input path="name" /></span>
+			<form:errors cssClass="error-field" path="name" />
 		</div>
 		<div class="form-row">
 			<form:label path="phonenumber"><spring:message code="Phone Number"></spring:message></form:label>

@@ -16,8 +16,8 @@ public class DriverValidator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "required", "It is required!");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "required", "It is required!");
 
-        if (driver.getFirstName().length() < 3) {
-        	errors.rejectValue("firstName", "min 3 chars", "Min 3 chars");
+        if (driver.getName().length() < 3) {
+        	errors.rejectValue("name", "min 3 chars", "Min 3 chars");
         }
         String phonenumber = driver.getPhonenumber();
         if (!StringUtils.hasLength(phonenumber)) {

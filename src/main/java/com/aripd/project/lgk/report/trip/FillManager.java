@@ -49,7 +49,7 @@ public class FillManager {
 			cell1.setCellStyle(bodyCellStyle);
 
 			HSSFCell cell2 = row.createCell(startColIndex + 1);
-			cell2.setCellValue(datasource.get(i - 2).getDriver().getFullname());
+			cell2.setCellValue(datasource.get(i - 2).getDriver().getName());
 			cell2.setCellStyle(bodyCellStyle);
 
 			HSSFCell cell3 = row.createCell(startColIndex + 2);

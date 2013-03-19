@@ -6,7 +6,7 @@
 
 <ul class="nav nav-tabs">
 	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-	<li class="active"><a href="${tripList}"><spring:message code="Trip Tracking" text="Trip Tracking"></spring:message></a></li>
+	<li class="active"><a href="${tripList}"><spring:message code="Trips"></spring:message></a></li>
 	<li class=""><a href="${tripNew}"><spring:message code="New Entry"></spring:message></a></li>
 </ul>
 
@@ -14,7 +14,7 @@
 	<aripd:column label="Action" field="id"/>
 	<aripd:column label="Account" field="account.username"/>
 	<aripd:column label="Truck" field="truck.plate"/>
-	<aripd:column label="Driver" field="driver.fullname"/>
+	<aripd:column label="Driver" field="driver.name"/>
 	<aripd:column label="Starting Point" field="startingPoint"/>
 	<aripd:column label="Starting Time" field="startingTime"/>
 	<aripd:column label="Starting km" field="startingKm"/>

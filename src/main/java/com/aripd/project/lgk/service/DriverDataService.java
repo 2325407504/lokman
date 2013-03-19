@@ -21,8 +21,7 @@ public class DriverDataService {
 		Driver driver;
 		for (int i = 0; i < 100; i++) {
 			driver = new Driver();
-			driver.setFirstName("Firstname"+i);
-			driver.setLastName("Lastname"+i);
+			driver.setName("Driver"+i);
 			driver.setPhonenumber("Phone"+i);
 			drivers.add(driver);
 		}

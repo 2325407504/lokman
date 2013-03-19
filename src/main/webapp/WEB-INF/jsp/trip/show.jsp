@@ -11,7 +11,7 @@
 
 <ul class="nav nav-tabs">
 	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-	<li class=""><a href="${tripList}"><spring:message code="Trip Tracking" text="Trip Tracking"></spring:message></a></li>
+	<li class=""><a href="${tripList}"><spring:message code="Trips"></spring:message></a></li>
 	<li class="active"><a href="${tripShow}"><spring:message code="Entry No"></spring:message>: ${tripAttribute.id}</a></li>
 	<li class=""><a href="${tripNew}"><spring:message code="New Entry"></spring:message></a></li>
 	<li class="dropdown">
@@ -59,7 +59,7 @@
 				<label class="label">
 					<spring:message code="Driver" text="Driver"></spring:message>
 				</label>
-				${tripAttribute.driver.fullname}
+				${tripAttribute.driver.name}
 			</li>
 			<li>
 				<label class="label">

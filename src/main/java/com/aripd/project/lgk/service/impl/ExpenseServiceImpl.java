@@ -1,8 +1,14 @@
 package com.aripd.project.lgk.service.impl;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -16,6 +22,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +55,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	@Resource(name = "accountService")
 	private AccountService accountService;
-	
+
 	public Expense findOne(Long id) {
 		return repository.findOne(id);
 	}
@@ -82,12 +92,13 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 		// Filtering and Searching
 		List<Predicate> predicateList = new ArrayList<Predicate>();
-		
+
 		if ((search != null) && (!(search.isEmpty()))) {
-			Predicate predicate = cb.like(root.get(Expense_.description), "%"+search+"%");
+			Predicate predicate = cb.like(root.get(Expense_.description), "%"
+					+ search + "%");
 			predicateList.add(predicate);
 		}
-		
+
 		Predicate[] predicates = new Predicate[predicateList.size()];
 		predicateList.toArray(predicates);
 		cq.where(predicates);
@@ -103,7 +114,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 		}
 
 		Long totalRecords = (long) em.createQuery(cq).getResultList().size();
-		
+
 		// Pagination
 		TypedQuery<Expense> typedQuery = em.createQuery(cq);
 		typedQuery = typedQuery.setFirstResult(displayStart);
@@ -113,7 +124,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 		return new ResultSet<Expense>(resultList, totalRecords, displaySize);
 	}
 
-	public ResultSet<Expense> getRecords(Principal principal, PagingCriteria criteria) {
+	public ResultSet<Expense> getRecords(Principal principal,
+			PagingCriteria criteria) {
 		Integer displaySize = criteria.getDisplaySize();
 		Integer displayStart = criteria.getDisplayStart();
 		Integer pageNumber = criteria.getPageNumber();
@@ -126,19 +138,19 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 		// Filtering and Searching
 		List<Predicate> predicateList = new ArrayList<Predicate>();
-		
+
 		Account account = accountService.findOneByUsername(principal.getName());
 		Predicate predicate_ = cb.equal(root.get(Expense_.account), account);
-		
+
 		if ((search != null) && (!(search.isEmpty()))) {
-			Predicate predicate1 = cb.like(root.get(Expense_.description), "%"+search+"%");
+			Predicate predicate1 = cb.like(root.get(Expense_.description), "%"
+					+ search + "%");
 			Predicate predicate = cb.and(predicate_, predicate1);
 			predicateList.add(predicate);
-		}
-		else {
+		} else {
 			predicateList.add(predicate_);
 		}
-		
+
 		Predicate[] predicates = new Predicate[predicateList.size()];
 		predicateList.toArray(predicates);
 		cq.where(predicates);
@@ -154,7 +166,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 		}
 
 		Long totalRecords = (long) em.createQuery(cq).getResultList().size();
-		
+
 		// Pagination
 		TypedQuery<Expense> typedQuery = em.createQuery(cq);
 		typedQuery = typedQuery.setFirstResult(displayStart);
@@ -169,7 +181,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 		HSSFWorkbook workbook = new HSSFWorkbook();
 
 		// 2. Create new worksheet
-		HSSFSheet worksheet = workbook.createSheet("Expense Report");
+		HSSFSheet worksheet = workbook.createSheet("Expenses");
 
 		// 3. Define starting indices for rows and columns
 		int startRowIndex = 0;
@@ -180,7 +192,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 		Layouter.buildReport(worksheet, startRowIndex, startColIndex);
 
 		// 5. Fill report
-		FillManager.fillReport(worksheet, startRowIndex, startColIndex, repository.findAll());
+		FillManager.fillReport(worksheet, startRowIndex, startColIndex,
+				repository.findAll());
 
 		// 6. Set the response properties
 		String fileName = "ExpenseReport.xls";
@@ -192,6 +205,51 @@ public class ExpenseServiceImpl implements ExpenseService {
 		// 7. Write to the output stream
 		Writer.write(response, worksheet);
 
+	}
+
+	public void importXLS(String fileName) {
+		FileInputStream iStream = null;
+		HSSFWorkbook workbook = null;
+		try {
+			iStream = new FileInputStream(fileName);
+			workbook = new HSSFWorkbook(iStream);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		HSSFSheet worksheet = workbook.getSheetAt(0);
+		Iterator<Row> rows = worksheet.rowIterator();
+
+		List<Expense> expenses = new ArrayList<Expense>();
+		Expense expense;
+		
+		//while (rows.hasNext()) {
+		for (int i = 3; i <= worksheet.getLastRowNum(); i++) {
+			//Row row = rows.next();
+			Row row = worksheet.getRow(i);
+			
+			String username = row.getCell(0).getStringCellValue();
+			String sDocumentDate = row.getCell(1).getStringCellValue();
+			String company = row.getCell(2).getStringCellValue();
+			String description = row.getCell(3).getStringCellValue();
+			BigDecimal amount = new BigDecimal(row.getCell(4).getNumericCellValue());
+			
+			DateTimeFormatter formatter = DateTimeFormat.forStyle("MS").withLocale(Locale.GERMAN);
+			DateTime documentDate = formatter.parseDateTime(sDocumentDate);
+
+			expense = new Expense();
+			expense.setAccount(accountService.findOneByUsername(username));
+			expense.setDocumentDate(documentDate);
+			expense.setCompany(company);
+			expense.setDescription(description);
+			expense.setAmount(amount);
+			
+			expenses.add(expense);
+		}
+		
+		repository.save(expenses);
 	}
 
 }

@@ -5,6 +5,7 @@
 <spring:url var="expenseShow" value="/expense/show/${expenseAttribute.id}" />
 <spring:url var="expenseEdit" value="/expense/edit/${expenseAttribute.id}" />
 <spring:url var="expenseNew" value="/expense/new" />
+<spring:url var="expenseImport" value="/expense/import/xls" />
 <spring:url var="expenseExport" value="/expense/export/xls" />
 <spring:url var="expenseSave" value="/expense/save" />
 
@@ -19,6 +20,7 @@
 			<li class="active"><a href="${expenseNew}"><spring:message code="New Entry"></spring:message></a></li>
 		</c:otherwise>
 	</c:choose>
+	<li class=""><a href="${expenseImport}"><spring:message code="Import"></spring:message></a></li>
 	<li class="dropdown">
 		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 			<spring:message code="Export"></spring:message>

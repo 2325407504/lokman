@@ -15,7 +15,7 @@
 </div>
 
 <div class="page-header">
-	<h1><spring:message code="Trip Report" text="Trip Report"></spring:message> <small><spring:message code="Trip Tracking"></spring:message></small></h1>
+	<h1><spring:message code="Trip Report" text="Trip Report"></spring:message> <small><spring:message code="Trips"></spring:message></small></h1>
 </div>
 <spring:url var="chart1Url" value="/trip/report3" />
 <img src="${chart1Url}" alt="">

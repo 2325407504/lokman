@@ -5,6 +5,7 @@
 <spring:url var="forwardingShow" value="/forwarding/show/${forwardingAttribute.id}" />
 <spring:url var="forwardingEdit" value="/forwarding/edit/${forwardingAttribute.id}" />
 <spring:url var="forwardingNew" value="/forwarding/new" />
+<spring:url var="forwardingImport" value="/forwarding/import/xls" />
 <spring:url var="forwardingExport" value="/forwarding/export/xls" />
 <spring:url var="uatfExport" value="/uatf/export/xls" />
 <spring:url var="forwardingSave" value="/forwarding/save" />
@@ -12,7 +13,7 @@
 
 <ul class="nav nav-tabs">
 	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-	<li class=""><a href="${forwardingList}"><spring:message code="Forwarding Tracking" text="Forwarding Tracking"></spring:message></a></li>
+	<li class=""><a href="${forwardingList}"><spring:message code="Forwardings"></spring:message></a></li>
 	<c:choose>
 		<c:when test="${ !empty forwardingAttribute.id }">
 			<li class="active"><a href="${forwardingEdit}"><spring:message code="Entry No"></spring:message>: ${forwardingAttribute.id}</a></li>
@@ -21,6 +22,7 @@
 			<li class="active"><a href="${forwardingNew}"><spring:message code="New Entry"></spring:message></a></li>
 		</c:otherwise>
 	</c:choose>
+	<li class=""><a href="${forwardingImport}"><spring:message code="Import"></spring:message></a></li>
 	<li class="dropdown">
 		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 			<spring:message code="Export"></spring:message>

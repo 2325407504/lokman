@@ -3,11 +3,12 @@ package com.aripd.project.lgk.domain;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.aripd.common.entity.BaseEntity;
 
 @Entity
-@Table(name = "subcontractor")
+@Table(name = "subcontractor", uniqueConstraints = @UniqueConstraint(columnNames = {"region_id", "name"}))
 public class Subcontractor extends BaseEntity {
 
 	private static final long serialVersionUID = -7548528652541560063L;

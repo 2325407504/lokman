@@ -28,6 +28,8 @@ public class Layouter {
 		worksheet.setColumnWidth(1, 5000);
 		worksheet.setColumnWidth(2, 5000);
 		worksheet.setColumnWidth(3, 5000);
+		worksheet.setColumnWidth(4, 5000);
+		worksheet.setColumnWidth(5, 5000);
 
 		// Build the title and date headers
 		buildTitle(worksheet, startRowIndex, startColIndex);
@@ -66,7 +68,7 @@ public class Layouter {
 		cellTitle.setCellStyle(cellStyleTitle);
 
 		// Create merged region for the report title
-		worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 3));
+		worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 5));
 
 		// Create date header
 		HSSFRow dateTitle = worksheet.createRow((short) startRowIndex + 1);
@@ -104,21 +106,29 @@ public class Layouter {
 		HSSFRow rowHeader = worksheet.createRow((short) startRowIndex + 2);
 		rowHeader.setHeight((short) 500);
 
-		HSSFCell cell1 = rowHeader.createCell(startColIndex + 0);
-		cell1.setCellValue("Account");
+		HSSFCell cell0 = rowHeader.createCell(startColIndex + 0);
+		cell0.setCellValue("Username");
+		cell0.setCellStyle(headerCellStyle);
+
+		HSSFCell cell1 = rowHeader.createCell(startColIndex + 1);
+		cell1.setCellValue("Fullname");
 		cell1.setCellStyle(headerCellStyle);
 
-		HSSFCell cell2 = rowHeader.createCell(startColIndex + 1);
+		HSSFCell cell2 = rowHeader.createCell(startColIndex + 2);
 		cell2.setCellValue("Date");
 		cell2.setCellStyle(headerCellStyle);
 
-		HSSFCell cell3 = rowHeader.createCell(startColIndex + 2);
-		cell3.setCellValue("Description");
+		HSSFCell cell3 = rowHeader.createCell(startColIndex + 3);
+		cell3.setCellValue("Company");
 		cell3.setCellStyle(headerCellStyle);
 
-		HSSFCell cell4 = rowHeader.createCell(startColIndex + 3);
-		cell4.setCellValue("Amount");
+		HSSFCell cell4 = rowHeader.createCell(startColIndex + 4);
+		cell4.setCellValue("Description");
 		cell4.setCellStyle(headerCellStyle);
+		
+		HSSFCell cell5 = rowHeader.createCell(startColIndex + 5);
+		cell5.setCellValue("Amount");
+		cell5.setCellStyle(headerCellStyle);
 		
 	}
 

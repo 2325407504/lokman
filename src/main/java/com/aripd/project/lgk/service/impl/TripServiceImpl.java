@@ -1,8 +1,13 @@
 package com.aripd.project.lgk.service.impl;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -16,6 +21,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +40,9 @@ import com.aripd.project.lgk.report.trip.FillManager;
 import com.aripd.project.lgk.report.trip.Layouter;
 import com.aripd.project.lgk.report.trip.Writer;
 import com.aripd.project.lgk.repository.TripRepository;
+import com.aripd.project.lgk.service.DriverService;
 import com.aripd.project.lgk.service.TripService;
+import com.aripd.project.lgk.service.TruckService;
 
 @Service("tripService")
 @Transactional(readOnly = true)
@@ -46,6 +57,12 @@ public class TripServiceImpl implements TripService {
 	@Resource(name = "accountService")
 	private AccountService accountService;
 
+	@Resource(name = "truckService")
+	private TruckService truckService;
+
+	@Resource(name = "driverService")
+	private DriverService driverService;
+
 	public Trip findOne(Long id) {
 		return repository.findOne(id);
 	}
@@ -58,22 +75,21 @@ public class TripServiceImpl implements TripService {
 		return repository.findAll();
 	}
 	
-	@Transactional(readOnly = false)
+	@Transactional
 	public Trip save(Trip trip) {
 		return repository.save(trip);
 	}
 	
-	@Transactional(readOnly = false)
+	@Transactional
 	public void delete(Long id) {
 		repository.delete(id);
 	}
 
-	@Transactional(readOnly = false)
+	@Transactional
 	public void delete(Trip trip) {
 		repository.delete(trip);
 	}
 
-	@Override
 	public ResultSet<Trip> getRecords(PagingCriteria criteria) {
 		Integer displaySize = criteria.getDisplaySize();
 		Integer displayStart = criteria.getDisplayStart();
@@ -119,7 +135,6 @@ public class TripServiceImpl implements TripService {
 		return new ResultSet<Trip>(resultList, totalRecords, displaySize);
 	}
 
-	@Override
 	public ResultSet<Trip> getRecords(Principal principal, PagingCriteria criteria) {
 		Integer displaySize = criteria.getDisplaySize();
 		Integer displayStart = criteria.getDisplayStart();
@@ -214,6 +229,64 @@ public class TripServiceImpl implements TripService {
 		// 7. Write to the output stream
 		Writer.write(response, worksheet);
 
+	}
+
+	public void importXLS(String fileName) {
+		FileInputStream iStream = null;
+		HSSFWorkbook workbook = null;
+		try {
+			iStream = new FileInputStream(fileName);
+			workbook = new HSSFWorkbook(iStream);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		HSSFSheet worksheet = workbook.getSheetAt(0);
+		Iterator<Row> rows = worksheet.rowIterator();
+
+		List<Trip> trips = new ArrayList<Trip>();
+		Trip trip;
+		
+		//while (rows.hasNext()) {
+		for (int i = 3; i <= worksheet.getLastRowNum(); i++) {
+			//Row row = rows.next();
+			Row row = worksheet.getRow(i);
+			
+			String username = row.getCell(0).getStringCellValue();
+			String truckPlate = row.getCell(1).getStringCellValue();
+			String driverName = row.getCell(2).getStringCellValue();
+			String startingPoint = row.getCell(3).getStringCellValue();
+			Integer startingKm = (int) row.getCell(4).getNumericCellValue();
+			String sStartingTime = row.getCell(5).getStringCellValue();
+			String endingPoint = row.getCell(6).getStringCellValue();
+			Integer endingKm = (int) row.getCell(7).getNumericCellValue();
+			String sEndingTime = row.getCell(8).getStringCellValue();
+			Integer loadWeightInTonne = (int) row.getCell(9).getNumericCellValue();
+			String remark = row.getCell(10).getStringCellValue();
+			
+			DateTimeFormatter formatter = DateTimeFormat.forStyle("MS").withLocale(Locale.GERMAN);
+			DateTime startingTime = formatter.parseDateTime(sStartingTime);
+			DateTime endingTime = formatter.parseDateTime(sEndingTime);
+
+			trip = new Trip();
+			trip.setAccount(accountService.findOneByUsername(username));
+			trip.setTruck(truckService.findOneByPlate(truckPlate));
+			trip.setDriver(driverService.findOneByName(driverName));
+			trip.setStartingPoint(startingPoint);
+			trip.setStartingKm(startingKm);
+			trip.setStartingTime(startingTime);
+			trip.setEndingPoint(endingPoint);
+			trip.setEndingKm(endingKm);
+			trip.setEndingTime(endingTime);
+			trip.setLoadWeightInTonne(loadWeightInTonne);
+			trip.setRemark(remark);
+			
+			trips.add(trip);
+		}
+		
+		repository.save(trips);
 	}
 
 }

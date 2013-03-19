@@ -6,12 +6,13 @@
 <spring:url var="tripEdit" value="/trip/edit/${tripAttribute.id}" />
 <spring:url var="tripNew" value="/trip/new" />
 <spring:url var="tripSave" value="/trip/save" />
+<spring:url var="tripImport" value="/trip/import/xls" />
 <spring:url var="tripExport" value="/trip/export/xls" />
 <spring:url var="tripChart" value="/trip/chart" />
 
 <ul class="nav nav-tabs">
 	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-	<li class=""><a href="${tripList}"><spring:message code="Trip Tracking" text="Trip Tracking"></spring:message></a></li>
+	<li class=""><a href="${tripList}"><spring:message code="Trips"></spring:message></a></li>
 	<c:choose>
 		<c:when test="${ !empty tripAttribute.id }">
 			<li class="active"><a href="${tripEdit}"><spring:message code="Entry No"></spring:message>: ${tripAttribute.id}</a></li>
@@ -20,6 +21,7 @@
 			<li class="active"><a href="${tripNew}"><spring:message code="New Entry"></spring:message></a></li>
 		</c:otherwise>
 	</c:choose>
+	<li class=""><a href="${tripImport}"><spring:message code="Import"></spring:message></a></li>
 	<li class="dropdown">
 		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 			<spring:message code="Export"></spring:message>
@@ -55,7 +57,7 @@
 				</div>
 				<div class="form-row">
 					<form:label path="driver"><spring:message code="Driver" text="Driver"></spring:message></form:label>
-					<form:select path="driver.id" multiple="false" items="${drivers}" itemLabel="fullname" itemValue="id" />
+					<form:select path="driver.id" multiple="false" items="${drivers}" itemLabel="name" itemValue="id" />
 					<form:errors cssClass="error-field" path="driver" />
 				</div>
 				<div class="form-row">

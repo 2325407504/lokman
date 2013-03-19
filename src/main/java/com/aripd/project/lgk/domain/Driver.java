@@ -3,6 +3,7 @@ package com.aripd.project.lgk.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -24,13 +25,10 @@ public class Driver extends BaseEntity {
 	
 	private boolean active;
 
-	private String firstName;
-	private String lastName;
+	@Column(unique = true)
+	private String name;
+	
 	private String phonenumber;
-
-	public String getFullname() {
-		return String.format("%s %s", firstName, lastName);
-	}
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "driver", fetch = FetchType.EAGER)
@@ -57,20 +55,12 @@ public class Driver extends BaseEntity {
 		this.active = active;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getPhonenumber() {

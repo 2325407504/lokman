@@ -30,4 +30,6 @@ public interface TripService {
 	
 	void exportXLS(HttpServletResponse response);
 
+	void importXLS(String fileName);
+
 }

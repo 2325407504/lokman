@@ -27,4 +27,6 @@ public interface ForwardingService {
 
 	void exportXLS(HttpServletResponse response);
 
+	void importXLS(String fileName);
+
 }

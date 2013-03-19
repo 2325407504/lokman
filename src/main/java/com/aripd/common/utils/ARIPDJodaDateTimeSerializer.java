@@ -14,7 +14,7 @@ import org.joda.time.format.DateTimeFormatter;
 public class ARIPDJodaDateTimeSerializer extends JsonSerializer<DateTime> {
 
 	// TODO Locale bilgisini SessionLocaleResolver dan nasıl alabiliriz
-	private static DateTimeFormatter formatter = DateTimeFormat.forStyle("SS").withLocale(Locale.GERMAN);
+	private static DateTimeFormatter formatter = DateTimeFormat.forStyle("MS").withLocale(Locale.GERMAN);
 
 	@Override
 	public void serialize(DateTime value, JsonGenerator gen,
