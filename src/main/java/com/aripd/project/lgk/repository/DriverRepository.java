@@ -6,6 +6,6 @@ import com.aripd.project.lgk.domain.Driver;
 
 public interface DriverRepository extends JpaRepository<Driver, Long> {
 
-	Driver findOneByName(String name);
+	Driver findOneByCode(String code);
 	
 }

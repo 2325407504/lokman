@@ -118,18 +118,12 @@
 
 	<!-- initializing data to realize some test -->
 	<beans>
-		<bean id="regionDataService" init-method="init"
-			class="com.aripd.project.lgk.service.RegionDataService" />
-		<bean id="accountDataService" parent="regionDataService"
-			init-method="init" class="com.aripd.account.service.AccountDataService" />
-		<bean id="truckDataService" parent="regionDataService"
-			init-method="init" class="com.aripd.project.lgk.service.TruckDataService" />
-		<bean id="subcontractorDataService" parent="regionDataService"
-			init-method="init" class="com.aripd.project.lgk.service.SubcontractorDataService" />
-		<bean id="driverDataService" init-method="init"
-			class="com.aripd.project.lgk.service.DriverDataService" />
-		<bean id="quotaDataService" init-method="init"
-			class="com.aripd.project.lgk.service.QuotaDataService" />
+		<bean init-method="init" id="regionDataService" class="com.aripd.project.lgk.service.RegionDataService" />
+		<bean init-method="init" parent="regionDataService" id="accountDataService" class="com.aripd.account.service.AccountDataService" />
+		<bean init-method="init" parent="regionDataService" id="truckDataService" class="com.aripd.project.lgk.service.TruckDataService" />
+		<bean init-method="init" parent="regionDataService" id="subcontractorDataService" class="com.aripd.project.lgk.service.SubcontractorDataService" />
+		<bean init-method="init" parent="regionDataService" id="driverDataService" class="com.aripd.project.lgk.service.DriverDataService" />
+		<bean init-method="init" id="quotaDataService" class="com.aripd.project.lgk.service.QuotaDataService" />
 	</beans>
 
 </beans>

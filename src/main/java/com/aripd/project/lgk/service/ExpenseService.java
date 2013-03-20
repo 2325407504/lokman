@@ -27,6 +27,8 @@ public interface ExpenseService {
 
 	void exportXLS(HttpServletResponse response);
 	
-	void importXLS(String fileName);
+	void importXLSX(String fileName);
+
+	void importCSV(String content);
 
 }

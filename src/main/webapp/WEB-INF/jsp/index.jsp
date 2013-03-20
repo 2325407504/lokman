@@ -39,31 +39,31 @@
 		<div class="item active">
 			<img src="http://dl.dropbox.com/u/36591931/toprakhareketi_com/forest1.jpg" alt="">
 			<div class="container">
-				<div class="carousel-caption">
+				<!-- div class="carousel-caption">
 					<h1>Example headline.</h1>
 					<p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
 					<a class="btn btn-large btn-primary" href="#">Sign up today</a>
 				</div>
-			</div>
+			</div-->
 		</div>
 		<div class="item">
 			<img src="http://dl.dropbox.com/u/36591931/toprakhareketi_com/forest2.jpg" alt="">
 			<div class="container">
-				<div class="carousel-caption">
+				<!-- div class="carousel-caption">
 					<h1>Another example headline.</h1>
 					<p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
 					<a class="btn btn-large btn-primary" href="#">Learn more</a>
-				</div>
+				</div-->
 			</div>
 		</div>
 		<div class="item">
 			<img src="http://dl.dropbox.com/u/36591931/toprakhareketi_com/forest3.jpg" alt="">
 			<div class="container">
-				<div class="carousel-caption">
+				<!-- div class="carousel-caption">
 					<h1>One more for good measure.</h1>
 					<p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
 					<a class="btn btn-large btn-primary" href="#">Browse gallery</a>
-				</div>
+				</div-->
 			</div>
 		</div>
 	</div>

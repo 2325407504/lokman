@@ -38,6 +38,10 @@ public class SubcontractorServiceImpl implements SubcontractorService {
 		return repository.findOne(id);
 	}
 
+	public Subcontractor findOneByCode(String code) {
+		return repository.findOneByCode(code);
+	}
+
 	public List<Subcontractor> findAll() {
 		return repository.findAll();
 	}
@@ -77,7 +81,9 @@ public class SubcontractorServiceImpl implements SubcontractorService {
 		List<Predicate> predicateList = new ArrayList<Predicate>();
 		
 		if ((search != null) && (!(search.isEmpty()))) {
-			Predicate predicate = cb.like(root.get(Subcontractor_.name), "%"+search+"%");
+			Predicate predicate1 = cb.like(root.get(Subcontractor_.code), "%"+search+"%");
+			Predicate predicate2 = cb.like(root.get(Subcontractor_.name), "%"+search+"%");
+			Predicate predicate = cb.or(predicate1, predicate2);
 			predicateList.add(predicate);
 		}
 		

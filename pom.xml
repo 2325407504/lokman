@@ -2,10 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.aripd</groupId>
-	<artifactId>gelibolu</artifactId>
+	<artifactId>lokman</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>gelibolu Maven Webapp</name>
+	<name>lokman Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -404,10 +404,15 @@
 			<artifactId>commons-io</artifactId>
 			<version>1.3.2</version>
 		</dependency>
-		<!-- Export -->
+		<!-- Apache POI -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
+			<version>3.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
 			<version>3.9</version>
 		</dependency>
 		<!-- Interceptor -->
@@ -416,11 +421,48 @@
 			<artifactId>javax.interceptor-api</artifactId>
 			<version>3.1</version>
 		</dependency>
+		<!-- Cloud -->
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>1.4.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.syncloud</groupId>
+			<artifactId>dropbox-client</artifactId>
+			<version>1.5.3</version>
+		</dependency>
+		<dependency>
+			<groupId>oauth.signpost</groupId>
+			<artifactId>signpost-core</artifactId>
+			<version>1.2.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>oauth.signpost</groupId>
+			<artifactId>signpost-commonshttp4</artifactId>
+			<version>1.2.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>htmlunit</groupId>
+			<artifactId>htmlunit</artifactId>
+			<version>1.14</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpmime</artifactId>
+			<version>4.0.3</version>
+		</dependency>
 
 	</dependencies>
 
 	<build>
-		<finalName>gelibolu</finalName>
+		<finalName>lokman</finalName>
 
 		<plugins>
 
@@ -509,19 +551,19 @@
 	</repositories>
 
 	<scm>
-		<connection>scm:git:git://github.com/aricem/gelibolu.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com/aricem/gelibolu.git</developerConnection>
-		<url>http://github.com/aricem/gelibolu</url>
+		<connection>scm:git:git://github.com/ARIPD/lokman.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/ARIPD/lokman.git</developerConnection>
+		<url>http://github.com/ARIPD/lokman</url>
 	</scm>
 
 	<issueManagement>
 		<system>GitHub Issues</system>
-		<url>http://github.com/aricem/gelibolu/issues</url>
+		<url>http://github.com/ARIPD/lokman/issues</url>
 	</issueManagement>
 
 	<ciManagement>
 		<system>Travis CI</system>
-		<url>http://travis-ci.org/#!/aricem/gelibolu</url>
+		<url>http://travis-ci.org/#!/ARIPD/lokman</url>
 	</ciManagement>
 
 	<organization>

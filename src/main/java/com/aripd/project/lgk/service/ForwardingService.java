@@ -15,6 +15,8 @@ public interface ForwardingService {
 	
 	Forwarding findOneByAccountAndId(Account account, Long id);
 	
+	Forwarding findOneByWaybillNo(String waybillNo);
+
 	Forwarding save(Forwarding formData);
 
 	void delete(Long id);
@@ -27,6 +29,8 @@ public interface ForwardingService {
 
 	void exportXLS(HttpServletResponse response);
 
-	void importXLS(String fileName);
+	void importXLSX(String fileName);
+
+	void importCSV(String content);
 
 }

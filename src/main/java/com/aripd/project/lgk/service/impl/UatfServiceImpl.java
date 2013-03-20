@@ -1,6 +1,11 @@
 package com.aripd.project.lgk.service.impl;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -14,6 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -150,6 +160,51 @@ public class UatfServiceImpl implements UatfService {
 		// 7. Write to the output stream
 		Writer.write(response, worksheet);
 
+	}
+
+	public void importXLSX(String fileName) {
+		InputStream iStream = null;
+		try {
+			iStream = new FileInputStream(fileName);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		Workbook workbook = null;
+		try {
+			workbook = WorkbookFactory.create(iStream);
+		} catch (InvalidFormatException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		Sheet worksheet = workbook.getSheetAt(0);
+		Iterator<Row> rows = worksheet.rowIterator();
+
+		List<Uatf> uatfs = new ArrayList<Uatf>();
+		Uatf uatf;
+		
+		//while (rows.hasNext()) {
+		for (int i = 1; i <= worksheet.getLastRowNum(); i++) {
+			//Row row = rows.next();
+			Row row = worksheet.getRow(i);
+			
+			String waybillNo = row.getCell(0).getStringCellValue();
+			String code = row.getCell(1).getStringCellValue();
+			String company = row.getCell(2).getStringCellValue();
+			String county = row.getCell(3).getStringCellValue();
+			String city = row.getCell(4).getStringCellValue();
+			
+			uatf = new Uatf();
+			uatf.setForwarding(forwardingService.findOneByWaybillNo(waybillNo));
+			uatf.setCode(code);
+			uatf.setCompany(company);
+			uatf.setCounty(county);
+			uatf.setCity(city);
+			
+			uatfs.add(uatf);
+		}
+		
+		repository.save(uatfs);
 	}
 
 }

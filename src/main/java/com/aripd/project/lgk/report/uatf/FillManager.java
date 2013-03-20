@@ -72,7 +72,7 @@ public class FillManager {
 			cell7.setCellStyle(bodyCellStyle);
 
 			HSSFCell cell8 = row.createCell(startColIndex + 7);
-			cell8.setCellValue(datasource.get(i - 2).getForwarding().getShippingCost().floatValue());
+			cell8.setCellValue(datasource.get(i - 2).getForwarding().getShippingCost().doubleValue());
 			cell8.setCellStyle(bodyCellStyle);
 
 			HSSFCell cell9 = row.createCell(startColIndex + 8);

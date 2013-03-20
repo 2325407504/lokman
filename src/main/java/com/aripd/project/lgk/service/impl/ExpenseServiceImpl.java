@@ -3,12 +3,14 @@ package com.aripd.project.lgk.service.impl;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -22,7 +24,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -207,39 +213,71 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	}
 
-	public void importXLS(String fileName) {
-		FileInputStream iStream = null;
-		HSSFWorkbook workbook = null;
+	public void importXLSX(String fileName) {
+		InputStream iStream = null;
 		try {
 			iStream = new FileInputStream(fileName);
-			workbook = new HSSFWorkbook(iStream);
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		HSSFSheet worksheet = workbook.getSheetAt(0);
+		Workbook workbook = null;
+		try {
+			workbook = WorkbookFactory.create(iStream);
+		} catch (InvalidFormatException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		Sheet worksheet = workbook.getSheetAt(0);
 		Iterator<Row> rows = worksheet.rowIterator();
 
 		List<Expense> expenses = new ArrayList<Expense>();
 		Expense expense;
 		
 		//while (rows.hasNext()) {
-		for (int i = 3; i <= worksheet.getLastRowNum(); i++) {
+		for (int i = 1; i <= worksheet.getLastRowNum(); i++) {
 			//Row row = rows.next();
 			Row row = worksheet.getRow(i);
 			
 			String username = row.getCell(0).getStringCellValue();
-			String sDocumentDate = row.getCell(1).getStringCellValue();
+			Date documentDate = row.getCell(1).getDateCellValue();
 			String company = row.getCell(2).getStringCellValue();
 			String description = row.getCell(3).getStringCellValue();
-			BigDecimal amount = new BigDecimal(row.getCell(4).getNumericCellValue());
+			BigDecimal amount = new BigDecimal(row.getCell(4).getNumericCellValue(), MathContext.DECIMAL64);
 			
-			DateTimeFormatter formatter = DateTimeFormat.forStyle("MS").withLocale(Locale.GERMAN);
-			DateTime documentDate = formatter.parseDateTime(sDocumentDate);
-
 			expense = new Expense();
+			expense.setSubmitted(true);
+			expense.setAccount(accountService.findOneByUsername(username));
+			expense.setDocumentDate(new DateTime(documentDate));
+			expense.setCompany(company);
+			expense.setDescription(description);
+			expense.setAmount(amount);
+			
+			expenses.add(expense);
+		}
+		
+		repository.save(expenses);
+	}
+
+	@Override
+	public void importCSV(String content) {
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm");
+		
+		List<Expense> expenses = new ArrayList<Expense>();
+		Expense expense;
+		
+		String rows[] = content.split("\\r?\\n");
+		for (String row : rows) {
+			String column[] = row.split(",");
+			
+			String username = column[0];
+			DateTime documentDate = formatter.parseDateTime(column[1]);
+			String company = column[2];
+			String description = column[3];
+			BigDecimal amount = new BigDecimal(column[4], MathContext.DECIMAL64);
+			
+			expense = new Expense();
+			expense.setSubmitted(true);
 			expense.setAccount(accountService.findOneByUsername(username));
 			expense.setDocumentDate(documentDate);
 			expense.setCompany(company);

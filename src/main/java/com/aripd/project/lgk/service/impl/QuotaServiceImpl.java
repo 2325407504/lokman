@@ -37,6 +37,10 @@ public class QuotaServiceImpl implements QuotaService {
 		return repository.findOne(id);
 	}
 
+	public Quota findOneByCode(String code) {
+		return repository.findOneByCode(code);
+	}
+
 	public List<Quota> findAll() {
 		return repository.findAll();
 	}
@@ -71,7 +75,9 @@ public class QuotaServiceImpl implements QuotaService {
 		List<Predicate> predicateList = new ArrayList<Predicate>();
 		
 		if ((search != null) && (!(search.isEmpty()))) {
-			Predicate predicate = cb.like(root.get(Quota_.name), "%"+search+"%");
+			Predicate predicate1 = cb.like(root.get(Quota_.code), "%"+search+"%");
+			Predicate predicate2 = cb.like(root.get(Quota_.name), "%"+search+"%");
+			Predicate predicate = cb.or(predicate1, predicate2);
 			predicateList.add(predicate);
 		}
 		

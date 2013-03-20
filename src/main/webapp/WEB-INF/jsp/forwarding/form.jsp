@@ -29,8 +29,8 @@
 			<b class="caret"></b>
 		</a>
 		<ul class="dropdown-menu">
-			<li><a href="${forwardingExport}"><spring:message code="Waybill" text="Waybill"></spring:message></a></li>
-			<li><a href="${uatfExport}"><spring:message code="UATF" text="UATF"></spring:message></a></li>
+			<li><a href="${forwardingExport}"><spring:message code="Waybill"></spring:message></a></li>
+			<li><a href="${uatfExport}"><spring:message code="UATF"></spring:message></a></li>
 		</ul>
 	</li>
 </ul>

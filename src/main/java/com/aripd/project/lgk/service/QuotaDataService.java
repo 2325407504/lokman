@@ -23,10 +23,14 @@ public class QuotaDataService {
 		List<Quota> quotas = new ArrayList<Quota>();
 		
 		Quota quota1 = new Quota();
+		quota1.setActive(true);
+		quota1.setCode("UID1");
 		quota1.setName("LASDER");
 		quotas.add(quota1);
 		
 		Quota quota2 = new Quota();
+		quota2.setActive(true);
+		quota2.setCode("UID2");
 		quota2.setName("Çimento Fabrikası");
 		quotas.add(quota2);
 		

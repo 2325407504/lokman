@@ -3,11 +3,12 @@ package com.aripd.project.lgk.service.impl;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -21,7 +22,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -231,55 +236,98 @@ public class TripServiceImpl implements TripService {
 
 	}
 
-	public void importXLS(String fileName) {
-		FileInputStream iStream = null;
-		HSSFWorkbook workbook = null;
+	public void importXLSX(String fileName) {
+		InputStream iStream = null;
 		try {
 			iStream = new FileInputStream(fileName);
-			workbook = new HSSFWorkbook(iStream);
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		HSSFSheet worksheet = workbook.getSheetAt(0);
+		Workbook workbook = null;
+		try {
+			workbook = WorkbookFactory.create(iStream);
+		} catch (InvalidFormatException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		Sheet worksheet = workbook.getSheetAt(0);
 		Iterator<Row> rows = worksheet.rowIterator();
 
 		List<Trip> trips = new ArrayList<Trip>();
 		Trip trip;
 		
 		//while (rows.hasNext()) {
-		for (int i = 3; i <= worksheet.getLastRowNum(); i++) {
+		for (int i = 1; i <= worksheet.getLastRowNum(); i++) {
 			//Row row = rows.next();
 			Row row = worksheet.getRow(i);
 			
 			String username = row.getCell(0).getStringCellValue();
 			String truckPlate = row.getCell(1).getStringCellValue();
-			String driverName = row.getCell(2).getStringCellValue();
+			String driverCode = row.getCell(2).getStringCellValue();
 			String startingPoint = row.getCell(3).getStringCellValue();
 			Integer startingKm = (int) row.getCell(4).getNumericCellValue();
-			String sStartingTime = row.getCell(5).getStringCellValue();
+			Date startingTime = row.getCell(5).getDateCellValue();
 			String endingPoint = row.getCell(6).getStringCellValue();
 			Integer endingKm = (int) row.getCell(7).getNumericCellValue();
-			String sEndingTime = row.getCell(8).getStringCellValue();
+			Date endingTime = row.getCell(8).getDateCellValue();
 			Integer loadWeightInTonne = (int) row.getCell(9).getNumericCellValue();
 			String remark = row.getCell(10).getStringCellValue();
 			
-			DateTimeFormatter formatter = DateTimeFormat.forStyle("MS").withLocale(Locale.GERMAN);
-			DateTime startingTime = formatter.parseDateTime(sStartingTime);
-			DateTime endingTime = formatter.parseDateTime(sEndingTime);
-
 			trip = new Trip();
+			trip.setSubmitted(true);
 			trip.setAccount(accountService.findOneByUsername(username));
 			trip.setTruck(truckService.findOneByPlate(truckPlate));
-			trip.setDriver(driverService.findOneByName(driverName));
+			trip.setDriver(driverService.findOneByCode(driverCode));
+			trip.setStartingPoint(startingPoint);
+			trip.setStartingKm(startingKm);
+			trip.setStartingTime(new DateTime(startingTime));
+			trip.setEndingPoint(endingPoint);
+			trip.setEndingKm(endingKm);
+			trip.setEndingTime(new DateTime(endingTime));
+			trip.setLoadWeightInTonne(loadWeightInTonne);
+			trip.setRemark(remark);
+			
+			trips.add(trip);
+		}
+		
+		repository.save(trips);
+	}
+
+	@Override
+	public void importCSV(String content) {
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm");
+		
+		List<Trip> trips = new ArrayList<Trip>();
+		Trip trip;
+		
+		String rows[] = content.split("\\r?\\n");
+		for (String row : rows) {
+			String column[] = row.split(",");
+			
+			String username = column[0];
+			String truckPlate = column[1];
+			String driverCode = column[2];
+			String startingPoint = column[3];
+			Integer startingKm = new Integer(column[4]);
+			DateTime startingTime = formatter.parseDateTime(column[5]);
+			String endingPoint = column[6];
+			Integer endingKm = new Integer(column[7]);
+			DateTime endingTime = formatter.parseDateTime(column[8]);
+			Integer loadWeightInTonne = new Integer(column[9]);
+			String remark = column[10];
+			
+			trip = new Trip();
+			trip.setSubmitted(true);
+			trip.setAccount(accountService.findOneByUsername(username));
+			trip.setTruck(truckService.findOneByPlate(truckPlate));
+			trip.setDriver(driverService.findOneByCode(driverCode));
 			trip.setStartingPoint(startingPoint);
 			trip.setStartingKm(startingKm);
 			trip.setStartingTime(startingTime);
 			trip.setEndingPoint(endingPoint);
 			trip.setEndingKm(endingKm);
-			trip.setEndingTime(endingTime);
+			trip.setEndingTime(new DateTime(endingTime));
 			trip.setLoadWeightInTonne(loadWeightInTonne);
 			trip.setRemark(remark);
 			

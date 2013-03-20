@@ -12,6 +12,8 @@
 
 <aripd:datatables datasource="/driver/get" id="drivers" dataUrlShow="/driver/show" dataUrlEdit="/driver/edit">
 	<aripd:column label="Action" field="id"/>
+	<aripd:column label="Region" field="region.name"/>
+	<aripd:column label="Code" field="code"/>
 	<aripd:column label="Fullname" field="name"/>
 	<aripd:column label="Phone Number" field="phonenumber"/>
 </aripd:datatables>

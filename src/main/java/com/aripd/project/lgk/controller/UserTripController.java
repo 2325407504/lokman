@@ -137,7 +137,7 @@ public class UserTripController {
 		formData.setAccount(account);
 
 		tripService.save(formData);
-		redirectAttributes.addFlashAttribute("message", "Successfully saved..");
+		redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
 		return "redirect:/user/trip/list";
 	}
 

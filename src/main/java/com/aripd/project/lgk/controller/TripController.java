@@ -27,6 +27,7 @@ import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.TableParam;
 import com.aripd.common.dto.WebResultSet;
+import com.aripd.common.model.CsvImportBean;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Trip;
@@ -118,7 +119,7 @@ public class TripController {
 		}
 
 		tripService.save(formData);
-		redirectAttributes.addFlashAttribute("message", "Successfully saved..");
+		redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
 		return "redirect:/trip/list";
 	}
 
@@ -153,6 +154,7 @@ public class TripController {
 	@RequestMapping(value = "/import/xls", method = RequestMethod.GET)
 	public String importAction(Model model) {
 		model.addAttribute(new FileUploadBean());
+		model.addAttribute(new CsvImportBean());
 		return "trip/import";
 	}
 
@@ -195,7 +197,23 @@ public class TripController {
 			e.printStackTrace();
 		}
 
-		tripService.importXLS(fileName);
+		tripService.importXLSX(fileName);
+		redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
+		return "redirect:/trip/list";
+	}
+
+	@RequestMapping(value = "/import/csv", method = RequestMethod.POST)
+	public String importCSV(
+			final RedirectAttributes redirectAttributes,
+			CsvImportBean csvImportBean, 
+			BindingResult result) {
+
+		if (result.hasErrors()) {
+			redirectAttributes.addFlashAttribute("message", "Hata oluştu");
+			return "redirect:/trip/import";
+		}
+		
+		tripService.importCSV(csvImportBean.getContent());
 		redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
 		return "redirect:/trip/list";
 	}

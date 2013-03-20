@@ -14,9 +14,6 @@ import com.aripd.account.repository.AccountRepository;
 import com.aripd.account.repository.RoleRepository;
 import com.aripd.project.lgk.repository.RegionRepository;
 
-/**
- * Data initialization service
- */
 @Service("initDataService")
 public class AccountDataService {
 

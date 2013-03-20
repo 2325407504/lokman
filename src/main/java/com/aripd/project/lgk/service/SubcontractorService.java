@@ -11,6 +11,8 @@ public interface SubcontractorService {
 
 	Subcontractor findOne(Long id);
 
+	Subcontractor findOneByCode(String code);
+
 	List<Subcontractor> findAll();
 
 	List<Subcontractor> findByRegion(Region region);

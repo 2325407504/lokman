@@ -10,6 +10,8 @@ public interface QuotaService {
 
 	Quota findOne(Long id);
 	
+	Quota findOneByCode(String code);
+
 	List<Quota> findAll();
 	
 	Quota save(Quota quota);

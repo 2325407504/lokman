@@ -139,7 +139,7 @@ public class UserForwardingController {
 		formData.setAccount(account);
 
 		forwardingService.save(formData);
-		redirectAttributes.addFlashAttribute("message", "Successfully saved..");
+		redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
 		return "redirect:/user/forwarding/list";
 	}
 

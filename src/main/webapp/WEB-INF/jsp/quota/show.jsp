@@ -14,6 +14,7 @@
 </ul>
 
 <aripd:description id="quotas">
+	<aripd:descriptionitem label="Code" field="${quotaAttribute.code}"></aripd:descriptionitem>
 	<aripd:descriptionitem label="Name" field="${quotaAttribute.name}"></aripd:descriptionitem>
 </aripd:description>
 

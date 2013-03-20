@@ -13,6 +13,7 @@
 <aripd:datatables datasource="/subcontractor/get" id="subcontractors" dataUrlShow="/subcontractor/show" dataUrlEdit="/subcontractor/edit">
 	<aripd:column label="Action" field="id"/>
 	<aripd:column label="Region" field="region.name"/>
+	<aripd:column label="Code" field="code"/>
 	<aripd:column label="Subcontractor" field="name"/>
 </aripd:datatables>
 

@@ -109,7 +109,7 @@ public class UserExpenseController {
 		formData.setAccount(account);
 
 		expenseService.save(formData);
-		redirectAttributes.addFlashAttribute("message", "Successfully saved..");
+		redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
 		return "redirect:/user/expense/list";
 	}
 

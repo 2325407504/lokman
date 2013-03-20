@@ -82,7 +82,7 @@ public class SubcontractorController {
 		}
 		
 		subcontractorService.save(subcontractor);
-		redirectAttributes.addFlashAttribute("message", "Successfully saved..");
+		redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
 		return "redirect:/subcontractor/list";
 	}
 

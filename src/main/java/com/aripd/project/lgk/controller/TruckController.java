@@ -82,7 +82,7 @@ public class TruckController {
 		}
 		
 		truckService.save(truck);
-		redirectAttributes.addFlashAttribute("message", "Successfully saved..");
+		redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
 		return "redirect:/truck/list";
 	}
 

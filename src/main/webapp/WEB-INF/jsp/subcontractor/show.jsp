@@ -15,6 +15,7 @@
 
 <aripd:description id="subcontractors">
 	<aripd:descriptionitem label="Region" field="${subcontractorAttribute.region.name}"></aripd:descriptionitem>
+	<aripd:descriptionitem label="Code" field="${subcontractorAttribute.code}"></aripd:descriptionitem>
 	<aripd:descriptionitem label="Name" field="${subcontractorAttribute.name}"></aripd:descriptionitem>
 </aripd:description>
 

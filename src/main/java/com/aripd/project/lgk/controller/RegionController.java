@@ -77,7 +77,7 @@ public class RegionController {
 		}
 		
 		regionService.save(region);
-		redirectAttributes.addFlashAttribute("message", "Successfully saved..");
+		redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
 		return "redirect:/region/list";
 	}
 

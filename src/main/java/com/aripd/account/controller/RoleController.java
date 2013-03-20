@@ -82,7 +82,7 @@ public class RoleController {
 
 		logger.debug("Received request to save existing record");
 		roleService.save(role);
-		redirectAttributes.addFlashAttribute("message", "Successfully saved..");
+		redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
 		return "redirect:/role/list";
 	}
 
@@ -92,7 +92,7 @@ public class RoleController {
 		logger.debug("Received request to delete existing record");
 		roleService.delete(id);
 		redirectAttributes.addFlashAttribute("message",
-				"Successfully deleted..");
+				"Silme işlemi başarı ile tamamlandı");
 		return "redirect:/role/list";
 	}
 

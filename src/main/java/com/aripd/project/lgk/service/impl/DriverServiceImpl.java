@@ -37,8 +37,8 @@ public class DriverServiceImpl implements DriverService {
 		return repository.findOne(id);
 	}
 
-	public Driver findOneByName(String name) {
-		return repository.findOneByName(name);
+	public Driver findOneByCode(String code) {
+		return repository.findOneByCode(code);
 	}
 
 	public List<Driver> findAll() {
@@ -75,9 +75,10 @@ public class DriverServiceImpl implements DriverService {
 		List<Predicate> predicateList = new ArrayList<Predicate>();
 		
 		if ((search != null) && (!(search.isEmpty()))) {
-			Predicate predicate1 = cb.like(root.get(Driver_.name), "%"+search+"%");
-			Predicate predicate2 = cb.like(root.get(Driver_.phonenumber), "%"+search+"%");
-			Predicate predicate = cb.or(predicate1, predicate2);
+			Predicate predicate1 = cb.like(root.get(Driver_.code), "%"+search+"%");
+			Predicate predicate2 = cb.like(root.get(Driver_.name), "%"+search+"%");
+			Predicate predicate3 = cb.like(root.get(Driver_.phonenumber), "%"+search+"%");
+			Predicate predicate = cb.or(predicate1, predicate2, predicate3);
 			predicateList.add(predicate);
 		}
 		

@@ -22,6 +22,7 @@ import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Driver;
 import com.aripd.project.lgk.service.DriverService;
+import com.aripd.project.lgk.service.RegionService;
 
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 @Controller
@@ -30,6 +31,9 @@ public class DriverController {
 	
 	@Resource(name="driverService")
 	private DriverService driverService;
+	
+	@Resource(name="regionService")
+	private RegionService regionService;
 	
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	public @ResponseBody
@@ -53,6 +57,7 @@ public class DriverController {
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
+		model.addAttribute("regions", regionService.findAll());
     	model.addAttribute("driverAttribute", new Driver());
     	return "driver/form";
 	}
@@ -61,6 +66,7 @@ public class DriverController {
     public String editAction(
     		@PathVariable Long id, 
     		Model model) {
+		model.addAttribute("regions", regionService.findAll());
     	model.addAttribute("driverAttribute", driverService.findOne(id));
     	return "driver/form";
 	}
@@ -73,11 +79,12 @@ public class DriverController {
 			Model model) {
     	
 		if (result.hasErrors()) {
+			model.addAttribute("regions", regionService.findAll());
 			return "/driver/form";
 		}
 		
 		driverService.save(driver);
-		redirectAttributes.addFlashAttribute("message", "Successfully saved..");
+		redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
 		return "redirect:/driver/list";
 	}
 

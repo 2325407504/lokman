@@ -26,4 +26,6 @@ public interface UatfService {
 
 	void exportXLS(HttpServletResponse response);
 
+	void importXLSX(String fileName);
+
 }

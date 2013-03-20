@@ -6,6 +6,7 @@
 <spring:url var="forwardingEdit" value="/forwarding/edit/${forwardingAttribute.id}" />
 <spring:url var="forwardingSubmit" value="/forwarding/submit/${forwardingAttribute.id}" />
 <spring:url var="forwardingNew" value="/forwarding/new" />
+<spring:url var="forwardingImport" value="/forwarding/import/xls" />
 <spring:url var="forwardingExport" value="/forwarding/export/xls" />
 <spring:url var="uatfExport" value="/uatf/export/xls" />
 
@@ -14,14 +15,15 @@
 	<li class=""><a href="${forwardingList}"><spring:message code="Forwardings"></spring:message></a></li>
 	<li class="active"><a href="${forwardingShow}"><spring:message code="Entry No"></spring:message>: ${forwardingAttribute.id}</a></li>
 	<li class=""><a href="${forwardingNew}"><spring:message code="New Entry"></spring:message></a></li>
+	<li class=""><a href="${forwardingImport}"><spring:message code="Import"></spring:message></a></li>
 	<li class="dropdown">
 		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 			<spring:message code="Export"></spring:message>
 			<b class="caret"></b>
 		</a>
 		<ul class="dropdown-menu">
-			<li><a href="${forwardingExport}"><spring:message code="Waybill" text="Waybill"></spring:message></a></li>
-			<li><a href="${uatfExport}"><spring:message code="UATF" text="UATF"></spring:message></a></li>
+			<li><a href="${forwardingExport}"><spring:message code="Waybill"></spring:message></a></li>
+			<li><a href="${uatfExport}"><spring:message code="UATF"></spring:message></a></li>
 		</ul>
 	</li>
 </ul>

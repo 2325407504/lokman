@@ -8,5 +8,7 @@ import com.aripd.project.lgk.domain.Forwarding;
 public interface ForwardingRepository extends JpaRepository<Forwarding, Long> {
 
 	Forwarding findOneByAccountAndId(Account account, Long id);
+
+	Forwarding findOneByWaybillNo(String waybillNo);
 	
 }

@@ -3,12 +3,14 @@ package com.aripd.project.lgk.service.impl;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -22,7 +24,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -41,10 +47,13 @@ import com.aripd.project.lgk.report.forwarding.FillManager;
 import com.aripd.project.lgk.report.forwarding.Layouter;
 import com.aripd.project.lgk.report.forwarding.Writer;
 import com.aripd.project.lgk.repository.ForwardingRepository;
+import com.aripd.project.lgk.repository.UatfRepository;
 import com.aripd.project.lgk.service.ForwardingService;
+import com.aripd.project.lgk.service.QuotaService;
+import com.aripd.project.lgk.service.SubcontractorService;
 
 @Service("forwardingService")
-@Transactional
+@Transactional(readOnly = true)
 public class ForwardingServiceImpl implements ForwardingService {
 
 	@PersistenceContext
@@ -53,36 +62,45 @@ public class ForwardingServiceImpl implements ForwardingService {
 	@Autowired
 	private ForwardingRepository repository;
 
+	@Autowired
+	private UatfRepository uatfRepository;
+
 	@Resource(name = "accountService")
 	private AccountService accountService;
 	
-	@Transactional(readOnly = true)
+	@Resource(name = "subcontractorService")
+	private SubcontractorService subcontractorService;
+
+	@Resource(name = "quotaService")
+	private QuotaService quotaService;
+
 	public Forwarding findOne(Long id) {
 		return repository.findOne(id);
 	}
 
-	@Transactional(readOnly = true)
+	public Forwarding findOneByWaybillNo(String waybillNo) {
+		return repository.findOneByWaybillNo(waybillNo);
+	}
+
 	public Forwarding findOneByAccountAndId(Account account, Long id) {
 		return repository.findOneByAccountAndId(account, id);
 	}
 
-	@Transactional(readOnly = false)
+	@Transactional
 	public Forwarding save(Forwarding forwarding) {
 		return repository.save(forwarding);
 	}
 
-	@Transactional(readOnly = false)
+	@Transactional
 	public void delete(Long id) {
 		repository.delete(id);
 	}
 
-	@Transactional(readOnly = false)
+	@Transactional
 	public void delete(Forwarding forwarding) {
 		repository.delete(forwarding);
 	}
 
-	@Transactional(readOnly = true)
-	@Override
 	public ResultSet<Forwarding> getRecords(PagingCriteria criteria) {
 		Integer displaySize = criteria.getDisplaySize();
 		Integer displayStart = criteria.getDisplayStart();
@@ -127,8 +145,6 @@ public class ForwardingServiceImpl implements ForwardingService {
 		return new ResultSet<Forwarding>(resultList, totalRecords, displaySize);
 	}
 
-	@Transactional(readOnly = true)
-	@Override
 	public ResultSet<Forwarding> getRecords(Principal principal, PagingCriteria criteria) {
 		Integer displaySize = criteria.getDisplaySize();
 		Integer displayStart = criteria.getDisplayStart();
@@ -210,26 +226,29 @@ public class ForwardingServiceImpl implements ForwardingService {
 
 	}
 
-	public void importXLS(String fileName) {
-		FileInputStream iStream = null;
-		HSSFWorkbook workbook = null;
+	public void importXLSX(String fileName) {
+		InputStream iStream = null;
 		try {
 			iStream = new FileInputStream(fileName);
-			workbook = new HSSFWorkbook(iStream);
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		HSSFSheet worksheet = workbook.getSheetAt(0);
+		Workbook workbook = null;
+		try {
+			workbook = WorkbookFactory.create(iStream);
+		} catch (InvalidFormatException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		Sheet worksheet = workbook.getSheetAt(0);
 		Iterator<Row> rows = worksheet.rowIterator();
 
 		List<Forwarding> forwardings = new ArrayList<Forwarding>();
 		Forwarding forwarding;
 		
 		//while (rows.hasNext()) {
-		for (int i = 3; i <= worksheet.getLastRowNum(); i++) {
+		for (int i = 1; i <= worksheet.getLastRowNum(); i++) {
 			//Row row = rows.next();
 			Row row = worksheet.getRow(i);
 			
@@ -237,17 +256,59 @@ public class ForwardingServiceImpl implements ForwardingService {
 			String waybillNo = row.getCell(1).getStringCellValue();
 			String driver = row.getCell(2).getStringCellValue();
 			String plate = row.getCell(3).getStringCellValue();
-			String sStartingTime = row.getCell(4).getStringCellValue();
-			String sEndingTime = row.getCell(5).getStringCellValue();
+			Date startingTime = row.getCell(4).getDateCellValue();
+			Date endingTime = row.getCell(5).getDateCellValue();
 			String endingPoint = row.getCell(6).getStringCellValue();
 			Integer loadWeightInTonne = (int) row.getCell(7).getNumericCellValue();
 			BigDecimal shippingCost = new BigDecimal(row.getCell(8).getNumericCellValue());
-			
-			DateTimeFormatter formatter = DateTimeFormat.forStyle("MS").withLocale(Locale.GERMAN);
-			DateTime startingTime = formatter.parseDateTime(sStartingTime);
-			DateTime endingTime = formatter.parseDateTime(sEndingTime);
+			String subcontractorCode = row.getCell(9).getStringCellValue();
+			String quotaCode = row.getCell(10).getStringCellValue();
 			
 			forwarding = new Forwarding();
+			forwarding.setSubmitted(true);
+			forwarding.setAccount(accountService.findOneByUsername(username));
+			forwarding.setWaybillNo(waybillNo);
+			forwarding.setDriver(driver);
+			forwarding.setPlate(plate);
+			forwarding.setStartingTime(new DateTime(startingTime));
+			forwarding.setEndingTime(new DateTime(endingTime));
+			forwarding.setEndingPoint(endingPoint);
+			forwarding.setLoadWeightInTonne(loadWeightInTonne);
+			forwarding.setShippingCost(shippingCost);
+			forwarding.setSubcontractor(subcontractorService.findOneByCode(subcontractorCode));
+			forwarding.setQuota(quotaService.findOneByCode(quotaCode));
+			
+			forwardings.add(forwarding);
+		}
+		
+		repository.save(forwardings);
+	}
+	
+	@Override
+	public void importCSV(String content) {
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm");
+		
+		List<Forwarding> forwardings = new ArrayList<Forwarding>();
+		Forwarding forwarding;
+		
+		String rows[] = content.split("\\r?\\n");
+		for (String row : rows) {
+			String column[] = row.split(",");
+			
+			String username = column[0];
+			String waybillNo = column[1];
+			String driver = column[2];
+			String plate = column[3];
+			DateTime startingTime = formatter.parseDateTime(column[4]);
+			DateTime endingTime = formatter.parseDateTime(column[5]);
+			String endingPoint = column[6];
+			Integer loadWeightInTonne = new Integer(column[7]);
+			BigDecimal shippingCost = new BigDecimal(column[8], MathContext.DECIMAL64);
+			String subcontractorCode = column[9];
+			String quotaCode = column[10];
+			
+			forwarding = new Forwarding();
+			forwarding.setSubmitted(true);
 			forwarding.setAccount(accountService.findOneByUsername(username));
 			forwarding.setWaybillNo(waybillNo);
 			forwarding.setDriver(driver);
@@ -257,6 +318,8 @@ public class ForwardingServiceImpl implements ForwardingService {
 			forwarding.setEndingPoint(endingPoint);
 			forwarding.setLoadWeightInTonne(loadWeightInTonne);
 			forwarding.setShippingCost(shippingCost);
+			forwarding.setSubcontractor(subcontractorService.findOneByCode(subcontractorCode));
+			forwarding.setQuota(quotaService.findOneByCode(quotaCode));
 			
 			forwardings.add(forwarding);
 		}

@@ -77,7 +77,7 @@ public class QuotaController {
 		}
 		
 		quotaService.save(quota);
-		redirectAttributes.addFlashAttribute("message", "Successfully saved..");
+		redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
 		return "redirect:/quota/list";
 	}
 

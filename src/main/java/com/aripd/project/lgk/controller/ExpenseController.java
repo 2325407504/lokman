@@ -26,6 +26,7 @@ import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.TableParam;
 import com.aripd.common.dto.WebResultSet;
+import com.aripd.common.model.CsvImportBean;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Expense;
@@ -87,7 +88,7 @@ public class ExpenseController {
 		}
 
 		expenseService.save(formData);
-		redirectAttributes.addFlashAttribute("message", "Successfully saved..");
+		redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
 		return "redirect:/expense/list";
 	}
 
@@ -121,6 +122,7 @@ public class ExpenseController {
 	@RequestMapping(value = "/import/xls", method = RequestMethod.GET)
 	public String importAction(Model model) {
 		model.addAttribute(new FileUploadBean());
+		model.addAttribute(new CsvImportBean());
 		return "expense/import";
 	}
 
@@ -163,7 +165,23 @@ public class ExpenseController {
 			e.printStackTrace();
 		}
 
-		expenseService.importXLS(fileName);
+		expenseService.importXLSX(fileName);
+		redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
+		return "redirect:/expense/list";
+	}
+
+	@RequestMapping(value = "/import/csv", method = RequestMethod.POST)
+	public String importCSV(
+			final RedirectAttributes redirectAttributes,
+			CsvImportBean csvImportBean, 
+			BindingResult result) {
+
+		if (result.hasErrors()) {
+			redirectAttributes.addFlashAttribute("message", "Hata oluştu");
+			return "redirect:/expense/import";
+		}
+		
+		expenseService.importCSV(csvImportBean.getContent());
 		redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
 		return "redirect:/expense/list";
 	}

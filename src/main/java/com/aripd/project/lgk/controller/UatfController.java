@@ -1,5 +1,9 @@
 package com.aripd.project.lgk.controller;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aripd.account.service.AccountService;
@@ -21,6 +26,7 @@ import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.TableParam;
 import com.aripd.common.dto.WebResultSet;
+import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Uatf;
@@ -117,6 +123,50 @@ public class UatfController {
 	@RequestMapping(value = "/export/xls", method = RequestMethod.GET)
 	public void getXLS(HttpServletResponse response, Model model) {
 		uatfService.exportXLS(response);
+	}
+
+	@RequestMapping(value = "/import/xls", method = RequestMethod.POST)
+	public String importXLS(
+			final RedirectAttributes redirectAttributes,
+			FileUploadBean fileUploadBean, 
+			BindingResult result) {
+
+		if (result.hasErrors()) {
+			redirectAttributes.addFlashAttribute("message", "Hata oluştu");
+			return "redirect:/forwarding/import";
+		}
+
+		String fileName = null;
+		try {
+			MultipartFile file = fileUploadBean.getFile();
+			InputStream inputStream = null;
+			OutputStream outputStream = null;
+			if (file.getSize() > 0) {
+				inputStream = file.getInputStream();
+				if (file.getSize() > 1000000) {
+					redirectAttributes.addFlashAttribute("message", "Dosya boyutu büyük");
+					return "redirect:/forwarding/import";
+				}
+				
+				fileName = "/tmp/" + file.getOriginalFilename();
+				
+				outputStream = new FileOutputStream(fileName);
+
+				int readBytes = 0;
+				byte[] buffer = new byte[10000];
+				while ((readBytes = inputStream.read(buffer, 0, 10000)) != -1) {
+					outputStream.write(buffer, 0, readBytes);
+				}
+				outputStream.close();
+				inputStream.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		uatfService.importXLSX(fileName);
+		redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
+		return "redirect:/forwarding/list";
 	}
 
 }
