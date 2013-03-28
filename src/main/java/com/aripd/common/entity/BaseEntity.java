@@ -1,7 +1,6 @@
 package com.aripd.common.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -10,8 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+
+import com.aripd.common.utils.ARIPDJodaDateTimeSerializer;
 
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
@@ -22,45 +25,41 @@ public abstract class BaseEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	/*
-	@DateTimeFormat(style = "SS")
+	@JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
 	@Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
-	private DateTime updatedAt;
-	*/
+	@Column(columnDefinition = "TIMESTAMP", nullable = false, updatable = false)
+	private DateTime createdAt;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = false, updatable = false)
-	private Date createdAt;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = false)
-	private Date updatedAt;
-
+	@JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
+	@Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+	@Column(columnDefinition = "TIMESTAMP", nullable = false, updatable = true)
+	private DateTime updatedAt;
+	
     @PreUpdate
     public void preUpdate() {
-        updatedAt = new Date();
+        updatedAt = new DateTime();
     }
     
     @PrePersist
     public void prePersist() {
-        Date now = new Date();
+        DateTime now = new DateTime();
         createdAt = now;
         updatedAt = now;
     }
     
-	public Date getCreatedAt() {
+	public DateTime getCreatedAt() {
 		return createdAt;
 	}
 
-	public Date getUpdatedAt() {
+	public DateTime getUpdatedAt() {
 		return updatedAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(DateTime createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public void setUpdatedAt(Date updatedAt) {
+	public void setUpdatedAt(DateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 	

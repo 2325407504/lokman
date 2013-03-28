@@ -56,11 +56,6 @@ public class TripController {
 	@Resource(name = "accountService")
 	private AccountService accountService;
 
-	@RequestMapping(value = "/chart")
-	public String chartAction(Model model) {
-		return "trip/chart";
-	}
-
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	public @ResponseBody
 	WebResultSet<Trip> getDataTables(@TableParam PagingCriteria criteria) {
@@ -216,6 +211,16 @@ public class TripController {
 		tripService.importCSV(csvImportBean.getContent());
 		redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
 		return "redirect:/trip/list";
+	}
+
+	@RequestMapping(value = "/chart")
+	public String chartAction(Model model) {
+		return "trip/chart";
+	}
+
+	@RequestMapping(value = "/report")
+	public String reportAction(Model model) {
+		return "trip/report";
 	}
 
 }

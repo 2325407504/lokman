@@ -14,7 +14,7 @@
 	</div>
 </footer>
 
-<aripd:flashattribute body="${message}" title="Mesaj"></aripd:flashattribute>
+<aripd:flashattribute body="${message}"></aripd:flashattribute>
 
 </body>
 </html>

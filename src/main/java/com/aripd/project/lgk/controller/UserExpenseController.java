@@ -98,8 +98,7 @@ public class UserExpenseController {
 			final RedirectAttributes redirectAttributes,
 			Principal principal,
 			@ModelAttribute("expenseAttribute") @Valid Expense formData,
-			BindingResult result, 
-			Model model) {
+			BindingResult result) {
 		
 		if (result.hasErrors()) {
 			return "/user/expense/form";

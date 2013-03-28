@@ -5,6 +5,7 @@
 <spring:url var="tripNew" value="/trip/new" />
 <spring:url var="tripImport" value="/trip/import/xls" />
 <spring:url var="tripExport" value="/trip/export/xls" />
+<spring:url var="tripReport" value="/trip/report" />
 <spring:url var="tripChart" value="/trip/chart" />
 
 <ul class="nav nav-tabs">
@@ -18,7 +19,16 @@
 			<b class="caret"></b>
 		</a>
 		<ul class="dropdown-menu">
-			<li><a href="${tripExport}"><spring:message code="Export"></spring:message></a></li>
+			<li><a href="${tripExport}"><spring:message code="Trips"></spring:message></a></li>
+		</ul>
+	</li>
+	<li class="dropdown">
+		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+			<spring:message code="Reports"></spring:message>
+			<b class="caret"></b>
+		</a>
+		<ul class="dropdown-menu">
+			<li><a href="${tripReport}"><spring:message code="Report"></spring:message></a></li>
 			<li><a href="${tripChart}"><spring:message code="Chart"></spring:message></a></li>
 		</ul>
 	</li>

@@ -18,6 +18,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletResponse;
@@ -37,6 +38,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aripd.account.domain.Account;
+import com.aripd.account.domain.Account_;
 import com.aripd.account.service.AccountService;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
@@ -95,13 +97,16 @@ public class ExpenseServiceImpl implements ExpenseService {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Expense> cq = cb.createQuery(Expense.class);
 		Root<Expense> root = cq.from(Expense.class);
+		Join<Expense, Account> account = root.join(Expense_.account);
 
 		// Filtering and Searching
 		List<Predicate> predicateList = new ArrayList<Predicate>();
 
 		if ((search != null) && (!(search.isEmpty()))) {
-			Predicate predicate = cb.like(root.get(Expense_.description), "%"
-					+ search + "%");
+			Predicate predicate1 = cb.like(root.get(Expense_.company), "%"+ search + "%");
+			Predicate predicate2 = cb.like(root.get(Expense_.description), "%"+ search + "%");
+			Predicate predicate3 = cb.like(account.get(Account_.username), "%"+ search + "%");
+			Predicate predicate = cb.or(predicate1, predicate2, predicate3);
 			predicateList.add(predicate);
 		}
 
