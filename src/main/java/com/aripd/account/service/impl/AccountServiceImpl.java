@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -20,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.aripd.account.domain.Account;
 import com.aripd.account.domain.Account_;
+import com.aripd.account.domain.Customer;
+import com.aripd.account.domain.Customer_;
 import com.aripd.account.repository.AccountRepository;
 import com.aripd.account.service.AccountService;
 import com.aripd.common.dto.PagingCriteria;
@@ -90,16 +93,16 @@ public class AccountServiceImpl implements AccountService {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Account> cq = cb.createQuery(Account.class);
 		Root<Account> root = cq.from(Account.class);
-		//Join<Account, Customer> root = cq.from(Account.class).join(Account_.customer);
-
+		Join<Account, Customer> customer = root.join(Account_.customer);
+		
 		// Filtering and Searching
 		List<Predicate> predicateList = new ArrayList<Predicate>();
 		
 		if ((search != null) && (!(search.isEmpty()))) {
 			Predicate predicate1 = cb.like(root.get(Account_.username), "%"+search+"%");
 			Predicate predicate2 = cb.like(root.get(Account_.email), "%"+search+"%");
-			//Predicate predicate3 = cb.like(root.get(Account_.customer), "%"+search+"%");
-			Predicate predicate = cb.or(predicate1, predicate2);
+			Predicate predicate3 = cb.like(customer.get(Customer_.lastName), "%"+search+"%");
+			Predicate predicate = cb.or(predicate1, predicate2, predicate3);
 			predicateList.add(predicate);
 		}
 		
