@@ -9,8 +9,8 @@ public class MediatorController {
 
 	@RequestMapping
 	public String getHomePage() {
-		return "index";
-		//return "redirect:/users";
+		//return "index";
+		return "redirect:/profile/show";
 	}
 	
 }

@@ -1,9 +1,9 @@
-</div>
-</div>
+		</div>
+	</div>
 </div>
 <footer class="container">
 	<div class="row">
-		<div class="span12">
+		<div class="span12 text-center">
 			<c:set var="value1" value="2012" />
 			<c:set var="value2" value="2013" />
 			<c:set var="value3" value="LGK" />
