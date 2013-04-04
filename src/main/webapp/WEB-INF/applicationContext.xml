@@ -2,6 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:p="http://www.springframework.org/schema/p" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
@@ -9,6 +10,8 @@
 		http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/mvc 
 		http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/task 
+		http://www.springframework.org/schema/task/spring-task-3.1.xsd
 	">
 
 	<context:property-placeholder
@@ -46,6 +49,11 @@
 		mapping="/c/**" location="WEB-INF/css/" /> <mvc:resources mapping="/s/**" 
 		location="WEB-INF/scripts/" /> <mvc:resources mapping="/favicon.ico" location="WEB-INF/images/favicon.ico" 
 		/ -->
+
+	<!-- Scheduler define -->
+	<task:scheduler id="taskScheduler" pool-size="10"/>
+	<task:executor id="taskExecutor" pool-size="5" />
+	<task:annotation-driven executor="taskExecutor" scheduler="taskScheduler" />
 
 	<!-- Application Message Bundle -->
 	<bean id="messageSource"
@@ -115,15 +123,5 @@
 		<!-- one of the properties available; the maximum file size in bytes -->
 		<property name="maxUploadSize" value="100000" />
 	</bean>
-
-	<!-- initializing data to realize some test -->
-	<beans>
-		<bean init-method="init" id="regionDataService" class="com.aripd.project.lgk.service.RegionDataService" />
-		<bean init-method="init" parent="regionDataService" id="accountDataService" class="com.aripd.account.service.AccountDataService" />
-		<bean init-method="init" parent="regionDataService" id="truckDataService" class="com.aripd.project.lgk.service.TruckDataService" />
-		<bean init-method="init" parent="regionDataService" id="subcontractorDataService" class="com.aripd.project.lgk.service.SubcontractorDataService" />
-		<bean init-method="init" parent="regionDataService" id="driverDataService" class="com.aripd.project.lgk.service.DriverDataService" />
-		<bean init-method="init" id="quotaDataService" class="com.aripd.project.lgk.service.QuotaDataService" />
-	</beans>
 
 </beans>
