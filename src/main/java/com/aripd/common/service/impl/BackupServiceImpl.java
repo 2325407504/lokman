@@ -40,7 +40,8 @@ public class BackupServiceImpl implements BackupService {
 		Date now = new Date();
 		String strDate = sdf.format(now);
 		System.out.println(strDate);
-
+		
+		/*
 		Ejb3Configuration cfg = new Ejb3Configuration();
 		Ejb3Configuration configured = cfg.configure(
 				fb.getPersistenceUnitInfo(), fb.getJpaPropertyMap());
@@ -50,18 +51,23 @@ public class BackupServiceImpl implements BackupService {
 		
 		se.setOutputFile("/Users/cem/Desktop/backup/" + strDate + ".sql");
 		se.execute(true, false, false, false);
+		*/
 		
-		/*
 		Process p;
 		try {
-			p = Runtime.getRuntime().exec("/usr/local/mysql-5.6.10-osx10.7-x86_64/bin/mysqldump -u root -proot lokman > /Users/cem/Desktop/backup/"+strDate+".sql 2> /Users/cem/Desktop/backup/database.log");
-			p.waitFor();
+			p = Runtime.getRuntime().exec("/usr/local/mysql-5.6.10-osx10.7-x86_64/bin/mysqldump -u root -proot lokman --result-file=/Users/cem/Desktop/backup/"+strDate+".sql");
+			int processComplete = p.waitFor(); 
+			if (processComplete == 0) {
+				System.out.println("Backup taken successfully");
+			}
+			else {
+				System.out.println("Could not take mysql backup");
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		*/
 
 	}
 
