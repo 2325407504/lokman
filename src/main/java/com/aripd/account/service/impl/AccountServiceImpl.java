@@ -73,8 +73,8 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Transactional
-	public Account save(Account formData) {
-		return repository.save(formData);
+	public Account save(Account account) {
+		return repository.save(account);
 	}
 
 	@Transactional

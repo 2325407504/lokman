@@ -1,12 +1,13 @@
 package com.aripd.account.controller;
 
+import java.security.Principal;
+
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,56 +17,77 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.aripd.account.domain.Account;
 import com.aripd.account.service.AccountService;
-import com.aripd.account.service.RoleService;
+import com.aripd.account.validator.AccountValidator;
 
 @PreAuthorize("isFullyAuthenticated()")
 @Controller
 @RequestMapping("/profile")
 public class ProfileController {
 	
-	protected static Logger logger = Logger.getLogger(ProfileController.class);
+	@Autowired
+	private AccountValidator accountValidator;
 	
 	@Resource(name="accountService")
 	private AccountService accountService;
 	
-	@Resource(name="roleService")
-	private RoleService roleService;
-	
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public String showAction(Model model) {
-		logger.debug("Received request to show add new record");
 		model.addAttribute("profileAttribute", accountService.findCurrentUser());
 		return "profile/show";
 	}
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String editAction(Model model) {
-		User securityUser = (User) (SecurityContextHolder.getContext()).getAuthentication().getPrincipal();
-		Account account = accountService.findOneByUsername(securityUser.getUsername());
+    public String editAction(
+    		Principal principal,
+    		Model model) {
+		Account account = accountService.findOneByUsername(principal.getName());
 		
-		logger.debug("Received request to show edit existing record");
     	model.addAttribute("profileAttribute", account);
     	return "profile/form";
 	}
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
-    		@ModelAttribute("profileAttribute") @Valid Account account, 
+    		Principal principal,
+    		@ModelAttribute("profileAttribute") @Valid Account formData, 
     		BindingResult result) {
+    	
+		//accountValidator.validate(formData, result);
 		if (result.hasErrors()) {
-			logger.error(result);
 			return "/profile/form";
 		}
 		
-		User securityUser = (User) (SecurityContextHolder.getContext()).getAuthentication().getPrincipal();
-		Account acc = accountService.findOneByUsername(securityUser.getUsername());
+		Account account = accountService.findOneByUsername(principal.getName());
 		
-		account.setId(acc.getId());
-		account.getCustomer().setId(acc.getCustomer().getId());
+		formData.getCustomer().setId(account.getCustomer().getId());
+		account.setCustomer(formData.getCustomer());
+		account.setUsername(formData.getUsername());
+		account.setEmail(formData.getEmail());
+		if (formData.getPassword().length() == 0) {
+			account.setPassword(account.getPassword());
+		}
+		else {
+			account.setPassword(DigestUtils.md5Hex(formData.getPassword()));
+		}
 		
-		logger.debug("Received request to save existing record");
 		accountService.save(account);
 		return "redirect:/profile/show";
 	}
 	
+    @RequestMapping(value = "/password", method = RequestMethod.GET)
+    public String passwordAction(Principal principal, Model model) {
+		Account account = accountService.findOneByUsername(principal.getName());
+		
+    	model.addAttribute("profileAttribute", account);
+    	return "profile/password";
+	}
+
+    @RequestMapping(value = "/password", method = RequestMethod.POST)
+    public String savePasswordAction(Principal principal, Model model) {
+		Account account = accountService.findOneByUsername(principal.getName());
+		
+    	model.addAttribute("profileAttribute", account);
+		return "redirect:/profile/show";
+	}
+
 }

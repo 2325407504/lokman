@@ -29,7 +29,7 @@
 			<form:errors cssClass="error-field" path="username" />
 		</div>
 		<div class="form-row">
-			<form:label path="password"><spring:message code="Password"></spring:message></form:label>
+			<form:label path="password"><spring:message code="New Password"></spring:message></form:label>
 			<span><form:password path="password" /></span>
 			<form:errors cssClass="error-field" path="password" />
 		</div>

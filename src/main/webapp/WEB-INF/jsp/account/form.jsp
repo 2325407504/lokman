@@ -15,6 +15,11 @@
 	<form:hidden path="customer.id" />
 	<fieldset>
 		<div class="form-row">
+			<form:label path="active">Aktif mi?</form:label>
+			<form:checkbox path="active" />
+			<form:errors cssClass="error-field" path="active" />
+		</div>
+		<div class="form-row">
 			<form:label path="region"><spring:message code="Region"></spring:message></form:label>
 			<form:select multiple="false" path="region.id" items="${regions}" itemLabel="name" itemValue="id" />
 			<form:errors cssClass="error-field" path="region" />

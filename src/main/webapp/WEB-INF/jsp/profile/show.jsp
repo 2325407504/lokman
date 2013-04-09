@@ -6,9 +6,8 @@
   <li><a href="${homeUrl}"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
   <li class="active"><spring:message code="Profile"></spring:message></li>
 	<li class="pull-right">
-		<spring:url var="editUrl" value="/profile/edit" />
-		<a class="btn btn-mini" href="${editUrl}"><spring:message code="Change Password"></spring:message></a>
-		<a class="btn btn-mini" href="${editUrl}"><spring:message code="Edit"></spring:message></a>
+		<spring:url var="profile_edit" value="/profile/edit" />
+		<a class="btn btn-mini" href="${profile_edit}"><spring:message code="Edit"></spring:message></a>
 	</li>
 </ul>
 

@@ -3,6 +3,7 @@ package com.aripd.account.controller;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -76,13 +77,27 @@ public class AccountController {
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveAction(
-			@ModelAttribute("accountAttribute") @Valid Account account,
+			@ModelAttribute("accountAttribute") @Valid Account formData,
 			BindingResult result) {
+		
 		if (result.hasErrors()) {
 			return "/account/form";
 		}
 
-		accountService.save(account);
+		if (formData.getId() != null) {
+			Account account = accountService.findOne(formData.getId());
+			if (formData.getPassword().length() == 0) {
+				formData.setPassword(account.getPassword());
+			}
+			else {
+				formData.setPassword(DigestUtils.md5Hex(formData.getPassword()));
+			}
+		}
+		else {
+			formData.setPassword(DigestUtils.md5Hex(formData.getPassword()));
+		}
+		
+		accountService.save(formData);
 		return "redirect:/account/list";
 	}
 
