@@ -14,10 +14,6 @@ public interface AccountService {
 
 	Account findOneByUsername(String username);
 
-	Account findCurrentUser();
-
-	boolean hasUsername(String username);
-
 	Account save(Account account);
 
 	void delete(Long id);

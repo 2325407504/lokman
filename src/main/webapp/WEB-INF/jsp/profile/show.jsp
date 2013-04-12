@@ -11,15 +11,11 @@
 	</li>
 </ul>
 
-<dl class="dl-horizontal">
-	<dt><spring:message code="Username"></spring:message></dt>
-	<dd><c:out value="${profileAttribute.username}" /></dd>
-	<dt><spring:message code="FirstName"></spring:message></dt>
-	<dd><c:out value="${profileAttribute.customer.firstName}" /></dd>
-	<dt><spring:message code="LastName"></spring:message></dt>
-	<dd><c:out value="${profileAttribute.customer.lastName}" /></dd>
-	<dt><spring:message code="E-mail Address"></spring:message></dt>
-	<dd><c:out value="${profileAttribute.email}" /></dd>
-</dl>
+<aripd:description id="profile">
+	<aripd:descriptionitem label="Username" field="${profileAttribute.username}"></aripd:descriptionitem>
+	<aripd:descriptionitem label="Fullname" field="${profileAttribute.customer.fullname}"></aripd:descriptionitem>
+	<aripd:descriptionitem label="E-mail Address" field="${profileAttribute.email}"></aripd:descriptionitem>
+	<aripd:descriptionitem label="Region" field="${profileAttribute.region.name}"></aripd:descriptionitem>
+</aripd:description>
 
 <%@ include file="/WEB-INF/jsp/footer.jsp" %>

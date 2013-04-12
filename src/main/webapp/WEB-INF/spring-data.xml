@@ -58,7 +58,7 @@
 		p:entityManagerFactory-ref="entityManagerFactory"/>
 		
 	<jdbc:initialize-database data-source="jpaDataSource">
-		<jdbc:script location="classpath:db/lokman.sql" />
+		<jdbc:script location="classpath:db/initial.sql" />
 	</jdbc:initialize-database>
-	
+
 </beans>

@@ -91,7 +91,7 @@ public class UserTripController {
 		Account account = accountService.findOneByUsername(principal.getName());
 
 		model.addAttribute("trucks", truckService.findByRegion(account.getRegion()));
-		model.addAttribute("drivers", driverService.findAll());
+		model.addAttribute("drivers", driverService.findByRegion(account.getRegion()));
 		model.addAttribute("tripAttribute", new Trip());
 		return "/user/trip/form";
 	}

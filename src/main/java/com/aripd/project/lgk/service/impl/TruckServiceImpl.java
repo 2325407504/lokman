@@ -42,12 +42,12 @@ public class TruckServiceImpl implements TruckService {
 		return repository.findOneByPlate(plate);
 	}
 
-	public List<Truck> findByRegion(Region region) {
-		return repository.findByRegion(region);
-	}
-
 	public List<Truck> findAll() {
 		return repository.findAll();
+	}
+
+	public List<Truck> findByRegion(Region region) {
+		return repository.findByRegion(region);
 	}
 
 	@Transactional

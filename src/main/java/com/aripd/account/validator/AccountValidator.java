@@ -29,10 +29,6 @@ public class AccountValidator {
 			//errors.rejectValue("password", "notmatch.password");
 		//}
 		
-		if (accountService.hasUsername(account.getUsername())) {
-			errors.rejectValue("username", "duplicate.username", "Duplicate value");
-		}
-		
 		String email = account.getEmail();
         if (StringUtils.hasLength(email)) {
             EmailValidator emailValidator = new EmailValidator();

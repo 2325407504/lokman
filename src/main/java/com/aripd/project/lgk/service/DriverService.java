@@ -5,6 +5,7 @@ import java.util.List;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.project.lgk.domain.Driver;
+import com.aripd.project.lgk.domain.Region;
 
 public interface DriverService {
 
@@ -14,6 +15,8 @@ public interface DriverService {
 	
 	List<Driver> findAll();
 	
+	List<Driver> findByRegion(Region region);
+
 	Driver save(Driver driver);
 	
 	void delete(Long id);

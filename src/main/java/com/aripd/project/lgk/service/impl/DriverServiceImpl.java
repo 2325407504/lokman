@@ -20,6 +20,7 @@ import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.SortField;
 import com.aripd.project.lgk.domain.Driver;
 import com.aripd.project.lgk.domain.Driver_;
+import com.aripd.project.lgk.domain.Region;
 import com.aripd.project.lgk.repository.DriverRepository;
 import com.aripd.project.lgk.service.DriverService;
 
@@ -43,6 +44,10 @@ public class DriverServiceImpl implements DriverService {
 
 	public List<Driver> findAll() {
 		return repository.findAll();
+	}
+
+	public List<Driver> findByRegion(Region region) {
+		return repository.findByRegion(region);
 	}
 
 	@Transactional

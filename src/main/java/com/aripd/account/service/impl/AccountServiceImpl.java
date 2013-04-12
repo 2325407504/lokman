@@ -1,7 +1,6 @@
 package com.aripd.account.service.impl;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,8 +13,6 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,27 +46,6 @@ public class AccountServiceImpl implements AccountService {
 
 	public Account findOneByUsername(String username) {
 		return repository.findOneByUsername(username);
-	}
-
-	@PreAuthorize("isFullyAuthenticated()")
-	public Account findCurrentUser() {
-		org.springframework.security.core.userdetails.User securityUser = (org.springframework.security.core.userdetails.User) (SecurityContextHolder
-				.getContext()).getAuthentication().getPrincipal();
-		return this.findOneByUsername(securityUser.getUsername());
-	}
-
-	@PreAuthorize("isFullyAuthenticated()")
-	public boolean hasUsername(String username) {
-		List<Account> list = repository.findAll();
-		list.remove(this.findCurrentUser());
-
-		Iterator<Account> iterator = list.iterator();
-		while (iterator.hasNext()) {
-			if (iterator.next().getUsername().equals(username)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	@Transactional

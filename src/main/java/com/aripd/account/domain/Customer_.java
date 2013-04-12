@@ -3,8 +3,6 @@ package com.aripd.account.domain;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-import org.joda.time.DateTime;
-
 import com.aripd.common.entity.BaseEntity_;
 
 /**

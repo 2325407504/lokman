@@ -31,8 +31,10 @@ public class ProfileController {
 	private AccountService accountService;
 	
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public String showAction(Model model) {
-		model.addAttribute("profileAttribute", accountService.findCurrentUser());
+	public String showAction(Principal principal, Model model) {
+		Account account = accountService.findOneByUsername(principal.getName());
+		
+		model.addAttribute("profileAttribute", account);
 		return "profile/show";
 	}
 
@@ -74,20 +76,4 @@ public class ProfileController {
 		return "redirect:/profile/show";
 	}
 	
-    @RequestMapping(value = "/password", method = RequestMethod.GET)
-    public String passwordAction(Principal principal, Model model) {
-		Account account = accountService.findOneByUsername(principal.getName());
-		
-    	model.addAttribute("profileAttribute", account);
-    	return "profile/password";
-	}
-
-    @RequestMapping(value = "/password", method = RequestMethod.POST)
-    public String savePasswordAction(Principal principal, Model model) {
-		Account account = accountService.findOneByUsername(principal.getName());
-		
-    	model.addAttribute("profileAttribute", account);
-		return "redirect:/profile/show";
-	}
-
 }

@@ -253,7 +253,9 @@ public class TripServiceImpl implements TripService {
 		Workbook workbook = null;
 		try {
 			workbook = WorkbookFactory.create(iStream);
-		} catch (InvalidFormatException | IOException e) {
+		} catch (InvalidFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		

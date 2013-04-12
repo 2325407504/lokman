@@ -25,6 +25,36 @@
 		correct base-package -->
 	<context:component-scan base-package="com.aripd" />
 
+	<!-- sending e-mail -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mail.host}" />
+		<property name="port" value="${mail.port}" />
+		<property name="username" value="${mail.username}" />
+		<property name="password" value="${mail.password}" />
+		<property name="javaMailProperties">
+			<props>
+				<!-- Use SMTP transport protocol -->
+				<prop key="mail.transport.protocol">${mail.transport.protocol}</prop>
+				<!-- Use SMTP-AUTH to authenticate to SMTP server -->
+				<prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+				<!-- Use TLS to encrypt communication with SMTP server -->
+				<prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>
+				<prop key="mail.debug">${mail.debug}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="alertMailMessage" class="org.springframework.mail.SimpleMailMessage">
+		<property name="bcc">
+			<value>${mail.username}</value>
+		</property>
+		<property name="from">
+			<value>${mail.username}</value>
+		</property>
+		<property name="subject"
+			value="Hizmet kaydınız" />
+	</bean>
+
 	<!-- Configures the annotation-driven Spring MVC Controller programming 
 		model. Note that, with Spring 3.1, this tag works in Servlet MVC only! -->
 	<mvc:annotation-driven conversion-service="conversionService"
