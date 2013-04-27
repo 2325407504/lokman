@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -25,11 +26,25 @@ public class BackupServiceImpl implements BackupService {
 	@Autowired
 	LocalContainerEntityManagerFactoryBean fb;
 	
+	@Value("${app.jdbc.dbname}")
+	String jdbcDbname;
+	
+	@Value("${app.jdbc.username}")
+	String jdbcUsername;
+	
+	@Value("${app.jdbc.password}")
+	String jdbcPassword;
+	
+	@Value("${path.program.mysqldump}")
+	String pathProgramMysqldump;
+	
+	@Value("${path.directory.export}")
+	String pathDirectoryExport;
+	
 	@Override
 	@Scheduled(cron = "${cron.backup.database}")
 	public void database() {
 		
-		String outputDirectory = "/Users/cem/Documents/backup/";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		Date now = new Date();
 		String strDate = sdf.format(now);
@@ -43,13 +58,13 @@ public class BackupServiceImpl implements BackupService {
 		SchemaExport se = new SchemaExport(
 				configured.getHibernateConfiguration());
 		
-		se.setOutputFile(outputDirectory + strDate + ".sql");
+		se.setOutputFile(pathDirectoryExport + strDate + ".sql");
 		se.execute(true, false, false, false);
 		*/
 		
 		Process p;
 		try {
-			p = Runtime.getRuntime().exec("/usr/local/mysql-5.6.11-osx10.7-x86_64/bin/mysqldump -u root -proot lokman --result-file=" + outputDirectory + strDate + ".sql");
+			p = Runtime.getRuntime().exec(pathProgramMysqldump+" -u "+jdbcUsername+" -p"+jdbcPassword+" "+jdbcDbname+" --result-file=" + pathDirectoryExport + strDate + ".sql");
 			int processComplete = p.waitFor(); 
 			if (processComplete == 0) {
 				System.out.println("Backup taken successfully");
