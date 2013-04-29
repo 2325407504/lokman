@@ -64,8 +64,10 @@
 							<li><a href="${driver_list}"><spring:message code="Drivers"></spring:message></a></li>
 							<li><a href="${subcontractor_list}"><spring:message code="Subcontractors"></spring:message></a></li>
 							<li><a href="${quota_list}"><spring:message code="Quotas"></spring:message></a></li>
+              <!-- 
 							<li class="nav-header"><spring:message code="Personnel"></spring:message></li>
 							<li><a href="${expense_list}"><spring:message code="Expenses"></spring:message></a></li>
+               -->
 							<li class="nav-header"><spring:message code="Logistics"></spring:message></li>
 							<li><a href="${trip_tracking_list}"><spring:message code="Trips"></spring:message></a></li>
 							<li><a href="${forwarding_list}"><spring:message code="Forwardings"></spring:message></a></li>
@@ -84,8 +86,10 @@
 				<div id="collapse3" class="accordion-body in collapse">
 					<div class="accordion-inner">
 						<ul class="nav nav-list">
+							<!-- 
 							<li class="nav-header"><spring:message code="Personnel"></spring:message></li>
 							<li><a href="${user_expense_list}"><spring:message code="Expenses"></spring:message></a></li>
+							 -->
 							<li class="nav-header"><spring:message code="Logistics"></spring:message></li>
 							<li><a href="${user_trip_tracking_list}"><spring:message code="Trips"></spring:message></a></li>
 							<li><a href="${user_forwarding_list}"><spring:message code="Forwardings"></spring:message></a></li>

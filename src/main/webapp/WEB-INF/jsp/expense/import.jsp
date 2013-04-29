@@ -60,7 +60,7 @@
 	</div>
 </div>
 
-<div class="bs-docs-example" data-content="<spring:message code="CSV"></spring:message>">
+<div class="bs-docs-example hide" data-content="<spring:message code="CSV"></spring:message>">
 	<form:form modelAttribute="csvImportBean" action="${expenseImportCSV}" method="post" enctype="multipart/form-data">
 		<div class="row-fluid">
 			<form:errors cssClass="error-field" path="content"/>

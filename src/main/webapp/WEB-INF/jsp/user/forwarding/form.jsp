@@ -28,17 +28,17 @@
 			<form:hidden path="id" />
 			<fieldset>
 				<div class="form-row">
-					<form:label path="waybillNo"><spring:message code="Waybill No" text="Waybill No"></spring:message></form:label>
+					<form:label path="waybillNo"><spring:message code="Waybill No"></spring:message></form:label>
 					<span><form:input type="text" path="waybillNo" /></span>
 					<form:errors cssClass="error-field" path="waybillNo" />
 				</div>
 				<div class="form-row">
-					<form:label path="driver"><spring:message code="Driver" text="Driver"></spring:message></form:label>
+					<form:label path="driver"><spring:message code="Driver"></spring:message></form:label>
 					<span><form:input path="driver" /></span>
 					<form:errors cssClass="error-field" path="driver" />
 				</div>
 				<div class="form-row">
-					<form:label path="plate"><spring:message code="Plate" text="Plate"></spring:message></form:label>
+					<form:label path="plate"><spring:message code="Plate"></spring:message></form:label>
 					<span><form:input path="plate" /></span>
 					<form:errors cssClass="error-field" path="plate" />
 				</div>
@@ -53,27 +53,27 @@
 					<form:errors cssClass="error-field" path="endingTime" />
 				</div>
 				<div class="form-row">
-					<form:label path="endingPoint"><spring:message code="Ending Point" text="Ending Point"></spring:message></form:label>
+					<form:label path="endingPoint"><spring:message code="Ending Point"></spring:message></form:label>
 					<span><form:input path="endingPoint" /></span>
 					<form:errors cssClass="error-field" path="endingPoint" />
 				</div>
 				<div class="form-row">
-					<form:label path="loadWeightInTonne"><spring:message code="loadWeightInTonne" text="loadWeightInTonne"></spring:message></form:label>
+					<form:label path="loadWeightInTonne"><spring:message code="Weight"></spring:message></form:label>
 					<span><form:input path="loadWeightInTonne" /></span>
 					<form:errors cssClass="error-field" path="loadWeightInTonne" />
 				</div>
 				<div class="form-row">
-					<form:label path="shippingCost"><spring:message code="Shipping Cost" text="Shipping Cost"></spring:message></form:label>
+					<form:label path="shippingCost"><spring:message code="Shipping Cost"></spring:message></form:label>
 					<span><form:input path="shippingCost" /></span>
 					<form:errors cssClass="error-field" path="shippingCost" />
 				</div>
 				<div class="form-row">
-					<form:label path="subcontractor"><spring:message code="Subcontractor" text="Subcontractor"></spring:message></form:label>
+					<form:label path="subcontractor"><spring:message code="Subcontractor"></spring:message></form:label>
 					<form:select path="subcontractor.id" multiple="false" items="${subcontractors}" itemLabel="name" itemValue="id"/>
 					<form:errors cssClass="error-field" path="subcontractor" />
 				</div>
 				<div class="form-row">
-					<form:label path="quota"><spring:message code="Quota" text="Quota"></spring:message></form:label>
+					<form:label path="quota"><spring:message code="Quota"></spring:message></form:label>
 					<form:select path="quota.id" multiple="false" items="${quotas}" itemLabel="name" itemValue="id"/>
 					<form:errors cssClass="error-field" path="quota" />
 				</div>

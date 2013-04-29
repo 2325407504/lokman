@@ -47,7 +47,7 @@
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Starting km" text="Starting km"></spring:message>
+					<spring:message code="Starting Km" text="Starting Km"></spring:message>
 				</label>
 				${tripAttribute.startingKm}
 			</li>
@@ -65,7 +65,7 @@
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Ending km" text="Ending km"></spring:message>
+					<spring:message code="Ending Km" text="Ending Km"></spring:message>
 				</label>
 				${tripAttribute.endingKm}
 			</li>
@@ -77,7 +77,7 @@
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="loadWeightInTonne" text="loadWeightInTonne"></spring:message>
+					<spring:message code="Weight"></spring:message>
 				</label>
 				${tripAttribute.loadWeightInTonne}
 			</li>

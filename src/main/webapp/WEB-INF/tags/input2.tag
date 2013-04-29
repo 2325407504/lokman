@@ -12,10 +12,10 @@
 <%@attribute name="icon" required="false" type="java.lang.String"%>
  
 <c:if test="${empty label}">
-    <c:set var="label" value="${fn:toUpperCase(fn:substring(path, 0, 1))}${fn:toLowerCase(fn:substring(path, 1,fn:length(path)))}" />
+	<c:set var="label" value="${fn:toUpperCase(fn:substring(path, 0, 1))}${fn:toLowerCase(fn:substring(path, 1,fn:length(path)))}" />
 </c:if>
 <c:if test="${fn:length(icon) gt 1 }">
-  <c:set var="icon" value='<i class="${icon}"></i>'/>
+	<c:set var="icon" value='<i class="${icon}"></i>'/>
 </c:if>
  
 <div class="control-group ${status.error ? 'error' : '' }">

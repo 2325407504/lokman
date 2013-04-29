@@ -65,7 +65,7 @@
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="loadWeightInTonne" text="loadWeightInTonne"></spring:message>
+					<spring:message code="loadWeightInTonne"></spring:message>
 				</label>
 				${forwardingAttribute.loadWeightInTonne}
 			</li>

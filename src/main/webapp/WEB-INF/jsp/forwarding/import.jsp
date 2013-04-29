@@ -3,8 +3,8 @@
 <spring:url var="homeUrl" value="/" />
 <spring:url var="forwardingList" value="/forwarding/list" />
 <spring:url var="forwardingNew" value="/forwarding/new" />
-<spring:url var="forwardingImport" value="/forwarding/import/xls" />
-<spring:url var="uatfImport" value="/uatf/import/xls" />
+<spring:url var="forwardingImportXLSX" value="/forwarding/import/xls" />
+<spring:url var="uatfImportXLSX" value="/uatf/import/xls" />
 <spring:url var="forwardingExport" value="/forwarding/export/xls" />
 <spring:url var="uatfExport" value="/uatf/export/xls" />
 <spring:url var="forwardingImportCSV" value="/forwarding/import/csv" />
@@ -13,7 +13,7 @@
 	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
 	<li class=""><a href="${forwardingList}"><spring:message code="Forwardings"></spring:message></a></li>
 	<li class=""><a href="${forwardingNew}"><spring:message code="New Entry"></spring:message></a></li>
-	<li class="active"><a href="${forwardingImport}"><spring:message code="Import"></spring:message></a></li>
+	<li class="active"><a href="${forwardingImportXLSX}"><spring:message code="Import"></spring:message></a></li>
 	<li class="dropdown">
 		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 			<spring:message code="Export"></spring:message>
@@ -27,7 +27,7 @@
 </ul>
 
 <div class="bs-docs-example" data-content="<spring:message code="XLSX"></spring:message> - <spring:message code="Waybill"></spring:message>">
-	<form:form modelAttribute="fileUploadBean" action="${forwardingImport}" method="post" enctype="multipart/form-data">
+	<form:form modelAttribute="fileUploadBean" action="${forwardingImportXLSX}" method="post" enctype="multipart/form-data">
 		<form:errors cssClass="error-field" path="file" />
 		<form:input path="file" type="file"/>
 		<button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload"></spring:message></button>
@@ -40,11 +40,11 @@
 					<th><spring:message code="Waybill"></spring:message></th>
 					<th><spring:message code="Driver"></spring:message></th>
 					<th><spring:message code="Plate"></spring:message></th>
-					<th>Starting Time</th>
-					<th>Ending Time</th>
-					<th>Ending Point</th>
+					<th><spring:message code="Starting Time"></spring:message></th>
+					<th><spring:message code="Ending Time"></spring:message></th>
+					<th><spring:message code="Ending Point"></spring:message></th>
 					<th><spring:message code="Weight"></spring:message></th>
-					<th>Shipping Cost</th>
+					<th><spring:message code="Shipping Cost"></spring:message></th>
 					<th><spring:message code="Subcontractor"></spring:message></th>
 					<th><spring:message code="Quota"></spring:message></th>
 				</tr>
@@ -95,7 +95,7 @@
 </div>
 
 <div class="bs-docs-example" data-content="<spring:message code="XLSX"></spring:message> - <spring:message code="UATF"></spring:message>">
-	<form:form modelAttribute="fileUploadBean" action="${uatfImport}" method="post" enctype="multipart/form-data">
+	<form:form modelAttribute="fileUploadBean" action="${uatfImportXLSX}" method="post" enctype="multipart/form-data">
 		<form:errors cssClass="error-field" path="file" />
 		<form:input path="file" type="file"/>
 		<button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload"></spring:message></button>
@@ -138,7 +138,7 @@
 	</div>
 </div>
 
-<div class="bs-docs-example" data-content="<spring:message code="CSV"></spring:message> - <spring:message code="Waybill"></spring:message>">
+<div class="bs-docs-example hide" data-content="<spring:message code="CSV"></spring:message> - <spring:message code="Waybill"></spring:message>">
 	<form:form modelAttribute="csvImportBean" action="${forwardingImportCSV}" method="post" enctype="multipart/form-data">
 		<div class="row-fluid">
 			<form:errors cssClass="error-field" path="content"/>
@@ -155,7 +155,7 @@ user3,05.03.2013 14:34,company3,desc3,13.3
 	</div>
 </div>
 
-<div class="bs-docs-example" data-content="<spring:message code="CSV"></spring:message> - <spring:message code="UATF"></spring:message>">
+<div class="bs-docs-example hide" data-content="<spring:message code="CSV"></spring:message> - <spring:message code="UATF"></spring:message>">
 	<form:form modelAttribute="csvImportBean" action="${forwardingImportCSV}" method="post" enctype="multipart/form-data">
 		<div class="row-fluid">
 			<form:errors cssClass="error-field" path="content"/>

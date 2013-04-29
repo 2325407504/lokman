@@ -28,7 +28,7 @@
 
 <c:if test="${tripAttribute.submitted}">
 <div class="alert alert-error">
-	<spring:message code="The record submitted by user"></spring:message>
+	<spring:message code="Submitted by user"></spring:message>
 	<a href="${tripEdit}"><i class="icon-pencil"></i> <spring:message code="Edit"></spring:message></a>
 	<a href="${tripSubmit}"><i class="icon-envelope"></i> <spring:message code="Draw Back"></spring:message></a>
 </div>
@@ -69,7 +69,7 @@
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Starting km" text="Starting km"></spring:message>
+					<spring:message code="Starting Km" text="Starting Km"></spring:message>
 				</label>
 				${tripAttribute.startingKm}
 			</li>
@@ -87,7 +87,7 @@
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Ending km" text="Ending km"></spring:message>
+					<spring:message code="Ending Km" text="Ending Km"></spring:message>
 				</label>
 				${tripAttribute.endingKm}
 			</li>
@@ -99,7 +99,7 @@
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="loadWeightInTonne" text="loadWeightInTonne"></spring:message>
+					<spring:message code="Weight"></spring:message>
 				</label>
 				${tripAttribute.loadWeightInTonne}
 			</li>

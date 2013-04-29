@@ -5,7 +5,7 @@
 	<artifactId>lokman</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>lokman Maven Webapp</name>
+	<name>lokman</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -28,8 +28,8 @@
 		<commons-codec.version>1.7</commons-codec.version>
 
 		<querydsl.version>2.9.0</querydsl.version>
-		<slf4j.version>1.6.1</slf4j.version>
-		<log4j.version>1.2.14</log4j.version>
+		<slf4j.version>1.7.5</slf4j.version>
+		<log4j.version>1.2.17</log4j.version>
 
 		<!-- Testing -->
 		<mockito.version>1.8.5</mockito.version>

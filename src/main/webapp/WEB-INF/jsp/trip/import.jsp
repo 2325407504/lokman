@@ -3,7 +3,7 @@
 <spring:url var="homeUrl" value="/" />
 <spring:url var="tripList" value="/trip/list" />
 <spring:url var="tripNew" value="/trip/new" />
-<spring:url var="tripImport" value="/trip/import/xls" />
+<spring:url var="tripImportXLSX" value="/trip/import/xls" />
 <spring:url var="tripImportCSV" value="/trip/import/csv" />
 <spring:url var="tripExport" value="/trip/export/xls" />
 
@@ -11,7 +11,7 @@
 	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
 	<li class=""><a href="${tripList}"><spring:message code="Trips"></spring:message></a></li>
 	<li class=""><a href="${tripNew}"><spring:message code="New Entry"></spring:message></a></li>
-	<li class="active"><a href="${tripImport}"><spring:message code="Import"></spring:message></a></li>
+	<li class="active"><a href="${tripImportXLSX}"><spring:message code="Import"></spring:message></a></li>
 	<li class="dropdown">
 		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 			<spring:message code="Export"></spring:message>
@@ -24,7 +24,7 @@
 </ul>
 
 <div class="bs-docs-example" data-content="<spring:message code="XLSX"></spring:message>">
-	<form:form modelAttribute="fileUploadBean" action="${tripImport}" method="post" enctype="multipart/form-data">
+	<form:form modelAttribute="fileUploadBean" action="${tripImportXLSX}" method="post" enctype="multipart/form-data">
 		<form:errors cssClass="error-field" path="file" />
 		<form:input path="file" type="file"/>
 		<button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload"></spring:message></button>
@@ -36,12 +36,12 @@
 					<th><spring:message code="Account"></spring:message></th>
 					<th><spring:message code="Plate"></spring:message></th>
 					<th><spring:message code="Driver"></spring:message></th>
-					<th>Starting Point</th>
-					<th>Starting Km</th>
-					<th>Starting Time</th>
-					<th>Ending Point</th>
-					<th>Ending Km</th>
-					<th>Ending Time</th>
+					<th><spring:message code="Starting Point"></spring:message></th>
+					<th><spring:message code="Starting Km"></spring:message></th>
+					<th><spring:message code="Starting Time"></spring:message></th>
+					<th><spring:message code="Ending Point"></spring:message></th>
+					<th><spring:message code="Ending Km"></spring:message></th>
+					<th><spring:message code="Ending Time"></spring:message></th>
 					<th><spring:message code="Weight"></spring:message></th>
 					<th><spring:message code="Remark"></spring:message></th>
 				</tr>
@@ -78,7 +78,7 @@
 	</div>
 </div>
 
-<div class="bs-docs-example" data-content="<spring:message code="CSV"></spring:message>">
+<div class="bs-docs-example hide" data-content="<spring:message code="CSV"></spring:message>">
 	<form:form modelAttribute="csvImportBean" action="${tripImportCSV}" method="post" enctype="multipart/form-data">
 		<div class="row-fluid">
 			<form:errors cssClass="error-field" path="content"/>

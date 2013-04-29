@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -152,6 +153,9 @@ public class ForwardingController {
 		return "forwarding/import";
 	}
 
+	@Value("${path.directory.import}")
+	String pathDirectoryImport;
+	
 	@RequestMapping(value = "/import/xls", method = RequestMethod.POST)
 	public String importXLS(
 			final RedirectAttributes redirectAttributes,
@@ -175,7 +179,7 @@ public class ForwardingController {
 					return "redirect:/forwarding/import";
 				}
 				
-				fileName = "/tmp/" + file.getOriginalFilename();
+				fileName = pathDirectoryImport + file.getOriginalFilename();
 				
 				outputStream = new FileOutputStream(fileName);
 

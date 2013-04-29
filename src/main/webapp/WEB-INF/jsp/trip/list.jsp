@@ -41,10 +41,10 @@
 	<aripd:column label="Driver" field="driver.name"/>
 	<aripd:column label="Starting Point" field="startingPoint"/>
 	<aripd:column label="Starting Time" field="startingTime"/>
-	<aripd:column label="Starting km" field="startingKm"/>
+	<aripd:column label="Starting Km" field="startingKm"/>
 	<aripd:column label="Ending Point" field="endingPoint"/>
 	<aripd:column label="Ending Time" field="endingTime"/>
-	<aripd:column label="Ending km" field="endingKm"/>
+	<aripd:column label="Ending Km" field="endingKm"/>
 	<aripd:column label="Weight" field="loadWeightInTonne"/>
 	<aripd:column label="Remark" field="remark"/>
 </aripd:datatables>

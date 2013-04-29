@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
 
-	<display-name>Spring Security Tutorial</display-name>
+	<display-name>Lokman Geri Kazanım</display-name>
 
 	<filter>
 		<filter-name>characterEncodingFilter</filter-name>
@@ -49,15 +49,12 @@
 		</param-value>
 	</context-param>
 
-	<!-- The Bootstrap listener to start up and shut down Spring's root WebApplicationContext. 
-		It is registered to Servlet Container -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	<listener>
 		<listener-class>
-			org.springframework.web.context.request.RequestContextListener
-		</listener-class>
+			org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
 
 	<servlet>

@@ -27,48 +27,52 @@
 			<form:hidden path="id" />
 			<fieldset>
 				<div class="form-row">
-					<form:label path="truck"><spring:message code="Truck" text="Truck"></spring:message></form:label>
+					<form:label path="truck"><spring:message code="Truck"></spring:message></form:label>
 					<form:select multiple="false" path="truck.id" items="${trucks}" itemLabel="plate" itemValue="id" />
 					<form:errors cssClass="error-field" path="truck" />
 				</div>
 				<div class="form-row">
-					<form:label path="driver"><spring:message code="Driver" text="Driver"></spring:message></form:label>
+					<form:label path="driver"><spring:message code="Driver"></spring:message></form:label>
 					<form:select path="driver.id" multiple="false" items="${drivers}" itemLabel="name" itemValue="id" />
 					<form:errors cssClass="error-field" path="driver" />
 				</div>
 				<div class="form-row">
-					<form:label path="startingPoint"><spring:message code="Starting Point" text="Starting Point"></spring:message></form:label>
+					<form:label path="startingPoint"><spring:message code="Starting Point"></spring:message></form:label>
 					<span><form:input path="startingPoint" /></span>
 					<form:errors cssClass="error-field" path="startingPoint" />
 				</div>
 				<div class="form-row">
-					<form:label path="startingKm"><spring:message code="Starting km" text="Starting km"></spring:message></form:label>
+					<form:label path="startingKm"><spring:message code="Starting Km"></spring:message></form:label>
 					<span><form:input path="startingKm" /></span>
 					<form:errors cssClass="error-field" path="startingKm" />
 				</div>
 				<div class="form-row">
-					<form:label path="startingTime"><spring:message code="Starting Time" text="Starting Time"></spring:message></form:label>
+					<form:label path="startingTime"><spring:message code="Starting Time"></spring:message></form:label>
 					<span><form:input type="datetime" path="startingTime" /></span>
 					<form:errors cssClass="error-field" path="startingTime" />
 				</div>
 				<div class="form-row">
-					<form:label path="endingPoint"><spring:message code="Ending Point" text="Ending Point"></spring:message></form:label>
+					<form:label path="endingPoint"><spring:message code="Ending Point"></spring:message></form:label>
 					<span><form:input path="endingPoint" /></span>
 					<form:errors cssClass="error-field" path="endingPoint" />
 				</div>
 				<div class="form-row">
-					<form:label path="endingKm"><spring:message code="Ending km" text="Ending km"></spring:message></form:label>
+					<form:label path="endingKm"><spring:message code="Ending Km"></spring:message></form:label>
 					<span><form:input path="endingKm" /></span>
 					<form:errors cssClass="error-field" path="endingKm" />
 				</div>
 				<div class="form-row">
-					<form:label path="endingTime"><spring:message code="Ending Time" text="Ending Time"></spring:message></form:label>
+					<form:label path="endingTime"><spring:message code="Ending Time"></spring:message></form:label>
 					<span><form:input type="datetime" path="endingTime" /></span>
 					<form:errors cssClass="error-field" path="endingTime" />
 				</div>
-				<aripd:input path="loadWeightInTonne" label="loadWeightInTonne"/>
+				<div class="form-row">
+					<form:label path="loadWeightInTonne"><spring:message code="Weight"></spring:message></form:label>
+					<span><form:input path="loadWeightInTonne" /></span>
+					<form:errors cssClass="error-field" path="loadWeightInTonne" />
+				</div>
 				<div class="control-group">
-					<form:label path="remark" class="control-label"><spring:message code="Remark" text="Remark"></spring:message></form:label>
+					<form:label path="remark" class="control-label"><spring:message code="Remark"></spring:message></form:label>
 					<div class="controls"><form:textarea path="remark" /></div>
 					<form:errors cssClass="error-field" path="remark" />
 				</div>

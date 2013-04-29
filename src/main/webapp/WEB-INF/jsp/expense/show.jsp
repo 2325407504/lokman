@@ -27,7 +27,7 @@
 
 <c:if test="${expenseAttribute.submitted}">
 <div class="alert alert-error">
-	<spring:message code="The record submitted by user"></spring:message>
+	<spring:message code="Submitted by user"></spring:message>
 	<a href="${expenseEdit}"><i class="icon-pencil"></i> <spring:message code="Edit"></spring:message></a>
 	<a href="${expenseSubmit}"><i class="icon-envelope"></i> <spring:message code="Draw Back"></spring:message></a>
 </div>

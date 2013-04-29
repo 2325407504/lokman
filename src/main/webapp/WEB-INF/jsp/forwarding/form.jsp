@@ -42,8 +42,7 @@
 			<form:hidden path="id" />
 			<fieldset>
 				<div class="form-row">
-					<form:label path="submitted"><spring:message code="Submitted" text="Submitted"></spring:message></form:label>
-					<span><form:checkbox path="submitted" /></span>
+					<span><form:checkbox path="submitted" /> <spring:message code="Submitted by user"></spring:message></span>
 					<form:errors cssClass="error-field" path="submitted" />
 				</div>
 				<div class="form-row">
@@ -82,7 +81,7 @@
 					<form:errors cssClass="error-field" path="endingPoint" />
 				</div>
 				<div class="form-row">
-					<form:label path="loadWeightInTonne"><spring:message code="loadWeightInTonne" text="loadWeightInTonne"></spring:message></form:label>
+					<form:label path="loadWeightInTonne"><spring:message code="Weight"></spring:message></form:label>
 					<span><form:input path="loadWeightInTonne" /></span>
 					<form:errors cssClass="error-field" path="loadWeightInTonne" />
 				</div>
