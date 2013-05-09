@@ -44,7 +44,7 @@
 		<ul class="unstyled">
 			<li>
 				<label class="label">
-					<spring:message code="Account" text="Account"></spring:message>
+					<spring:message code="Account"></spring:message>
 				</label>
 				${expenseAttribute.account.customer.fullname}
 			</li>

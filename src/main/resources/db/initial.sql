@@ -1,12 +1,7 @@
 INSERT INTO `role` (`id`, `createdAt`, `updatedAt`, `code`, `name`) VALUES
 (1, NOW(), NOW(), 'ROLE_SUPERADMIN', 'Süper Yönetici'),
 (2, NOW(), NOW(), 'ROLE_ADMIN', 'Yönetici'),
-(3, NOW(), NOW(), 'ROLE_USER', 'Kullanıcı'),
-(4, NOW(), NOW(), 'ROLE_L1', 'Rol1'),
-(5, NOW(), NOW(), 'ROLE_L2', 'Rol2'),
-(6, NOW(), NOW(), 'ROLE_L3', 'Rol3'),
-(7, NOW(), NOW(), 'ROLE_L4', 'Rol4'),
-(8, NOW(), NOW(), 'ROLE_L5', 'Rol5');
+(3, NOW(), NOW(), 'ROLE_USER', 'Kullanıcı');
 
 INSERT INTO `region` (`id`, `createdAt`, `updatedAt`, `name`) VALUES
 (1, NOW(), NOW(), 'İstanbul/Trakya'),
@@ -101,6 +96,37 @@ INSERT INTO `truck` (`id`, `createdAt`, `updatedAt`, `active`, `plate`, `region_
 (14, NOW(), NOW(), b'1', '09 D 9585', 4),
 (15, NOW(), NOW(), b'1', '35 HVU 92', 4);
 
+INSERT INTO `quota` (`id`, `createdAt`, `updatedAt`, `active`, `code`, `name`) VALUES
+(1, NOW(), NOW(), b'1', 'UID1', 'LASDER'),
+(2, NOW(), NOW(), b'1', 'UID2', 'Çimento Fabrikası');
+
+INSERT INTO `subcontractor` (`id`, `createdAt`, `updatedAt`, `active`, `code`, `name`, `region_id`) VALUES
+(1, NOW(), NOW(), b'1', 'UID1', 'Fethi Topaktaş', 1),
+(2, NOW(), NOW(), b'1', 'UID2', 'Niyazi Özdemir', 2),
+(3, NOW(), NOW(), b'1', 'UID3', 'Newnak', 2),
+(4, NOW(), NOW(), b'1', 'UID4', 'Ali Doğan', 2),
+(5, NOW(), NOW(), b'1', 'UID5', 'Yavuz Narman', 2),
+(6, NOW(), NOW(), b'1', 'UID6', 'Diğer', 2),
+(7, NOW(), NOW(), b'1', 'UID7', 'Çubukçular', 2),
+(8, NOW(), NOW(), b'1', 'UID8', 'Veysel Kutucu', 2),
+(9, NOW(), NOW(), b'1', 'UID9', 'Erdal Yalım Bursa', 2),
+(10, NOW(), NOW(), b'1', 'UID10', 'Erdal Yalım Eskişehir', 2),
+(11, NOW(), NOW(), b'1', 'UID11', 'Ali Caner', 2),
+(12, NOW(), NOW(), b'1', 'UID12', 'İsmail Demirkol', 2),
+(13, NOW(), NOW(), b'1', 'UID13', 'İbrahim Gedikli', 3),
+(14, NOW(), NOW(), b'1', 'UID14', 'Diğer', 3),
+(15, NOW(), NOW(), b'1', 'UID15', 'Yaşar Bayrakal', 4),
+(16, NOW(), NOW(), b'1', 'UID16', 'Ömer Örücü', 4),
+(17, NOW(), NOW(), b'1', 'UID17', 'Ramazan Kafa', 4),
+(18, NOW(), NOW(), b'1', 'UID18', 'Diğer', 4),
+(19, NOW(), NOW(), b'1', 'UID19', 'Veysel Kızıldağ', 5),
+(20, NOW(), NOW(), b'1', 'UID20', 'Ayhan Aydın', 5),
+(21, NOW(), NOW(), b'1', 'UID21', 'Murat Teke', 5),
+(22, NOW(), NOW(), b'1', 'UID22', 'Ünsal Alemdar', 5),
+(23, NOW(), NOW(), b'1', 'UID23', 'Senayi Öztürk', 5),
+(24, NOW(), NOW(), b'1', 'UID24', 'Diğer', 5),
+(25, NOW(), NOW(), b'1', 'UID25', 'Diğer', 6);
+
 INSERT INTO `expense` (`id`, `createdAt`, `updatedAt`, `amount`, `company`, `description`, `documentDate`, `submitted`, `account_id`) VALUES
 (NULL, NOW(), NOW(), (FLOOR(1 + RAND() * 60)), CONCAT('Company', (FLOOR(1 + RAND() * 60))), (FLOOR(1 + RAND() * 100000)), '2013-02-05 22:00:00', b'1', (FLOOR(1 + RAND() * 14))),
 (NULL, NOW(), NOW(), (FLOOR(1 + RAND() * 60)), CONCAT('Company', (FLOOR(1 + RAND() * 60))), (FLOOR(1 + RAND() * 100000)), '2013-02-05 22:00:00', b'1', (FLOOR(1 + RAND() * 14))),
@@ -142,37 +168,6 @@ INSERT INTO `expense` (`id`, `createdAt`, `updatedAt`, `amount`, `company`, `des
 (NULL, NOW(), NOW(), (FLOOR(1 + RAND() * 60)), CONCAT('Company', (FLOOR(1 + RAND() * 60))), (FLOOR(1 + RAND() * 100000)), '2013-02-05 22:00:00', b'1', (FLOOR(1 + RAND() * 14))),
 (NULL, NOW(), NOW(), (FLOOR(1 + RAND() * 60)), CONCAT('Company', (FLOOR(1 + RAND() * 60))), (FLOOR(1 + RAND() * 100000)), '2013-02-05 22:00:00', b'1', (FLOOR(1 + RAND() * 14))),
 (NULL, NOW(), NOW(), (FLOOR(1 + RAND() * 60)), CONCAT('Company', (FLOOR(1 + RAND() * 60))), (FLOOR(1 + RAND() * 100000)), '2013-02-05 22:00:00', b'1', (FLOOR(1 + RAND() * 14)));
-
-INSERT INTO `quota` (`id`, `createdAt`, `updatedAt`, `active`, `code`, `name`) VALUES
-(1, NOW(), NOW(), b'1', 'UID1', 'LASDER'),
-(2, NOW(), NOW(), b'1', 'UID2', 'Çimento Fabrikası');
-
-INSERT INTO `subcontractor` (`id`, `createdAt`, `updatedAt`, `active`, `code`, `name`, `region_id`) VALUES
-(1, NOW(), NOW(), b'1', 'UID1', 'Fethi Topaktaş', 1),
-(2, NOW(), NOW(), b'1', 'UID2', 'Niyazi Özdemir', 2),
-(3, NOW(), NOW(), b'1', 'UID3', 'Newnak', 2),
-(4, NOW(), NOW(), b'1', 'UID4', 'Ali Doğan', 2),
-(5, NOW(), NOW(), b'1', 'UID5', 'Yavuz Narman', 2),
-(6, NOW(), NOW(), b'1', 'UID6', 'Diğer', 2),
-(7, NOW(), NOW(), b'1', 'UID7', 'Çubukçular', 2),
-(8, NOW(), NOW(), b'1', 'UID8', 'Veysel Kutucu', 2),
-(9, NOW(), NOW(), b'1', 'UID9', 'Erdal Yalım Bursa', 2),
-(10, NOW(), NOW(), b'1', 'UID10', 'Erdal Yalım Eskişehir', 2),
-(11, NOW(), NOW(), b'1', 'UID11', 'Ali Caner', 2),
-(12, NOW(), NOW(), b'1', 'UID12', 'İsmail Demirkol', 2),
-(13, NOW(), NOW(), b'1', 'UID13', 'İbrahim Gedikli', 3),
-(14, NOW(), NOW(), b'1', 'UID14', 'Diğer', 3),
-(15, NOW(), NOW(), b'1', 'UID15', 'Yaşar Bayrakal', 4),
-(16, NOW(), NOW(), b'1', 'UID16', 'Ömer Örücü', 4),
-(17, NOW(), NOW(), b'1', 'UID17', 'Ramazan Kafa', 4),
-(18, NOW(), NOW(), b'1', 'UID18', 'Diğer', 4),
-(19, NOW(), NOW(), b'1', 'UID19', 'Veysel Kızıldağ', 5),
-(20, NOW(), NOW(), b'1', 'UID20', 'Ayhan Aydın', 5),
-(21, NOW(), NOW(), b'1', 'UID21', 'Murat Teke', 5),
-(22, NOW(), NOW(), b'1', 'UID22', 'Ünsal Alemdar', 5),
-(23, NOW(), NOW(), b'1', 'UID23', 'Senayi Öztürk', 5),
-(24, NOW(), NOW(), b'1', 'UID24', 'Diğer', 5),
-(25, NOW(), NOW(), b'1', 'UID25', 'Diğer', 6);
 
 INSERT INTO `forwarding` (`id`, `createdAt`, `updatedAt`, `driver`, `endingPoint`, `endingTime`, `loadWeightInTonne`, `plate`, `shippingCost`, `startingTime`, `submitted`, `waybillNo`, `account_id`, `quota_id`, `subcontractor_id`) VALUES
 (NULL, NOW(), NOW(), CONCAT('Driver', (FLOOR(1 + RAND() * 60))), CONCAT('Ending Point', (FLOOR(1 + RAND() * 60))), '2013-02-05 22:00:00', (FLOOR(1 + RAND() * 60)), CONCAT('34AA', (FLOOR(1 + RAND() * 999))), '11.00', '2013-02-05 22:00:00', b'0', (FLOOR(1 + RAND() * 100000)), (FLOOR(1 + RAND() * 14)), 1, 1),

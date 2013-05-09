@@ -16,7 +16,7 @@
 <ul class="unstyled">
 	<li>
 		<label class="label">
-			<spring:message code="Id" text="Id"></spring:message>
+			<spring:message code="Id"></spring:message>
 		</label>
 		${roleAttribute.id}
 	</li>

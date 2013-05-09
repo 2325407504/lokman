@@ -47,25 +47,25 @@
 		<ul class="unstyled">
 			<li>
 				<label class="label">
-					<spring:message code="Account" text="Account"></spring:message>
+					<spring:message code="Account"></spring:message>
 				</label>
 				${forwardingAttribute.account.customer.fullname}
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Waybill No" text="Waybill No"></spring:message>
+					<spring:message code="Waybill No"></spring:message>
 				</label>
 				${forwardingAttribute.waybillNo}
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Driver" text="Driver"></spring:message>
+					<spring:message code="Driver"></spring:message>
 				</label>
 				${forwardingAttribute.driver}
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Plate" text="Plate"></spring:message>
+					<spring:message code="Plate"></spring:message>
 				</label>
 				${forwardingAttribute.plate}
 			</li>
@@ -83,7 +83,7 @@
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Ending Point" text="Ending Point"></spring:message>
+					<spring:message code="Ending Point"></spring:message>
 				</label>
 				${forwardingAttribute.endingPoint}
 			</li>
@@ -95,19 +95,19 @@
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Shipping Cost" text="Shipping Cost"></spring:message>
+					<spring:message code="Shipping Cost"></spring:message>
 				</label>
 				${forwardingAttribute.shippingCost}
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Subcontractor" text="Subcontractor"></spring:message>
+					<spring:message code="Subcontractor"></spring:message>
 				</label>
 				${forwardingAttribute.subcontractor.name}
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Quota" text="Quota"></spring:message>
+					<spring:message code="Quota"></spring:message>
 				</label>
 				${forwardingAttribute.quota.name}
 			</li>

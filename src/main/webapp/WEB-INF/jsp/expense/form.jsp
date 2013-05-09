@@ -43,7 +43,7 @@
 					<form:errors cssClass="error-field" path="submitted" />
 				</div>
 				<div class="form-row">
-					<form:label path="account"><spring:message code="Account" text="Account"></spring:message></form:label>
+					<form:label path="account"><spring:message code="Account"></spring:message></form:label>
 					<form:select multiple="false" path="account.id" items="${accounts}" itemLabel="customer.fullname" itemValue="id" />
 					<form:errors cssClass="error-field" path="account" />
 				</div>

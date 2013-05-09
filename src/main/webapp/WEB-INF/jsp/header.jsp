@@ -56,7 +56,7 @@
 						<li class="dropdown">
 							<c:set var="localeCode" value="${pageContext.response.locale}" />
 							<c:set var="availLanguages" value="tr_TR,en_US" />
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><spring:message code="Language" text="Language"></spring:message>: ${localeCode}<b class="caret"></b></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><spring:message code="Language"></spring:message>: ${localeCode}<b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<c:if test="${!fn:contains(availLanguages,localeCode)}">
 									<c:set var="localeCode" value="tr_TR" />

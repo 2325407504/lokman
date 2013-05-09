@@ -13,6 +13,7 @@
 <spring:url value="/profile/show" var="profile_show" />
 <spring:url value="/role/list" var="role_list" />
 <spring:url value="/account/list" var="account_list" />
+<spring:url value="/backup/list" var="backup_list" />
 <spring:url value="/region/list" var="region_list" />
 <spring:url value="/truck/list" var="truck_list" />
 <spring:url value="/driver/list" var="driver_list" />
@@ -42,7 +43,8 @@
 						<ul class="nav nav-list">
 							<li class="nav-header"><spring:message code="User Management"></spring:message></li>
 							<li><a href="${role_list}"><spring:message code="Roles"></spring:message></a></li>
-							<li><a href="${account_list}"><spring:message code="Accounts"></spring:message></a></li>
+              <li><a href="${account_list}"><spring:message code="Accounts"></spring:message></a></li>
+              <li><a href="${backup_list}"><spring:message code="Backup"></spring:message></a></li>
 						</ul>
 					</div>
 				</div>

@@ -45,55 +45,55 @@
 		<ul class="unstyled">
 			<li>
 				<label class="label">
-					<spring:message code="Account" text="Account"></spring:message>
+					<spring:message code="Account"></spring:message>
 				</label>
 				${tripAttribute.account.customer.fullname}
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Truck" text="Truck"></spring:message>
+					<spring:message code="Truck"></spring:message>
 				</label>
 				${tripAttribute.truck.plate}
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Driver" text="Driver"></spring:message>
+					<spring:message code="Driver"></spring:message>
 				</label>
 				${tripAttribute.driver.name}
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Starting Point" text="Starting Point"></spring:message>
+					<spring:message code="Starting Point"></spring:message>
 				</label>
 				${tripAttribute.startingPoint}
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Starting Km" text="Starting Km"></spring:message>
+					<spring:message code="Starting Km"></spring:message>
 				</label>
 				${tripAttribute.startingKm}
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Starting Time" text="Starting Time"></spring:message>
+					<spring:message code="Starting Time"></spring:message>
 				</label>
 				<spring:eval expression="tripAttribute.startingTime" />
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Ending Point" text="Ending Point"></spring:message>
+					<spring:message code="Ending Point"></spring:message>
 				</label>
 				${tripAttribute.endingPoint}
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Ending Km" text="Ending Km"></spring:message>
+					<spring:message code="Ending Km"></spring:message>
 				</label>
 				${tripAttribute.endingKm}
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Ending Time" text="Ending Time"></spring:message>
+					<spring:message code="Ending Time"></spring:message>
 				</label>
 				<spring:eval expression="tripAttribute.endingTime" />
 			</li>
@@ -105,7 +105,7 @@
 			</li>
 			<li>
 				<label class="label">
-					<spring:message code="Remark" text="Remark"></spring:message>
+					<spring:message code="Remark"></spring:message>
 				</label>
 				${tripAttribute.remark}
 			</li>
