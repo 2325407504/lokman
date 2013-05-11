@@ -102,11 +102,11 @@
 	<import resource="trace-context.xml" />
 
 	<!-- Imports datasource configuration -->
-	<import resource="spring-data.xml" />
+	<import resource="db.xml" />
 
 	<bean id="deployProperties"
 		class="org.springframework.beans.factory.config.PropertiesFactoryBean"
-		p:location="/WEB-INF/spring.properties" />
+		p:location="classpath:db.properties" />
 
 	<!-- Converters -->
 	<bean id="conversionService"

@@ -18,5 +18,6 @@ public class Uatf_ extends BaseEntity_ {
 	public static volatile SingularAttribute<Uatf, String> company;
 	public static volatile SingularAttribute<Uatf, String> county;
 	public static volatile SingularAttribute<Uatf, String> city;
+	public static volatile SingularAttribute<Uatf, Integer> loadWeightInTonne;
 
 }

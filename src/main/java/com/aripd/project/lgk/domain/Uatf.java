@@ -25,6 +25,8 @@ public class Uatf extends BaseEntity {
 	private String county;
 	private String city;
 
+	private Integer loadWeightInTonne;
+	
 	public String getCode() {
 		return code;
 	}
@@ -55,6 +57,14 @@ public class Uatf extends BaseEntity {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public Integer getLoadWeightInTonne() {
+		return loadWeightInTonne;
+	}
+
+	public void setLoadWeightInTonne(Integer loadWeightInTonne) {
+		this.loadWeightInTonne = loadWeightInTonne;
 	}
 
 	public static long getSerialversionuid() {

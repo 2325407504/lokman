@@ -34,6 +34,8 @@ public class Layouter {
 		worksheet.setColumnWidth(7, 5000);
 		worksheet.setColumnWidth(8, 5000);
 		worksheet.setColumnWidth(9, 5000);
+		worksheet.setColumnWidth(10, 5000);
+		worksheet.setColumnWidth(11, 5000);
 
 		// Build the title and date headers
 		buildTitle(worksheet, startRowIndex, startColIndex);
@@ -72,7 +74,7 @@ public class Layouter {
 		cellTitle.setCellStyle(cellStyleTitle);
 
 		// Create merged region for the report title
-		worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 9));
+		worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 11));
 
 		// Create date header
 		HSSFRow dateTitle = worksheet.createRow((short) startRowIndex + 1);
@@ -135,7 +137,7 @@ public class Layouter {
 		cell6.setCellStyle(headerCellStyle);
 		
 		HSSFCell cell7 = rowHeader.createCell(startColIndex + 6);
-		cell7.setCellValue("loadWeightInTonne");
+		cell7.setCellValue("Weight");
 		cell7.setCellStyle(headerCellStyle);
 		
 		HSSFCell cell8 = rowHeader.createCell(startColIndex + 7);
@@ -153,6 +155,10 @@ public class Layouter {
 		HSSFCell cell11 = rowHeader.createCell(startColIndex + 10);
 		cell11.setCellValue("UATF");
 		cell11.setCellStyle(headerCellStyle);
+		
+		HSSFCell cell12 = rowHeader.createCell(startColIndex + 11);
+		cell12.setCellValue("Weight");
+		cell12.setCellStyle(headerCellStyle);
 		
 	}
 

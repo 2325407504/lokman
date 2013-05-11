@@ -87,6 +87,10 @@ public class FillManager {
 			cell11.setCellValue(datasource.get(i - 2).getCode());
 			cell11.setCellStyle(bodyCellStyle);
 
+			HSSFCell cell12 = row.createCell(startColIndex + 11);
+			cell12.setCellValue(datasource.get(i - 2).getLoadWeightInTonne());
+			cell12.setCellStyle(bodyCellStyle);
+
 		}
 	}
 

@@ -108,7 +108,8 @@
 					<th><spring:message code="UATF"></spring:message></th>
 					<th><spring:message code="Company"></spring:message></th>
 					<th><spring:message code="County"></spring:message></th>
-					<th><spring:message code="City"></spring:message></th>
+          <th><spring:message code="City"></spring:message></th>
+          <th><spring:message code="Weight"></spring:message></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -117,7 +118,8 @@
 					<td>uatf11</td>
 					<td>company11</td>
 					<td>county11</td>
-					<td>city11</td>
+          <td>city11</td>
+          <td>7</td>
 				</tr>
 				<tr>
 					<td>waybillno1</td>
@@ -125,6 +127,7 @@
 					<td>company12</td>
 					<td>county12</td>
 					<td>city12</td>
+          <td>11</td>
 				</tr>
 				<tr>
 					<td>waybillno2</td>
@@ -132,6 +135,7 @@
 					<td>company21</td>
 					<td>county21</td>
 					<td>city21</td>
+          <td>12</td>
 				</tr>
 			</tbody>
 		</table>

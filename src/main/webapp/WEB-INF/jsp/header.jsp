@@ -51,9 +51,8 @@
 						<li><a href="${logoutUrl}"><spring:message code="Logout"></spring:message> (<%= request.getUserPrincipal().getName() %>)</a></li>
 						</sec:authorize>
 						<sec:authorize access="isAnonymous()">
-						<li><a href="${loginUrl}"><spring:message code="Login"></spring:message></a></li>
 						</sec:authorize>
-						<li class="dropdown">
+						<!-- li class="dropdown">
 							<c:set var="localeCode" value="${pageContext.response.locale}" />
 							<c:set var="availLanguages" value="tr_TR,en_US" />
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><spring:message code="Language"></spring:message>: ${localeCode}<b class="caret"></b></a>
@@ -65,7 +64,7 @@
 									<li><a href="?language=${lang}">${lang} <c:if test="${fn:contains(localeCode, lang)}"><i class="icon-ok"></i></c:if></a></li>
 								</c:forEach>
 							</ul>
-						</li>
+						</li-->
 					</ul>
 				</div>
 			</div>

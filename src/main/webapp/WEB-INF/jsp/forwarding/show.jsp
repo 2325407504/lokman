@@ -118,7 +118,8 @@
 			<aripd:column label="Code" field="code"/>
 			<aripd:column label="Company" field="company"/>
 			<aripd:column label="County" field="county"/>
-			<aripd:column label="City" field="city"/>
+      <aripd:column label="City" field="city"/>
+      <aripd:column label="Weight" field="loadWeightInTonne"/>
 		</aripd:datatables>
 	</div>
 </div>

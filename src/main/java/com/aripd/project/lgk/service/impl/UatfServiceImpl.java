@@ -31,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.SortField;
+import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Uatf;
 import com.aripd.project.lgk.domain.Uatf_;
 import com.aripd.project.lgk.report.uatf.FillManager;
@@ -183,7 +184,6 @@ public class UatfServiceImpl implements UatfService {
 		Iterator<Row> rows = worksheet.rowIterator();
 
 		List<Uatf> uatfs = new ArrayList<Uatf>();
-		Uatf uatf;
 		
 		//while (rows.hasNext()) {
 		for (int i = 1; i <= worksheet.getLastRowNum(); i++) {
@@ -195,15 +195,20 @@ public class UatfServiceImpl implements UatfService {
 			String company = row.getCell(2).getStringCellValue();
 			String county = row.getCell(3).getStringCellValue();
 			String city = row.getCell(4).getStringCellValue();
-			
-			uatf = new Uatf();
-			uatf.setForwarding(forwardingService.findOneByWaybillNo(waybillNo));
-			uatf.setCode(code);
-			uatf.setCompany(company);
-			uatf.setCounty(county);
-			uatf.setCity(city);
-			
-			uatfs.add(uatf);
+			Integer loadWeightInTonne = (int) row.getCell(5).getNumericCellValue();
+
+			Forwarding forwarding = forwardingService.findOneByWaybillNo(waybillNo);
+			if (forwarding != null) {
+				Uatf uatf = new Uatf();
+				uatf.setForwarding(forwarding);
+				uatf.setCode(code);
+				uatf.setCompany(company);
+				uatf.setCounty(county);
+				uatf.setCity(city);
+				uatf.setLoadWeightInTonne(loadWeightInTonne);
+				
+				uatfs.add(uatf);
+			}
 		}
 		
 		repository.save(uatfs);

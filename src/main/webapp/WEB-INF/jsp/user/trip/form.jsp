@@ -73,7 +73,7 @@
 				</div>
 				<div class="control-group">
 					<form:label path="remark" class="control-label"><spring:message code="Remark"></spring:message></form:label>
-					<div class="controls"><form:textarea path="remark" /></div>
+					<div class="controls"><form:textarea path="remark" cssClass="span6" /></div>
 					<form:errors cssClass="error-field" path="remark" />
 				</div>
 				<div class="form-actions">

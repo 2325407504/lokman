@@ -120,7 +120,8 @@
 		<fmt:message key="Code" var="Code"/>
 		<fmt:message key="Company" var="Company"/>
 		<fmt:message key="County" var="County"/>
-		<fmt:message key="City" var="City"/>
+    <fmt:message key="City" var="City"/>
+    <fmt:message key="Weight" var="Weight"/>
 
 		<c:if test="${forwardingAttribute.id != null}">
 		<form:form modelAttribute="uatfAttribute" action="${uatfSave}" method="post" class="form-inline">
@@ -128,17 +129,19 @@
 			<form:input path="code" cssClass="input-small" placeholder="${Code}" />
 			<form:input path="company" cssClass="input-small" placeholder="${Company}" />
 			<form:input path="county" cssClass="input-small" placeholder="${County}" />
-			<form:input path="city" cssClass="input-small" placeholder="${City}" />
+      <form:input path="city" cssClass="input-small" placeholder="${City}" />
+      <form:input path="loadWeightInTonne" cssClass="input-mini" placeholder="${Weight}" />
 			<button class="btn" type="submit"><i class="icon-ok"></i></button>
 		</form:form>
 		
 		<hr>
 		
-		<aripd:datatables datasource="/uatf/get/${forwardingAttribute.id}" id="uatfs" dataUrlDelete="/uatf/delete" actionColumn="4">
+		<aripd:datatables datasource="/uatf/get/${forwardingAttribute.id}" id="uatfs" dataUrlDelete="/uatf/delete" actionColumn="5">
 			<aripd:column label="Code" field="code"/>
 			<aripd:column label="Company" field="company"/>
 			<aripd:column label="County" field="county"/>
-			<aripd:column label="City" field="city"/>
+      <aripd:column label="City" field="city"/>
+      <aripd:column label="Weight" field="loadWeightInTonne"/>
 			<aripd:column label="Action" field="id"/>
 		</aripd:datatables>
 		</c:if>

@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -21,6 +22,8 @@ import com.aripd.common.service.BackupService;
 @Service("backupService")
 @Transactional(readOnly = true)
 public class BackupServiceImpl implements BackupService {
+
+	protected static Logger logger = Logger.getLogger(BackupServiceImpl.class);
 
 	@PersistenceContext
 	private EntityManager em;
@@ -48,12 +51,11 @@ public class BackupServiceImpl implements BackupService {
 
 	@Override
 	@Scheduled(cron = "${cron.backup.database}")
-	public void database() {
+	public void backup() {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		Date now = new Date();
 		String strDate = sdf.format(now);
-		System.out.println(strDate);
 
 		Process p;
 		String cmd = pathProgramMysqldump + " -u " + jdbcUsername + " -p"
@@ -63,9 +65,9 @@ public class BackupServiceImpl implements BackupService {
 			p = Runtime.getRuntime().exec(cmd);
 			int processComplete = p.waitFor();
 			if (processComplete == 0) {
-				System.out.println("Backup taken successfully");
+				logger.debug("Backup taken successfully");
 			} else {
-				System.out.println("Could not take backup: " + cmd);
+				logger.debug("Could not take backup: " + cmd);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -85,9 +87,9 @@ public class BackupServiceImpl implements BackupService {
 			p = Runtime.getRuntime().exec(cmd);
 			int processComplete = p.waitFor();
 			if (processComplete == 0) {
-				System.out.println("Restored successfully");
+				logger.debug("Restored successfully");
 			} else {
-				System.out.println("Could not restored: " + cmd);
+				logger.debug("Could not restored: " + cmd);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -99,13 +101,12 @@ public class BackupServiceImpl implements BackupService {
 	@Override
 	public void delete(String file) {
 		try {
-			String cem = pathDirectoryExport + file;
-			File f = new File(cem);
+			File f = new File(pathDirectoryExport + file);
 
 			if (f.delete()) {
-				System.out.println(f.getName() + " is deleted!");
+				logger.debug(f.getName() + " is deleted.");
 			} else {
-				System.out.println("Delete operation is failed." + cem);
+				logger.debug("Delete operation is failed.");
 			}
 
 		} catch (Exception e) {
@@ -116,18 +117,17 @@ public class BackupServiceImpl implements BackupService {
 	}
 
 	@Override
-	public File[] findAll(String pathDirectoryExport, String ext) {
+	public File[] findAll() {
 		File dir = new File(pathDirectoryExport);
 		if (dir.isDirectory() == false) {
-			System.out.println("Directory does not exists : "
-					+ pathDirectoryExport);
+			logger.debug("Directory does not exists : " + pathDirectoryExport);
 		}
-		File[] files = dir.listFiles(new GenericExtFilter(ext));
+		File[] files = dir.listFiles(new GenericExtFilter("sql"));
 		if (files.length == 0) {
-			System.out.println("no files");
+			logger.debug("No files");
 		}
 		for (File file : files) {
-			System.out.println(file.toString());
+			logger.debug(file.toString());
 		}
 		return files;
 	}

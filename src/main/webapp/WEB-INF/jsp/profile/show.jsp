@@ -15,7 +15,6 @@
 	<aripd:descriptionitem label="Username" field="${profileAttribute.username}"></aripd:descriptionitem>
 	<aripd:descriptionitem label="Fullname" field="${profileAttribute.customer.fullname}"></aripd:descriptionitem>
 	<aripd:descriptionitem label="E-mail Address" field="${profileAttribute.email}"></aripd:descriptionitem>
-	<aripd:descriptionitem label="Region" field="${profileAttribute.region.name}"></aripd:descriptionitem>
 </aripd:description>
 
 <%@ include file="/WEB-INF/jsp/footer.jsp" %>

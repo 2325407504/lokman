@@ -12,13 +12,23 @@
 </ul>
 
 <table class="table">
-  <c:forEach var="file" items="${files}">
+  <thead>
     <tr>
-      <td>${file.name}</td>
-      <td><a href="/backup/${file.name}/restore"><spring:message code="Restore"></spring:message></a></td>
-      <td><a href="/backup/${file.name}/delete"><spring:message code="Delete"></spring:message></a></td>
+      <th><spring:message code="Backup File"></spring:message></th>
+      <th><spring:message code="Action"></spring:message></th>
     </tr>
-  </c:forEach>
+  </thead>
+  <tbody>
+	  <c:forEach var="file" items="${files}">
+	    <tr>
+	      <td>${file.name}</td>
+	      <td>
+	       <a href="/backup/${file.name}/restore"><spring:message code="Restore"></spring:message></a>
+	       <a href="/backup/${file.name}/delete"><spring:message code="Delete"></spring:message></a>
+	      </td>
+	    </tr>
+	  </c:forEach>
+  </tbody>
 </table>
 
 <%@ include file="/WEB-INF/jsp/footer.jsp" %>
