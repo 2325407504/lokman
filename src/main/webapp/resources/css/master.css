@@ -1,112 +1,61 @@
 body {
-	padding-top: 100px;
+    padding-top: 100px;
 }
 
 .ui-widget {
-	font-size: 12px !important;
+    font-size: 12px !important;
 }
 
 /* Form - signin */
 .form-signin {
-	max-width: 300px;
-	padding: 19px 29px 29px;
-	margin: 0 auto 20px;
-	background-color: #fff;
-	border: 1px solid #e5e5e5;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-	box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+    max-width: 300px;
+    padding: 19px 29px 29px;
+    margin: 0 auto 20px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
 }
 
 .form-signin .form-signin-heading,.form-signin .checkbox {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .form-signin input[type="text"],.form-signin input[type="password"] {
-	font-size: 16px;
-	height: auto;
-	margin-bottom: 15px;
-	padding: 7px 9px;
+    font-size: 16px;
+    height: auto;
+    margin-bottom: 15px;
+    padding: 7px 9px;
 }
 
 /* bs-docs-example */
 .bs-docs-example {
-	position: relative;
-	margin: 15px 0;
-	padding: 39px 19px 14px;
-	background-color: #fff;
-	border: 1px solid #ddd;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
+    position: relative;
+    margin: 15px 0;
+    padding: 39px 19px 14px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
 }
 
 .bs-docs-example::after {
-	content: attr(data-content);
-	position: absolute;
-	top: -1px;
-	left: -1px;
-	padding: 3px 7px;
-	font-size: 12px;
-	font-weight: bold;
-	background-color: #f5f5f5;
-	border: 1px solid #ddd;
-	color: #9da0a4;
-	-webkit-border-radius: 4px 0 4px 0;
-	-moz-border-radius: 4px 0 4px 0;
-	border-radius: 4px 0 4px 0;
-}
-
-/* Carousel base class */
-.carousel {
-	margin-bottom: 60px;
-}
-
-.carousel .container {
-	position: relative;
-	z-index: 9;
-}
-
-.carousel-control {
-	height: 80px;
-	margin-top: 0;
-	font-size: 120px;
-	text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
-	background-color: transparent;
-	border: 0;
-	z-index: 10;
-}
-
-.carousel .item {
-	height: 500px;
-}
-
-.carousel img {
-	position: absolute;
-	top: 0;
-	left: 0;
-	min-width: 100%;
-	height: 500px;
-}
-
-.carousel-caption {
-	background-color: transparent;
-	position: static;
-	max-width: 550px;
-	padding: 0 70px;
-	margin-top: 200px;
-}
-
-.carousel-caption h1,.carousel-caption .lead {
-	margin: 0;
-	line-height: 1.25;
-	color: #fff;
-	text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
-}
-
-.carousel-caption .btn {
-	margin-top: 10px;
+    content: attr(data-content);
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    color: #9da0a4;
+    -webkit-border-radius: 4px 0 4px 0;
+    -moz-border-radius: 4px 0 4px 0;
+    border-radius: 4px 0 4px 0;
 }
