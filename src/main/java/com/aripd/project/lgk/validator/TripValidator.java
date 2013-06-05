@@ -12,14 +12,10 @@ import com.aripd.project.lgk.service.TripService;
 @Service("tripValidator")
 public class TripValidator {
 
-	@Resource(name = "tripService")
-	private TripService tripService;
+    @Resource(name = "tripService")
+    private TripService tripService;
 
-	//public void setTripService(TripService tripService) {
-		//this.tripService = tripService;
-	//}
-
-	public void validate(Trip trip, Errors errors) {
+    public void validate(Trip trip, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "truck", "required", "It is required!");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "driver", "required", "It is required!");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "startingPoint", "required", "It is required!");
@@ -29,6 +25,5 @@ public class TripValidator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "endingKm", "required", "It is required!");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "endingTime", "required", "It is required!");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "loadWeightInTonne", "required", "It is required!");
-	}
-
+    }
 }

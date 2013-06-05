@@ -58,8 +58,10 @@ public class BackupServiceImpl implements BackupService {
 		String strDate = sdf.format(now);
 
 		Process p;
-		String cmd = pathProgramMysqldump + " -u " + jdbcUsername + " -p"
-				+ jdbcPassword + " " + jdbcDbname + " --result-file="
+                
+                // mysqldump --skip-triggers --compact --no-create-info -u username -ppassword database table1 table2 --result-file=filename.sql
+		String cmd = pathProgramMysqldump + " --skip-triggers --compact --no-create-info -u " + jdbcUsername + " -p"
+				+ jdbcPassword + " " + jdbcDbname + " role region customer account account_role driver truck quota subcontractor expense forwarding trip uatf --result-file="
 				+ pathDirectoryExport + strDate + ".sql";
 		try {
 			p = Runtime.getRuntime().exec(cmd);

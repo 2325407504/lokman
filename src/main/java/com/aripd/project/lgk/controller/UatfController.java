@@ -37,140 +37,135 @@ import com.aripd.project.lgk.service.QuotaService;
 import com.aripd.project.lgk.service.SubcontractorService;
 import com.aripd.project.lgk.service.UatfService;
 import com.aripd.project.lgk.validator.UatfValidator;
+import javax.validation.Valid;
 
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 @Controller
 @RequestMapping("/uatf")
 public class UatfController {
 
-	@Autowired
-	private UatfValidator uatfValidator;
+    @Autowired
+    private UatfValidator uatfValidator;
+    @Resource(name = "forwardingService")
+    private ForwardingService forwardingService;
+    @Resource(name = "uatfService")
+    private UatfService uatfService;
+    @Resource(name = "quotaService")
+    private QuotaService quotaService;
+    @Resource(name = "subcontractorService")
+    private SubcontractorService subcontractorService;
+    @Resource(name = "driverService")
+    private DriverService driverService;
+    @Resource(name = "accountService")
+    private AccountService accountService;
 
-	@Resource(name = "forwardingService")
-	private ForwardingService forwardingService;
+    @RequestMapping(value = "/get/{forwarding_id}", method = RequestMethod.GET)
+    public @ResponseBody
+    WebResultSet<Uatf> getDataTables(@PathVariable Long forwarding_id, @TableParam PagingCriteria criteria) {
+        ResultSet<Uatf> customers = this.uatfService.getRecords(forwarding_id, criteria);
+        return ControllerUtils.getWebResultSet(criteria, customers);
+    }
 
-	@Resource(name = "uatfService")
-	private UatfService uatfService;
+    @RequestMapping(value = "/save/{forwarding_id}", method = RequestMethod.POST)
+    public String saveAction(
+            final RedirectAttributes redirectAttributes,
+            HttpServletRequest request,
+            @PathVariable Long forwarding_id,
+            @ModelAttribute("uatfAttribute") @Valid Uatf formData,
+            BindingResult result,
+            Model model) {
 
-	@Resource(name = "quotaService")
-	private QuotaService quotaService;
+        Forwarding forwarding = forwardingService.findOne(forwarding_id);
+        if (forwarding.isSubmitted() && request.isUserInRole("ROLE_USER")) {
+            redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+            return "redirect:/forwarding/list";
+        }
 
-	@Resource(name = "subcontractorService")
-	private SubcontractorService subcontractorService;
+        //uatfValidator.validate(formData, result);
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("message", "Bütün alanları doldurmalısınız");
+            model.addAttribute("drivers", driverService.findAll());
+            return "redirect:/forwarding/edit/" + forwarding_id;
+        }
 
-	@Resource(name = "driverService")
-	private DriverService driverService;
+        formData.setForwarding(forwarding);
 
-	@Resource(name = "accountService")
-	private AccountService accountService;
+        uatfService.save(formData);
+        return "redirect:/forwarding/edit/" + forwarding_id;
+    }
 
-	@RequestMapping(value = "/get/{forwarding_id}", method = RequestMethod.GET)
-	public @ResponseBody
-	WebResultSet<Uatf> getDataTables(@PathVariable Long forwarding_id, @TableParam PagingCriteria criteria) {
-		ResultSet<Uatf> customers = this.uatfService.getRecords(forwarding_id, criteria);
-		return ControllerUtils.getWebResultSet(criteria, customers);
-	}
-	
-	@RequestMapping(value = "/save/{forwarding_id}", method = RequestMethod.POST)
-	public String saveAction(
-			final RedirectAttributes redirectAttributes,
-			HttpServletRequest request,
-			@PathVariable Long forwarding_id, 
-			@ModelAttribute("uatfAttribute")/* @Valid */Uatf formData,
-			BindingResult result, 
-			Model model) {
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public String delete(
+            final RedirectAttributes redirectAttributes,
+            HttpServletRequest request,
+            @PathVariable Long id) {
 
-		Forwarding forwarding = forwardingService.findOne(forwarding_id);
-		if (forwarding.isSubmitted() && request.isUserInRole("ROLE_USER")) {
-			redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
-			return "redirect:/forwarding/list";
-		}
+        Uatf uatf = uatfService.findOne(id);
 
-		uatfValidator.validate(formData, result);
-		if (result.hasErrors()) {
-			model.addAttribute("drivers", driverService.findAll());
-			return "/uatf/form";
-		}
+        if (uatf.getForwarding().isSubmitted() && request.isUserInRole("ROLE_USER")) {
+            redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+            return "redirect:/forwarding/list";
+        }
 
-		formData.setForwarding(forwarding);
+        uatfService.delete(uatf);
+        return "redirect:/forwarding/edit/" + uatf.getForwarding().getId();
+    }
 
-		uatfService.save(formData);
-		return "redirect:/forwarding/edit/"+forwarding_id;
-	}
+    /**
+     * Exports the report as an Excel format.
+     * <p>
+     * Make sure this method doesn't return any model. Otherwise, you'll get an
+     * "IllegalStateException: getOutputStream() has already been called for
+     * this response"
+     */
+    @RequestMapping(value = "/export/xls", method = RequestMethod.GET)
+    public void getXLS(HttpServletResponse response, Model model) {
+        uatfService.exportXLS(response);
+    }
+    @Value("${path.directory.import}")
+    String pathDirectoryImport;
 
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-	public String delete(
-			final RedirectAttributes redirectAttributes,
-			HttpServletRequest request,
-			@PathVariable Long id) {
-		
-		Uatf uatf = uatfService.findOne(id);
-		
-		if (uatf.getForwarding().isSubmitted() && request.isUserInRole("ROLE_USER")) {
-			redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
-			return "redirect:/forwarding/list";
-		}
+    @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
+    public String importXLS(
+            final RedirectAttributes redirectAttributes,
+            FileUploadBean fileUploadBean,
+            BindingResult result) {
 
-		uatfService.delete(uatf);
-		return "redirect:/forwarding/edit/"+uatf.getForwarding().getId();
-	}
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("message", "Hata oluştu");
+            return "redirect:/forwarding/import";
+        }
 
-	/**
-	 * Exports the report as an Excel format.
-	 * <p>
-	 * Make sure this method doesn't return any model. Otherwise, you'll get an
-	 * "IllegalStateException: getOutputStream() has already been called for this response"
-	 */
-	@RequestMapping(value = "/export/xls", method = RequestMethod.GET)
-	public void getXLS(HttpServletResponse response, Model model) {
-		uatfService.exportXLS(response);
-	}
+        String fileName = null;
+        try {
+            MultipartFile file = fileUploadBean.getFile();
+            InputStream inputStream = null;
+            OutputStream outputStream = null;
+            if (file.getSize() > 0) {
+                inputStream = file.getInputStream();
+                if (file.getSize() > 1000000) {
+                    redirectAttributes.addFlashAttribute("message", "Dosya boyutu büyük");
+                    return "redirect:/forwarding/import";
+                }
 
-	@Value("${path.directory.import}")
-	String pathDirectoryImport;
+                fileName = pathDirectoryImport + file.getOriginalFilename();
 
-	@RequestMapping(value = "/import/xls", method = RequestMethod.POST)
-	public String importXLS(
-			final RedirectAttributes redirectAttributes,
-			FileUploadBean fileUploadBean, 
-			BindingResult result) {
+                outputStream = new FileOutputStream(fileName);
 
-		if (result.hasErrors()) {
-			redirectAttributes.addFlashAttribute("message", "Hata oluştu");
-			return "redirect:/forwarding/import";
-		}
+                int readBytes = 0;
+                byte[] buffer = new byte[10000];
+                while ((readBytes = inputStream.read(buffer, 0, 10000)) != -1) {
+                    outputStream.write(buffer, 0, readBytes);
+                }
+                outputStream.close();
+                inputStream.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-		String fileName = null;
-		try {
-			MultipartFile file = fileUploadBean.getFile();
-			InputStream inputStream = null;
-			OutputStream outputStream = null;
-			if (file.getSize() > 0) {
-				inputStream = file.getInputStream();
-				if (file.getSize() > 1000000) {
-					redirectAttributes.addFlashAttribute("message", "Dosya boyutu büyük");
-					return "redirect:/forwarding/import";
-				}
-				
-				fileName = pathDirectoryImport + file.getOriginalFilename();
-				
-				outputStream = new FileOutputStream(fileName);
-
-				int readBytes = 0;
-				byte[] buffer = new byte[10000];
-				while ((readBytes = inputStream.read(buffer, 0, 10000)) != -1) {
-					outputStream.write(buffer, 0, readBytes);
-				}
-				outputStream.close();
-				inputStream.close();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		uatfService.importXLSX(fileName);
-		redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
-		return "redirect:/forwarding/list";
-	}
-
+        uatfService.importXLSX(fileName);
+        redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
+        return "redirect:/forwarding/list";
+    }
 }

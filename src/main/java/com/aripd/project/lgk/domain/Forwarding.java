@@ -19,159 +19,150 @@ import org.joda.time.DateTime;
 import com.aripd.account.domain.Account;
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.common.utils.ARIPDJodaDateTimeSerializer;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "forwarding")
 public class Forwarding extends BaseEntity {
 
-	private static final long serialVersionUID = 7142407700649461014L;
+    private static final long serialVersionUID = 7142407700649461014L;
+    @Column(nullable = false)
+    private boolean submitted = false;
+    @ManyToOne
+    @JoinColumn(nullable = false, insertable = true, updatable = true)
+    private Account account;
+    @Column(unique = true)
+    private String waybillNo;
+    private String driver;
+    private String plate;
+    @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
+    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+    @Column(columnDefinition = "TIMESTAMP")
+    private DateTime startingTime;
+    @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
+    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+    @Column(columnDefinition = "TIMESTAMP")
+    private DateTime endingTime;
+    private String endingPoint;
+    @Column(nullable = false)
+    @NotNull
+    private Integer loadWeightInTonne;
+    @Column(nullable = false)
+    @NotNull
+    private BigDecimal shippingCost;
+    @ManyToOne
+    private Subcontractor subcontractor;
+    @ManyToOne
+    private Quota quota;
+    @JsonIgnore
+    @OneToMany(mappedBy = "forwarding", cascade = CascadeType.REMOVE)
+    private Set<Uatf> uatfs;
 
-	@Column(nullable = false)
-	private boolean submitted = false;
+    public boolean isSubmitted() {
+        return submitted;
+    }
 
-	@ManyToOne
-	@JoinColumn(nullable = false, insertable = true, updatable = true)
-	private Account account;
+    public void setSubmitted(boolean submitted) {
+        this.submitted = submitted;
+    }
 
-	@Column(unique = true)
-	private String waybillNo;
-	
-	private String driver;
-	
-	private String plate;
+    public Account getAccount() {
+        return account;
+    }
 
-	@JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
-	@Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
-	@Column(columnDefinition = "TIMESTAMP")
-	private DateTime startingTime;
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
-	@JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
-	@Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
-	@Column(columnDefinition = "TIMESTAMP")
-	private DateTime endingTime;
+    public String getWaybillNo() {
+        return waybillNo;
+    }
 
-	private String endingPoint;
-	
-	private Integer loadWeightInTonne;
+    public void setWaybillNo(String waybillNo) {
+        this.waybillNo = waybillNo;
+    }
 
-	private BigDecimal shippingCost;
-	
-	@ManyToOne
-	private Subcontractor subcontractor;
+    public String getDriver() {
+        return driver;
+    }
 
-	@ManyToOne
-	private Quota quota;
+    public void setDriver(String driver) {
+        this.driver = driver;
+    }
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "forwarding", cascade = CascadeType.REMOVE)
-	private Set<Uatf> uatfs;
+    public String getPlate() {
+        return plate;
+    }
 
-	public boolean isSubmitted() {
-		return submitted;
-	}
+    public void setPlate(String plate) {
+        this.plate = plate;
+    }
 
-	public void setSubmitted(boolean submitted) {
-		this.submitted = submitted;
-	}
+    public DateTime getStartingTime() {
+        return startingTime;
+    }
 
-	public Account getAccount() {
-		return account;
-	}
+    public void setStartingTime(DateTime startingTime) {
+        this.startingTime = startingTime;
+    }
 
-	public void setAccount(Account account) {
-		this.account = account;
-	}
+    public DateTime getEndingTime() {
+        return endingTime;
+    }
 
-	public String getWaybillNo() {
-		return waybillNo;
-	}
+    public void setEndingTime(DateTime endingTime) {
+        this.endingTime = endingTime;
+    }
 
-	public void setWaybillNo(String waybillNo) {
-		this.waybillNo = waybillNo;
-	}
+    public String getEndingPoint() {
+        return endingPoint;
+    }
 
-	public String getDriver() {
-		return driver;
-	}
+    public void setEndingPoint(String endingPoint) {
+        this.endingPoint = endingPoint;
+    }
 
-	public void setDriver(String driver) {
-		this.driver = driver;
-	}
+    public Integer getLoadWeightInTonne() {
+        return loadWeightInTonne;
+    }
 
-	public String getPlate() {
-		return plate;
-	}
+    public void setLoadWeightInTonne(Integer loadWeightInTonne) {
+        this.loadWeightInTonne = loadWeightInTonne;
+    }
 
-	public void setPlate(String plate) {
-		this.plate = plate;
-	}
+    public BigDecimal getShippingCost() {
+        return shippingCost;
+    }
 
-	public DateTime getStartingTime() {
-		return startingTime;
-	}
+    public void setShippingCost(BigDecimal shippingCost) {
+        this.shippingCost = shippingCost;
+    }
 
-	public void setStartingTime(DateTime startingTime) {
-		this.startingTime = startingTime;
-	}
+    public Subcontractor getSubcontractor() {
+        return subcontractor;
+    }
 
-	public DateTime getEndingTime() {
-		return endingTime;
-	}
+    public void setSubcontractor(Subcontractor subcontractor) {
+        this.subcontractor = subcontractor;
+    }
 
-	public void setEndingTime(DateTime endingTime) {
-		this.endingTime = endingTime;
-	}
+    public Quota getQuota() {
+        return quota;
+    }
 
-	public String getEndingPoint() {
-		return endingPoint;
-	}
+    public void setQuota(Quota quota) {
+        this.quota = quota;
+    }
 
-	public void setEndingPoint(String endingPoint) {
-		this.endingPoint = endingPoint;
-	}
+    public Set<Uatf> getUatfs() {
+        return uatfs;
+    }
 
-	public Integer getLoadWeightInTonne() {
-		return loadWeightInTonne;
-	}
+    public void setUatfs(Set<Uatf> uatfs) {
+        this.uatfs = uatfs;
+    }
 
-	public void setLoadWeightInTonne(Integer loadWeightInTonne) {
-		this.loadWeightInTonne = loadWeightInTonne;
-	}
-
-	public BigDecimal getShippingCost() {
-		return shippingCost;
-	}
-
-	public void setShippingCost(BigDecimal shippingCost) {
-		this.shippingCost = shippingCost;
-	}
-
-	public Subcontractor getSubcontractor() {
-		return subcontractor;
-	}
-
-	public void setSubcontractor(Subcontractor subcontractor) {
-		this.subcontractor = subcontractor;
-	}
-
-	public Quota getQuota() {
-		return quota;
-	}
-
-	public void setQuota(Quota quota) {
-		this.quota = quota;
-	}
-
-	public Set<Uatf> getUatfs() {
-		return uatfs;
-	}
-
-	public void setUatfs(Set<Uatf> uatfs) {
-		this.uatfs = uatfs;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
 }

@@ -8,75 +8,83 @@ import javax.persistence.Table;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.aripd.common.entity.BaseEntity;
+import javax.persistence.Column;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "uatf")
 public class Uatf extends BaseEntity {
 
-	private static final long serialVersionUID = 5180174134796884976L;
+    private static final long serialVersionUID = 5180174134796884976L;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "forwarding_id")
+    private Forwarding forwarding;
+    @Column(nullable = false)
+    @NotNull
+    private String code;
+    @Column(nullable = false)
+    @NotNull
+    private String company;
+    @Column(nullable = false)
+    @NotNull
+    private String county;
+    @Column(nullable = false)
+    @NotNull
+    private String city;
+    @Column(nullable = false)
+    @NotNull
+    private Integer loadWeightInTonne;
 
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name="forwarding_id")
-	private Forwarding forwarding;
-	
-	private String code;
-	private String company;
-	private String county;
-	private String city;
+    public String getCode() {
+        return code;
+    }
 
-	private Integer loadWeightInTonne;
-	
-	public String getCode() {
-		return code;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public String getCompany() {
+        return company;
+    }
 
-	public String getCompany() {
-		return company;
-	}
+    public void setCompany(String company) {
+        this.company = company;
+    }
 
-	public void setCompany(String company) {
-		this.company = company;
-	}
+    public String getCounty() {
+        return county;
+    }
 
-	public String getCounty() {
-		return county;
-	}
+    public void setCounty(String county) {
+        this.county = county;
+    }
 
-	public void setCounty(String county) {
-		this.county = county;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public Integer getLoadWeightInTonne() {
+        return loadWeightInTonne;
+    }
 
-	public Integer getLoadWeightInTonne() {
-		return loadWeightInTonne;
-	}
+    public void setLoadWeightInTonne(Integer loadWeightInTonne) {
+        this.loadWeightInTonne = loadWeightInTonne;
+    }
 
-	public void setLoadWeightInTonne(Integer loadWeightInTonne) {
-		this.loadWeightInTonne = loadWeightInTonne;
-	}
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+    public Forwarding getForwarding() {
+        return forwarding;
+    }
 
-	public Forwarding getForwarding() {
-		return forwarding;
-	}
-
-	public void setForwarding(Forwarding forwarding) {
-		this.forwarding = forwarding;
-	}
-
+    public void setForwarding(Forwarding forwarding) {
+        this.forwarding = forwarding;
+    }
 }

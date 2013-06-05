@@ -15,81 +15,77 @@ import org.joda.time.DateTime;
 import com.aripd.account.domain.Account;
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.common.utils.ARIPDJodaDateTimeSerializer;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "expense")
 public class Expense extends BaseEntity {
 
-	private static final long serialVersionUID = 7142407700649461014L;
+    private static final long serialVersionUID = 7142407700649461014L;
+    @Column(nullable = false)
+    private boolean submitted = false;
+    @ManyToOne
+    @JoinColumn(nullable = false, insertable = true, updatable = true)
+    private Account account;
+    @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
+    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+    @Column(columnDefinition = "TIMESTAMP")
+    private DateTime documentDate;
+    private String company;
+    private String description;
+    @Column(nullable = false)
+    @NotNull
+    private BigDecimal amount;
 
-	@Column(nullable = false)
-	private boolean submitted = false;
+    public boolean isSubmitted() {
+        return submitted;
+    }
 
-	@ManyToOne
-	@JoinColumn(nullable = false, insertable = true, updatable = true)
-	private Account account;
+    public void setSubmitted(boolean submitted) {
+        this.submitted = submitted;
+    }
 
-	@JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
-	@Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
-	@Column(columnDefinition = "TIMESTAMP")
-	private DateTime documentDate;
+    public Account getAccount() {
+        return account;
+    }
 
-	private String company;
-	
-	private String description;
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
-	private BigDecimal amount;
+    public DateTime getDocumentDate() {
+        return documentDate;
+    }
 
-	public boolean isSubmitted() {
-		return submitted;
-	}
+    public void setDocumentDate(DateTime documentDate) {
+        this.documentDate = documentDate;
+    }
 
-	public void setSubmitted(boolean submitted) {
-		this.submitted = submitted;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public Account getAccount() {
-		return account;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setAccount(Account account) {
-		this.account = account;
-	}
+    public BigDecimal getAmount() {
+        return amount;
+    }
 
-	public DateTime getDocumentDate() {
-		return documentDate;
-	}
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
 
-	public void setDocumentDate(DateTime documentDate) {
-		this.documentDate = documentDate;
-	}
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getCompany() {
+        return company;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public BigDecimal getAmount() {
-		return amount;
-	}
-
-	public void setAmount(BigDecimal amount) {
-		this.amount = amount;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	public String getCompany() {
-		return company;
-	}
-
-	public void setCompany(String company) {
-		this.company = company;
-	}
-	
+    public void setCompany(String company) {
+        this.company = company;
+    }
 }

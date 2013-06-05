@@ -11,11 +11,11 @@ import com.aripd.project.lgk.domain.Uatf;
 @Transactional
 public class UatfValidator {
 
-	public void validate(Uatf uatf, Errors errors) {
+    public void validate(Uatf uatf, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "code", "required", "It is required!");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "company", "required", "It is required!");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "county", "required", "It is required!");	
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "city", "required", "It is required!");	
-	}
-
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "county", "required", "It is required!");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "city", "required", "It is required!");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "loadWeightInTonne", "required", "It is required!");
+    }
 }

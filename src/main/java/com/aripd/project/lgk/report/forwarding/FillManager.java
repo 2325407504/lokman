@@ -14,6 +14,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Uatf;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 
 public class FillManager {
 
@@ -37,6 +38,9 @@ public class FillManager {
         bodyCellStyle.setAlignment(CellStyle.ALIGN_CENTER);
         bodyCellStyle.setWrapText(true);
 
+        HSSFCellStyle numericStyle = worksheet.getWorkbook().createCellStyle();
+        numericStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("#,##0.00"));
+        
         // Create body
         for (int i = startRowIndex; i + startRowIndex - 2 < datasource.size() + 2; i++) {
             // Create a new row
@@ -76,7 +80,7 @@ public class FillManager {
 
             HSSFCell cell8 = row.createCell(startColIndex + 8);
             cell8.setCellValue(datasource.get(i - 2).getShippingCost().doubleValue());
-            cell8.setCellStyle(bodyCellStyle);
+            cell8.setCellStyle(numericStyle);
 
             HSSFCell cell9 = row.createCell(startColIndex + 9);
             cell9.setCellValue(datasource.get(i - 2).getSubcontractor().getName());

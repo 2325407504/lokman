@@ -18,142 +18,129 @@ import com.aripd.common.utils.ARIPDJodaDateTimeSerializer;
 @Table(name = "trip")
 public class Trip extends BaseEntity {
 
-	private static final long serialVersionUID = -8215609876889575062L;
-	
-	@Column(nullable = false)
-	private boolean submitted = false;
+    private static final long serialVersionUID = -8215609876889575062L;
+    @Column(nullable = false)
+    private boolean submitted = false;
+    @ManyToOne
+    @JoinColumn(nullable = false, insertable = true, updatable = true)
+    private Account account;
+    @ManyToOne
+    private Truck truck;
+    @ManyToOne
+    private Driver driver;
+    private String startingPoint;
+    private Integer startingKm;
+    @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
+    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+    @Column(columnDefinition = "TIMESTAMP")
+    private DateTime startingTime;
+    private String endingPoint;
+    private Integer endingKm;
+    @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
+    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+    @Column(columnDefinition = "TIMESTAMP")
+    private DateTime endingTime;
+    private Integer loadWeightInTonne;
+    @Column(columnDefinition = "TEXT", nullable = true)
+    private String remark;
 
-	@ManyToOne
-	@JoinColumn(nullable = false, insertable = true, updatable = true)
-	private Account account;
+    public Account getAccount() {
+        return account;
+    }
 
-	@ManyToOne
-	private Truck truck;
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
-	@ManyToOne
-	private Driver driver;
+    public Truck getTruck() {
+        return truck;
+    }
 
-	private String startingPoint;
+    public void setTruck(Truck truck) {
+        this.truck = truck;
+    }
 
-	private Integer startingKm;
+    public Driver getDriver() {
+        return driver;
+    }
 
-	@JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
-	@Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
-	@Column(columnDefinition = "TIMESTAMP")
-	private DateTime startingTime;
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
 
-	private String endingPoint;
+    public String getStartingPoint() {
+        return startingPoint;
+    }
 
-	private Integer endingKm;
+    public void setStartingPoint(String startingPoint) {
+        this.startingPoint = startingPoint;
+    }
 
-	@JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
-	@Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
-	@Column(columnDefinition = "TIMESTAMP")
-	private DateTime endingTime;
+    public Integer getStartingKm() {
+        return startingKm;
+    }
 
-	private Integer loadWeightInTonne;
+    public void setStartingKm(Integer startingKm) {
+        this.startingKm = startingKm;
+    }
 
-	@Column(columnDefinition = "TEXT", nullable = true)
-	private String remark;
+    public DateTime getStartingTime() {
+        return startingTime;
+    }
 
-	public Account getAccount() {
-		return account;
-	}
+    public void setStartingTime(DateTime startingTime) {
+        this.startingTime = startingTime;
+    }
 
-	public void setAccount(Account account) {
-		this.account = account;
-	}
+    public String getEndingPoint() {
+        return endingPoint;
+    }
 
-	public Truck getTruck() {
-		return truck;
-	}
+    public void setEndingPoint(String endingPoint) {
+        this.endingPoint = endingPoint;
+    }
 
-	public void setTruck(Truck truck) {
-		this.truck = truck;
-	}
+    public Integer getEndingKm() {
+        return endingKm;
+    }
 
-	public Driver getDriver() {
-		return driver;
-	}
+    public void setEndingKm(Integer endingKm) {
+        this.endingKm = endingKm;
+    }
 
-	public void setDriver(Driver driver) {
-		this.driver = driver;
-	}
+    public DateTime getEndingTime() {
+        return endingTime;
+    }
 
-	public String getStartingPoint() {
-		return startingPoint;
-	}
+    public void setEndingTime(DateTime endingTime) {
+        this.endingTime = endingTime;
+    }
 
-	public void setStartingPoint(String startingPoint) {
-		this.startingPoint = startingPoint;
-	}
+    public Integer getLoadWeightInTonne() {
+        return loadWeightInTonne;
+    }
 
-	public Integer getStartingKm() {
-		return startingKm;
-	}
+    public void setLoadWeightInTonne(Integer loadWeightInTonne) {
+        this.loadWeightInTonne = loadWeightInTonne;
+    }
 
-	public void setStartingKm(Integer startingKm) {
-		this.startingKm = startingKm;
-	}
+    public String getRemark() {
+        return remark;
+    }
 
-	public DateTime getStartingTime() {
-		return startingTime;
-	}
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
-	public void setStartingTime(DateTime startingTime) {
-		this.startingTime = startingTime;
-	}
+    public boolean isSubmitted() {
+        return submitted;
+    }
 
-	public String getEndingPoint() {
-		return endingPoint;
-	}
+    public void setSubmitted(boolean submitted) {
+        this.submitted = submitted;
+    }
 
-	public void setEndingPoint(String endingPoint) {
-		this.endingPoint = endingPoint;
-	}
-
-	public Integer getEndingKm() {
-		return endingKm;
-	}
-
-	public void setEndingKm(Integer endingKm) {
-		this.endingKm = endingKm;
-	}
-
-	public DateTime getEndingTime() {
-		return endingTime;
-	}
-
-	public void setEndingTime(DateTime endingTime) {
-		this.endingTime = endingTime;
-	}
-
-	public Integer getLoadWeightInTonne() {
-		return loadWeightInTonne;
-	}
-
-	public void setLoadWeightInTonne(Integer loadWeightInTonne) {
-		this.loadWeightInTonne = loadWeightInTonne;
-	}
-
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-
-	public boolean isSubmitted() {
-		return submitted;
-	}
-
-	public void setSubmitted(boolean submitted) {
-		this.submitted = submitted;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
 }

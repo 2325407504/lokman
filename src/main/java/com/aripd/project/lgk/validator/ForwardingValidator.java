@@ -11,11 +11,9 @@ import com.aripd.project.lgk.service.ForwardingService;
 @Service("forwardingValidator")
 public class ForwardingValidator {
 
-	@Resource(name = "forwardingService")
-	private ForwardingService forwardingService;
+    @Resource(name = "forwardingService")
+    private ForwardingService forwardingService;
 
-	public void validate(Forwarding forwarding, Errors errors) {
-		
-	}
-
+    public void validate(Forwarding forwarding, Errors errors) {
+    }
 }
