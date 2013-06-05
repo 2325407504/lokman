@@ -23,57 +23,54 @@ import com.aripd.account.validator.AccountValidator;
 @Controller
 @RequestMapping("/profile")
 public class ProfileController {
-	
-	@Autowired
-	private AccountValidator accountValidator;
-	
-	@Resource(name="accountService")
-	private AccountService accountService;
-	
-	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public String showAction(Principal principal, Model model) {
-		Account account = accountService.findOneByUsername(principal.getName());
-		
-		model.addAttribute("profileAttribute", account);
-		return "profile/show";
-	}
+
+    @Autowired
+    private AccountValidator accountValidator;
+    @Resource(name = "accountService")
+    private AccountService accountService;
+
+    @RequestMapping(value = "/show", method = RequestMethod.GET)
+    public String showAction(Principal principal, Model model) {
+        Account account = accountService.findOneByUsername(principal.getName());
+
+        model.addAttribute("profileAttribute", account);
+        return "profile/show";
+    }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String editAction(
-    		Principal principal,
-    		Model model) {
-		Account account = accountService.findOneByUsername(principal.getName());
-		
-    	model.addAttribute("profileAttribute", account);
-    	return "profile/form";
-	}
+            Principal principal,
+            Model model) {
+        Account account = accountService.findOneByUsername(principal.getName());
+
+        model.addAttribute("profileAttribute", account);
+        return "profile/form";
+    }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
-    		Principal principal,
-    		@ModelAttribute("profileAttribute") @Valid Account formData, 
-    		BindingResult result) {
-    	
-		//accountValidator.validate(formData, result);
-		if (result.hasErrors()) {
-			return "/profile/form";
-		}
-		
-		Account account = accountService.findOneByUsername(principal.getName());
-		
-		formData.getCustomer().setId(account.getCustomer().getId());
-		account.setCustomer(formData.getCustomer());
-		account.setUsername(formData.getUsername());
-		account.setEmail(formData.getEmail());
-		if (formData.getPassword().length() == 0) {
-			account.setPassword(account.getPassword());
-		}
-		else {
-			account.setPassword(DigestUtils.md5Hex(formData.getPassword()));
-		}
-		
-		accountService.save(account);
-		return "redirect:/profile/show";
-	}
-	
+            Principal principal,
+            @ModelAttribute("profileAttribute") @Valid Account formData,
+            BindingResult result) {
+
+        //accountValidator.validate(formData, result);
+        if (result.hasErrors()) {
+            return "/profile/form";
+        }
+
+        Account account = accountService.findOneByUsername(principal.getName());
+
+        formData.getCustomer().setId(account.getCustomer().getId());
+        account.setCustomer(formData.getCustomer());
+        account.setUsername(formData.getUsername());
+        account.setEmail(formData.getEmail());
+        if (formData.getPassword().length() == 0) {
+            account.setPassword(account.getPassword());
+        } else {
+            account.setPassword(DigestUtils.md5Hex(formData.getPassword()));
+        }
+
+        accountService.save(account);
+        return "redirect:/profile/show";
+    }
 }

@@ -31,80 +31,74 @@ import com.aripd.project.lgk.service.RegionService;
 @RequestMapping("/account")
 public class AccountController {
 
-	@Resource(name = "accountService")
-	private AccountService accountService;
+    @Resource(name = "accountService")
+    private AccountService accountService;
+    @Resource(name = "roleService")
+    private RoleService roleService;
+    @Resource(name = "regionService")
+    private RegionService regionService;
+    @Resource(name = "accountValidator")
+    private AccountValidator accountValidator;
 
-	@Resource(name = "roleService")
-	private RoleService roleService;
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    public @ResponseBody
+    WebResultSet<Account> getDataTables(@TableParam PagingCriteria criteria) {
+        ResultSet<Account> resultset = this.accountService.getRecords(criteria);
+        return ControllerUtils.getWebResultSet(criteria, resultset);
+    }
 
-	@Resource(name="regionService")
-	private RegionService regionService;
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String listAction(Model model) {
+        return "account/list";
+    }
 
-	@Resource(name = "accountValidator")
-	private AccountValidator accountValidator;
+    @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+    public String showAction(@PathVariable Long id, Model model) {
+        model.addAttribute("accountAttribute", accountService.findOne(id));
+        return "account/show";
+    }
 
-	@RequestMapping(value = "/get", method = RequestMethod.GET)
-	public @ResponseBody
-	WebResultSet<Account> getDataTables(@TableParam PagingCriteria criteria) {
-		ResultSet<Account> resultset = this.accountService.getRecords(criteria);
-		return ControllerUtils.getWebResultSet(criteria, resultset);
-	}
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public String newAction(Model model) {
+        model.addAttribute("regions", regionService.findAll());
+        model.addAttribute("accountAttribute", new Account());
+        return "account/form";
+    }
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String listAction(Model model) {
-		return "account/list";
-	}
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String editAction(@PathVariable Long id, Model model) {
+        model.addAttribute("regions", regionService.findAll());
+        model.addAttribute("accountAttribute", accountService.findOne(id));
+        return "account/form";
+    }
 
-	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
-	public String showAction(@PathVariable Long id, Model model) {
-		model.addAttribute("accountAttribute", accountService.findOne(id));
-		return "account/show";
-	}
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public String saveAction(
+            @ModelAttribute("accountAttribute") @Valid Account formData,
+            BindingResult result) {
 
-	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String newAction(Model model) {
-		model.addAttribute("regions", regionService.findAll());
-		model.addAttribute("accountAttribute", new Account());
-		return "account/form";
-	}
+        if (result.hasErrors()) {
+            return "/account/form";
+        }
 
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-	public String editAction(@PathVariable Long id, Model model) {
-		model.addAttribute("regions", regionService.findAll());
-		model.addAttribute("accountAttribute", accountService.findOne(id));
-		return "account/form";
-	}
+        if (formData.getId() != null) {
+            Account account = accountService.findOne(formData.getId());
+            if (formData.getPassword().length() == 0) {
+                formData.setPassword(account.getPassword());
+            } else {
+                formData.setPassword(DigestUtils.md5Hex(formData.getPassword()));
+            }
+        } else {
+            formData.setPassword(DigestUtils.md5Hex(formData.getPassword()));
+        }
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveAction(
-			@ModelAttribute("accountAttribute") @Valid Account formData,
-			BindingResult result) {
-		
-		if (result.hasErrors()) {
-			return "/account/form";
-		}
+        accountService.save(formData);
+        return "redirect:/account/list";
+    }
 
-		if (formData.getId() != null) {
-			Account account = accountService.findOne(formData.getId());
-			if (formData.getPassword().length() == 0) {
-				formData.setPassword(account.getPassword());
-			}
-			else {
-				formData.setPassword(DigestUtils.md5Hex(formData.getPassword()));
-			}
-		}
-		else {
-			formData.setPassword(DigestUtils.md5Hex(formData.getPassword()));
-		}
-		
-		accountService.save(formData);
-		return "redirect:/account/list";
-	}
-
-	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-	public String delete(@RequestParam(value = "id", required = true) Long id) {
-		accountService.delete(id);
-		return "redirect:/account/list";
-	}
-
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public String delete(@RequestParam(value = "id", required = true) Long id) {
+        accountService.delete(id);
+        return "redirect:/account/list";
+    }
 }

@@ -1,0 +1,160 @@
+<%@ include file="/WEB-INF/views/header.jsp" %>
+
+<spring:url var="homeUrl" value="/" />
+<spring:url var="tripList" value="/trip/list" />
+<spring:url var="tripShow" value="/trip/show/${tripAttribute.id}" />
+<spring:url var="tripEdit" value="/trip/edit/${tripAttribute.id}" />
+<spring:url var="tripNew" value="/trip/new" />
+<spring:url var="tripSave" value="/trip/save" />
+<spring:url var="tripImport" value="/trip/import/xls" />
+<spring:url var="tripExport" value="/trip/export/xls" />
+<spring:url var="tripChart" value="/trip/chart" />
+
+<ul class="nav nav-tabs">
+	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
+	<li class=""><a href="${tripList}"><spring:message code="Trips"></spring:message></a></li>
+	<c:choose>
+		<c:when test="${ !empty tripAttribute.id }">
+			<li class="active"><a href="${tripEdit}"><spring:message code="Entry No"></spring:message>: ${tripAttribute.id}</a></li>
+		</c:when>
+		<c:otherwise>
+			<li class="active"><a href="${tripNew}"><spring:message code="New Entry"></spring:message></a></li>
+		</c:otherwise>
+	</c:choose>
+	<li class=""><a href="${tripImport}"><spring:message code="Import"></spring:message></a></li>
+	<li class="dropdown">
+		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+			<spring:message code="Export"></spring:message>
+			<b class="caret"></b>
+		</a>
+		<ul class="dropdown-menu">
+			<li><a href="${tripExport}"><spring:message code="Export"></spring:message></a></li>
+			<li><a href="${tripChart}"><spring:message code="Chart"></spring:message></a></li>
+		</ul>
+	</li>
+</ul>
+
+<div class="row-fluid">
+	<div class="span12">
+		<form:form modelAttribute="tripAttribute" action="${tripSave}" method="post">
+			<form:errors path="*" cssClass="error-block" element="div" />
+			<form:hidden path="id" />
+			<fieldset>
+				<div class="form-row">
+					<span><form:checkbox path="submitted" /> <spring:message code="Submitted by user"></spring:message></span>
+					<form:errors cssClass="error-field" path="submitted" />
+				</div>
+				<div class="form-row">
+					<form:label path="account"><spring:message code="Account"></spring:message></form:label>
+					<form:select multiple="false" path="account.id" items="${accounts}" itemLabel="customer.fullname" itemValue="id" />
+					<form:errors cssClass="error-field" path="account" />
+				</div>
+				<div class="form-row">
+					<form:label path="truck"><spring:message code="Truck"></spring:message></form:label>
+					<form:select multiple="false" path="truck.id" items="${trucks}" itemLabel="plate" itemValue="id" />
+					<form:errors cssClass="error-field" path="truck" />
+				</div>
+				<div class="form-row">
+					<form:label path="driver"><spring:message code="Driver"></spring:message></form:label>
+					<form:select path="driver.id" multiple="false" items="${drivers}" itemLabel="name" itemValue="id" />
+					<form:errors cssClass="error-field" path="driver" />
+				</div>
+				<div class="form-row">
+					<form:label path="startingPoint"><spring:message code="Starting Point"></spring:message></form:label>
+					<span><form:input path="startingPoint" /></span>
+					<form:errors cssClass="error-field" path="startingPoint" />
+				</div>
+				<div class="form-row">
+					<form:label path="startingKm"><spring:message code="Starting Km"></spring:message></form:label>
+					<span><form:input path="startingKm" /></span>
+					<form:errors cssClass="error-field" path="startingKm" />
+				</div>
+				<div class="form-row">
+					<form:label path="startingTime"><spring:message code="Starting Time"></spring:message></form:label>
+					<span><form:input type="datetime" path="startingTime" /></span>
+					<form:errors cssClass="error-field" path="startingTime" />
+				</div>
+				<div class="form-row">
+					<form:label path="endingPoint"><spring:message code="Ending Point"></spring:message></form:label>
+					<span><form:input path="endingPoint" /></span>
+					<form:errors cssClass="error-field" path="endingPoint" />
+				</div>
+				<div class="form-row">
+					<form:label path="endingKm"><spring:message code="Ending Km"></spring:message></form:label>
+					<span><form:input path="endingKm" /></span>
+					<form:errors cssClass="error-field" path="endingKm" />
+				</div>
+				<div class="form-row">
+					<form:label path="endingTime"><spring:message code="Ending Time"></spring:message></form:label>
+					<span><form:input type="datetime" path="endingTime" /></span>
+					<form:errors cssClass="error-field" path="endingTime" />
+				</div>
+				<div class="form-row">
+					<form:label path="loadWeightInTonne"><spring:message code="Weight"></spring:message></form:label>
+					<span><form:input path="loadWeightInTonne" /></span>
+					<form:errors cssClass="error-field" path="loadWeightInTonne" />
+				</div>
+				<div class="control-group">
+					<form:label path="remark" class="control-label"><spring:message code="Remark"></spring:message></form:label>
+					<div class="controls"><form:textarea path="remark" /></div>
+					<form:errors cssClass="error-field" path="remark" />
+				</div>
+				<div class="form-actions">
+					<c:if test="${ !empty tripAttribute.id }">
+					<a class="btn btn-danger" href="javascript:$('#form-${tripAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete"></spring:message></a>
+					</c:if>
+					<button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
+				</div>
+			</fieldset>
+		</form:form>
+	</div>
+</div>
+
+<c:if test="${ !empty tripAttribute.id }">
+<spring:url var="deleteUrl" value="/trip/delete?id=${tripAttribute.id}" />
+<form:form id="form-${tripAttribute.id}" modelAttribute="tripAttribute" action="${deleteUrl}" method="delete">
+	<form:hidden path="id" />
+</form:form>
+</c:if>
+
+<script type="text/javascript">
+<!--
+var startDateTextBox = $('#startingTime');
+var endDateTextBox = $('#endingTime');
+
+startDateTextBox.datetimepicker({ 
+	onClose: function(dateText, inst) {
+		if (endDateTextBox.val() != '') {
+			var testStartDate = startDateTextBox.datetimepicker('getDate');
+			var testEndDate = endDateTextBox.datetimepicker('getDate');
+			if (testStartDate > testEndDate)
+				endDateTextBox.datetimepicker('setDate', testStartDate);
+		}
+		else {
+			endDateTextBox.val(dateText);
+		}
+	},
+	onSelect: function (selectedDateTime){
+		endDateTextBox.datetimepicker('option', 'minDate', startDateTextBox.datetimepicker('getDate') );
+	}
+});
+endDateTextBox.datetimepicker({ 
+	onClose: function(dateText, inst) {
+		if (startDateTextBox.val() != '') {
+			var testStartDate = startDateTextBox.datetimepicker('getDate');
+			var testEndDate = endDateTextBox.datetimepicker('getDate');
+			if (testStartDate > testEndDate)
+				startDateTextBox.datetimepicker('setDate', testEndDate);
+		}
+		else {
+			startDateTextBox.val(dateText);
+		}
+	},
+	onSelect: function (selectedDateTime){
+		startDateTextBox.datetimepicker('option', 'maxDate', endDateTextBox.datetimepicker('getDate') );
+	}
+});
+//-->
+</script>
+
+<%@ include file="/WEB-INF/views/footer.jsp" %>

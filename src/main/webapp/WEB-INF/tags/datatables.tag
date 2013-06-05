@@ -20,9 +20,9 @@
 </table>
 <c:set var="org_languagetool_tags_table_outputmode" value="SCRIPT" scope="request" />
 <c:set var="org_languagetool_tags_table_firstcolumn" value="TRUE" scope="request" />
-<link rel="stylesheet" href="/resources/dataTables/DT_bootstrap.css" />
-<script type="text/javascript" src="/resources/dataTables/jquery.dataTables.js"></script>
-<script type="text/javascript" src="/resources/dataTables/DT_bootstrap.js"></script>
+<link rel="stylesheet" href="resources/dataTables/DT_bootstrap.css" />
+<script type="text/javascript" src="resources/dataTables/jquery.dataTables.js"></script>
+<script type="text/javascript" src="resources/dataTables/DT_bootstrap.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#${id}').dataTable( {
