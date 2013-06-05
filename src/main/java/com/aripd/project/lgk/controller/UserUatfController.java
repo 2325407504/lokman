@@ -62,7 +62,7 @@ public class UserUatfController {
         //uatfValidator.validate(formData, result);
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("message", "Bütün alanları doldurmalısınız");
-            return "redirect:/forwarding/edit/" + forwarding_id;
+            return "redirect:/user/forwarding/edit/" + forwarding_id;
         }
 
         formData.setForwarding(forwarding);
