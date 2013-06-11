@@ -7,6 +7,5 @@ import com.aripd.project.lgk.domain.Expense;
 
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
-	Expense findOneByAccountAndId(Account account, Long id);
-
+    Expense findOneByAccountAndId(Account account, Long id);
 }

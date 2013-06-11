@@ -11,62 +11,56 @@ import com.aripd.common.entity.BaseEntity;
 @Table(name = "driver")
 public class Driver extends BaseEntity {
 
-	private static final long serialVersionUID = -542748460992087952L;
+    private static final long serialVersionUID = -542748460992087952L;
+    private boolean active;
+    @ManyToOne
+    private Region region;
+    @Column(unique = true)
+    private String code;
+    private String name;
+    private String phonenumber;
 
-	private boolean active;
-	
-	@ManyToOne
-	private Region region;
-	
-	@Column(unique = true)
-	private String code;
-	
-	private String name;
-	
-	private String phonenumber;
-	
-	public boolean isActive() {
-		return active;
-	}
+    public boolean isActive() {
+        return active;
+    }
 
-	public void setActive(boolean active) {
-		this.active = active;
-	}
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getPhonenumber() {
-		return phonenumber;
-	}
+    public String getPhonenumber() {
+        return phonenumber;
+    }
 
-	public void setPhonenumber(String phonenumber) {
-		this.phonenumber = phonenumber;
-	}
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
 
-	public Region getRegion() {
-		return region;
-	}
+    public Region getRegion() {
+        return region;
+    }
 
-	public void setRegion(Region region) {
-		this.region = region;
-	}
+    public void setRegion(Region region) {
+        this.region = region;
+    }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
 }

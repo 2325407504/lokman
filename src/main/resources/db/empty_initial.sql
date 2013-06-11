@@ -11,6 +11,24 @@ INSERT INTO `region` (`id`, `createdAt`, `updatedAt`, `name`) VALUES
 (5, NOW(), NOW(), 'Doğu Akdeniz'),
 (6, NOW(), NOW(), 'Güney/Orta Anadolu');
 
+INSERT INTO `electricmeter` (`id`, `createdAt`, `updatedAt`, `name`) VALUES
+(1, NOW(), NOW(), '180'),
+(2, NOW(), NOW(), '181'),
+(3, NOW(), NOW(), '182'),
+(4, NOW(), NOW(), '183'),
+(5, NOW(), NOW(), '580'),
+(6, NOW(), NOW(), '880');
+
+INSERT INTO `shift` (`id`, `createdAt`, `updatedAt`, `name`) VALUES
+(1, NOW(), NOW(), 'Shift1'),
+(2, NOW(), NOW(), 'Shift2'),
+(3, NOW(), NOW(), 'Shift3');
+
+INSERT INTO `product` (`id`, `createdAt`, `updatedAt`, `name`) VALUES
+(1, NOW(), NOW(), '0-0,6 mm'),
+(2, NOW(), NOW(), '0,6-2 mm'),
+(3, NOW(), NOW(), '2-4 mm');
+
 INSERT INTO `customer` (`id`, `createdAt`, `updatedAt`, `firstName`, `lastName`) VALUES
 (1, NOW(), NOW(), 'Cem', 'ARIPD'),
 (2, NOW(), NOW(), 'Admin', 'ARIPD'),

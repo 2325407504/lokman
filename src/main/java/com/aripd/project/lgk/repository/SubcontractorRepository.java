@@ -9,8 +9,7 @@ import com.aripd.project.lgk.domain.Subcontractor;
 
 public interface SubcontractorRepository extends JpaRepository<Subcontractor, Long> {
 
-	Subcontractor findOneByCode(String code);
-	
-	List<Subcontractor> findByRegion(Region region);
+    Subcontractor findOneByCode(String code);
 
+    List<Subcontractor> findByRegion(Region region);
 }

@@ -8,15 +8,14 @@ import com.aripd.common.entity.BaseEntity_;
 
 /**
  * A meta model class used to create type safe queries.
- * 
+ *
  * @author cem
  */
 @StaticMetamodel(Truck.class)
 public class Truck_ extends BaseEntity_ {
 
-	public static volatile SingularAttribute<Truck, Boolean> active;
-	public static volatile SingularAttribute<Truck, String> plate;
-	public static volatile SingularAttribute<Truck, Region> region;
-	public static volatile ListAttribute<Truck, Trip> trips;
-
+    public static volatile SingularAttribute<Truck, Boolean> active;
+    public static volatile SingularAttribute<Truck, String> plate;
+    public static volatile SingularAttribute<Truck, Region> region;
+    public static volatile ListAttribute<Truck, Trip> trips;
 }

@@ -13,20 +13,22 @@
                 
                 <base href="${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/" />
 		
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
-		<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
-		<link rel="stylesheet" href="resources/css/master.css" />
-
-		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
-		<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="resources/js/jquery.min.js"></script>
+                
+		<link rel="stylesheet" href="resources/css/jquery-ui.min.css" />
+		<script type="text/javascript" src="resources/js/jquery-ui.min.js"></script>
+                
+		<link rel="stylesheet" href="resources/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="resources/css/bootstrap-responsive.min.css" />
+		<script src="resources/js/bootstrap.min.js"></script>
 		
-		<!-- jquery-ui-timepicker -->
 		<link rel="stylesheet" href="resources/jquery-ui-timepicker/jquery-ui-timepicker-addon.css" />
 		<script type="text/javascript" src="resources/jquery-ui-timepicker/jquery-ui-timepicker-addon.js"></script>
 		<script type="text/javascript" src="resources/jquery-ui-timepicker/jquery-ui-timepicker-tr.js"></script>
 		<script type="text/javascript" src="resources/js/ui.datepicker-tr.js"></script>
 		
+		<link rel="stylesheet" href="resources/css/master.css" />
+
 	</head>
 	<body>
 	

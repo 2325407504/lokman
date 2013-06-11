@@ -7,6 +7,5 @@ import com.aripd.project.lgk.domain.Trip;
 
 public interface TripRepository extends JpaRepository<Trip, Long> {
 
-	Trip findOneByAccountAndId(Account account, Long id);
-	
+    Trip findOneByAccountAndId(Account account, Long id);
 }

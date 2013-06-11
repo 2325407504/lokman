@@ -7,15 +7,14 @@ import com.aripd.common.entity.BaseEntity_;
 
 /**
  * A meta model class used to create type safe queries.
- * 
+ *
  * @author cem
  */
 @StaticMetamodel(Subcontractor.class)
 public class Subcontractor_ extends BaseEntity_ {
 
-	public static volatile SingularAttribute<Subcontractor, Boolean> active;
-	public static volatile SingularAttribute<Subcontractor, String> code;
-	public static volatile SingularAttribute<Subcontractor, String> name;
-	public static volatile SingularAttribute<Subcontractor, Region> region;
-
+    public static volatile SingularAttribute<Subcontractor, Boolean> active;
+    public static volatile SingularAttribute<Subcontractor, String> code;
+    public static volatile SingularAttribute<Subcontractor, String> name;
+    public static volatile SingularAttribute<Subcontractor, Region> region;
 }

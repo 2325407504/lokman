@@ -22,95 +22,89 @@ import com.aripd.project.lgk.domain.Region;
 @Table(name = "account")
 public class Account extends BaseEntity {
 
-	private static final long serialVersionUID = 5410601898024568036L;
+    private static final long serialVersionUID = 5410601898024568036L;
+    @JsonIgnore
+    @Column(nullable = false, unique = false)
+    private String password;
+    @Column(unique = true)
+    private String username;
+    @Column(nullable = false, unique = true)
+    private String email;
+    @JsonIgnore
+    @Column(nullable = true, unique = false)
+    private boolean active = false;
+    @JsonIgnore
+    @JoinTable(name = "account_role", joinColumns =
+            @JoinColumn(name = "account_id"), inverseJoinColumns =
+            @JoinColumn(name = "role_id"))
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Role> roles;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Customer customer;
+    @ManyToOne
+    private Region region;
 
-	@JsonIgnore
-	@Column(nullable = false, unique = false)
-	private String password;
+    public Account() {
+        roles = new ArrayList<Role>();
+    }
 
-	@Column(unique = true)
-	private String username;
+    public String getPassword() {
+        return password;
+    }
 
-	@Column(nullable = false, unique = true)
-	private String email;
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	@JsonIgnore
-	@Column(nullable = true, unique = false)
-	private boolean active = false;
+    public String getUsername() {
+        return username;
+    }
 
-	@JsonIgnore
-	@JoinTable(name = "account_role", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Role> roles;
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	private Customer customer;
+    public String getEmail() {
+        return email;
+    }
 
-	@ManyToOne
-	private Region region;
-	
-	public Account() {
-		roles = new ArrayList<Role>();
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public List<Role> getRoles() {
+        return roles;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public boolean isActive() {
+        return active;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public Customer getCustomer() {
+        return customer;
+    }
 
-	public List<Role> getRoles() {
-		return roles;
-	}
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
+    public Region getRegion() {
+        return region;
+    }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
-	public Region getRegion() {
-		return region;
-	}
-
-	public void setRegion(Region region) {
-		this.region = region;
-	}
-
+    public void setRegion(Region region) {
+        this.region = region;
+    }
 }

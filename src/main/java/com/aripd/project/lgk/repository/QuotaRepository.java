@@ -6,6 +6,5 @@ import com.aripd.project.lgk.domain.Quota;
 
 public interface QuotaRepository extends JpaRepository<Quota, Long> {
 
-	Quota findOneByCode(String code);
-
+    Quota findOneByCode(String code);
 }

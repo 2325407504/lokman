@@ -9,8 +9,7 @@ import com.aripd.project.lgk.domain.Region;
 
 public interface DriverRepository extends JpaRepository<Driver, Long> {
 
-	Driver findOneByCode(String code);
+    Driver findOneByCode(String code);
 
-	List<Driver> findByRegion(Region region);
-	
+    List<Driver> findByRegion(Region region);
 }

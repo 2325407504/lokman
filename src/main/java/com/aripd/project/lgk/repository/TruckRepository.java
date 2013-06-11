@@ -9,8 +9,7 @@ import com.aripd.project.lgk.domain.Truck;
 
 public interface TruckRepository extends JpaRepository<Truck, Long> {
 
-	Truck findOneByPlate(String plate);
+    Truck findOneByPlate(String plate);
 
-	List<Truck> findByRegion(Region region);
-
+    List<Truck> findByRegion(Region region);
 }

@@ -7,12 +7,11 @@ import com.aripd.common.entity.BaseEntity_;
 
 /**
  * A meta model class used to create type safe queries.
- * 
+ *
  * @author cem
  */
 @StaticMetamodel(Region.class)
 public class Region_ extends BaseEntity_ {
 
-	public static volatile SingularAttribute<Region, String> name;
-
+    public static volatile SingularAttribute<Region, String> name;
 }

@@ -11,52 +11,47 @@ import com.aripd.common.entity.BaseEntity;
 @Table(name = "subcontractor")
 public class Subcontractor extends BaseEntity {
 
-	private static final long serialVersionUID = -7548528652541560063L;
+    private static final long serialVersionUID = -7548528652541560063L;
+    private boolean active;
+    @Column(unique = true)
+    private String code;
+    private String name;
+    @ManyToOne
+    private Region region;
 
-	private boolean active;
-	
-	@Column(unique = true)
-	private String code;
-	
-	private String name;
+    public boolean isActive() {
+        return active;
+    }
 
-	@ManyToOne
-	private Region region;
-	
-	public boolean isActive() {
-		return active;
-	}
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
-	public void setActive(boolean active) {
-		this.active = active;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Region getRegion() {
+        return region;
+    }
 
-	public Region getRegion() {
-		return region;
-	}
+    public void setRegion(Region region) {
+        this.region = region;
+    }
 
-	public void setRegion(Region region) {
-		this.region = region;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
 }
