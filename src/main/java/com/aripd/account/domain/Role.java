@@ -10,43 +10,35 @@ import com.aripd.common.entity.BaseEntity;
 @Table(name = "role")
 public class Role extends BaseEntity {
 
-	private static final long serialVersionUID = 1080604793302174491L;
+    @Column(nullable = false, unique = true)
+    private String code;
+    private String name;
 
-	@Column(nullable = false, unique = true)
-	private String code;
+    public Role() {
+    }
 
-	private String name;
+    public Role(String code) {
+        this.code = code;
+    }
 
-	public Role() {
-	}
+    public Role(String code, String name) {
+        this.code = code;
+        this.name = name;
+    }
 
-	public Role(String code) {
-		this.code = code;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public Role(String code, String name) {
-		this.code = code;
-		this.name = name;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
+    public void setName(String name) {
+        this.name = name;
+    }
 }

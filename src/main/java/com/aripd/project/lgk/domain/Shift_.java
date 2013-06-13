@@ -13,5 +13,6 @@ import com.aripd.common.entity.BaseEntity_;
 @StaticMetamodel(Shift.class)
 public class Shift_ extends BaseEntity_ {
 
+    public static volatile SingularAttribute<Shift, String> code;
     public static volatile SingularAttribute<Shift, String> name;
 }

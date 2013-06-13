@@ -37,10 +37,20 @@ public class Production extends BaseEntity {
     private Shift shift;
     @Column(nullable = false)
     @NotNull
-    private Integer feed;
+    private Double feed;
+    @Column(columnDefinition = "TEXT", nullable = true)
+    private String remark;
     @JsonIgnore
     @OneToMany(mappedBy = "production", cascade = CascadeType.REMOVE)
     private Set<Bigbag> bigbags;
+
+    /*public Double getTotalProductionWeight() {
+        Double weight = 0d;
+        for (Bigbag bigbag : getBigbags()) {
+            weight += bigbag.getWeight();
+        }
+        return weight;
+    }*/
 
     public boolean isSubmitted() {
         return submitted;
@@ -74,12 +84,20 @@ public class Production extends BaseEntity {
         this.shift = shift;
     }
 
-    public Integer getFeed() {
+    public Double getFeed() {
         return feed;
     }
 
-    public void setFeed(Integer feed) {
+    public void setFeed(Double feed) {
         this.feed = feed;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public Set<Bigbag> getBigbags() {

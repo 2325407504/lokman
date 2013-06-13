@@ -11,51 +11,43 @@ import com.aripd.common.entity.BaseEntity;
 @Table(name = "customer")
 public class Customer extends BaseEntity {
 
-	private static final long serialVersionUID = -6094813584577638738L;
+    @Column(nullable = true, unique = false)
+    private String firstName;
+    @Column(nullable = true, unique = false)
+    private String lastName;
 
-	@Column(nullable = true, unique = false)
-	private String firstName;
+    public Customer() {
+    }
 
-	@Column(nullable = true, unique = false)
-	private String lastName;
+    public Customer(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
-	public Customer() {
-	}
-	
-	public Customer(String firstName, String lastName) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}
+    @Transient
+    public String getFullname() {
+        StringBuilder sb = new StringBuilder();
 
-	@Transient
-	public String getFullname() {
-		StringBuilder sb = new StringBuilder();
+        sb.append(firstName);
+        sb.append(" ");
+        sb.append(lastName);
 
-		sb.append(firstName);
-		sb.append(" ");
-		sb.append(lastName);
+        return sb.toString();
+    }
 
-		return sb.toString();
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }

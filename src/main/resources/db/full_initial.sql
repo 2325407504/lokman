@@ -19,15 +19,15 @@ INSERT INTO `electricmeter` (`id`, `createdAt`, `updatedAt`, `name`) VALUES
 (5, NOW(), NOW(), '580'),
 (6, NOW(), NOW(), '880');
 
-INSERT INTO `shift` (`id`, `createdAt`, `updatedAt`, `name`) VALUES
-(1, NOW(), NOW(), 'Shift1'),
-(2, NOW(), NOW(), 'Shift2'),
-(3, NOW(), NOW(), 'Shift3');
+INSERT INTO `shift` (`id`, `createdAt`, `updatedAt`, `code`, `name`) VALUES
+(1, NOW(), NOW(), 'A', 'Vardiya A'),
+(2, NOW(), NOW(), 'B', 'Vardiya B'),
+(3, NOW(), NOW(), 'C', 'Vardiya C');
 
-INSERT INTO `product` (`id`, `createdAt`, `updatedAt`, `name`) VALUES
-(1, NOW(), NOW(), '0-0,6 mm'),
-(2, NOW(), NOW(), '0,6-2 mm'),
-(3, NOW(), NOW(), '2-4 mm');
+INSERT INTO `product` (`id`, `createdAt`, `updatedAt`, `code`, `name`) VALUES
+(1, NOW(), NOW(), 'P1', '0-0,6 mm'),
+(2, NOW(), NOW(), 'P2', '0,6-2 mm'),
+(3, NOW(), NOW(), 'P3', '2-4 mm');
 
 INSERT INTO `customer` (`id`, `createdAt`, `updatedAt`, `firstName`, `lastName`) VALUES
 (1, NOW(), NOW(), 'Cem', 'ARIPD'),

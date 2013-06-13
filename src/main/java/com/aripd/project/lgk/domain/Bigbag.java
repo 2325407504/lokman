@@ -23,7 +23,7 @@ public class Bigbag extends BaseEntity {
     private Product product;
     @Column(nullable = false)
     @NotNull
-    private Integer feed;
+    private Double weight;
 
     public Production getProduction() {
         return production;
@@ -41,11 +41,11 @@ public class Bigbag extends BaseEntity {
         this.product = product;
     }
 
-    public Integer getFeed() {
-        return feed;
+    public Double getWeight() {
+        return weight;
     }
 
-    public void setFeed(Integer feed) {
-        this.feed = feed;
+    public void setWeight(Double weight) {
+        this.weight = weight;
     }
 }

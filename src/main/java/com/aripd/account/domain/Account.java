@@ -22,7 +22,6 @@ import com.aripd.project.lgk.domain.Region;
 @Table(name = "account")
 public class Account extends BaseEntity {
 
-    private static final long serialVersionUID = 5410601898024568036L;
     @JsonIgnore
     @Column(nullable = false, unique = false)
     private String password;
@@ -78,10 +77,6 @@ public class Account extends BaseEntity {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
-    }
-
-    public static long getSerialversionuid() {
-        return serialVersionUID;
     }
 
     public boolean isActive() {

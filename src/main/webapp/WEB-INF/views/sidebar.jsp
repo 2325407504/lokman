@@ -80,6 +80,8 @@
                                 <li class="nav-header"><spring:message code="Logistics"></spring:message></li>
                             <li><a href="${trip_list}"><spring:message code="Trips"></spring:message></a></li>
                             <li><a href="${forwarding_list}"><spring:message code="Forwardings"></spring:message></a></li>
+                            <li class="nav-header"><spring:message code="Production"></spring:message></li>
+                            <li><a href="${production_list}"><spring:message code="Production"></spring:message></a></li>
                             </ul>
                         </div>
                     </div>

@@ -25,7 +25,6 @@ import javax.validation.constraints.NotNull;
 @Table(name = "forwarding")
 public class Forwarding extends BaseEntity {
 
-    private static final long serialVersionUID = 7142407700649461014L;
     @Column(nullable = false)
     private boolean submitted = false;
     @ManyToOne
@@ -162,7 +161,4 @@ public class Forwarding extends BaseEntity {
         this.uatfs = uatfs;
     }
 
-    public static long getSerialversionuid() {
-        return serialVersionUID;
-    }
 }

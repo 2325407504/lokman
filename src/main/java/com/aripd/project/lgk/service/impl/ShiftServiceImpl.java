@@ -27,77 +27,80 @@ import com.aripd.project.lgk.service.ShiftService;
 @Transactional(readOnly = true)
 public class ShiftServiceImpl implements ShiftService {
 
-	@PersistenceContext
-	private EntityManager em;
-	
-	@Autowired
-	private ShiftRepository repository;
-	
-	public Shift findOne(Long id) {
-		return repository.findOne(id);
-	}
+    @PersistenceContext
+    private EntityManager em;
+    @Autowired
+    private ShiftRepository repository;
 
-	public List<Shift> findAll() {
-		return repository.findAll();
-	}
+    public Shift findOne(Long id) {
+        return repository.findOne(id);
+    }
 
-	@Transactional
-	public Shift save(Shift shift) {
-		return repository.save(shift);
-	}
-	
-	@Transactional
-	public void delete(Long id) {
-		repository.delete(id);
-	}
+    public Shift findOneByCode(String code) {
+        return repository.findOneByCode(code);
+    }
 
-	@Transactional
-	public void delete(Shift shift) {
-		repository.delete(shift);
-	}
+    public List<Shift> findAll() {
+        return repository.findAll();
+    }
 
-	public ResultSet<Shift> getRecords(PagingCriteria criteria) {
-		Integer displaySize = criteria.getDisplaySize();
-		Integer displayStart = criteria.getDisplayStart();
-		Integer pageNumber = criteria.getPageNumber();
-		List<SortField> sortFields = criteria.getSortFields();
-		String search = criteria.getSearch();
+    @Transactional
+    public Shift save(Shift shift) {
+        return repository.save(shift);
+    }
 
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Shift> cq = cb.createQuery(Shift.class);
-		Root<Shift> root = cq.from(Shift.class);
+    @Transactional
+    public void delete(Long id) {
+        repository.delete(id);
+    }
 
-		// Filtering and Searching
-		List<Predicate> predicateList = new ArrayList<Predicate>();
-		
-		if ((search != null) && (!(search.isEmpty()))) {
-			Predicate predicate = cb.like(root.get(Shift_.name), "%"+search+"%");
-			predicateList.add(predicate);
-		}
-		
-		Predicate[] predicates = new Predicate[predicateList.size()];
-		predicateList.toArray(predicates);
-		cq.where(predicates);
+    @Transactional
+    public void delete(Shift shift) {
+        repository.delete(shift);
+    }
 
-		// Sorting
-		for (SortField sortField : sortFields) {
-			String field = sortField.getField();
-			String direction = sortField.getDirection().getDirection();
-			if (direction.equalsIgnoreCase("asc"))
-				cq.orderBy(cb.asc(root.get(field)));
-			else if (direction.equalsIgnoreCase("desc"))
-				cq.orderBy(cb.desc(root.get(field)));
-		}
+    public ResultSet<Shift> getRecords(PagingCriteria criteria) {
+        Integer displaySize = criteria.getDisplaySize();
+        Integer displayStart = criteria.getDisplayStart();
+        Integer pageNumber = criteria.getPageNumber();
+        List<SortField> sortFields = criteria.getSortFields();
+        String search = criteria.getSearch();
 
-		Long totalRecords = (long) em.createQuery(cq).getResultList().size();
-		
-		// Pagination
-		TypedQuery<Shift> typedQuery = em.createQuery(cq);
-		typedQuery = typedQuery.setFirstResult(displayStart);
-		typedQuery = typedQuery.setMaxResults(displaySize);
-		List<Shift> resultList = typedQuery.getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Shift> cq = cb.createQuery(Shift.class);
+        Root<Shift> root = cq.from(Shift.class);
 
-		return new ResultSet<Shift>(resultList, totalRecords, displaySize);
-	}
+        // Filtering and Searching
+        List<Predicate> predicateList = new ArrayList<Predicate>();
 
+        if ((search != null) && (!(search.isEmpty()))) {
+            Predicate predicate = cb.like(root.get(Shift_.name), "%" + search + "%");
+            predicateList.add(predicate);
+        }
+
+        Predicate[] predicates = new Predicate[predicateList.size()];
+        predicateList.toArray(predicates);
+        cq.where(predicates);
+
+        // Sorting
+        for (SortField sortField : sortFields) {
+            String field = sortField.getField();
+            String direction = sortField.getDirection().getDirection();
+            if (direction.equalsIgnoreCase("asc")) {
+                cq.orderBy(cb.asc(root.get(field)));
+            } else if (direction.equalsIgnoreCase("desc")) {
+                cq.orderBy(cb.desc(root.get(field)));
+            }
+        }
+
+        Long totalRecords = (long) em.createQuery(cq).getResultList().size();
+
+        // Pagination
+        TypedQuery<Shift> typedQuery = em.createQuery(cq);
+        typedQuery = typedQuery.setFirstResult(displayStart);
+        typedQuery = typedQuery.setMaxResults(displaySize);
+        List<Shift> resultList = typedQuery.getResultList();
+
+        return new ResultSet<Shift>(resultList, totalRecords, displaySize);
+    }
 }

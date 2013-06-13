@@ -10,6 +10,8 @@ public interface ProductService {
 
     Product findOne(Long id);
 
+    Product findOneByCode(String code);
+
     List<Product> findAll();
 
     Product save(Product product);

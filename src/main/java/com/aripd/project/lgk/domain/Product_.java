@@ -13,5 +13,6 @@ import com.aripd.common.entity.BaseEntity_;
 @StaticMetamodel(Product.class)
 public class Product_ extends BaseEntity_ {
 
+    public static volatile SingularAttribute<Product, String> code;
     public static volatile SingularAttribute<Product, String> name;
 }

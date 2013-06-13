@@ -36,6 +36,10 @@ public class ProductServiceImpl implements ProductService {
         return repository.findOne(id);
     }
 
+    public Product findOneByCode(String code) {
+        return repository.findOneByCode(code);
+    }
+
     public List<Product> findAll() {
         return repository.findAll();
     }

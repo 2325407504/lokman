@@ -15,5 +15,5 @@ public class Bigbag_ extends BaseEntity_ {
 
     public static volatile SingularAttribute<Bigbag, Production> production;
     public static volatile SingularAttribute<Bigbag, Product> product;
-    public static volatile SingularAttribute<Bigbag, Integer> feed;
+    public static volatile SingularAttribute<Bigbag, Double> weight;
 }

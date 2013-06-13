@@ -30,81 +30,80 @@ import com.aripd.common.dto.SortField;
 @Transactional(readOnly = true)
 public class AccountServiceImpl implements AccountService {
 
-	@PersistenceContext
+    @PersistenceContext
     private EntityManager em;
-	
-	@Resource
-	private AccountRepository repository;
+    @Resource
+    private AccountRepository repository;
 
-	public List<Account> findAll() {
-		return repository.findAll();
-	}
+    public List<Account> findAll() {
+        return repository.findAll();
+    }
 
-	public Account findOne(Long id) {
-		return repository.findOne(id);
-	}
+    public Account findOne(Long id) {
+        return repository.findOne(id);
+    }
 
-	public Account findOneByUsername(String username) {
-		return repository.findOneByUsername(username);
-	}
+    public Account findOneByUsername(String username) {
+        return repository.findOneByUsername(username);
+    }
 
-	@Transactional
-	public Account save(Account account) {
-		return repository.save(account);
-	}
+    @Transactional
+    public Account save(Account account) {
+        return repository.save(account);
+    }
 
-	@Transactional
-	public void delete(Long id) {
-		repository.delete(id);
-	}
+    @Transactional
+    public void delete(Long id) {
+        repository.delete(id);
+    }
 
-	@Override
-	public ResultSet<Account> getRecords(PagingCriteria criteria) {
-		Integer displaySize = criteria.getDisplaySize();
-		Integer displayStart = criteria.getDisplayStart();
-		Integer pageNumber = criteria.getPageNumber();
-		String search = criteria.getSearch();
-		List<SortField> sortFields = criteria.getSortFields();
+    @Override
+    public ResultSet<Account> getRecords(PagingCriteria criteria) {
+        Integer displaySize = criteria.getDisplaySize();
+        Integer displayStart = criteria.getDisplayStart();
+        Integer pageNumber = criteria.getPageNumber();
+        String search = criteria.getSearch();
+        List<SortField> sortFields = criteria.getSortFields();
 
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Account> cq = cb.createQuery(Account.class);
-		Root<Account> root = cq.from(Account.class);
-		Join<Account, Customer> customer = root.join(Account_.customer);
-		
-		// Filtering and Searching
-		List<Predicate> predicateList = new ArrayList<Predicate>();
-		
-		if ((search != null) && (!(search.isEmpty()))) {
-			Predicate predicate1 = cb.like(root.get(Account_.username), "%"+search+"%");
-			Predicate predicate2 = cb.like(root.get(Account_.email), "%"+search+"%");
-			Predicate predicate3 = cb.like(customer.get(Customer_.lastName), "%"+search+"%");
-			Predicate predicate = cb.or(predicate1, predicate2, predicate3);
-			predicateList.add(predicate);
-		}
-		
-		Predicate[] predicates = new Predicate[predicateList.size()];
-		predicateList.toArray(predicates);
-		cq.where(predicates);
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Account> cq = cb.createQuery(Account.class);
+        Root<Account> root = cq.from(Account.class);
+        Join<Account, Customer> customer = root.join(Account_.customer);
 
-		// Sorting
-		for (SortField sortField : sortFields) {
-			String field = sortField.getField();
-			String direction = sortField.getDirection().getDirection();
-			if (direction.equalsIgnoreCase("asc"))
-				cq.orderBy(cb.asc(root.get(field)));
-			else if (direction.equalsIgnoreCase("desc"))
-				cq.orderBy(cb.desc(root.get(field)));
-		}
-		
-		Long totalRecords = (long) em.createQuery(cq).getResultList().size();
+        // Filtering and Searching
+        List<Predicate> predicateList = new ArrayList<Predicate>();
 
-		// Pagination
-		TypedQuery<Account> typedQuery = em.createQuery(cq);
-		typedQuery = typedQuery.setFirstResult(displayStart);
-		typedQuery = typedQuery.setMaxResults(displaySize);
-		List<Account> resultList = typedQuery.getResultList();
+        if ((search != null) && (!(search.isEmpty()))) {
+            Predicate predicate1 = cb.like(root.get(Account_.username), "%" + search + "%");
+            Predicate predicate2 = cb.like(root.get(Account_.email), "%" + search + "%");
+            Predicate predicate3 = cb.like(customer.get(Customer_.lastName), "%" + search + "%");
+            Predicate predicate = cb.or(predicate1, predicate2, predicate3);
+            predicateList.add(predicate);
+        }
 
-		return new ResultSet<Account>(resultList, totalRecords, displaySize);
-	}
+        Predicate[] predicates = new Predicate[predicateList.size()];
+        predicateList.toArray(predicates);
+        cq.where(predicates);
 
+        // Sorting
+        for (SortField sortField : sortFields) {
+            String field = sortField.getField();
+            String direction = sortField.getDirection().getDirection();
+            if (direction.equalsIgnoreCase("asc")) {
+                cq.orderBy(cb.asc(root.get(field)));
+            } else if (direction.equalsIgnoreCase("desc")) {
+                cq.orderBy(cb.desc(root.get(field)));
+            }
+        }
+
+        Long totalRecords = (long) em.createQuery(cq).getResultList().size();
+
+        // Pagination
+        TypedQuery<Account> typedQuery = em.createQuery(cq);
+        typedQuery = typedQuery.setFirstResult(displayStart);
+        typedQuery = typedQuery.setMaxResults(displaySize);
+        List<Account> resultList = typedQuery.getResultList();
+
+        return new ResultSet<Account>(resultList, totalRecords, displaySize);
+    }
 }

@@ -10,6 +10,8 @@ public interface ShiftService {
 
 	Shift findOne(Long id);
 	
+	Shift findOneByCode(String code);
+	
 	List<Shift> findAll();
 	
 	Shift save(Shift shift);
