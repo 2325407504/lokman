@@ -38,37 +38,37 @@
     <div class="row-fluid">
         <div class="span4">
         <form:form modelAttribute="productionAttribute" action="${productionSave}" method="post">
-            <form:errors path="*" cssClass="error-block" element="div" />
+            <form:errors path="*" cssClass="alert alert-error" element="div" />
             <form:hidden path="id" />
             <fieldset>
-                <div class="form-row">
+                <div class="control-group">
                     <form:checkbox path="submitted" /> <spring:message code="Submitted by user"></spring:message>
-                    <form:errors cssClass="error-field" path="submitted" />
+                    <form:errors cssClass="text-error" path="submitted" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="account"><spring:message code="Account"></spring:message></form:label>
                     <form:select multiple="false" path="account.id" items="${accounts}" itemLabel="customer.fullname" itemValue="id" />
-                    <form:errors cssClass="error-field" path="account" />
+                    <form:errors cssClass="text-error" path="account" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="shiftdate"><spring:message code="Date"></spring:message></form:label>
                     <form:input type="text" path="shiftdate" />
-                    <form:errors cssClass="error-field" path="shiftdate" />
+                    <form:errors cssClass="text-error" path="shiftdate" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="shift"><spring:message code="Shift"></spring:message></form:label>
                     <form:select path="shift.id" multiple="false" items="${shifts}" itemLabel="name" itemValue="id"/>
-                    <form:errors cssClass="error-field" path="shift" />
+                    <form:errors cssClass="text-error" path="shift" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="feed"><spring:message code="Feed" text="Feed"></spring:message></form:label>
                     <form:input path="feed" />
-                    <form:errors cssClass="error-field" path="feed" />
+                    <form:errors cssClass="text-error" path="feed" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="remark"><spring:message code="Remark"></spring:message></form:label>
                     <form:textarea path="remark" />
-                    <form:errors cssClass="error-field" path="remark" />
+                    <form:errors cssClass="text-error" path="remark" />
                 </div>
                 <div class="form-actions">
                     <c:if test="${ !empty productionAttribute.id }">
@@ -92,7 +92,7 @@
 
         <c:if test="${productionAttribute.id != null}">
             <form:form modelAttribute="bigbagAttribute" action="${bigbagSave}" method="post" class="form-inline">
-                <form:errors path="*" cssClass="error-block" element="div" />
+                <form:errors path="*" cssClass="alert alert-error" element="div" />
                 <form:select path="product.id" multiple="false">
                     <form:option value="-" label="---Ürün Seçiniz"/>
                     <form:options items="${products}" itemLabel="name" itemValue="id"/>

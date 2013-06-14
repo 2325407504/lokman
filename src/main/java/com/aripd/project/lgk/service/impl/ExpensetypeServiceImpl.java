@@ -18,31 +18,31 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.SortField;
-import com.aripd.project.lgk.domain.Region;
-import com.aripd.project.lgk.domain.Region_;
-import com.aripd.project.lgk.repository.RegionRepository;
-import com.aripd.project.lgk.service.RegionService;
+import com.aripd.project.lgk.domain.Expensetype;
+import com.aripd.project.lgk.domain.Expensetype_;
+import com.aripd.project.lgk.repository.ExpensetypeRepository;
+import com.aripd.project.lgk.service.ExpensetypeService;
 
-@Service("regionService")
+@Service("expensetypeService")
 @Transactional(readOnly = true)
-public class RegionServiceImpl implements RegionService {
+public class ExpensetypeServiceImpl implements ExpensetypeService {
 
     @PersistenceContext
     private EntityManager em;
     @Autowired
-    private RegionRepository repository;
+    private ExpensetypeRepository repository;
 
-    public Region findOne(Long id) {
+    public Expensetype findOne(Long id) {
         return repository.findOne(id);
     }
 
-    public List<Region> findAll() {
+    public List<Expensetype> findAll() {
         return repository.findAll();
     }
 
     @Transactional
-    public Region save(Region region) {
-        return repository.save(region);
+    public Expensetype save(Expensetype expensetype) {
+        return repository.save(expensetype);
     }
 
     @Transactional
@@ -51,11 +51,11 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Transactional
-    public void delete(Region region) {
-        repository.delete(region);
+    public void delete(Expensetype expensetype) {
+        repository.delete(expensetype);
     }
 
-    public ResultSet<Region> getRecords(PagingCriteria criteria) {
+    public ResultSet<Expensetype> getRecords(PagingCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
         Integer pageNumber = criteria.getPageNumber();
@@ -63,14 +63,14 @@ public class RegionServiceImpl implements RegionService {
         String search = criteria.getSearch();
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Region> cq = cb.createQuery(Region.class);
-        Root<Region> root = cq.from(Region.class);
+        CriteriaQuery<Expensetype> cq = cb.createQuery(Expensetype.class);
+        Root<Expensetype> root = cq.from(Expensetype.class);
 
         // Filtering and Searching
         List<Predicate> predicateList = new ArrayList<Predicate>();
 
         if ((search != null) && (!(search.isEmpty()))) {
-            Predicate predicate = cb.like(root.get(Region_.name), "%" + search + "%");
+            Predicate predicate = cb.like(root.get(Expensetype_.name), "%" + search + "%");
             predicateList.add(predicate);
         }
 
@@ -92,11 +92,11 @@ public class RegionServiceImpl implements RegionService {
         Long totalRecords = (long) em.createQuery(cq).getResultList().size();
 
         // Pagination
-        TypedQuery<Region> typedQuery = em.createQuery(cq);
+        TypedQuery<Expensetype> typedQuery = em.createQuery(cq);
         typedQuery = typedQuery.setFirstResult(displayStart);
         typedQuery = typedQuery.setMaxResults(displaySize);
-        List<Region> resultList = typedQuery.getResultList();
+        List<Expensetype> resultList = typedQuery.getResultList();
 
-        return new ResultSet<Region>(resultList, totalRecords, displaySize);
+        return new ResultSet<Expensetype>(resultList, totalRecords, displaySize);
     }
 }

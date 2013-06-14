@@ -23,28 +23,28 @@
 <div class="row-fluid">
 	<div class="span12">
 		<form:form modelAttribute="expenseAttribute" action="${expenseSave}" method="post">
-			<form:errors path="*" cssClass="error-block" element="div" />
+			<form:errors path="*" cssClass="alert alert-error" element="div" />
 			<form:hidden path="id" />
 			<fieldset>
-				<div class="form-row">
+				<div class="control-group">
 					<form:label path="documentDate"><spring:message code="Date"></spring:message></form:label>
 					<span><form:input type="text" path="documentDate" /></span>
-					<form:errors cssClass="error-field" path="documentDate" />
+					<form:errors cssClass="text-error" path="documentDate" />
 				</div>
-				<div class="form-row">
+				<div class="control-group">
 					<form:label path="company"><spring:message code="Company"></spring:message></form:label>
 					<span><form:input path="company" /></span>
-					<form:errors cssClass="error-field" path="company" />
+					<form:errors cssClass="text-error" path="company" />
 				</div>
-				<div class="form-row">
+				<div class="control-group">
 					<form:label path="description"><spring:message code="Description"></spring:message></form:label>
 					<span><form:input path="description" /></span>
-					<form:errors cssClass="error-field" path="description" />
+					<form:errors cssClass="text-error" path="description" />
 				</div>
-				<div class="form-row">
+				<div class="control-group">
 					<form:label path="amount"><spring:message code="Amount"></spring:message></form:label>
 					<span><form:input path="amount" /></span>
-					<form:errors cssClass="error-field" path="amount" />
+					<form:errors cssClass="text-error" path="amount" />
 				</div>
 				<div class="form-actions">
 					<c:if test="${ !empty expenseAttribute.id }">

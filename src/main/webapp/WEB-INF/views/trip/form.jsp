@@ -2,8 +2,12 @@
 
 <spring:url var="homeUrl" value="/" />
 <spring:url var="tripList" value="/trip/list" />
-<spring:url var="tripShow" value="/trip/show/${tripAttribute.id}" />
-<spring:url var="tripEdit" value="/trip/edit/${tripAttribute.id}" />
+<spring:url var="tripShow" value="/trip/show/{id}">
+    <spring:param name="id" value="${tripAttribute.id}" />
+</spring:url>
+<spring:url var="tripEdit" value="/trip/edit/{id}">
+    <spring:param name="id" value="${tripAttribute.id}" />
+</spring:url>
 <spring:url var="tripNew" value="/trip/new" />
 <spring:url var="tripSave" value="/trip/save" />
 <spring:url var="tripImport" value="/trip/import/xls" />
@@ -36,68 +40,70 @@
 
     <div class="row-fluid">
         <div class="span12">
-        <form:form modelAttribute="tripAttribute" action="${tripSave}" method="post">
-            <form:errors path="*" cssClass="error-block" element="div" />
+        <form:form id="trip" modelAttribute="tripAttribute" action="${tripSave}" method="post">
+            <form:errors path="*" cssClass="alert alert-error" element="div" />
             <form:hidden path="id" />
             <fieldset>
-                <div class="form-row">
-                    <span><form:checkbox path="submitted" /> <spring:message code="Submitted by user"></spring:message></span>
-                    <form:errors cssClass="error-field" path="submitted" />
+                <div class="control-group">
+                    <form:checkbox path="submitted" /> <spring:message code="Submitted by user"></spring:message>
+                    <form:errors cssClass="text-error" path="submitted" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="account"><spring:message code="Account"></spring:message></form:label>
                     <form:select multiple="false" path="account.id" items="${accounts}" itemLabel="customer.fullname" itemValue="id" />
-                    <form:errors cssClass="error-field" path="account" />
+                    <form:errors cssClass="text-error" path="account" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="truck"><spring:message code="Truck"></spring:message></form:label>
-                    <form:select multiple="false" path="truck.id" items="${trucks}" itemLabel="plate" itemValue="id" />
-                    <form:errors cssClass="error-field" path="truck" />
+                    <c:if test="${ !empty tripAttribute.id }">
+                        <form:select id="truck" multiple="false" path="truck.id" items="${trucks}" itemLabel="plate" itemValue="id" />
+                    </c:if>
+                    <c:if test="${ empty tripAttribute.id }">
+                        <form:select id="truck" multiple="false" path="truck.id" items="${trucks}" itemLabel="plate" itemValue="id" onchange="getKilometer(this.form);" />
+                    </c:if>
+                    <form:errors cssClass="text-error" path="truck" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="driver"><spring:message code="Driver"></spring:message></form:label>
                     <form:select path="driver.id" multiple="false" items="${drivers}" itemLabel="name" itemValue="id" />
-                    <form:errors cssClass="error-field" path="driver" />
+                    <form:errors cssClass="text-error" path="driver" />
                 </div>
-                <div class="form-row">
-                    <form:label path="startingPoint"><spring:message code="Starting Point"></spring:message></form:label>
-                    <span><form:input path="startingPoint" /></span>
-                    <form:errors cssClass="error-field" path="startingPoint" />
+                <div class="control-group">
+                    <spring:message code="Starting Point" var="startingPoint"></spring:message>
+                    <spring:message code="Ending Point" var="endingPoint"></spring:message>
+                    <form:label path="startingPoint">${startingPoint} - ${endingPoint}</form:label>
+                    <form:input path="startingPoint" cssClass="input-medium" placeholder="${startingPoint}" />
+                    <form:errors cssClass="text-error" path="startingPoint" />
+                    <form:input path="endingPoint" cssClass="input-medium" placeholder="${endingPoint}" />
+                    <form:errors cssClass="text-error" path="endingPoint" />
                 </div>
-                <div class="form-row">
-                    <form:label path="startingKm"><spring:message code="Starting Km"></spring:message></form:label>
-                    <span><form:input path="startingKm" /></span>
-                    <form:errors cssClass="error-field" path="startingKm" />
+                <div class="control-group">
+                    <spring:message code="Starting Km" var="startingKm"></spring:message>
+                    <spring:message code="Ending Km" var="endingKm"></spring:message>
+                    <form:label path="startingKm">${startingKm} - ${endingKm}</form:label>
+                    <form:input path="startingKm" cssClass="input-medium" placeholder="${startingKm}" />
+                    <form:errors cssClass="text-error" path="startingKm" />
+                    <form:input path="endingKm" cssClass="input-medium" placeholder="${endingKm}" />
+                    <form:errors cssClass="text-error" path="endingKm" />
                 </div>
-                <div class="form-row">
-                    <form:label path="startingTime"><spring:message code="Starting Time"></spring:message></form:label>
-                    <span><form:input type="datetime" path="startingTime" /></span>
-                    <form:errors cssClass="error-field" path="startingTime" />
+                <div class="control-group">
+                    <spring:message code="Starting Time" var="startingTime"></spring:message>
+                    <spring:message code="Ending Time" var="endingTime"></spring:message>
+                    <form:label path="startingTime">${startingTime} - ${endingTime}</form:label>
+                    <form:input type="datetime" path="startingTime" cssClass="input-medium" placeholder="${startingTime}" />
+                    <form:errors cssClass="text-error" path="startingTime" />
+                    <form:input type="datetime" path="endingTime" cssClass="input-medium" placeholder="${endingTime}" />
+                    <form:errors cssClass="text-error" path="endingTime" />
                 </div>
-                <div class="form-row">
-                    <form:label path="endingPoint"><spring:message code="Ending Point"></spring:message></form:label>
-                    <span><form:input path="endingPoint" /></span>
-                    <form:errors cssClass="error-field" path="endingPoint" />
-                </div>
-                <div class="form-row">
-                    <form:label path="endingKm"><spring:message code="Ending Km"></spring:message></form:label>
-                    <span><form:input path="endingKm" /></span>
-                    <form:errors cssClass="error-field" path="endingKm" />
-                </div>
-                <div class="form-row">
-                    <form:label path="endingTime"><spring:message code="Ending Time"></spring:message></form:label>
-                    <span><form:input type="datetime" path="endingTime" /></span>
-                    <form:errors cssClass="error-field" path="endingTime" />
-                </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="loadWeightInTonne"><spring:message code="Weight"></spring:message></form:label>
-                    <span><form:input path="loadWeightInTonne" /></span>
-                    <form:errors cssClass="error-field" path="loadWeightInTonne" />
+                    <form:input path="loadWeightInTonne" />
+                    <form:errors cssClass="text-error" path="loadWeightInTonne" />
                 </div>
                 <div class="control-group">
                     <form:label path="remark" class="control-label"><spring:message code="Remark"></spring:message></form:label>
-                    <div class="controls"><form:textarea path="remark" /></div>
-                    <form:errors cssClass="error-field" path="remark" />
+                    <form:textarea path="remark" />
+                    <form:errors cssClass="text-error" path="remark" />
                 </div>
                 <div class="form-actions">
                     <c:if test="${ !empty tripAttribute.id }">
@@ -111,14 +117,37 @@
 </div>
 
 <c:if test="${ !empty tripAttribute.id }">
-    <spring:url var="deleteUrl" value="/trip/delete?id=${tripAttribute.id}" />
+    <spring:url var="deleteUrl" value="/trip/delete">
+        <spring:param name="id" value="${tripAttribute.id}" />
+    </spring:url>
     <form:form id="form-${tripAttribute.id}" modelAttribute="tripAttribute" action="${deleteUrl}" method="delete">
         <form:hidden path="id" />
     </form:form>
 </c:if>
 
+<c:if test="${ empty tripAttribute.id }">
+    <script type="text/javascript">
+        $(function() {
+            getKilometer($('form#trip'));
+        });
+
+        function getKilometer(e) {
+            var truck_id = $(e).find('#truck').val();
+            $.ajax({
+                type: "GET",
+                url: "truck/get/" + truck_id + "/kilometer",
+                //data: "name=" + name + "&education=" + education,
+                success: function(response) {
+                    $(e).find('#startingKm').val(response);
+                },
+                error: function(e) {
+                    alert('Hata: ' + e);
+                }
+            });
+        }
+    </script>
+</c:if>
 <script type="text/javascript">
-<!--
     var startDateTextBox = $('#startingTime');
     var endDateTextBox = $('#endingTime');
 
@@ -154,7 +183,6 @@
             startDateTextBox.datetimepicker('option', 'maxDate', endDateTextBox.datetimepicker('getDate'));
         }
     });
-//-->
 </script>
 
 <%@ include file="/WEB-INF/views/footer.jsp" %>

@@ -35,37 +35,42 @@
     <div class="row-fluid">
         <div class="span12">
         <form:form modelAttribute="expenseAttribute" action="${expenseSave}" method="post">
-            <form:errors path="*" cssClass="error-block" element="div" />
+            <form:errors path="*" cssClass="alert alert-error" element="div" />
             <form:hidden path="id" />
             <fieldset>
-                <div class="form-row">
-                    <span><form:checkbox path="submitted" /> <spring:message code="Submitted by user"></spring:message></span>
-                    <form:errors cssClass="error-field" path="submitted" />
+                <div class="control-group">
+                    <form:checkbox path="submitted" /> <spring:message code="Submitted by user"></spring:message>
+                    <form:errors cssClass="text-error" path="submitted" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="account"><spring:message code="Account"></spring:message></form:label>
                     <form:select multiple="false" path="account.id" items="${accounts}" itemLabel="customer.fullname" itemValue="id" />
-                    <form:errors cssClass="error-field" path="account" />
+                    <form:errors cssClass="text-error" path="account" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
+                    <form:label path="expensetype"><spring:message code="Expensetype"></spring:message></form:label>
+                    <form:select path="expensetype.id" multiple="false" items="${expensetypes}" itemLabel="name" itemValue="id"/>
+                    <form:errors cssClass="text-error" path="account" />
+                </div>
+                <div class="control-group">
                     <form:label path="documentDate"><spring:message code="Date"></spring:message></form:label>
-                    <span><form:input type="text" path="documentDate" /></span>
-                    <form:errors cssClass="error-field" path="documentDate" />
+                    <form:input type="text" path="documentDate" />
+                    <form:errors cssClass="text-error" path="documentDate" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="company"><spring:message code="Company"></spring:message></form:label>
-                    <span><form:input path="company" /></span>
-                    <form:errors cssClass="error-field" path="company" />
+                    <form:input path="company" />
+                    <form:errors cssClass="text-error" path="company" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="description"><spring:message code="Description"></spring:message></form:label>
-                    <span><form:input path="description" /></span>
-                    <form:errors cssClass="error-field" path="description" />
+                    <form:input path="description" />
+                    <form:errors cssClass="text-error" path="description" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="amount"><spring:message code="Amount"></spring:message></form:label>
-                    <span><form:input path="amount" /></span>
-                    <form:errors cssClass="error-field" path="amount" />
+                    <form:input path="amount" />
+                    <form:errors cssClass="text-error" path="amount" />
                 </div>
                 <div class="form-actions">
                     <c:if test="${ !empty expenseAttribute.id }">

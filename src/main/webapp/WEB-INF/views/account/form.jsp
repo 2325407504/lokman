@@ -10,44 +10,44 @@
 </ul>
 <spring:url var="saveUrl" value="/account/save" />
 <form:form modelAttribute="accountAttribute" action="${saveUrl}" method="post">
-	<form:errors path="*" cssClass="error-block" element="div" />
+	<form:errors path="*" cssClass="alert alert-error" element="div" />
 	<form:hidden path="id" />
 	<form:hidden path="customer.id" />
 	<fieldset>
-		<div class="form-row">
+		<div class="control-group">
 			<form:label path="active">Aktif mi?</form:label>
 			<form:checkbox path="active" />
-			<form:errors cssClass="error-field" path="active" />
+			<form:errors cssClass="text-error" path="active" />
 		</div>
-		<div class="form-row">
+		<div class="control-group">
 			<form:label path="region"><spring:message code="Region"></spring:message></form:label>
 			<form:select multiple="false" path="region.id" items="${regions}" itemLabel="name" itemValue="id" />
-			<form:errors cssClass="error-field" path="region" />
+			<form:errors cssClass="text-error" path="region" />
 		</div>
-		<div class="form-row">
+		<div class="control-group">
 			<form:label path="customer.firstName"><spring:message code="FirstName"></spring:message></form:label>
 			<span><form:input path="customer.firstName" /></span>
-			<form:errors cssClass="error-field" path="customer.firstName" />
+			<form:errors cssClass="text-error" path="customer.firstName" />
 		</div>       
-		<div class="form-row">
+		<div class="control-group">
 			<form:label path="customer.lastName"><spring:message code="LastName"></spring:message></form:label>
 			<span><form:input path="customer.lastName" /></span>
-			<form:errors cssClass="error-field" path="customer.lastName" />
+			<form:errors cssClass="text-error" path="customer.lastName" />
 		</div>
-		<div class="form-row">
+		<div class="control-group">
 			<form:label path="email"><spring:message code="E-mail Address"></spring:message></form:label>
 			<span><form:input path="email" /></span>
-			<form:errors cssClass="error-field" path="email" />
+			<form:errors cssClass="text-error" path="email" />
 		</div>
-		<div class="form-row">
+		<div class="control-group">
 			<form:label path="username"><spring:message code="Username"></spring:message></form:label>
 			<span><form:input path="username" /></span>
-			<form:errors cssClass="error-field" path="username" />
+			<form:errors cssClass="text-error" path="username" />
 		</div>
-		<div class="form-row">
+		<div class="control-group">
 			<form:label path="password"><spring:message code="Password"></spring:message></form:label>
 			<span><form:password path="password" /></span>
-			<form:errors cssClass="error-field" path="password" />
+			<form:errors cssClass="text-error" path="password" />
 		</div>
 		<div class="form-actions">
 			<c:if test="${ !empty accountAttribute.id }">

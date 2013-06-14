@@ -46,7 +46,7 @@
 					<span class="icon-bar"></span>
 				</a>
 				<spring:url value="/" var="homeUrl" />
-				<a class="brand" href="${homeUrl}"><img alt="" src="http://lgk.com.tr/deco/lokmanlogo.png"></a>
+				<a class="brand" href="${homeUrl}"><img alt="" src="resources/img/logo.png"></a>
 				<div class="nav-collapse collapse pull-right">
 					<ul class="nav">
 						<sec:authorize access="isAuthenticated()">

@@ -8,16 +8,15 @@ import com.aripd.project.lgk.domain.Region;
 
 public interface RegionService {
 
-	Region findOne(Long id);
-	
-	List<Region> findAll();
-	
-	Region save(Region region);
-	
-	void delete(Long id);
-	
-	void delete(Region region);
+    Region findOne(Long id);
 
-	ResultSet<Region> getRecords(PagingCriteria criteria);
-	
+    List<Region> findAll();
+
+    Region save(Region region);
+
+    void delete(Long id);
+
+    void delete(Region region);
+
+    ResultSet<Region> getRecords(PagingCriteria criteria);
 }

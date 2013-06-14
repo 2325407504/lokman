@@ -4,13 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.aripd.common.entity.BaseEntity;
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "electricmeter")
-public class Electricmeter extends BaseEntity {
+@Table(name = "expensetype")
+public class Expensetype extends BaseEntity {
 
-    @NotEmpty
     private String name;
 
     public String getName() {

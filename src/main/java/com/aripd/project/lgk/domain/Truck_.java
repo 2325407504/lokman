@@ -15,7 +15,8 @@ import com.aripd.common.entity.BaseEntity_;
 public class Truck_ extends BaseEntity_ {
 
     public static volatile SingularAttribute<Truck, Boolean> active;
-    public static volatile SingularAttribute<Truck, String> plate;
     public static volatile SingularAttribute<Truck, Region> region;
-    public static volatile ListAttribute<Truck, Trip> trips;
+    public static volatile SingularAttribute<Truck, String> plate;
+    public static volatile SingularAttribute<Truck, Integer> km;
+    //public static volatile ListAttribute<Truck, Trip> trips;
 }

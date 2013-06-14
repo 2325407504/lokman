@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +31,7 @@ import com.aripd.common.model.CsvImportBean;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Trip;
+import com.aripd.project.lgk.domain.Truck;
 import com.aripd.project.lgk.service.DriverService;
 import com.aripd.project.lgk.service.TripService;
 import com.aripd.project.lgk.service.TruckService;
@@ -85,7 +85,6 @@ public class TripController {
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(
             final RedirectAttributes redirectAttributes,
-            HttpServletRequest request,
             @PathVariable Long id,
             Model model) {
         model.addAttribute("accounts", accountService.findAll());
@@ -110,6 +109,9 @@ public class TripController {
             return "/trip/form";
         }
 
+        Truck truck = truckService.findOne(formData.getTruck().getId());
+        truck.setKm(formData.getEndingKm());
+        truckService.save(truck);
         tripService.save(formData);
         redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
         return "redirect:/trip/list";

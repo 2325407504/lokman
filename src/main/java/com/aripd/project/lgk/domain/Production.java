@@ -44,14 +44,6 @@ public class Production extends BaseEntity {
     @OneToMany(mappedBy = "production", cascade = CascadeType.REMOVE)
     private Set<Bigbag> bigbags;
 
-    /*public Double getTotalProductionWeight() {
-        Double weight = 0d;
-        for (Bigbag bigbag : getBigbags()) {
-            weight += bigbag.getWeight();
-        }
-        return weight;
-    }*/
-
     public boolean isSubmitted() {
         return submitted;
     }

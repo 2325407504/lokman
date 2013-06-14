@@ -32,7 +32,6 @@ import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Bigbag;
 import com.aripd.project.lgk.domain.Production;
-import com.aripd.project.lgk.domain.Uatf;
 import com.aripd.project.lgk.service.ProductService;
 import com.aripd.project.lgk.service.ProductionService;
 import com.aripd.project.lgk.service.ShiftService;

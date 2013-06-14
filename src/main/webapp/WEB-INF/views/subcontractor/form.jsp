@@ -20,23 +20,23 @@
 </ul>
 
 <form:form modelAttribute="subcontractorAttribute" action="${subcontractorSave}" method="post">
-	<form:errors path="*" cssClass="error-block" element="div" />
+	<form:errors path="*" cssClass="alert alert-error" element="div" />
 	<form:hidden path="id" />
 	<fieldset>
-		<div class="form-row">
+		<div class="control-group">
 			<form:label path="code"><spring:message code="Code"></spring:message></form:label>
 			<span><form:input path="code" /></span>
-			<form:errors cssClass="error-field" path="code" />
+			<form:errors cssClass="text-error" path="code" />
 		</div>
-		<div class="form-row">
+		<div class="control-group">
 			<form:label path="region"><spring:message code="Region"></spring:message></form:label>
 			<form:select multiple="false" path="region.id" items="${regions}" itemLabel="name" itemValue="id" />
-			<form:errors cssClass="error-field" path="region" />
+			<form:errors cssClass="text-error" path="region" />
 		</div>
-		<div class="form-row">
+		<div class="control-group">
 			<form:label path="name"><spring:message code="Name"></spring:message></form:label>
 			<span class="input"><form:input path="name" /></span>
-			<form:errors cssClass="error-field" path="name" />
+			<form:errors cssClass="text-error" path="name" />
 		</div>
 		<div class="form-actions">
 			<c:if test="${ !empty subcontractorAttribute.id }">

@@ -27,67 +27,66 @@ import com.aripd.project.lgk.service.RegionService;
 @Controller
 @RequestMapping("/region")
 public class RegionController {
-	
-	@Resource(name="regionService")
-	private RegionService regionService;
-	
-	@RequestMapping(value = "/get", method = RequestMethod.GET)
-	public @ResponseBody
-	WebResultSet<Region> getDataTables(@TableParam PagingCriteria criteria) {
-		ResultSet<Region> resultset = this.regionService.getRecords(criteria);
-		return ControllerUtils.getWebResultSet(criteria, resultset);
-	}
 
-	@RequestMapping(value="/list")
-	public String listAction(Model model) {
-		return "region/list";
-	}
+    @Resource(name = "regionService")
+    private RegionService regionService;
 
-	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
-	public String showAction(
-			@PathVariable Long id,
-			Model model) {
-		model.addAttribute("regionAttribute", regionService.findOne(id));
-		return "region/show";
-	}
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    public @ResponseBody
+    WebResultSet<Region> getDataTables(@TableParam PagingCriteria criteria) {
+        ResultSet<Region> resultset = this.regionService.getRecords(criteria);
+        return ControllerUtils.getWebResultSet(criteria, resultset);
+    }
 
-	@RequestMapping(value = "/new", method = RequestMethod.GET)
+    @RequestMapping(value = "/list")
+    public String listAction(Model model) {
+        return "region/list";
+    }
+
+    @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+    public String showAction(
+            @PathVariable Long id,
+            Model model) {
+        model.addAttribute("regionAttribute", regionService.findOne(id));
+        return "region/show";
+    }
+
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-    	model.addAttribute("regionAttribute", new Region());
-    	return "region/form";
-	}
+        model.addAttribute("regionAttribute", new Region());
+        return "region/form";
+    }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(
-    		@PathVariable Long id, 
-    		Model model) {
-    	model.addAttribute("regionAttribute", regionService.findOne(id));
-    	return "region/form";
-	}
+            @PathVariable Long id,
+            Model model) {
+        model.addAttribute("regionAttribute", regionService.findOne(id));
+        return "region/form";
+    }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
-			final RedirectAttributes redirectAttributes,
-    		@ModelAttribute("regionAttribute") @Valid Region region, 
-			BindingResult result, 
-			Model model) {
-    	
-		if (result.hasErrors()) {
-			return "/region/form";
-		}
-		
-		regionService.save(region);
-		redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
-		return "redirect:/region/list";
-	}
+            final RedirectAttributes redirectAttributes,
+            @ModelAttribute("regionAttribute") @Valid Region region,
+            BindingResult result,
+            Model model) {
 
-	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-	public String delete(
-			final RedirectAttributes redirectAttributes,
-			@RequestParam(value = "id", required = true) Long id) {
-		regionService.delete(id);
-		redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
-		return "redirect:/region/list";
-	}
+        if (result.hasErrors()) {
+            return "/region/form";
+        }
 
+        regionService.save(region);
+        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+        return "redirect:/region/list";
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public String delete(
+            final RedirectAttributes redirectAttributes,
+            @RequestParam(value = "id", required = true) Long id) {
+        regionService.delete(id);
+        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+        return "redirect:/region/list";
+    }
 }

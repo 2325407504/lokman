@@ -23,58 +23,58 @@
 <div class="row-fluid">
 	<div class="span12">
 		<form:form modelAttribute="tripAttribute" action="${tripSave}" method="post">
-			<form:errors path="*" cssClass="error-block" element="div" />
+			<form:errors path="*" cssClass="alert alert-error" element="div" />
 			<form:hidden path="id" />
 			<fieldset>
-				<div class="form-row">
+				<div class="control-group">
 					<form:label path="truck"><spring:message code="Truck"></spring:message></form:label>
 					<form:select multiple="false" path="truck.id" items="${trucks}" itemLabel="plate" itemValue="id" />
-					<form:errors cssClass="error-field" path="truck" />
+					<form:errors cssClass="text-error" path="truck" />
 				</div>
-				<div class="form-row">
+				<div class="control-group">
 					<form:label path="driver"><spring:message code="Driver"></spring:message></form:label>
 					<form:select path="driver.id" multiple="false" items="${drivers}" itemLabel="name" itemValue="id" />
-					<form:errors cssClass="error-field" path="driver" />
+					<form:errors cssClass="text-error" path="driver" />
 				</div>
-				<div class="form-row">
+				<div class="control-group">
 					<form:label path="startingPoint"><spring:message code="Starting Point"></spring:message></form:label>
 					<span><form:input path="startingPoint" /></span>
-					<form:errors cssClass="error-field" path="startingPoint" />
+					<form:errors cssClass="text-error" path="startingPoint" />
 				</div>
-				<div class="form-row">
+				<div class="control-group">
 					<form:label path="startingKm"><spring:message code="Starting Km"></spring:message></form:label>
 					<span><form:input path="startingKm" /></span>
-					<form:errors cssClass="error-field" path="startingKm" />
+					<form:errors cssClass="text-error" path="startingKm" />
 				</div>
-				<div class="form-row">
+				<div class="control-group">
 					<form:label path="startingTime"><spring:message code="Starting Time"></spring:message></form:label>
 					<span><form:input type="datetime" path="startingTime" /></span>
-					<form:errors cssClass="error-field" path="startingTime" />
+					<form:errors cssClass="text-error" path="startingTime" />
 				</div>
-				<div class="form-row">
+				<div class="control-group">
 					<form:label path="endingPoint"><spring:message code="Ending Point"></spring:message></form:label>
 					<span><form:input path="endingPoint" /></span>
-					<form:errors cssClass="error-field" path="endingPoint" />
+					<form:errors cssClass="text-error" path="endingPoint" />
 				</div>
-				<div class="form-row">
+				<div class="control-group">
 					<form:label path="endingKm"><spring:message code="Ending Km"></spring:message></form:label>
 					<span><form:input path="endingKm" /></span>
-					<form:errors cssClass="error-field" path="endingKm" />
+					<form:errors cssClass="text-error" path="endingKm" />
 				</div>
-				<div class="form-row">
+				<div class="control-group">
 					<form:label path="endingTime"><spring:message code="Ending Time"></spring:message></form:label>
 					<span><form:input type="datetime" path="endingTime" /></span>
-					<form:errors cssClass="error-field" path="endingTime" />
+					<form:errors cssClass="text-error" path="endingTime" />
 				</div>
-				<div class="form-row">
+				<div class="control-group">
 					<form:label path="loadWeightInTonne"><spring:message code="Weight"></spring:message></form:label>
 					<span><form:input path="loadWeightInTonne" /></span>
-					<form:errors cssClass="error-field" path="loadWeightInTonne" />
+					<form:errors cssClass="text-error" path="loadWeightInTonne" />
 				</div>
 				<div class="control-group">
 					<form:label path="remark" class="control-label"><spring:message code="Remark"></spring:message></form:label>
 					<div class="controls"><form:textarea path="remark" cssClass="span6" /></div>
-					<form:errors cssClass="error-field" path="remark" />
+					<form:errors cssClass="text-error" path="remark" />
 				</div>
 				<div class="form-actions">
 					<c:if test="${ !empty tripAttribute.id }">

@@ -6,17 +6,21 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.aripd.common.entity.BaseEntity;
+import javax.validation.constraints.Min;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "truck")
 public class Truck extends BaseEntity {
 
-    private static final long serialVersionUID = 6697864974198990570L;
     private boolean active;
     @ManyToOne
     private Region region;
+    @NotBlank
     @Column(unique = true)
     private String plate;
+    @Min(value = 0)
+    private Integer km;
 
     public boolean isActive() {
         return active;
@@ -42,7 +46,11 @@ public class Truck extends BaseEntity {
         this.plate = plate;
     }
 
-    public static long getSerialversionuid() {
-        return serialVersionUID;
+    public Integer getKm() {
+        return km;
+    }
+
+    public void setKm(Integer km) {
+        this.km = km;
     }
 }

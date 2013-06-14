@@ -25,7 +25,7 @@
 
 <div class="bs-docs-example" data-content="<spring:message code="XLSX"></spring:message>">
 	<form:form modelAttribute="fileUploadBean" action="${tripImportXLSX}" method="post" enctype="multipart/form-data">
-		<form:errors cssClass="error-field" path="file" />
+		<form:errors cssClass="text-error" path="file" />
 		<form:input path="file" type="file"/>
 		<button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload"></spring:message></button>
 	</form:form>
@@ -81,7 +81,7 @@
 <div class="bs-docs-example hide" data-content="<spring:message code="CSV"></spring:message>">
 	<form:form modelAttribute="csvImportBean" action="${tripImportCSV}" method="post" enctype="multipart/form-data">
 		<div class="row-fluid">
-			<form:errors cssClass="error-field" path="content"/>
+			<form:errors cssClass="text-error" path="content"/>
 			<form:textarea path="content" cssClass="span12" rows="5"/>
 			<button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload"></spring:message></button>
 		</div>

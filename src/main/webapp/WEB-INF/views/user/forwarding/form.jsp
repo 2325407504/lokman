@@ -24,58 +24,58 @@
 <div class="row-fluid">
     <div class="span4">
         <form:form modelAttribute="forwardingAttribute" action="${forwardingSave}" method="post">
-            <form:errors path="*" cssClass="error-block" element="div" />
+            <form:errors path="*" cssClass="alert alert-error" element="div" />
             <form:hidden path="id" />
             <fieldset>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="waybillNo"><spring:message code="Waybill No"></spring:message></form:label>
                     <span><form:input type="text" path="waybillNo" /></span>
-                    <form:errors cssClass="error-field" path="waybillNo" />
+                    <form:errors cssClass="text-error" path="waybillNo" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="driver"><spring:message code="Driver"></spring:message></form:label>
                     <span><form:input path="driver" /></span>
-                    <form:errors cssClass="error-field" path="driver" />
+                    <form:errors cssClass="text-error" path="driver" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="plate"><spring:message code="Plate"></spring:message></form:label>
                     <span><form:input path="plate" /></span>
-                    <form:errors cssClass="error-field" path="plate" />
+                    <form:errors cssClass="text-error" path="plate" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="startingTime"><spring:message code="Starting Time"></spring:message></form:label>
                     <span><form:input type="text" path="startingTime" /></span>
-                    <form:errors cssClass="error-field" path="startingTime" />
+                    <form:errors cssClass="text-error" path="startingTime" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="endingTime"><spring:message code="Ending Time"></spring:message></form:label>
                     <span><form:input type="text" path="endingTime" /></span>
-                    <form:errors cssClass="error-field" path="endingTime" />
+                    <form:errors cssClass="text-error" path="endingTime" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="endingPoint"><spring:message code="Ending Point"></spring:message></form:label>
                     <span><form:input path="endingPoint" /></span>
-                    <form:errors cssClass="error-field" path="endingPoint" />
+                    <form:errors cssClass="text-error" path="endingPoint" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="loadWeightInTonne"><spring:message code="Weight"></spring:message></form:label>
                     <span><form:input path="loadWeightInTonne" /></span>
-                    <form:errors cssClass="error-field" path="loadWeightInTonne" />
+                    <form:errors cssClass="text-error" path="loadWeightInTonne" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="shippingCost"><spring:message code="Shipping Cost"></spring:message></form:label>
                     <span><form:input path="shippingCost" /></span>
-                    <form:errors cssClass="error-field" path="shippingCost" />
+                    <form:errors cssClass="text-error" path="shippingCost" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="subcontractor"><spring:message code="Subcontractor"></spring:message></form:label>
                     <form:select path="subcontractor.id" multiple="false" items="${subcontractors}" itemLabel="name" itemValue="id"/>
-                    <form:errors cssClass="error-field" path="subcontractor" />
+                    <form:errors cssClass="text-error" path="subcontractor" />
                 </div>
-                <div class="form-row">
+                <div class="control-group">
                     <form:label path="quota"><spring:message code="Quota"></spring:message></form:label>
                     <form:select path="quota.id" multiple="false" items="${quotas}" itemLabel="name" itemValue="id"/>
-                    <form:errors cssClass="error-field" path="quota" />
+                    <form:errors cssClass="text-error" path="quota" />
                 </div>
                 <div class="form-actions">
                     <c:if test="${ !empty forwardingAttribute.id }">
@@ -102,7 +102,7 @@
 
         <c:if test="${forwardingAttribute.id != null}">
             <form:form modelAttribute="uatfAttribute" action="${uatfSave}" method="post" class="form-inline">
-                <form:errors path="*" cssClass="error-block" element="div" />
+                <form:errors path="*" cssClass="alert alert-error" element="div" />
                 <form:input path="code" cssClass="input-small" placeholder="${Code}" />
                 <form:input path="company" cssClass="input-small" placeholder="${Company}" />
                 <form:input path="county" cssClass="input-small" placeholder="${County}" />

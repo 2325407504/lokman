@@ -4,12 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.aripd.common.entity.BaseEntity;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "region")
 public class Region extends BaseEntity {
 
-    private static final long serialVersionUID = -6849484656846432441L;
+    @NotBlank
     private String name;
 
     public String getName() {
@@ -18,9 +19,5 @@ public class Region extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public static long getSerialversionuid() {
-        return serialVersionUID;
     }
 }

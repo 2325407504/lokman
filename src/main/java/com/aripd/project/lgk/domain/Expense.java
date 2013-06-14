@@ -21,12 +21,13 @@ import javax.validation.constraints.NotNull;
 @Table(name = "expense")
 public class Expense extends BaseEntity {
 
-    private static final long serialVersionUID = 7142407700649461014L;
     @Column(nullable = false)
     private boolean submitted = false;
     @ManyToOne
     @JoinColumn(nullable = false, insertable = true, updatable = true)
     private Account account;
+    @ManyToOne
+    private Expensetype expensetype;
     @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
     @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
     @Column(columnDefinition = "TIMESTAMP")
@@ -53,6 +54,14 @@ public class Expense extends BaseEntity {
         this.account = account;
     }
 
+    public Expensetype getExpensetype() {
+        return expensetype;
+    }
+
+    public void setExpensetype(Expensetype expensetype) {
+        this.expensetype = expensetype;
+    }
+
     public DateTime getDocumentDate() {
         return documentDate;
     }
@@ -75,10 +84,6 @@ public class Expense extends BaseEntity {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
-    }
-
-    public static long getSerialversionuid() {
-        return serialVersionUID;
     }
 
     public String getCompany() {

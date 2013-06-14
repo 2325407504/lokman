@@ -15,6 +15,7 @@
 <spring:url value="/account/list" var="account_list" />
 <spring:url value="/backup/list" var="backup_list" />
 <spring:url value="/region/list" var="region_list" />
+<spring:url value="/expensetype/list" var="expensetype_list" />
 <spring:url value="/product/list" var="product_list" />
 <spring:url value="/electricmeter/list" var="electricmeter_list" />
 <spring:url value="/shift/list" var="shift_list" />
@@ -68,16 +69,15 @@
                             <li><a href="${region_list}"><spring:message code="Regions"></spring:message></a></li>
                             <li><a href="${product_list}"><spring:message code="Products"></spring:message></a></li>
                             <li><a href="${electricmeter_list}"><spring:message code="Electricmeters"></spring:message></a></li>
+                            <li><a href="${expensetype_list}"><spring:message code="Expensetypes"></spring:message></a></li>
                             <li><a href="${shift_list}"><spring:message code="Shifts"></spring:message></a></li>
                             <li><a href="${truck_list}"><spring:message code="Trucks"></spring:message></a></li>
                             <li><a href="${driver_list}"><spring:message code="Drivers"></spring:message></a></li>
                             <li><a href="${subcontractor_list}"><spring:message code="Subcontractors"></spring:message></a></li>
                             <li><a href="${quota_list}"><spring:message code="Quotas"></spring:message></a></li>
-                                <!-- 
-                                                                              <li class="nav-header"><spring:message code="Personnel"></spring:message></li>
-                                                                              <li><a href="${expense_list}"><spring:message code="Expenses"></spring:message></a></li>
-                                -->
-                                <li class="nav-header"><spring:message code="Logistics"></spring:message></li>
+                            <li class="nav-header"><spring:message code="Personnel"></spring:message></li>
+                            <li><a href="${expense_list}"><spring:message code="Expenses"></spring:message></a></li>
+                            <li class="nav-header"><spring:message code="Logistics"></spring:message></li>
                             <li><a href="${trip_list}"><spring:message code="Trips"></spring:message></a></li>
                             <li><a href="${forwarding_list}"><spring:message code="Forwardings"></spring:message></a></li>
                             <li class="nav-header"><spring:message code="Production"></spring:message></li>
@@ -97,11 +97,9 @@
                     <div id="collapse3" class="accordion-body in collapse">
                         <div class="accordion-inner">
                             <ul class="nav nav-list">
-                                <!-- 
                                 <li class="nav-header"><spring:message code="Personnel"></spring:message></li>
-                                <li><a href="${user_expense_list}"><spring:message code="Expenses"></spring:message></a></li>
-                                -->
-                                <li class="nav-header"><spring:message code="Logistics"></spring:message></li>
+                            <li><a href="${user_expense_list}"><spring:message code="Expenses"></spring:message></a></li>
+                            <li class="nav-header"><spring:message code="Logistics"></spring:message></li>
                             <li><a href="${user_trip_list}"><spring:message code="Trips"></spring:message></a></li>
                             <li><a href="${user_forwarding_list}"><spring:message code="Forwardings"></spring:message></a></li>
                             </ul>

@@ -5,6 +5,7 @@ import javax.persistence.Table;
 
 import com.aripd.common.entity.BaseEntity;
 import javax.persistence.Column;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "product")
@@ -12,6 +13,7 @@ public class Product extends BaseEntity {
 
     @Column(unique = true)
     private String code;
+    @NotEmpty
     private String name;
 
     public String getCode() {

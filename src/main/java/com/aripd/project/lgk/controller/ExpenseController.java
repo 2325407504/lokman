@@ -33,161 +33,164 @@ import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Expense;
 import com.aripd.project.lgk.domain.Uatf;
 import com.aripd.project.lgk.service.ExpenseService;
+import com.aripd.project.lgk.service.ExpensetypeService;
 
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 @Controller
 @RequestMapping("/expense")
 public class ExpenseController {
 
-	@Resource(name = "expenseService")
-	private ExpenseService expenseService;
+    @Resource(name = "expenseService")
+    private ExpenseService expenseService;
+    @Resource(name = "accountService")
+    private AccountService accountService;
+    @Resource(name = "expensetypeService")
+    private ExpensetypeService expensetypeService;
 
-	@Resource(name = "accountService")
-	private AccountService accountService;
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    public @ResponseBody
+    WebResultSet<Expense> getDataTables(@TableParam PagingCriteria criteria) {
+        ResultSet<Expense> resultset = this.expenseService.getRecords(criteria);
+        return ControllerUtils.getWebResultSet(criteria, resultset);
+    }
 
-	@RequestMapping(value = "/get", method = RequestMethod.GET)
-	public @ResponseBody
-	WebResultSet<Expense> getDataTables(@TableParam PagingCriteria criteria) {
-		ResultSet<Expense> resultset = this.expenseService.getRecords(criteria);
-		return ControllerUtils.getWebResultSet(criteria, resultset);
-	}
+    @RequestMapping(value = "/list")
+    public String listAction(Model model) {
+        return "expense/list";
+    }
 
-	@RequestMapping(value = "/list")
-	public String listAction(Model model) {
-		return "expense/list";
-	}
+    @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+    public String showAction(@PathVariable Long id, Model model) {
+        model.addAttribute("expenseAttribute", expenseService.findOne(id));
+        return "expense/show";
+    }
 
-	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
-	public String showAction(@PathVariable Long id, Model model) {
-		model.addAttribute("expenseAttribute", expenseService.findOne(id));
-		return "expense/show";
-	}
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public String newAction(Model model) {
+        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("expensetypes", expensetypeService.findAll());
+        model.addAttribute("expenseAttribute", new Expense());
+        return "expense/form";
+    }
 
-	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String newAction(Model model) {
-		model.addAttribute("accounts", accountService.findAll());
-		model.addAttribute("expenseAttribute", new Expense());
-		return "expense/form";
-	}
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String editAction(@PathVariable Long id, Model model) {
+        model.addAttribute("uatfAttribute", new Uatf());
+        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("expensetypes", expensetypeService.findAll());
+        model.addAttribute("expenseAttribute", expenseService.findOne(id));
+        return "expense/form";
+    }
 
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-	public String editAction(@PathVariable Long id, Model model) {
-		model.addAttribute("uatfAttribute", new Uatf());
-		model.addAttribute("accounts", accountService.findAll());
-		model.addAttribute("expenseAttribute", expenseService.findOne(id));
-		return "expense/form";
-	}
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public String saveAction(final RedirectAttributes redirectAttributes,
+            @ModelAttribute("expenseAttribute") @Valid Expense formData,
+            BindingResult result, Model model) {
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveAction(final RedirectAttributes redirectAttributes,
-			@ModelAttribute("expenseAttribute") @Valid Expense formData,
-			BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("accounts", accountService.findAll());
+            return "/expense/form";
+        }
 
-		if (result.hasErrors()) {
-			model.addAttribute("accounts", accountService.findAll());
-			return "/expense/form";
-		}
+        expenseService.save(formData);
+        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+        return "redirect:/expense/list";
+    }
 
-		expenseService.save(formData);
-		redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
-		return "redirect:/expense/list";
-	}
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public String delete(final RedirectAttributes redirectAttributes,
+            @RequestParam(value = "id", required = true) Long id) {
+        expenseService.delete(id);
+        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+        return "redirect:/expense/list";
+    }
 
-	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-	public String delete(final RedirectAttributes redirectAttributes,
-			@RequestParam(value = "id", required = true) Long id) {
-		expenseService.delete(id);
-		redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
-		return "redirect:/expense/list";
-	}
+    @RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)
+    public String submitAction(@PathVariable Long id) {
+        Expense expense = expenseService.findOne(id);
+        expense.setSubmitted(true ^ expense.isSubmitted());
+        expenseService.save(expense);
+        return "redirect:/expense/show/" + id;
+    }
 
-	@RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)
-	public String submitAction(@PathVariable Long id) {
-		Expense expense = expenseService.findOne(id);
-		expense.setSubmitted(true ^ expense.isSubmitted());
-		expenseService.save(expense);
-		return "redirect:/expense/show/" + id;
-	}
+    /**
+     * Exports the report as an Excel format.
+     * <p>
+     * Make sure this method doesn't return any model. Otherwise, you'll get an
+     * "IllegalStateException: getOutputStream() has already been called for
+     * this response"
+     */
+    @RequestMapping(value = "/export/xls", method = RequestMethod.GET)
+    public void getXLS(HttpServletResponse response, Model model) {
+        expenseService.exportXLS(response);
+    }
 
-	/**
-	 * Exports the report as an Excel format.
-	 * <p>
-	 * Make sure this method doesn't return any model. Otherwise, you'll get an
-	 * "IllegalStateException: getOutputStream() has already been called for this response"
-	 */
-	@RequestMapping(value = "/export/xls", method = RequestMethod.GET)
-	public void getXLS(HttpServletResponse response, Model model) {
-		expenseService.exportXLS(response);
-	}
+    @RequestMapping(value = "/import/xls", method = RequestMethod.GET)
+    public String importAction(Model model) {
+        model.addAttribute(new FileUploadBean());
+        model.addAttribute(new CsvImportBean());
+        return "expense/import";
+    }
+    @Value("${path.directory.import}")
+    String pathDirectoryImport;
 
-	@RequestMapping(value = "/import/xls", method = RequestMethod.GET)
-	public String importAction(Model model) {
-		model.addAttribute(new FileUploadBean());
-		model.addAttribute(new CsvImportBean());
-		return "expense/import";
-	}
+    @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
+    public String importXLS(
+            final RedirectAttributes redirectAttributes,
+            FileUploadBean fileUploadBean,
+            BindingResult result) {
 
-	@Value("${path.directory.import}")
-	String pathDirectoryImport;
-	
-	@RequestMapping(value = "/import/xls", method = RequestMethod.POST)
-	public String importXLS(
-			final RedirectAttributes redirectAttributes,
-			FileUploadBean fileUploadBean, 
-			BindingResult result) {
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("message", "Hata oluştu");
+            return "redirect:/expense/import";
+        }
 
-		if (result.hasErrors()) {
-			redirectAttributes.addFlashAttribute("message", "Hata oluştu");
-			return "redirect:/expense/import";
-		}
+        String fileName = null;
+        try {
+            MultipartFile file = fileUploadBean.getFile();
+            InputStream inputStream = null;
+            OutputStream outputStream = null;
+            if (file.getSize() > 0) {
+                inputStream = file.getInputStream();
+                if (file.getSize() > 1000000) {
+                    redirectAttributes.addFlashAttribute("message", "Dosya boyutu büyük");
+                    return "redirect:/expense/import";
+                }
 
-		String fileName = null;
-		try {
-			MultipartFile file = fileUploadBean.getFile();
-			InputStream inputStream = null;
-			OutputStream outputStream = null;
-			if (file.getSize() > 0) {
-				inputStream = file.getInputStream();
-				if (file.getSize() > 1000000) {
-					redirectAttributes.addFlashAttribute("message", "Dosya boyutu büyük");
-					return "redirect:/expense/import";
-				}
-				
-				fileName = pathDirectoryImport + file.getOriginalFilename();
-				
-				outputStream = new FileOutputStream(fileName);
+                fileName = pathDirectoryImport + file.getOriginalFilename();
 
-				int readBytes = 0;
-				byte[] buffer = new byte[10000];
-				while ((readBytes = inputStream.read(buffer, 0, 10000)) != -1) {
-					outputStream.write(buffer, 0, readBytes);
-				}
-				outputStream.close();
-				inputStream.close();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+                outputStream = new FileOutputStream(fileName);
 
-		expenseService.importXLSX(fileName);
-		redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
-		return "redirect:/expense/list";
-	}
+                int readBytes = 0;
+                byte[] buffer = new byte[10000];
+                while ((readBytes = inputStream.read(buffer, 0, 10000)) != -1) {
+                    outputStream.write(buffer, 0, readBytes);
+                }
+                outputStream.close();
+                inputStream.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-	@RequestMapping(value = "/import/csv", method = RequestMethod.POST)
-	public String importCSV(
-			final RedirectAttributes redirectAttributes,
-			CsvImportBean csvImportBean, 
-			BindingResult result) {
+        expenseService.importXLSX(fileName);
+        redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
+        return "redirect:/expense/list";
+    }
 
-		if (result.hasErrors()) {
-			redirectAttributes.addFlashAttribute("message", "Hata oluştu");
-			return "redirect:/expense/import";
-		}
-		
-		expenseService.importCSV(csvImportBean.getContent());
-		redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
-		return "redirect:/expense/list";
-	}
+    @RequestMapping(value = "/import/csv", method = RequestMethod.POST)
+    public String importCSV(
+            final RedirectAttributes redirectAttributes,
+            CsvImportBean csvImportBean,
+            BindingResult result) {
 
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("message", "Hata oluştu");
+            return "redirect:/expense/import";
+        }
+
+        expenseService.importCSV(csvImportBean.getContent());
+        redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
+        return "redirect:/expense/list";
+    }
 }
