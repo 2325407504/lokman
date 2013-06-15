@@ -5,9 +5,13 @@
 <%@ attribute name="dataUrlEdit" required="false" rtexprvalue="true" %>
 <%@ attribute name="dataUrlDelete" required="false" rtexprvalue="true" %>
 <%@ attribute name="actionColumn" required="false" type="java.lang.Integer" %>
+<%@ attribute name="sortingColumn" required="false" type="java.lang.Integer" %>
+<%@ attribute name="sortingDirection" required="false" type="java.lang.String" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:if test="${actionColumn == null}"><c:set var="actionColumn" value="0" /></c:if>
+<c:if test="${sortingColumn == null}"><c:set var="sortingColumn" value="${actionColumn}" /></c:if>
+<c:if test="${sortingDirection == null}"><c:set var="sortingDirection" value="desc" /></c:if>
 <c:set var="org_languagetool_tags_table_outputmode" value="TABLE" scope="request" />
 <table class="table table-striped table-bordered" id="${id}">
     <thead>
@@ -64,7 +68,7 @@
                     "sNext": "<spring:message code="table.records.next" />",
                     "sLast": "<spring:message code="table.records.last" />"
                 },
-                "aaSorting": [[${actionColumn}, "desc"]],
+                "aaSorting": [[${sortingColumn}, "${sortingDirection}"]],
                 "aoColumns": [<jsp:doBody />]
             });
         });
