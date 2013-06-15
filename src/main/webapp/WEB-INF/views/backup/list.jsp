@@ -20,8 +20,12 @@
         </thead>
         <tbody>
         <c:forEach var="file" items="${files}">
-            <spring:url var="backup_restore" value="/backup/${file.name}/restore"/>
-            <spring:url var="backup_delete" value="/backup/${file.name}/delete"/>
+            <spring:url var="backup_restore" value="/backup/{filename}/restore">
+                <spring:param name="filename" value="${file.name}" />
+            </spring:url>
+            <spring:url var="backup_delete" value="/backup/{filename}/delete">
+                <spring:param name="filename" value="${file.name}" />
+            </spring:url>
             <tr>
                 <td>${file.name}</td>
                 <td>

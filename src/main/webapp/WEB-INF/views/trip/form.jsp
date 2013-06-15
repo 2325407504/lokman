@@ -141,6 +141,7 @@
                     $(e).find('#startingKm').val(response);
                 },
                 error: function(e) {
+                    console.log(e);
                     alert('Hata: ' + e);
                 }
             });

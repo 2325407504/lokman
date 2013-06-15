@@ -9,20 +9,21 @@ import com.aripd.project.lgk.domain.Truck;
 
 public interface TruckService {
 
-	Truck findOne(Long id);
-	
-	Truck findOneByPlate(String plate);
-	
-	List<Truck> findAll();
-	
-	List<Truck> findByRegion(Region region);
+    public Integer getKilometer(Long id);
 
-	Truck save(Truck truck);
-	
-	void delete(Long id);
+    public Truck findOne(Long id);
 
-	void delete(Truck truck);
+    public Truck findOneByPlate(String plate);
 
-	ResultSet<Truck> getRecords(PagingCriteria criteria);
+    public List<Truck> findAll();
 
+    public List<Truck> findByRegion(Region region);
+
+    public Truck save(Truck truck);
+
+    public void delete(Long id);
+
+    public void delete(Truck truck);
+
+    public ResultSet<Truck> getRecords(PagingCriteria criteria);
 }

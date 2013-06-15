@@ -35,7 +35,7 @@
         </div>
         <div class="control-group">
             <form:label path="km"><spring:message code="Kilometer"></spring:message></form:label>
-            <form:input path="km" />
+            <form:input path="km" readonly="true" />
             <form:errors cssClass="text-error" path="km" />
         </div>
         <div class="form-actions">

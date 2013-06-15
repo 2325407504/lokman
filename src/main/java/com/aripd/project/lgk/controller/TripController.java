@@ -222,6 +222,7 @@ public class TripController {
 
     @RequestMapping(value = "/report")
     public String reportAction(Model model) {
+        model.addAttribute("trucks", truckService.findAll());
         return "trip/report";
     }
 }

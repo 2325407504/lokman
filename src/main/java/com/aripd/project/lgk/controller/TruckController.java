@@ -50,7 +50,7 @@ public class TruckController {
     @RequestMapping(value = "/get/{id}/kilometer", method = RequestMethod.GET)
     public @ResponseBody
     Integer getKilometer(@PathVariable Long id) {
-        return truckService.findOne(id).getKm();
+        return truckService.getKilometer(id);
     }
 
     @RequestMapping(value = "/list")
