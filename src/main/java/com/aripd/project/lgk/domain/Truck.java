@@ -6,7 +6,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.aripd.common.entity.BaseEntity;
-import javax.validation.constraints.Min;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
@@ -19,8 +19,11 @@ public class Truck extends BaseEntity {
     @NotBlank
     @Column(unique = true)
     private String plate;
-    @Min(value = 0)
-    private Integer km;
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 
     public boolean isActive() {
         return active;
@@ -44,13 +47,5 @@ public class Truck extends BaseEntity {
 
     public void setPlate(String plate) {
         this.plate = plate;
-    }
-
-    public Integer getKm() {
-        return km;
-    }
-
-    public void setKm(Integer km) {
-        this.km = km;
     }
 }

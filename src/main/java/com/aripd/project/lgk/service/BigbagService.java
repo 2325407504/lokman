@@ -2,28 +2,25 @@ package com.aripd.project.lgk.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.project.lgk.domain.Bigbag;
 
 public interface BigbagService {
 
-	Bigbag findOne(Long id);
+    Bigbag findOne(Long id);
 
-	List<Bigbag> findAll();
+    List<Bigbag> findAll();
 
-	Bigbag save(Bigbag bigbag);
+    Bigbag save(Bigbag bigbag);
 
-	void delete(Long id);
+    void delete(Long id);
 
-	void delete(Bigbag bigbag);
+    void delete(Bigbag bigbag);
 
-	List<Bigbag> findByProductionId(Long id);
+    List<Bigbag> findByProductionId(Long id);
 
-	ResultSet<Bigbag> getRecords(Long production_id, PagingCriteria criteria);
+    ResultSet<Bigbag> getRecords(Long production_id, PagingCriteria criteria);
 
-	void importXLSX(String fileName);
-
+    void importXLSX(String fileName);
 }

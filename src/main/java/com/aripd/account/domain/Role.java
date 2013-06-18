@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.aripd.common.entity.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "role")
@@ -13,6 +14,11 @@ public class Role extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String code;
     private String name;
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 
     public Role() {
     }

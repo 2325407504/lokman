@@ -20,6 +20,7 @@ import com.aripd.account.domain.Account;
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.common.utils.ARIPDJodaDateTimeSerializer;
 import javax.validation.constraints.NotNull;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "forwarding")
@@ -56,6 +57,11 @@ public class Forwarding extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "forwarding", cascade = CascadeType.REMOVE)
     private Set<Uatf> uatfs;
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 
     public boolean isSubmitted() {
         return submitted;
@@ -160,5 +166,4 @@ public class Forwarding extends BaseEntity {
     public void setUatfs(Set<Uatf> uatfs) {
         this.uatfs = uatfs;
     }
-
 }

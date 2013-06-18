@@ -6,6 +6,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.aripd.common.entity.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "customer")
@@ -15,6 +16,11 @@ public class Customer extends BaseEntity {
     private String firstName;
     @Column(nullable = true, unique = false)
     private String lastName;
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 
     public Customer() {
     }

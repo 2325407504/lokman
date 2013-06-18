@@ -6,6 +6,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.aripd.common.entity.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "subcontractor")
@@ -18,6 +19,11 @@ public class Subcontractor extends BaseEntity {
     private String name;
     @ManyToOne
     private Region region;
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 
     public boolean isActive() {
         return active;

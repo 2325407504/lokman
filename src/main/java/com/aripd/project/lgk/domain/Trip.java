@@ -13,6 +13,7 @@ import org.joda.time.DateTime;
 import com.aripd.account.domain.Account;
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.common.utils.ARIPDJodaDateTimeSerializer;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "trip")
@@ -43,6 +44,11 @@ public class Trip extends BaseEntity {
     private Integer loadWeightInTonne;
     @Column(columnDefinition = "TEXT", nullable = true)
     private String remark;
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 
     public Account getAccount() {
         return account;

@@ -14,7 +14,6 @@
     <aripd:column label="Action" field="id"/>
     <aripd:column label="Region" field="region.name"/>
     <aripd:column label="Plate" field="plate"/>
-    <aripd:column label="Kilometer" field="km"/>
 </aripd:datatables>
 
 <%@ include file="/WEB-INF/views/footer.jsp" %>

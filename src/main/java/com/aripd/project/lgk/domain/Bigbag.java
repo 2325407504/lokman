@@ -5,25 +5,27 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-
 import com.aripd.common.entity.BaseEntity;
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "bigbag")
 public class Bigbag extends BaseEntity {
 
-    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "production_id")
     private Production production;
     @ManyToOne
     private Product product;
     @Column(nullable = false)
     @NotNull
     private Double weight;
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 
     public Production getProduction() {
         return production;

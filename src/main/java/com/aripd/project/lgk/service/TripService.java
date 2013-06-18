@@ -9,29 +9,33 @@ import com.aripd.account.domain.Account;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.project.lgk.domain.Trip;
+import com.aripd.project.lgk.domain.Truck;
 
 public interface TripService {
 
-	Trip findOne(Long id);
+    public Trip findOne(Long id);
 
-	Trip findOneByAccountAndId(Account account, Long id);
-	
-	List<Trip> findAll();
+    public Trip findOneByAccountAndId(Account account, Long id);
 
-	Trip save(Trip trip);
-	
-	void delete(Long id);
+    public List<Trip> findAll();
 
-	void delete(Trip trip);
-	
-	ResultSet<Trip> getRecords(PagingCriteria criteria);
-	
-	ResultSet<Trip> getRecords(Principal principal, PagingCriteria criteria);
-	
-	void exportXLS(HttpServletResponse response);
+    public Trip save(Trip trip);
 
-	void importXLSX(String fileName);
+    public void delete(Long id);
 
-	void importCSV(String content);
+    public void delete(Trip trip);
 
+    public ResultSet<Trip> getRecords(PagingCriteria criteria);
+
+    public ResultSet<Trip> getRecords(Principal principal, PagingCriteria criteria);
+
+    public void exportAll(HttpServletResponse response);
+
+    public void exportByTruck(HttpServletResponse response, Truck truck);
+
+    public void exportByTruck(HttpServletResponse response, Principal principal, Truck truck);
+
+    public void importXLSX(String fileName);
+
+    public void importCSV(String content);
 }

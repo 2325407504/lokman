@@ -17,6 +17,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.project.lgk.domain.Region;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "account")
@@ -43,6 +44,11 @@ public class Account extends BaseEntity {
     @ManyToOne
     private Region region;
 
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
+    
     public Account() {
         roles = new ArrayList<Role>();
     }

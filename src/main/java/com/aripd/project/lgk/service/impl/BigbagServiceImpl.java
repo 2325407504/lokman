@@ -115,14 +115,14 @@ public class BigbagServiceImpl implements BigbagService {
 
         // Sorting
         /*for (SortField sortField : sortFields) {
-            String field = sortField.getField();
-            String direction = sortField.getDirection().getDirection();
-            if (direction.equalsIgnoreCase("asc")) {
-                cq.orderBy(cb.asc(bigbag.get(field)));
-            } else if (direction.equalsIgnoreCase("desc")) {
-                cq.orderBy(cb.desc(bigbag.get(field)));
-            }
-        }*/
+         String field = sortField.getField();
+         String direction = sortField.getDirection().getDirection();
+         if (direction.equalsIgnoreCase("asc")) {
+         cq.orderBy(cb.asc(bigbag.get(field)));
+         } else if (direction.equalsIgnoreCase("desc")) {
+         cq.orderBy(cb.desc(bigbag.get(field)));
+         }
+         }*/
 
         Long totalRecords = (long) em.createQuery(cq).getResultList().size();
 

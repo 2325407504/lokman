@@ -16,6 +16,7 @@ import com.aripd.account.domain.Account;
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.common.utils.ARIPDJodaDateTimeSerializer;
 import javax.validation.constraints.NotNull;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "expense")
@@ -37,6 +38,11 @@ public class Expense extends BaseEntity {
     @Column(nullable = false)
     @NotNull
     private BigDecimal amount;
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 
     public boolean isSubmitted() {
         return submitted;

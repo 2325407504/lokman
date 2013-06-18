@@ -10,6 +10,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import com.aripd.common.entity.BaseEntity;
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "uatf")
@@ -35,6 +36,11 @@ public class Uatf extends BaseEntity {
     @Column(nullable = false)
     @NotNull
     private Integer loadWeightInTonne;
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 
     public String getCode() {
         return code;

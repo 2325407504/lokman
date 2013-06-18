@@ -43,6 +43,7 @@ import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.SortField;
 import com.aripd.project.lgk.domain.Trip;
 import com.aripd.project.lgk.domain.Trip_;
+import com.aripd.project.lgk.domain.Truck;
 import com.aripd.project.lgk.report.trip.FillManager;
 import com.aripd.project.lgk.report.trip.Layouter;
 import com.aripd.project.lgk.report.trip.Writer;
@@ -209,7 +210,7 @@ public class TripServiceImpl implements TripService {
      * 7. Write to the output stream
      * </pre>
      */
-    public void exportXLS(HttpServletResponse response) {
+    public void exportAll(HttpServletResponse response) {
         // 1. Create new workbook
         HSSFWorkbook workbook = new HSSFWorkbook();
 
@@ -229,14 +230,69 @@ public class TripServiceImpl implements TripService {
 
         // 6. Set the response properties
         String fileName = "TripReport.xls";
-        response.setHeader("Content-Disposition", "inline; filename="
-                + fileName);
+        response.setHeader("Content-Disposition", "inline; filename=" + fileName);
         // Make sure to set the correct content type
         response.setContentType("application/vnd.ms-excel");
 
         // 7. Write to the output stream
         Writer.write(response, worksheet);
+    }
 
+    public void exportByTruck(HttpServletResponse response, Truck truck) {
+        // 1. Create new workbook
+        HSSFWorkbook workbook = new HSSFWorkbook();
+
+        // 2. Create new worksheet
+        HSSFSheet worksheet = workbook.createSheet("Trip Report for " + truck.getPlate());
+
+        // 3. Define starting indices for rows and columns
+        int startRowIndex = 0;
+        int startColIndex = 0;
+
+        // 4. Build layout
+        // Build title, date, and column headers
+        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
+
+        // 5. Fill report
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, repository.findByTruck(truck));
+
+        // 6. Set the response properties
+        String fileName = "TripReport.xls";
+        response.setHeader("Content-Disposition", "inline; filename=" + fileName);
+        // Make sure to set the correct content type
+        response.setContentType("application/vnd.ms-excel");
+
+        // 7. Write to the output stream
+        Writer.write(response, worksheet);
+    }
+
+    public void exportByTruck(HttpServletResponse response, Principal principal, Truck truck) {
+        // 1. Create new workbook
+        HSSFWorkbook workbook = new HSSFWorkbook();
+
+        // 2. Create new worksheet
+        HSSFSheet worksheet = workbook.createSheet("Trip Report for " + truck.getPlate());
+
+        // 3. Define starting indices for rows and columns
+        int startRowIndex = 0;
+        int startColIndex = 0;
+
+        // 4. Build layout
+        // Build title, date, and column headers
+        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
+
+        // 5. Fill report
+        Account account = accountService.findOneByUsername(principal.getName());
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, repository.findByAccountAndTruck(account, truck));
+
+        // 6. Set the response properties
+        String fileName = "TripReport.xls";
+        response.setHeader("Content-Disposition", "inline; filename=" + fileName);
+        // Make sure to set the correct content type
+        response.setContentType("application/vnd.ms-excel");
+
+        // 7. Write to the output stream
+        Writer.write(response, worksheet);
     }
 
     public void importXLSX(String fileName) {

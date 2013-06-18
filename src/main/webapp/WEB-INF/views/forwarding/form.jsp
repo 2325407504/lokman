@@ -36,13 +36,13 @@
     </ul>
 
     <div class="row-fluid">
-        <div class="span4">
+        <div class="span6">
         <form:form modelAttribute="forwardingAttribute" action="${forwardingSave}" method="post">
             <form:errors path="*" cssClass="alert alert-error" element="div" />
             <form:hidden path="id" />
             <fieldset>
                 <div class="control-group">
-                    <span><form:checkbox path="submitted" /> <spring:message code="Submitted by user"></spring:message></span>
+                    <form:checkbox path="submitted" /> <spring:message code="Submitted by user"></spring:message>
                     <form:errors cssClass="text-error" path="submitted" />
                 </div>
                 <div class="control-group">
@@ -52,42 +52,41 @@
                 </div>
                 <div class="control-group">
                     <form:label path="waybillNo"><spring:message code="Waybill No"></spring:message></form:label>
-                    <span><form:input type="text" path="waybillNo" /></span>
+                    <form:input type="text" path="waybillNo" />
                     <form:errors cssClass="text-error" path="waybillNo" />
                 </div>
                 <div class="control-group">
                     <form:label path="driver"><spring:message code="Driver"></spring:message></form:label>
-                    <span><form:input path="driver" /></span>
+                    <form:input path="driver" />
                     <form:errors cssClass="text-error" path="driver" />
                 </div>
                 <div class="control-group">
                     <form:label path="plate"><spring:message code="Plate"></spring:message></form:label>
-                    <span><form:input path="plate" /></span>
+                    <form:input path="plate" />
                     <form:errors cssClass="text-error" path="plate" />
                 </div>
                 <div class="control-group">
-                    <form:label path="startingTime"><spring:message code="Starting Time"></spring:message></form:label>
-                    <span><form:input type="text" path="startingTime" /></span>
+                    <spring:message code="Starting Time" var="startingTime"></spring:message>
+                    <spring:message code="Ending Time" var="endingTime"></spring:message>
+                    <form:label path="startingTime">${startingTime} - ${endingTime}</form:label>
+                    <form:input type="datetime" path="startingTime" cssClass="input-medium" placeholder="${startingTime}" />
                     <form:errors cssClass="text-error" path="startingTime" />
-                </div>
-                <div class="control-group">
-                    <form:label path="endingTime"><spring:message code="Ending Time"></spring:message></form:label>
-                    <span><form:input type="text" path="endingTime" /></span>
+                    <form:input type="datetime" path="endingTime" cssClass="input-medium" placeholder="${endingTime}" />
                     <form:errors cssClass="text-error" path="endingTime" />
                 </div>
                 <div class="control-group">
                     <form:label path="endingPoint"><spring:message code="Ending Point"></spring:message></form:label>
-                    <span><form:input path="endingPoint" /></span>
+                    <form:input path="endingPoint" />
                     <form:errors cssClass="text-error" path="endingPoint" />
                 </div>
                 <div class="control-group">
                     <form:label path="loadWeightInTonne"><spring:message code="Weight"></spring:message></form:label>
-                    <span><form:input path="loadWeightInTonne" /></span>
+                    <form:input path="loadWeightInTonne" />
                     <form:errors cssClass="text-error" path="loadWeightInTonne" />
                 </div>
                 <div class="control-group">
                     <form:label path="shippingCost"><spring:message code="Shipping Cost"></spring:message></form:label>
-                    <span><form:input path="shippingCost" /></span>
+                    <form:input path="shippingCost" />
                     <form:errors cssClass="text-error" path="shippingCost" />
                 </div>
                 <div class="control-group">
@@ -116,7 +115,7 @@
             </form:form>
         </c:if>
     </div>
-    <div class="span8">
+    <div class="span6">
         <fmt:message key="Code" var="Code"/>
         <fmt:message key="Company" var="Company"/>
         <fmt:message key="County" var="County"/>

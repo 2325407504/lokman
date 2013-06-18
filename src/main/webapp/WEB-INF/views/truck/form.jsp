@@ -33,11 +33,6 @@
             <form:input path="plate" />
             <form:errors cssClass="text-error" path="plate" />
         </div>
-        <div class="control-group">
-            <form:label path="km"><spring:message code="Kilometer"></spring:message></form:label>
-            <form:input path="km" readonly="true" />
-            <form:errors cssClass="text-error" path="km" />
-        </div>
         <div class="form-actions">
             <c:if test="${ !empty truckAttribute.id }">
                 <a class="btn btn-danger" href="javascript:$('#form-${truckAttribute.id}').submit();"><spring:message code="Delete"></spring:message></a>

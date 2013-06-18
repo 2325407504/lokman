@@ -101,22 +101,22 @@ INSERT INTO `driver` (`id`, `createdAt`, `updatedAt`, `active`, `code`, `name`, 
 (14, NOW(), NOW(), b'1', 'UID14', 'Sürücü14', 'Telefon14', 6),
 (15, NOW(), NOW(), b'1', 'UID15', 'Sürücü15', 'Telefon15', 6);
 
-INSERT INTO `truck` (`id`, `createdAt`, `updatedAt`, `active`, `km`, `plate`, `region_id`) VALUES
-(1, NOW(), NOW(), b'1', 0, '34 YK 1063', 1),
-(2, NOW(), NOW(), b'1', 0, '35 SEC 10', 1),
-(3, NOW(), NOW(), b'1', 0, '35 ZH 318', 1),
-(4, NOW(), NOW(), b'1', 0, '35 U 1884', 1),
-(5, NOW(), NOW(), b'1', 0, '35 HA 6914', 2),
-(6, NOW(), NOW(), b'1', 0, '34 AT 2912', 2),
-(7, NOW(), NOW(), b'1', 0, '34 TE 6123', 2),
-(8, NOW(), NOW(), b'1', 0, '35 CEV 47', 3),
-(9, NOW(), NOW(), b'1', 0, '35 HMH 47', 3),
-(10, NOW(), NOW(), b'1', 0, '35 SAU 44', 3),
-(11, NOW(), NOW(), b'1', 0, '35 AC 7870', 3),
-(12, NOW(), NOW(), b'1', 0, '35 VH 793', 4),
-(13, NOW(), NOW(), b'1', 0, '35 HNU 60', 4),
-(14, NOW(), NOW(), b'1', 0, '09 D 9585', 4),
-(15, NOW(), NOW(), b'1', 0, '35 HVU 92', 4);
+INSERT INTO `truck` (`id`, `createdAt`, `updatedAt`, `active`, `plate`, `region_id`) VALUES
+(1, NOW(), NOW(), b'1', '34 YK 1063', 1),
+(2, NOW(), NOW(), b'1', '35 SEC 10', 1),
+(3, NOW(), NOW(), b'1', '35 ZH 318', 1),
+(4, NOW(), NOW(), b'1', '35 U 1884', 1),
+(5, NOW(), NOW(), b'1', '35 HA 6914', 2),
+(6, NOW(), NOW(), b'1', '34 AT 2912', 2),
+(7, NOW(), NOW(), b'1', '34 TE 6123', 2),
+(8, NOW(), NOW(), b'1', '35 CEV 47', 3),
+(9, NOW(), NOW(), b'1', '35 HMH 47', 3),
+(10, NOW(), NOW(), b'1', '35 SAU 44', 3),
+(11, NOW(), NOW(), b'1', '35 AC 7870', 3),
+(12, NOW(), NOW(), b'1', '35 VH 793', 4),
+(13, NOW(), NOW(), b'1', '35 HNU 60', 4),
+(14, NOW(), NOW(), b'1', '09 D 9585', 4),
+(15, NOW(), NOW(), b'1', '35 HVU 92', 4);
 
 INSERT INTO `quota` (`id`, `createdAt`, `updatedAt`, `active`, `code`, `name`) VALUES
 (1, NOW(), NOW(), b'1', 'UID1', 'LASDER'),

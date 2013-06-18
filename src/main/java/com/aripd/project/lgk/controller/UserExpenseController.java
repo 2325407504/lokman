@@ -26,133 +26,134 @@ import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Expense;
 import com.aripd.project.lgk.service.ExpenseService;
+import com.aripd.project.lgk.service.ExpensetypeService;
 
 @PreAuthorize("hasRole('ROLE_USER')")
 @Controller
 @RequestMapping("/user/expense")
 public class UserExpenseController {
 
-	@Resource(name = "expenseService")
-	private ExpenseService expenseService;
+    @Resource(name = "expenseService")
+    private ExpenseService expenseService;
+    @Resource(name = "accountService")
+    private AccountService accountService;
+    @Resource(name = "expensetypeService")
+    private ExpensetypeService expensetypeService;
 
-	@Resource(name = "accountService")
-	private AccountService accountService;
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    public @ResponseBody
+    WebResultSet<Expense> getDataTables(
+            Principal principal,
+            @TableParam PagingCriteria criteria) {
+        ResultSet<Expense> resultset = this.expenseService.getRecords(principal, criteria);
+        return ControllerUtils.getWebResultSet(criteria, resultset);
+    }
 
-	@RequestMapping(value = "/get", method = RequestMethod.GET)
-	public @ResponseBody
-	WebResultSet<Expense> getDataTables(
-			Principal principal,
-			@TableParam PagingCriteria criteria) {
-		ResultSet<Expense> resultset = this.expenseService.getRecords(principal, criteria);
-		return ControllerUtils.getWebResultSet(criteria, resultset);
-	}
+    @RequestMapping(value = "/list")
+    public String listAction(Model model) {
+        return "/user/expense/list";
+    }
 
-	@RequestMapping(value = "/list")
-	public String listAction(Model model) {
-		return "/user/expense/list";
-	}
+    @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+    public String showAction(
+            final RedirectAttributes redirectAttributes,
+            Principal principal,
+            @PathVariable Long id,
+            Model model) {
 
-	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
-	public String showAction(
-			final RedirectAttributes redirectAttributes,
-			Principal principal,
-			@PathVariable Long id,
-			Model model) {
-		
-		Account account = accountService.findOneByUsername(principal.getName());
-		Expense expense = expenseService.findOneByAccountAndId(account, id);
-		
-		if (expense instanceof Expense == false) {
-			redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
-			return "redirect:/user/expense/list";
-		}
-		
-		model.addAttribute("expenseAttribute", expense);
-		return "/user/expense/show";
-	}
+        Account account = accountService.findOneByUsername(principal.getName());
+        Expense expense = expenseService.findOneByAccountAndId(account, id);
 
-	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String newAction(Model model) {
-		model.addAttribute("expenseAttribute", new Expense());
-		return "/user/expense/form";
-	}
+        if (expense instanceof Expense == false) {
+            redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
+            return "redirect:/user/expense/list";
+        }
 
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-	public String editAction(
-			final RedirectAttributes redirectAttributes,
-			@PathVariable Long id, 
-			Model model) {
-		
-		Expense expense = expenseService.findOne(id);
-		if (expense.isSubmitted()) {
-			redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
-			return "redirect:/user/expense/list";
-		}
-		
-		model.addAttribute("expenseAttribute", expense);
-		return "/user/expense/form";
-	}
+        model.addAttribute("expenseAttribute", expense);
+        return "/user/expense/show";
+    }
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveAction(
-			final RedirectAttributes redirectAttributes,
-			Principal principal,
-			@ModelAttribute("expenseAttribute") @Valid Expense formData,
-			BindingResult result) {
-		
-		if (result.hasErrors()) {
-			return "/user/expense/form";
-		}
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public String newAction(Model model) {
+        model.addAttribute("expensetypes", expensetypeService.findAll());
+        model.addAttribute("expenseAttribute", new Expense());
+        return "/user/expense/form";
+    }
 
-		Account account = accountService.findOneByUsername(principal.getName());
-		formData.setAccount(account);
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String editAction(
+            final RedirectAttributes redirectAttributes,
+            @PathVariable Long id,
+            Model model) {
 
-		expenseService.save(formData);
-		redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
-		return "redirect:/user/expense/list";
-	}
+        Expense expense = expenseService.findOne(id);
+        if (expense.isSubmitted()) {
+            redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+            return "redirect:/user/expense/list";
+        }
 
-	@RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)
-	public String submitAction(
-			final RedirectAttributes redirectAttributes,
-			Principal principal,
-			@PathVariable Long id, 
-			Model model) {
-		
-		Account account = accountService.findOneByUsername(principal.getName());
-		Expense expense = expenseService.findOneByAccountAndId(account, id);
-		
-		if (expense instanceof Expense == false) {
-			redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
-			return "redirect:/user/expense/list";
-		}
+        model.addAttribute("expensetypes", expensetypeService.findAll());
+        model.addAttribute("expenseAttribute", expense);
+        return "/user/expense/form";
+    }
 
-		expense.setSubmitted(true);
-		expenseService.save(expense);
-		return "redirect:/user/expense/show/"+id;
-	}
-	
-	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-	public String delete(
-			final RedirectAttributes redirectAttributes,
-			Principal principal,
-			@RequestParam(value = "id", required = true) Long id) {
-		
-		Account account = accountService.findOneByUsername(principal.getName());
-		Expense expense = expenseService.findOneByAccountAndId(account, id);
-		
-		if (expense instanceof Expense == false) {
-			redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
-		}
-		else if (expense.isSubmitted()) {
-			redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
-		}
-		else {
-			redirectAttributes.addFlashAttribute("message", "Kaydınız başarı ile silindi");
-			expenseService.delete(expense);
-		}
-		
-		return "redirect:/user/expense/list";
-	}
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public String saveAction(
+            final RedirectAttributes redirectAttributes,
+            Principal principal,
+            @ModelAttribute("expenseAttribute") @Valid Expense formData,
+            BindingResult result) {
 
+        if (result.hasErrors()) {
+            return "/user/expense/form";
+        }
+
+        Account account = accountService.findOneByUsername(principal.getName());
+        formData.setAccount(account);
+
+        expenseService.save(formData);
+        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+        return "redirect:/user/expense/list";
+    }
+
+    @RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)
+    public String submitAction(
+            final RedirectAttributes redirectAttributes,
+            Principal principal,
+            @PathVariable Long id,
+            Model model) {
+
+        Account account = accountService.findOneByUsername(principal.getName());
+        Expense expense = expenseService.findOneByAccountAndId(account, id);
+
+        if (expense instanceof Expense == false) {
+            redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
+            return "redirect:/user/expense/list";
+        }
+
+        expense.setSubmitted(true);
+        expenseService.save(expense);
+        return "redirect:/user/expense/show/" + id;
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public String delete(
+            final RedirectAttributes redirectAttributes,
+            Principal principal,
+            @RequestParam(value = "id", required = true) Long id) {
+
+        Account account = accountService.findOneByUsername(principal.getName());
+        Expense expense = expenseService.findOneByAccountAndId(account, id);
+
+        if (expense instanceof Expense == false) {
+            redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
+        } else if (expense.isSubmitted()) {
+            redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Kaydınız başarı ile silindi");
+            expenseService.delete(expense);
+        }
+
+        return "redirect:/user/expense/list";
+    }
 }

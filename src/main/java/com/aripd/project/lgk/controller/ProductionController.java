@@ -31,7 +31,10 @@ import com.aripd.common.model.CsvImportBean;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Bigbag;
+import com.aripd.project.lgk.domain.Compensation;
 import com.aripd.project.lgk.domain.Production;
+import com.aripd.project.lgk.service.CompensationService;
+import com.aripd.project.lgk.service.ElectricmeterService;
 import com.aripd.project.lgk.service.ProductService;
 import com.aripd.project.lgk.service.ProductionService;
 import com.aripd.project.lgk.service.ShiftService;
@@ -47,12 +50,16 @@ public class ProductionController {
     private ProductionValidator productionValidator;
     @Resource(name = "productionService")
     private ProductionService productionService;
-    @Resource(name = "shiftService")
-    private ShiftService shiftService;
     @Resource(name = "accountService")
     private AccountService accountService;
     @Resource(name = "productService")
     private ProductService productService;
+    @Resource(name = "shiftService")
+    private ShiftService shiftService;
+    @Resource(name = "electricmeterService")
+    private ElectricmeterService electricmeterService;
+    @Resource(name = "compensationService")
+    private CompensationService compensationService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -78,6 +85,7 @@ public class ProductionController {
     public String newAction(Model model) {
         model.addAttribute("accounts", accountService.findAll());
         model.addAttribute("shifts", shiftService.findAll());
+        model.addAttribute("electricmeters", electricmeterService.findAll());
         model.addAttribute("productionAttribute", new Production());
         return "production/form";
     }
@@ -89,6 +97,7 @@ public class ProductionController {
         model.addAttribute("bigbagAttribute", new Bigbag());
         model.addAttribute("accounts", accountService.findAll());
         model.addAttribute("shifts", shiftService.findAll());
+        model.addAttribute("electricmeters", electricmeterService.findAll());
         model.addAttribute("products", productService.findAll());
         model.addAttribute("productionAttribute", productionService.findOne(id));
         return "production/form";
@@ -108,7 +117,19 @@ public class ProductionController {
             return "/production/form";
         }
 
-        productionService.save(formData);
+        Production production = productionService.save(formData);
+        
+        for (Compensation compensation : formData.getCompensations()) {
+            compensation.setProduction(production);
+            //compensation.setElectricmeter(compensation.getElectricmeter());
+            //compensation.setVal(compensation.getVal());
+            compensationService.save(compensation);
+        }
+
+        //Compensation compensation = compensationService.findOneByProductionAndElectricmeter(production, electricmeter);
+        //truck.setKm(formData.getEndingKm());
+        //truckService.save(truck);
+
         redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
         return "redirect:/production/list";
     }

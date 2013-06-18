@@ -31,7 +31,6 @@ import com.aripd.common.model.CsvImportBean;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Expense;
-import com.aripd.project.lgk.domain.Uatf;
 import com.aripd.project.lgk.service.ExpenseService;
 import com.aripd.project.lgk.service.ExpensetypeService;
 
@@ -75,7 +74,6 @@ public class ExpenseController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
-        model.addAttribute("uatfAttribute", new Uatf());
         model.addAttribute("accounts", accountService.findAll());
         model.addAttribute("expensetypes", expensetypeService.findAll());
         model.addAttribute("expenseAttribute", expenseService.findOne(id));

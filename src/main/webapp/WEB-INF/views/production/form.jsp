@@ -77,6 +77,27 @@
                     <button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
                     </div>
                 </fieldset>
+                <table class="table">
+                    <caption>Compensation Table</caption>
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Name</th>
+                            <th>Val</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${electricmeters}" var="electricmeter" varStatus="status">
+                        <tr>
+                            <td>${status.count}</td>
+                            <td>${electricmeter.name}</td>
+                            <td><input class="input-mini" name="compensations[${status.index}].production.id" value="${productionAttribute.id}"/></td>
+                            <td><input class="input-mini" name="compensations[${status.index}].electricmeter.id" value="${electricmeter.id}"/></td>
+                            <td><input class="input-mini" name="compensations[${status.index}].val" value="12"/></td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
         </form:form>
 
         <c:if test="${ !empty productionAttribute.id }">

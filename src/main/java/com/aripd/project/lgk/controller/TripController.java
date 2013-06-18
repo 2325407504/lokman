@@ -109,9 +109,6 @@ public class TripController {
             return "/trip/form";
         }
 
-        Truck truck = truckService.findOne(formData.getTruck().getId());
-        truck.setKm(formData.getEndingKm());
-        truckService.save(truck);
         tripService.save(formData);
         redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
         return "redirect:/trip/list";
@@ -142,8 +139,8 @@ public class TripController {
      * this response"
      */
     @RequestMapping(value = "/export/xls", method = RequestMethod.GET)
-    public void getXLS(HttpServletResponse response, Model model) {
-        tripService.exportXLS(response);
+    public void exportAll(HttpServletResponse response, Model model) {
+        tripService.exportAll(response);
     }
 
     @RequestMapping(value = "/import/xls", method = RequestMethod.GET)
@@ -224,5 +221,14 @@ public class TripController {
     public String reportAction(Model model) {
         model.addAttribute("trucks", truckService.findAll());
         return "trip/report";
+    }
+
+    @RequestMapping(value = "/report/truck/{id}/xls", method = RequestMethod.GET)
+    public void exportByTruck(
+            HttpServletResponse response,
+            @PathVariable Long id,
+            Model model) {
+        Truck truck = truckService.findOne(id);
+        tripService.exportByTruck(response, truck);
     }
 }

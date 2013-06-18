@@ -16,7 +16,6 @@
 <aripd:description id="trucks">
     <aripd:descriptionitem label="Region" field="${truckAttribute.region.name}"></aripd:descriptionitem>
     <aripd:descriptionitem label="Plate" field="${truckAttribute.plate}"></aripd:descriptionitem>
-    <aripd:descriptionitem label="Kilometer" field="${truckAttribute.km}"></aripd:descriptionitem>
 </aripd:description>
 
 <div class="form-actions">

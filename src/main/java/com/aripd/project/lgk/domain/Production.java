@@ -18,7 +18,11 @@ import org.joda.time.DateTime;
 import com.aripd.account.domain.Account;
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.common.utils.ARIPDJodaDateTimeSerializer;
+import java.util.List;
 import javax.validation.constraints.NotNull;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "production")
@@ -43,6 +47,14 @@ public class Production extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "production", cascade = CascadeType.REMOVE)
     private Set<Bigbag> bigbags;
+    @OneToMany(mappedBy = "production", cascade = CascadeType.REMOVE)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Compensation> compensations;
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 
     public boolean isSubmitted() {
         return submitted;
@@ -98,5 +110,13 @@ public class Production extends BaseEntity {
 
     public void setBigbags(Set<Bigbag> bigbags) {
         this.bigbags = bigbags;
+    }
+
+    public List<Compensation> getCompensations() {
+        return compensations;
+    }
+
+    public void setCompensations(List<Compensation> compensations) {
+        this.compensations = compensations;
     }
 }
