@@ -47,6 +47,7 @@ public class Production extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "production", cascade = CascadeType.REMOVE)
     private Set<Bigbag> bigbags;
+    @JsonIgnore
     @OneToMany(mappedBy = "production", cascade = CascadeType.REMOVE)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Compensation> compensations;
