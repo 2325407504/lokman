@@ -35,11 +35,11 @@
         </li>
     </ul>
 
+<form:form modelAttribute="productionAttribute" action="${productionSave}" method="post">
+    <form:errors path="*" cssClass="alert alert-error" element="div" />
+    <form:hidden path="id" />
     <div class="row-fluid">
         <div class="span4">
-        <form:form modelAttribute="productionAttribute" action="${productionSave}" method="post">
-            <form:errors path="*" cssClass="alert alert-error" element="div" />
-            <form:hidden path="id" />
             <fieldset>
                 <div class="control-group">
                     <form:checkbox path="submitted" /> <spring:message code="Submitted by user"></spring:message>
@@ -70,26 +70,20 @@
                     <form:textarea path="remark" />
                     <form:errors cssClass="text-error" path="remark" />
                 </div>
-                <div class="form-actions">
-                    <c:if test="${ !empty productionAttribute.id }">
-                        <a class="btn btn-danger" href="javascript:$('#form-${productionAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete"></spring:message></a>
-                    </c:if>
-                    <button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
-                    </div>
-                </fieldset>
-                <table class="table">
-                    <caption>Machine Times</caption>
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Name</th>
-                            <th>Val</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            </fieldset>
+        </div>
+        <div class="span4">
+            <table class="table">
+                <caption><spring:message code="Machine Times" /></caption>
+                <thead>
+                    <tr>
+                        <th><spring:message code="Machine" /></th>
+                        <th><spring:message code="Value" /></th>
+                    </tr>
+                </thead>
+                <tbody>
                     <c:forEach items="${machines}" var="machine" varStatus="status">
                         <tr>
-                            <td>${status.count}</td>
                             <td>${machine.name}</td>
                             <td>
                                 <input type="hidden" class="input-mini" name="machinetimes[${status.index}].id" value="${productionAttribute.machinetimes[status.index].id}"/>
@@ -100,19 +94,19 @@
                     </c:forEach>
                 </tbody>
             </table>
+        </div>
+        <div class="span4">
             <table class="table">
-                <caption>Compensation Table</caption>
+                <caption><spring:message code="Compensation Table" /></caption>
                 <thead>
                     <tr>
-                        <th>No.</th>
-                        <th>Name</th>
-                        <th>Val</th>
+                        <th><spring:message code="Electricmeter" /></th>
+                        <th><spring:message code="Value" /></th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach items="${electricmeters}" var="electricmeter" varStatus="status">
                         <tr>
-                            <td>${status.count}</td>
                             <td>${electricmeter.name}</td>
                             <td>
                                 <input type="hidden" class="input-mini" name="compensations[${status.index}].id" value="${productionAttribute.compensations[status.index].id}"/>
@@ -123,16 +117,30 @@
                     </c:forEach>
                 </tbody>
             </table>
-        </form:form>
-
-        <c:if test="${ !empty productionAttribute.id }">
-            <spring:url var="deleteUrl" value="/production/delete?id=${productionAttribute.id}" />
-            <form:form id="form-${productionAttribute.id}" modelAttribute="productionAttribute" action="${deleteUrl}" method="delete">
-                <form:hidden path="id" />
-            </form:form>
-        </c:if>
+        </div>
     </div>
-    <div class="span8">
+
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="form-actions">
+                <c:if test="${ !empty productionAttribute.id }">
+                    <a class="btn btn-danger" href="javascript:$('#form-${productionAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete"></spring:message></a>
+                </c:if>
+                <button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
+                </div>
+            </div>
+        </div>
+</form:form>
+
+
+<c:if test="${ !empty productionAttribute.id }">
+    <spring:url var="deleteUrl" value="/production/delete?id=${productionAttribute.id}" />
+    <form:form id="form-${productionAttribute.id}" modelAttribute="productionAttribute" action="${deleteUrl}" method="delete">
+        <form:hidden path="id" />
+    </form:form>
+</c:if>
+<div class="row-fluid">
+    <div class="span12">
         <fmt:message key="Product" var="Product"/>
         <fmt:message key="Weight" var="Weight"/>
 
@@ -144,12 +152,12 @@
                     <form:options items="${products}" itemLabel="name" itemValue="id"/>
                 </form:select>
                 <form:input path="weight" cssClass="input-small" placeholder="${Weight}" />
-                <button class="btn" type="submit"><i class="icon-ok"></i></button>
+                <button class="btn btn-primary" type="submit"><i class="icon-ok icon-white"></i></button>
                 </form:form>
 
             <hr>
 
-            <aripd:datatables datasource="/bigbag/get/${productionAttribute.id}" id="bigbags" dataUrlDelete="/bigbag/delete" actionColumn="2">
+            <aripd:datatables datasource="/bigbag/get/${productionAttribute.id}" id="bigbags" caption="Production Amounts" dataUrlDelete="/bigbag/delete" actionColumn="2">
                 <aripd:column label="Product" field="product.name"/>
                 <aripd:column label="Weight" field="weight"/>
                 <aripd:column label="Action" field="id"/>
@@ -160,48 +168,10 @@
 
 <script>
     $(function() {
-        $("#shiftdate").datetimepicker();
+        $("#shiftdate").datetimepicker({
+            maxDate: new Date()
+        });
     });
-</script>
-
-<script type="text/javascript">
-<!--
-    var startDateTextBox = $('#startingTime');
-    var endDateTextBox = $('#endingTime');
-
-    startDateTextBox.datetimepicker({
-        onClose: function(dateText, inst) {
-            if (endDateTextBox.val() != '') {
-                var testStartDate = startDateTextBox.datetimepicker('getDate');
-                var testEndDate = endDateTextBox.datetimepicker('getDate');
-                if (testStartDate > testEndDate)
-                    endDateTextBox.datetimepicker('setDate', testStartDate);
-            }
-            else {
-                endDateTextBox.val(dateText);
-            }
-        },
-        onSelect: function(selectedDateTime) {
-            endDateTextBox.datetimepicker('option', 'minDate', startDateTextBox.datetimepicker('getDate'));
-        }
-    });
-    endDateTextBox.datetimepicker({
-        onClose: function(dateText, inst) {
-            if (startDateTextBox.val() != '') {
-                var testStartDate = startDateTextBox.datetimepicker('getDate');
-                var testEndDate = endDateTextBox.datetimepicker('getDate');
-                if (testStartDate > testEndDate)
-                    startDateTextBox.datetimepicker('setDate', testEndDate);
-            }
-            else {
-                startDateTextBox.val(dateText);
-            }
-        },
-        onSelect: function(selectedDateTime) {
-            startDateTextBox.datetimepicker('option', 'maxDate', endDateTextBox.datetimepicker('getDate'));
-        }
-    });
-//-->
 </script>
 
 <%@ include file="/WEB-INF/views/footer.jsp" %>

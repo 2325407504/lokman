@@ -123,11 +123,13 @@ public class ProductionController {
         if (result.hasErrors()) {
             model.addAttribute("accounts", accountService.findAll());
             model.addAttribute("shifts", shiftService.findAll());
+            model.addAttribute("electricmeters", electricmeterService.findAll());
+            model.addAttribute("machines", machineService.findAll());
             return "/production/form";
         }
 
         Production production = productionService.save(formData);
-        
+
         for (Machinetime machinetime : formData.getMachinetimes()) {
             machinetime.setProduction(production);
             machinetimeService.save(machinetime);

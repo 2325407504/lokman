@@ -1,5 +1,6 @@
 <%@ tag language="java" %>
 <%@ attribute name="id" required="true" %>
+<%@ attribute name="caption" required="false" type="java.lang.String" %>
 <%@ attribute name="datasource" required="true" rtexprvalue="true" %>
 <%@ attribute name="dataUrlShow" required="false" rtexprvalue="true" %>
 <%@ attribute name="dataUrlEdit" required="false" rtexprvalue="true" %>
@@ -14,6 +15,7 @@
 <c:if test="${sortingDirection == null}"><c:set var="sortingDirection" value="desc" /></c:if>
 <c:set var="org_languagetool_tags_table_outputmode" value="TABLE" scope="request" />
 <table class="table table-striped table-bordered" id="${id}">
+    <caption><spring:message code="${caption}" text="${caption}" /></caption>
     <thead>
         <tr><jsp:doBody /></tr>
     </thead>

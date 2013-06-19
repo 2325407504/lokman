@@ -77,29 +77,9 @@
             </li>
         </ul>
     </div>
-    <div class="span8">
-        <aripd:datatables datasource="/bigbag/get/${productionAttribute.id}" id="bigbags">
-            <aripd:column label="Product" field="product.name"/>
-            <aripd:column label="Weight" field="weight"/>
-        </aripd:datatables>
-    </div>
-</div>
-
-<div class="row-fluid">
-    <div class="span6">
+    <div class="span4">
         <table class="table">
-            <caption>Compensation Table</caption>
-            <c:forEach items="${productionAttribute.compensations}" var="compensation">
-                <tr>
-                    <td>${compensation.electricmeter.name}</td>
-                    <td>${compensation.val}</td>
-                </tr>
-            </c:forEach>
-        </table>
-    </div>
-    <div class="span6">
-        <table class="table">
-            <caption>Machine Times</caption>
+            <caption><spring:message code="Machine Times" /></caption>
             <c:forEach items="${productionAttribute.machinetimes}" var="machinetime">
                 <tr>
                     <td>${machinetime.machine.name}</td>
@@ -108,6 +88,27 @@
             </c:forEach>
         </table>
     </div>
+    <div class="span4">
+        <table class="table">
+            <caption><spring:message code="Compensation Table" /></caption>
+            <c:forEach items="${productionAttribute.compensations}" var="compensation">
+                <tr>
+                    <td>${compensation.electricmeter.name}</td>
+                    <td>${compensation.val}</td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span12">
+        <aripd:datatables datasource="/bigbag/get/${productionAttribute.id}" id="bigbags" caption="Production Amounts">
+            <aripd:column label="Product" field="product.name"/>
+            <aripd:column label="Weight" field="weight"/>
+        </aripd:datatables>
+    </div>
+</div>
 </div>
 
 <%@ include file="/WEB-INF/views/footer.jsp" %>

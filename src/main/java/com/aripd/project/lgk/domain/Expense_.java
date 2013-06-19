@@ -20,6 +20,7 @@ public class Expense_ extends BaseEntity_ {
 
     public static volatile SingularAttribute<Expense, Boolean> submitted;
     public static volatile SingularAttribute<Expense, Account> account;
+    public static volatile SingularAttribute<Expense, Expensetype> expensetype;
     public static volatile SingularAttribute<Expense, DateTime> documentDate;
     public static volatile SingularAttribute<Expense, String> company;
     public static volatile SingularAttribute<Expense, String> description;

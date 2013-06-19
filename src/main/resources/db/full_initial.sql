@@ -34,9 +34,9 @@ INSERT INTO `expensetype` (`id`, `createdAt`, `updatedAt`, `name`) VALUES
 (2, NOW(), NOW(), 'Diğer');
 
 INSERT INTO `shift` (`id`, `createdAt`, `updatedAt`, `code`, `name`) VALUES
-(1, NOW(), NOW(), 'A', 'Vardiya A'),
-(2, NOW(), NOW(), 'B', 'Vardiya B'),
-(3, NOW(), NOW(), 'C', 'Vardiya C');
+(1, NOW(), NOW(), 'A', 'Vardiya A (00:00-08:00)'),
+(2, NOW(), NOW(), 'B', 'Vardiya B (08:00-16:00)'),
+(3, NOW(), NOW(), 'C', 'Vardiya C (16:00-24:00)');
 
 INSERT INTO `product` (`id`, `createdAt`, `updatedAt`, `code`, `name`) VALUES
 (1, NOW(), NOW(), 'P1', 'Granül A (0-0,6 mm)'),
