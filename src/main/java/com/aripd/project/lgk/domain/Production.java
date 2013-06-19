@@ -51,6 +51,10 @@ public class Production extends BaseEntity {
     @OneToMany(mappedBy = "production", cascade = CascadeType.REMOVE)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Compensation> compensations;
+    @JsonIgnore
+    @OneToMany(mappedBy = "production", cascade = CascadeType.REMOVE)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Machinetime> machinetimes;
 
     @Override
     public String toString() {
@@ -119,5 +123,13 @@ public class Production extends BaseEntity {
 
     public void setCompensations(List<Compensation> compensations) {
         this.compensations = compensations;
+    }
+
+    public List<Machinetime> getMachinetimes() {
+        return machinetimes;
+    }
+
+    public void setMachinetimes(List<Machinetime> machinetimes) {
+        this.machinetimes = machinetimes;
     }
 }

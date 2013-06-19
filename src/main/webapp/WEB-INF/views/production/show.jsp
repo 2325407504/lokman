@@ -85,4 +85,29 @@
     </div>
 </div>
 
+<div class="row-fluid">
+    <div class="span6">
+        <table class="table">
+            <caption>Compensation Table</caption>
+            <c:forEach items="${productionAttribute.compensations}" var="compensation">
+                <tr>
+                    <td>${compensation.electricmeter.name}</td>
+                    <td>${compensation.val}</td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
+    <div class="span6">
+        <table class="table">
+            <caption>Machine Times</caption>
+            <c:forEach items="${productionAttribute.machinetimes}" var="machinetime">
+                <tr>
+                    <td>${machinetime.machine.name}</td>
+                    <td>${machinetime.val}</td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
+</div>
+
 <%@ include file="/WEB-INF/views/footer.jsp" %>

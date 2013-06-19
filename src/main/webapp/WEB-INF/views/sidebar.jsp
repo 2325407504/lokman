@@ -18,6 +18,7 @@
 <spring:url value="/expensetype/list" var="expensetype_list" />
 <spring:url value="/product/list" var="product_list" />
 <spring:url value="/electricmeter/list" var="electricmeter_list" />
+<spring:url value="/machine/list" var="machine_list" />
 <spring:url value="/shift/list" var="shift_list" />
 <spring:url value="/truck/list" var="truck_list" />
 <spring:url value="/driver/list" var="driver_list" />
@@ -69,6 +70,7 @@
                             <li><a href="${region_list}"><spring:message code="Regions"></spring:message></a></li>
                             <li><a href="${product_list}"><spring:message code="Products"></spring:message></a></li>
                             <li><a href="${electricmeter_list}"><spring:message code="Electricmeters"></spring:message></a></li>
+                            <li><a href="${machine_list}"><spring:message code="Machines"></spring:message></a></li>
                             <li><a href="${expensetype_list}"><spring:message code="Expensetypes"></spring:message></a></li>
                             <li><a href="${shift_list}"><spring:message code="Shifts"></spring:message></a></li>
                             <li><a href="${truck_list}"><spring:message code="Trucks"></spring:message></a></li>

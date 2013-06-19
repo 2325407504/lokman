@@ -8,6 +8,7 @@ import org.joda.time.DateTime;
 
 import com.aripd.account.domain.Account;
 import com.aripd.common.entity.BaseEntity_;
+import javax.persistence.metamodel.ListAttribute;
 
 /**
  * A meta model class used to create type safe queries.
@@ -24,4 +25,6 @@ public class Production_ extends BaseEntity_ {
     public static volatile SingularAttribute<Production, Double> feed;
     public static volatile SingularAttribute<Production, String> remark;
     public static volatile SetAttribute<Production, Bigbag> bigbags;
+    public static volatile ListAttribute<Production, Compensation> compensations;
+    public static volatile ListAttribute<Production, Machinetime> machinetimes;
 }

@@ -32,9 +32,12 @@ import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Bigbag;
 import com.aripd.project.lgk.domain.Compensation;
+import com.aripd.project.lgk.domain.Machinetime;
 import com.aripd.project.lgk.domain.Production;
 import com.aripd.project.lgk.service.CompensationService;
 import com.aripd.project.lgk.service.ElectricmeterService;
+import com.aripd.project.lgk.service.MachineService;
+import com.aripd.project.lgk.service.MachinetimeService;
 import com.aripd.project.lgk.service.ProductService;
 import com.aripd.project.lgk.service.ProductionService;
 import com.aripd.project.lgk.service.ShiftService;
@@ -58,8 +61,12 @@ public class ProductionController {
     private ShiftService shiftService;
     @Resource(name = "electricmeterService")
     private ElectricmeterService electricmeterService;
+    @Resource(name = "machineService")
+    private MachineService machineService;
     @Resource(name = "compensationService")
     private CompensationService compensationService;
+    @Resource(name = "machinetimeService")
+    private MachinetimeService machinetimeService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -86,6 +93,7 @@ public class ProductionController {
         model.addAttribute("accounts", accountService.findAll());
         model.addAttribute("shifts", shiftService.findAll());
         model.addAttribute("electricmeters", electricmeterService.findAll());
+        model.addAttribute("machines", machineService.findAll());
         model.addAttribute("productionAttribute", new Production());
         return "production/form";
     }
@@ -98,6 +106,7 @@ public class ProductionController {
         model.addAttribute("accounts", accountService.findAll());
         model.addAttribute("shifts", shiftService.findAll());
         model.addAttribute("electricmeters", electricmeterService.findAll());
+        model.addAttribute("machines", machineService.findAll());
         model.addAttribute("products", productService.findAll());
         model.addAttribute("productionAttribute", productionService.findOne(id));
         return "production/form";
@@ -119,6 +128,11 @@ public class ProductionController {
 
         Production production = productionService.save(formData);
         
+        for (Machinetime machinetime : formData.getMachinetimes()) {
+            machinetime.setProduction(production);
+            machinetimeService.save(machinetime);
+        }
+
         for (Compensation compensation : formData.getCompensations()) {
             compensation.setProduction(production);
             compensationService.save(compensation);

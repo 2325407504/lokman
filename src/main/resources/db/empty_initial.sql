@@ -19,6 +19,16 @@ INSERT INTO `electricmeter` (`id`, `createdAt`, `updatedAt`, `name`) VALUES
 (5, NOW(), NOW(), '580'),
 (6, NOW(), NOW(), '880');
 
+INSERT INTO `machine` (`id`, `createdAt`, `updatedAt`, `name`) VALUES
+(1, NOW(), NOW(), 'Granülatör1'),
+(2, NOW(), NOW(), 'Granülatör2'),
+(3, NOW(), NOW(), 'Ana Kırıcı'),
+(4, NOW(), NOW(), 'Hooper Dozaj Bandı'),
+(5, NOW(), NOW(), 'Değirmen (Impact Mill)'),
+(6, NOW(), NOW(), 'Değirmen Dozaj Bandı'),
+(7, NOW(), NOW(), 'Powderizer1'),
+(8, NOW(), NOW(), 'Powderizer2');
+
 INSERT INTO `expensetype` (`id`, `createdAt`, `updatedAt`, `name`) VALUES
 (1, NOW(), NOW(), 'Yakıt'),
 (2, NOW(), NOW(), 'Diğer');
@@ -29,9 +39,11 @@ INSERT INTO `shift` (`id`, `createdAt`, `updatedAt`, `code`, `name`) VALUES
 (3, NOW(), NOW(), 'C', 'Vardiya C');
 
 INSERT INTO `product` (`id`, `createdAt`, `updatedAt`, `code`, `name`) VALUES
-(1, NOW(), NOW(), 'P1', '0-0,6 mm'),
-(2, NOW(), NOW(), 'P2', '0,6-2 mm'),
-(3, NOW(), NOW(), 'P3', '2-4 mm');
+(1, NOW(), NOW(), 'P1', 'Granül A (0-0,6 mm)'),
+(2, NOW(), NOW(), 'P2', 'Granül B (0,6-2 mm)'),
+(3, NOW(), NOW(), 'P3', 'Granül C (2-4 mm)'),
+(4, NOW(), NOW(), 'P4', 'Tekstil'),
+(5, NOW(), NOW(), 'P5', 'Çelik');
 
 INSERT INTO `customer` (`id`, `createdAt`, `updatedAt`, `firstName`, `lastName`) VALUES
 (1, NOW(), NOW(), 'SA', 'ARIPD'),

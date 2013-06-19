@@ -78,7 +78,7 @@
                     </div>
                 </fieldset>
                 <table class="table">
-                    <caption>Compensation Table</caption>
+                    <caption>Machine Times</caption>
                     <thead>
                         <tr>
                             <th>No.</th>
@@ -87,6 +87,29 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <c:forEach items="${machines}" var="machine" varStatus="status">
+                        <tr>
+                            <td>${status.count}</td>
+                            <td>${machine.name}</td>
+                            <td>
+                                <input type="hidden" class="input-mini" name="machinetimes[${status.index}].id" value="${productionAttribute.machinetimes[status.index].id}"/>
+                                <input type="hidden" class="input-mini" name="machinetimes[${status.index}].machine.id" value="${machine.id}"/>
+                                <input class="input-mini" name="machinetimes[${status.index}].val" value="${productionAttribute.machinetimes[status.index].val}"/>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+            <table class="table">
+                <caption>Compensation Table</caption>
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>Val</th>
+                    </tr>
+                </thead>
+                <tbody>
                     <c:forEach items="${electricmeters}" var="electricmeter" varStatus="status">
                         <tr>
                             <td>${status.count}</td>
