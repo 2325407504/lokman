@@ -121,14 +121,8 @@ public class ProductionController {
         
         for (Compensation compensation : formData.getCompensations()) {
             compensation.setProduction(production);
-            //compensation.setElectricmeter(compensation.getElectricmeter());
-            //compensation.setVal(compensation.getVal());
             compensationService.save(compensation);
         }
-
-        //Compensation compensation = compensationService.findOneByProductionAndElectricmeter(production, electricmeter);
-        //truck.setKm(formData.getEndingKm());
-        //truckService.save(truck);
 
         redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
         return "redirect:/production/list";

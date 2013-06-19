@@ -91,9 +91,11 @@
                         <tr>
                             <td>${status.count}</td>
                             <td>${electricmeter.name}</td>
-                            <td><input class="input-mini" name="compensations[${status.index}].production.id" value="${productionAttribute.id}"/></td>
-                            <td><input class="input-mini" name="compensations[${status.index}].electricmeter.id" value="${electricmeter.id}"/></td>
-                            <td><input class="input-mini" name="compensations[${status.index}].val" value="12"/></td>
+                            <td>
+                                <input type="hidden" class="input-mini" name="compensations[${status.index}].id" value="${productionAttribute.compensations[status.index].id}"/>
+                                <input type="hidden" class="input-mini" name="compensations[${status.index}].electricmeter.id" value="${electricmeter.id}"/>
+                                <input class="input-mini" name="compensations[${status.index}].val" value="${productionAttribute.compensations[status.index].val}"/>
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>
