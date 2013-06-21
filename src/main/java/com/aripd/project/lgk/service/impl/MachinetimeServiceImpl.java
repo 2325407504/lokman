@@ -47,6 +47,11 @@ public class MachinetimeServiceImpl implements MachinetimeService {
         return repository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public List<Machinetime> findByProduction(Production production) {
+        return repository.findByProduction(production);
+    }
+
     @Transactional(readOnly = false)
     public Machinetime save(Machinetime machinetime) {
         return repository.save(machinetime);

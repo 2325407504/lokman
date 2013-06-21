@@ -136,7 +136,6 @@
             $.ajax({
                 type: "GET",
                 url: "truck/get/" + truck_id + "/kilometer",
-                //data: "name=" + name + "&education=" + education,
                 success: function(response) {
                     $(e).find('#startingKm').val(response);
                 },

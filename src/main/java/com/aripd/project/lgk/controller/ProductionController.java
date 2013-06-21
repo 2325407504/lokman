@@ -43,6 +43,7 @@ import com.aripd.project.lgk.service.ProductionService;
 import com.aripd.project.lgk.service.ShiftService;
 import com.aripd.project.lgk.validator.ProductionValidator;
 import javax.validation.Valid;
+import org.joda.time.DateTime;
 
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 @Controller
@@ -94,7 +95,9 @@ public class ProductionController {
         model.addAttribute("shifts", shiftService.findAll());
         model.addAttribute("electricmeters", electricmeterService.findAll());
         model.addAttribute("machines", machineService.findAll());
-        model.addAttribute("productionAttribute", new Production());
+        Production production = new Production();
+        production.setShiftdate(new DateTime());
+        model.addAttribute("productionAttribute", production);
         return "production/form";
     }
 

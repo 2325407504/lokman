@@ -35,7 +35,7 @@
         </li>
     </ul>
 
-<form:form modelAttribute="productionAttribute" action="${productionSave}" method="post">
+<form:form id="production" modelAttribute="productionAttribute" action="${productionSave}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <form:hidden path="id" />
     <div class="row-fluid">
@@ -52,12 +52,12 @@
                 </div>
                 <div class="control-group">
                     <form:label path="shiftdate"><spring:message code="Date"></spring:message></form:label>
-                    <form:input type="text" path="shiftdate" />
+                    <form:input id="shiftdate" type="text" path="shiftdate" />
                     <form:errors cssClass="text-error" path="shiftdate" />
                 </div>
                 <div class="control-group">
                     <form:label path="shift"><spring:message code="Shift"></spring:message></form:label>
-                    <form:select path="shift.id" multiple="false" items="${shifts}" itemLabel="name" itemValue="id"/>
+                    <form:select id="shiftId" path="shift.id" multiple="false" items="${shifts}" itemLabel="name" itemValue="id" />
                     <form:errors cssClass="text-error" path="shift" />
                 </div>
                 <div class="control-group">
@@ -79,12 +79,14 @@
                     <tr>
                         <th><spring:message code="Machine" /></th>
                         <th><spring:message code="Value" /></th>
+                        <th><spring:message code="Value" /></th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach items="${machines}" var="machine" varStatus="status">
                         <tr>
                             <td>${machine.name}</td>
+                            <td id="machine_${machine.id}"></td>
                             <td>
                                 <input type="hidden" class="input-mini" name="machinetimes[${status.index}].id" value="${productionAttribute.machinetimes[status.index].id}"/>
                                 <input type="hidden" class="input-mini" name="machinetimes[${status.index}].machine.id" value="${machine.id}"/>

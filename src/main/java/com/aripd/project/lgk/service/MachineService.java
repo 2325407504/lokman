@@ -8,15 +8,15 @@ import com.aripd.project.lgk.domain.Machine;
 
 public interface MachineService {
 
-    Machine findOne(Long id);
+    public Machine findOne(Long id);
 
-    List<Machine> findAll();
+    public List<Machine> findAll();
 
-    Machine save(Machine machine);
+    public Machine save(Machine machine);
 
-    void delete(Long id);
+    public void delete(Long id);
 
-    void delete(Machine machine);
+    public void delete(Machine machine);
 
-    ResultSet<Machine> getRecords(PagingCriteria criteria);
+    public ResultSet<Machine> getRecords(PagingCriteria criteria);
 }

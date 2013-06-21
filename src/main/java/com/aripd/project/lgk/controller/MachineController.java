@@ -21,7 +21,15 @@ import com.aripd.common.dto.TableParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Machine;
+import com.aripd.project.lgk.domain.Machinetime;
+import com.aripd.project.lgk.domain.Production;
+import com.aripd.project.lgk.domain.Shift;
 import com.aripd.project.lgk.service.MachineService;
+import com.aripd.project.lgk.service.MachinetimeService;
+import com.aripd.project.lgk.service.ProductionService;
+import com.aripd.project.lgk.service.ShiftService;
+import java.util.List;
+import org.joda.time.DateTime;
 
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 @Controller
@@ -30,6 +38,12 @@ public class MachineController {
 
     @Resource(name = "machineService")
     private MachineService machineService;
+    @Resource(name = "machinetimeService")
+    private MachinetimeService machinetimeService;
+    @Resource(name = "productionService")
+    private ProductionService productionService;
+    @Resource(name = "shiftService")
+    private ShiftService shiftService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody

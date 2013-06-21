@@ -14,6 +14,8 @@ public interface MachinetimeService {
 
     public List<Machinetime> findAll();
 
+    public List<Machinetime> findByProduction(Production production);
+
     public Machinetime save(Machinetime machinetime);
 
     public void delete(Long id);
