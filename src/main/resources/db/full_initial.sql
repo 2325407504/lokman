@@ -38,12 +38,17 @@ INSERT INTO `shift` (`id`, `createdAt`, `updatedAt`, `code`, `name`) VALUES
 (2, NOW(), NOW(), 'B', 'Vardiya B (08:00-16:00)'),
 (3, NOW(), NOW(), 'C', 'Vardiya C (16:00-24:00)');
 
-INSERT INTO `product` (`id`, `createdAt`, `updatedAt`, `code`, `name`) VALUES
-(1, NOW(), NOW(), 'P1', 'Granül A (0-0,6 mm)'),
-(2, NOW(), NOW(), 'P2', 'Granül B (0,6-2 mm)'),
-(3, NOW(), NOW(), 'P3', 'Granül C (2-4 mm)'),
-(4, NOW(), NOW(), 'P4', 'Tekstil'),
-(5, NOW(), NOW(), 'P5', 'Çelik');
+INSERT INTO `productgroup` (`id`, `createdAt`, `updatedAt`, `name`) VALUES
+(1, NOW(), NOW(), 'Granül'),
+(2, NOW(), NOW(), 'Tekstil'),
+(3, NOW(), NOW(), 'Çelik');
+
+INSERT INTO `product` (`id`, `createdAt`, `updatedAt`, `code`, `name`, `productgroup_id`) VALUES
+(1, NOW(), NOW(), 'P1', 'Granül A (0-0,6 mm)', 1),
+(2, NOW(), NOW(), 'P2', 'Granül B (0,6-2 mm)', 1),
+(3, NOW(), NOW(), 'P3', 'Granül C (2-4 mm)', 1),
+(4, NOW(), NOW(), 'P4', 'Tekstil', 2),
+(5, NOW(), NOW(), 'P5', 'Çelik', 3);
 
 INSERT INTO `customer` (`id`, `createdAt`, `updatedAt`, `firstName`, `lastName`) VALUES
 (1, NOW(), NOW(), 'SA', 'ARIPD'),

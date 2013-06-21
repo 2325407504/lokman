@@ -17,6 +17,7 @@
 <spring:url value="/region/list" var="region_list" />
 <spring:url value="/expensetype/list" var="expensetype_list" />
 <spring:url value="/product/list" var="product_list" />
+<spring:url value="/productgroup/list" var="productgroup_list" />
 <spring:url value="/electricmeter/list" var="electricmeter_list" />
 <spring:url value="/machine/list" var="machine_list" />
 <spring:url value="/shift/list" var="shift_list" />
@@ -68,6 +69,7 @@
                             <ul class="nav nav-list">
                                 <li class="nav-header"><spring:message code="Settings"></spring:message></li>
                             <li><a href="${region_list}"><spring:message code="Regions"></spring:message></a></li>
+                            <li><a href="${productgroup_list}"><spring:message code="Product Groups"></spring:message></a></li>
                             <li><a href="${product_list}"><spring:message code="Products"></spring:message></a></li>
                             <li><a href="${electricmeter_list}"><spring:message code="Electricmeters"></spring:message></a></li>
                             <li><a href="${machine_list}"><spring:message code="Machines"></spring:message></a></li>

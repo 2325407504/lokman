@@ -15,4 +15,5 @@ public class Product_ extends BaseEntity_ {
 
     public static volatile SingularAttribute<Product, String> code;
     public static volatile SingularAttribute<Product, String> name;
+    public static volatile SingularAttribute<Product, Productgroup> productgroup;
 }

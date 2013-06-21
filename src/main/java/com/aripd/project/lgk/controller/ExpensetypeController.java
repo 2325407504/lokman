@@ -27,67 +27,66 @@ import com.aripd.project.lgk.service.ExpensetypeService;
 @Controller
 @RequestMapping("/expensetype")
 public class ExpensetypeController {
-	
-	@Resource(name="expensetypeService")
-	private ExpensetypeService expensetypeService;
-	
-	@RequestMapping(value = "/get", method = RequestMethod.GET)
-	public @ResponseBody
-	WebResultSet<Expensetype> getDataTables(@TableParam PagingCriteria criteria) {
-		ResultSet<Expensetype> resultset = this.expensetypeService.getRecords(criteria);
-		return ControllerUtils.getWebResultSet(criteria, resultset);
-	}
 
-	@RequestMapping(value="/list")
-	public String listAction(Model model) {
-		return "expensetype/list";
-	}
+    @Resource(name = "expensetypeService")
+    private ExpensetypeService expensetypeService;
 
-	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
-	public String showAction(
-			@PathVariable Long id,
-			Model model) {
-		model.addAttribute("expensetypeAttribute", expensetypeService.findOne(id));
-		return "expensetype/show";
-	}
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    public @ResponseBody
+    WebResultSet<Expensetype> getDataTables(@TableParam PagingCriteria criteria) {
+        ResultSet<Expensetype> resultset = this.expensetypeService.getRecords(criteria);
+        return ControllerUtils.getWebResultSet(criteria, resultset);
+    }
 
-	@RequestMapping(value = "/new", method = RequestMethod.GET)
+    @RequestMapping(value = "/list")
+    public String listAction(Model model) {
+        return "expensetype/list";
+    }
+
+    @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+    public String showAction(
+            @PathVariable Long id,
+            Model model) {
+        model.addAttribute("expensetypeAttribute", expensetypeService.findOne(id));
+        return "expensetype/show";
+    }
+
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-    	model.addAttribute("expensetypeAttribute", new Expensetype());
-    	return "expensetype/form";
-	}
+        model.addAttribute("expensetypeAttribute", new Expensetype());
+        return "expensetype/form";
+    }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(
-    		@PathVariable Long id, 
-    		Model model) {
-    	model.addAttribute("expensetypeAttribute", expensetypeService.findOne(id));
-    	return "expensetype/form";
-	}
+            @PathVariable Long id,
+            Model model) {
+        model.addAttribute("expensetypeAttribute", expensetypeService.findOne(id));
+        return "expensetype/form";
+    }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
-			final RedirectAttributes redirectAttributes,
-    		@ModelAttribute("expensetypeAttribute") @Valid Expensetype expensetype, 
-			BindingResult result, 
-			Model model) {
-    	
-		if (result.hasErrors()) {
-			return "/expensetype/form";
-		}
-		
-		expensetypeService.save(expensetype);
-		redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
-		return "redirect:/expensetype/list";
-	}
+            final RedirectAttributes redirectAttributes,
+            @ModelAttribute("expensetypeAttribute") @Valid Expensetype expensetype,
+            BindingResult result,
+            Model model) {
 
-	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-	public String delete(
-			final RedirectAttributes redirectAttributes,
-			@RequestParam(value = "id", required = true) Long id) {
-		expensetypeService.delete(id);
-		redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
-		return "redirect:/expensetype/list";
-	}
+        if (result.hasErrors()) {
+            return "/expensetype/form";
+        }
 
+        expensetypeService.save(expensetype);
+        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+        return "redirect:/expensetype/list";
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public String delete(
+            final RedirectAttributes redirectAttributes,
+            @RequestParam(value = "id", required = true) Long id) {
+        expensetypeService.delete(id);
+        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+        return "redirect:/expensetype/list";
+    }
 }

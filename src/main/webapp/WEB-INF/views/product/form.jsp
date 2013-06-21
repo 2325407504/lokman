@@ -24,6 +24,11 @@
     <form:hidden path="id" />
     <fieldset>
         <div class="control-group">
+            <form:label path="productgroup"><spring:message code="Product Group"></spring:message></form:label>
+            <form:select path="productgroup.id" multiple="false" items="${productgroups}" itemLabel="name" itemValue="id"/>
+            <form:errors cssClass="text-error" path="productgroup" />
+        </div>
+        <div class="control-group">
             <form:label path="code"><spring:message code="Code"></spring:message></form:label>
             <span><form:input path="code" /></span>
             <form:errors cssClass="text-error" path="code" />

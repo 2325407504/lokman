@@ -5,6 +5,7 @@ import javax.persistence.Table;
 
 import com.aripd.common.entity.BaseEntity;
 import javax.persistence.Column;
+import javax.persistence.ManyToOne;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -16,6 +17,8 @@ public class Product extends BaseEntity {
     private String code;
     @NotEmpty
     private String name;
+    @ManyToOne
+    private Productgroup productgroup;
 
     @Override
     public String toString() {
@@ -36,5 +39,13 @@ public class Product extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Productgroup getProductgroup() {
+        return productgroup;
+    }
+
+    public void setProductgroup(Productgroup productgroup) {
+        this.productgroup = productgroup;
     }
 }

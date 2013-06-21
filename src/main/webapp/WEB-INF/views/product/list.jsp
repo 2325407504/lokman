@@ -12,6 +12,7 @@
 
 <aripd:datatables datasource="/product/get" id="products" dataUrlShow="/product/show" dataUrlEdit="/product/edit">
     <aripd:column label="Action" field="id"/>
+    <aripd:column label="Product Group" field="productgroup.name"/>
     <aripd:column label="Code" field="code"/>
     <aripd:column label="Name" field="name"/>
 </aripd:datatables>

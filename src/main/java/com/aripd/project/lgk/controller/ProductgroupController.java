@@ -20,78 +20,73 @@ import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.TableParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.utils.ControllerUtils;
-import com.aripd.project.lgk.domain.Product;
-import com.aripd.project.lgk.service.ProductService;
+import com.aripd.project.lgk.domain.Productgroup;
 import com.aripd.project.lgk.service.ProductgroupService;
 
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 @Controller
-@RequestMapping("/product")
-public class ProductController {
+@RequestMapping("/productgroup")
+public class ProductgroupController {
 
-    @Resource(name = "productService")
-    private ProductService productService;
     @Resource(name = "productgroupService")
     private ProductgroupService productgroupService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
-    WebResultSet<Product> getDataTables(@TableParam PagingCriteria criteria) {
-        ResultSet<Product> resultset = this.productService.getRecords(criteria);
+    WebResultSet<Productgroup> getDataTables(@TableParam PagingCriteria criteria) {
+        ResultSet<Productgroup> resultset = this.productgroupService.getRecords(criteria);
         return ControllerUtils.getWebResultSet(criteria, resultset);
     }
 
     @RequestMapping(value = "/list")
     public String listAction(Model model) {
-        return "product/list";
+        return "productgroup/list";
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
     public String showAction(
             @PathVariable Long id,
             Model model) {
-        model.addAttribute("productAttribute", productService.findOne(id));
-        return "product/show";
+        model.addAttribute("productgroupAttribute", productgroupService.findOne(id));
+        return "productgroup/show";
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-        model.addAttribute("productgroups", productgroupService.findAll());
-        model.addAttribute("productAttribute", new Product());
-        return "product/form";
+        model.addAttribute("productgroupAttribute", new Productgroup());
+        return "productgroup/form";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(
             @PathVariable Long id,
             Model model) {
-        model.addAttribute("productgroups", productgroupService.findAll());
-        model.addAttribute("productAttribute", productService.findOne(id));
-        return "product/form";
+        model.addAttribute("productgroupAttribute", productgroupService.findOne(id));
+        return "productgroup/form";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("productAttribute") @Valid Product product,
+            @ModelAttribute("productgroupAttribute") @Valid Productgroup productgroup,
             BindingResult result,
             Model model) {
 
         if (result.hasErrors()) {
-            return "/product/form";
+            return "/productgroup/form";
         }
 
-        productService.save(product);
+        productgroupService.save(productgroup);
         redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
-        return "redirect:/product/list";
+        return "redirect:/productgroup/list";
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public String delete(
             final RedirectAttributes redirectAttributes,
             @RequestParam(value = "id", required = true) Long id) {
-        productService.delete(id);
+        productgroupService.delete(id);
         redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
-        return "redirect:/product/list";
+        return "redirect:/productgroup/list";
     }
 }

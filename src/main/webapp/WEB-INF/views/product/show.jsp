@@ -14,6 +14,7 @@
     </ul>
 
 <aripd:description id="products">
+    <aripd:descriptionitem label="Product Group" field="${productAttribute.productgroup.name}"></aripd:descriptionitem>
     <aripd:descriptionitem label="Code" field="${productAttribute.code}"></aripd:descriptionitem>
     <aripd:descriptionitem label="Name" field="${productAttribute.name}"></aripd:descriptionitem>
 </aripd:description>
