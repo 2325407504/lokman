@@ -3,13 +3,12 @@ package com.aripd.common.service;
 import java.io.File;
 
 public interface BackupService {
-	
-	void backup();
 
-	void restore(String file);
+    void backup();
 
-	void delete(String file);
+    void restore(String file);
 
-	File[] findAll();
-	
+    void delete(String file);
+
+    File[] findAll();
 }

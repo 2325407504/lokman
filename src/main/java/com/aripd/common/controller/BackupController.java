@@ -27,28 +27,31 @@ public class BackupController {
     }
 
     @RequestMapping(value = "/take", method = RequestMethod.GET)
-    public String takeAction(final RedirectAttributes redirectAttributes,
+    public String takeAction(
+            final RedirectAttributes redirectAttributes,
             Model model) {
         backupService.backup();
-        redirectAttributes.addFlashAttribute("message",
-                "Başarı ile yedek alındı.");
+        redirectAttributes.addFlashAttribute("message", "Başarı ile yedek alındı.");
         return "redirect:/backup/list";
     }
 
     @RequestMapping(value = "/{file}/delete", method = RequestMethod.GET)
-    public String deleteAction(final RedirectAttributes redirectAttributes,
-            @PathVariable(value = "file") String file, Model model) {
+    public String deleteAction(
+            final RedirectAttributes redirectAttributes,
+            @PathVariable(value = "file") String file,
+            Model model) {
         backupService.delete(file);
         redirectAttributes.addFlashAttribute("message", "Başarı ile silindi.");
         return "redirect:/backup/list";
     }
 
     @RequestMapping(value = "/{file}/restore", method = RequestMethod.GET)
-    public String restoreAction(final RedirectAttributes redirectAttributes,
-            @PathVariable String file, Model model) {
+    public String restoreAction(
+            final RedirectAttributes redirectAttributes,
+            @PathVariable String file,
+            Model model) {
         backupService.restore(file);
-        redirectAttributes.addFlashAttribute("message",
-                "Sisteme veriler geri yüklendi.");
+        redirectAttributes.addFlashAttribute("message", "Sisteme veriler geri yüklendi.");
         return "redirect:/backup/list";
     }
 }
