@@ -55,246 +55,214 @@ import com.aripd.project.lgk.service.ExpenseService;
 @Transactional(readOnly = true)
 public class ExpenseServiceImpl implements ExpenseService {
 
-	@PersistenceContext
-	private EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
+    @Autowired
+    private ExpenseRepository repository;
+    @Resource(name = "accountService")
+    private AccountService accountService;
 
-	@Autowired
-	private ExpenseRepository repository;
+    public Expense findOne(Long id) {
+        return repository.findOne(id);
+    }
 
-	@Resource(name = "accountService")
-	private AccountService accountService;
+    public Expense findOneByAccountAndId(Account account, Long id) {
+        return repository.findOneByAccountAndId(account, id);
+    }
 
-	public Expense findOne(Long id) {
-		return repository.findOne(id);
-	}
+    @Transactional
+    public Expense save(Expense expense) {
+        return repository.save(expense);
+    }
 
-	public Expense findOneByAccountAndId(Account account, Long id) {
-		return repository.findOneByAccountAndId(account, id);
-	}
+    @Transactional
+    public void delete(Long id) {
+        repository.delete(id);
+    }
 
-	@Transactional
-	public Expense save(Expense expense) {
-		return repository.save(expense);
-	}
+    @Transactional
+    public void delete(Expense expense) {
+        repository.delete(expense);
+    }
 
-	@Transactional
-	public void delete(Long id) {
-		repository.delete(id);
-	}
+    public ResultSet<Expense> getRecords(PagingCriteria criteria) {
+        Integer displaySize = criteria.getDisplaySize();
+        Integer displayStart = criteria.getDisplayStart();
+        Integer pageNumber = criteria.getPageNumber();
+        List<SortField> sortFields = criteria.getSortFields();
+        String search = criteria.getSearch();
 
-	@Transactional
-	public void delete(Expense expense) {
-		repository.delete(expense);
-	}
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Expense> cq = cb.createQuery(Expense.class);
+        Root<Expense> root = cq.from(Expense.class);
+        Join<Expense, Account> account = root.join(Expense_.account);
 
-	public ResultSet<Expense> getRecords(PagingCriteria criteria) {
-		Integer displaySize = criteria.getDisplaySize();
-		Integer displayStart = criteria.getDisplayStart();
-		Integer pageNumber = criteria.getPageNumber();
-		List<SortField> sortFields = criteria.getSortFields();
-		String search = criteria.getSearch();
+        // Filtering and Searching
+        List<Predicate> predicateList = new ArrayList<Predicate>();
 
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Expense> cq = cb.createQuery(Expense.class);
-		Root<Expense> root = cq.from(Expense.class);
-		Join<Expense, Account> account = root.join(Expense_.account);
+        if ((search != null) && (!(search.isEmpty()))) {
+            Predicate predicate1 = cb.like(root.get(Expense_.company), "%" + search + "%");
+            Predicate predicate2 = cb.like(root.get(Expense_.description), "%" + search + "%");
+            Predicate predicate3 = cb.like(account.get(Account_.username), "%" + search + "%");
+            Predicate predicate = cb.or(predicate1, predicate2, predicate3);
+            predicateList.add(predicate);
+        }
 
-		// Filtering and Searching
-		List<Predicate> predicateList = new ArrayList<Predicate>();
+        Predicate[] predicates = new Predicate[predicateList.size()];
+        predicateList.toArray(predicates);
+        cq.where(predicates);
 
-		if ((search != null) && (!(search.isEmpty()))) {
-			Predicate predicate1 = cb.like(root.get(Expense_.company), "%"+ search + "%");
-			Predicate predicate2 = cb.like(root.get(Expense_.description), "%"+ search + "%");
-			Predicate predicate3 = cb.like(account.get(Account_.username), "%"+ search + "%");
-			Predicate predicate = cb.or(predicate1, predicate2, predicate3);
-			predicateList.add(predicate);
-		}
+        // Sorting
+        for (SortField sortField : sortFields) {
+            String field = sortField.getField();
+            String direction = sortField.getDirection().getDirection();
+            if (direction.equalsIgnoreCase("asc")) {
+                cq.orderBy(cb.asc(root.get(field)));
+            } else if (direction.equalsIgnoreCase("desc")) {
+                cq.orderBy(cb.desc(root.get(field)));
+            }
+        }
 
-		Predicate[] predicates = new Predicate[predicateList.size()];
-		predicateList.toArray(predicates);
-		cq.where(predicates);
+        Long totalRecords = (long) em.createQuery(cq).getResultList().size();
 
-		// Sorting
-		for (SortField sortField : sortFields) {
-			String field = sortField.getField();
-			String direction = sortField.getDirection().getDirection();
-			if (direction.equalsIgnoreCase("asc"))
-				cq.orderBy(cb.asc(root.get(field)));
-			else if (direction.equalsIgnoreCase("desc"))
-				cq.orderBy(cb.desc(root.get(field)));
-		}
+        // Pagination
+        TypedQuery<Expense> typedQuery = em.createQuery(cq);
+        typedQuery = typedQuery.setFirstResult(displayStart);
+        typedQuery = typedQuery.setMaxResults(displaySize);
+        List<Expense> resultList = typedQuery.getResultList();
 
-		Long totalRecords = (long) em.createQuery(cq).getResultList().size();
+        return new ResultSet<Expense>(resultList, totalRecords, displaySize);
+    }
 
-		// Pagination
-		TypedQuery<Expense> typedQuery = em.createQuery(cq);
-		typedQuery = typedQuery.setFirstResult(displayStart);
-		typedQuery = typedQuery.setMaxResults(displaySize);
-		List<Expense> resultList = typedQuery.getResultList();
+    public ResultSet<Expense> getRecords(Principal principal,
+            PagingCriteria criteria) {
+        Integer displaySize = criteria.getDisplaySize();
+        Integer displayStart = criteria.getDisplayStart();
+        Integer pageNumber = criteria.getPageNumber();
+        List<SortField> sortFields = criteria.getSortFields();
+        String search = criteria.getSearch();
 
-		return new ResultSet<Expense>(resultList, totalRecords, displaySize);
-	}
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Expense> cq = cb.createQuery(Expense.class);
+        Root<Expense> root = cq.from(Expense.class);
 
-	public ResultSet<Expense> getRecords(Principal principal,
-			PagingCriteria criteria) {
-		Integer displaySize = criteria.getDisplaySize();
-		Integer displayStart = criteria.getDisplayStart();
-		Integer pageNumber = criteria.getPageNumber();
-		List<SortField> sortFields = criteria.getSortFields();
-		String search = criteria.getSearch();
+        // Filtering and Searching
+        List<Predicate> predicateList = new ArrayList<Predicate>();
 
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Expense> cq = cb.createQuery(Expense.class);
-		Root<Expense> root = cq.from(Expense.class);
+        Account account = accountService.findOneByUsername(principal.getName());
+        Predicate predicate_ = cb.equal(root.get(Expense_.account), account);
 
-		// Filtering and Searching
-		List<Predicate> predicateList = new ArrayList<Predicate>();
+        if ((search != null) && (!(search.isEmpty()))) {
+            Predicate predicate1 = cb.like(root.get(Expense_.description), "%"
+                    + search + "%");
+            Predicate predicate = cb.and(predicate_, predicate1);
+            predicateList.add(predicate);
+        } else {
+            predicateList.add(predicate_);
+        }
 
-		Account account = accountService.findOneByUsername(principal.getName());
-		Predicate predicate_ = cb.equal(root.get(Expense_.account), account);
+        Predicate[] predicates = new Predicate[predicateList.size()];
+        predicateList.toArray(predicates);
+        cq.where(predicates);
 
-		if ((search != null) && (!(search.isEmpty()))) {
-			Predicate predicate1 = cb.like(root.get(Expense_.description), "%"
-					+ search + "%");
-			Predicate predicate = cb.and(predicate_, predicate1);
-			predicateList.add(predicate);
-		} else {
-			predicateList.add(predicate_);
-		}
+        // Sorting
+        for (SortField sortField : sortFields) {
+            String field = sortField.getField();
+            String direction = sortField.getDirection().getDirection();
+            if (direction.equalsIgnoreCase("asc")) {
+                cq.orderBy(cb.asc(root.get(field)));
+            } else if (direction.equalsIgnoreCase("desc")) {
+                cq.orderBy(cb.desc(root.get(field)));
+            }
+        }
 
-		Predicate[] predicates = new Predicate[predicateList.size()];
-		predicateList.toArray(predicates);
-		cq.where(predicates);
+        Long totalRecords = (long) em.createQuery(cq).getResultList().size();
 
-		// Sorting
-		for (SortField sortField : sortFields) {
-			String field = sortField.getField();
-			String direction = sortField.getDirection().getDirection();
-			if (direction.equalsIgnoreCase("asc"))
-				cq.orderBy(cb.asc(root.get(field)));
-			else if (direction.equalsIgnoreCase("desc"))
-				cq.orderBy(cb.desc(root.get(field)));
-		}
+        // Pagination
+        TypedQuery<Expense> typedQuery = em.createQuery(cq);
+        typedQuery = typedQuery.setFirstResult(displayStart);
+        typedQuery = typedQuery.setMaxResults(displaySize);
+        List<Expense> resultList = typedQuery.getResultList();
 
-		Long totalRecords = (long) em.createQuery(cq).getResultList().size();
+        return new ResultSet<Expense>(resultList, totalRecords, displaySize);
+    }
 
-		// Pagination
-		TypedQuery<Expense> typedQuery = em.createQuery(cq);
-		typedQuery = typedQuery.setFirstResult(displayStart);
-		typedQuery = typedQuery.setMaxResults(displaySize);
-		List<Expense> resultList = typedQuery.getResultList();
+    public void exportXLS(HttpServletResponse response) {
+        // 1. Create new workbook
+        HSSFWorkbook workbook = new HSSFWorkbook();
 
-		return new ResultSet<Expense>(resultList, totalRecords, displaySize);
-	}
+        // 2. Create new worksheet
+        HSSFSheet worksheet = workbook.createSheet("Expenses");
 
-	public void exportXLS(HttpServletResponse response) {
-		// 1. Create new workbook
-		HSSFWorkbook workbook = new HSSFWorkbook();
+        // 3. Define starting indices for rows and columns
+        int startRowIndex = 0;
+        int startColIndex = 0;
 
-		// 2. Create new worksheet
-		HSSFSheet worksheet = workbook.createSheet("Expenses");
+        // 4. Build layout
+        // Build title, date, and column headers
+        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
 
-		// 3. Define starting indices for rows and columns
-		int startRowIndex = 0;
-		int startColIndex = 0;
+        // 5. Fill report
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex,
+                repository.findAll());
 
-		// 4. Build layout
-		// Build title, date, and column headers
-		Layouter.buildReport(worksheet, startRowIndex, startColIndex);
+        // 6. Set the response properties
+        String fileName = "ExpenseReport.xls";
+        response.setHeader("Content-Disposition", "inline; filename="
+                + fileName);
+        // Make sure to set the correct content type
+        response.setContentType("application/vnd.ms-excel");
 
-		// 5. Fill report
-		FillManager.fillReport(worksheet, startRowIndex, startColIndex,
-				repository.findAll());
+        // 7. Write to the output stream
+        Writer.write(response, worksheet);
 
-		// 6. Set the response properties
-		String fileName = "ExpenseReport.xls";
-		response.setHeader("Content-Disposition", "inline; filename="
-				+ fileName);
-		// Make sure to set the correct content type
-		response.setContentType("application/vnd.ms-excel");
+    }
 
-		// 7. Write to the output stream
-		Writer.write(response, worksheet);
+    public void importXLSX(String fileName) {
+        InputStream iStream = null;
+        try {
+            iStream = new FileInputStream(fileName);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
-	}
+        Workbook workbook = null;
+        try {
+            workbook = WorkbookFactory.create(iStream);
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-	public void importXLSX(String fileName) {
-		InputStream iStream = null;
-		try {
-			iStream = new FileInputStream(fileName);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		Workbook workbook = null;
-		try {
-			workbook = WorkbookFactory.create(iStream);
-		} catch (InvalidFormatException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		Sheet worksheet = workbook.getSheetAt(0);
-		Iterator<Row> rows = worksheet.rowIterator();
+        Sheet worksheet = workbook.getSheetAt(0);
+        Iterator<Row> rows = worksheet.rowIterator();
 
-		List<Expense> expenses = new ArrayList<Expense>();
-		Expense expense;
-		
-		//while (rows.hasNext()) {
-		for (int i = 1; i <= worksheet.getLastRowNum(); i++) {
-			//Row row = rows.next();
-			Row row = worksheet.getRow(i);
-			
-			String username = row.getCell(0).getStringCellValue();
-			Date documentDate = row.getCell(1).getDateCellValue();
-			String company = row.getCell(2).getStringCellValue();
-			String description = row.getCell(3).getStringCellValue();
-			BigDecimal amount = new BigDecimal(row.getCell(4).getNumericCellValue(), MathContext.DECIMAL64);
-			
-			expense = new Expense();
-			expense.setSubmitted(true);
-			expense.setAccount(accountService.findOneByUsername(username));
-			expense.setDocumentDate(new DateTime(documentDate));
-			expense.setCompany(company);
-			expense.setDescription(description);
-			expense.setAmount(amount);
-			
-			expenses.add(expense);
-		}
-		
-		repository.save(expenses);
-	}
+        List<Expense> expenses = new ArrayList<Expense>();
+        Expense expense;
 
-	@Override
-	public void importCSV(String content) {
-		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm");
-		
-		List<Expense> expenses = new ArrayList<Expense>();
-		Expense expense;
-		
-		String rows[] = content.split("\\r?\\n");
-		for (String row : rows) {
-			String column[] = row.split(",");
-			
-			String username = column[0];
-			DateTime documentDate = formatter.parseDateTime(column[1]);
-			String company = column[2];
-			String description = column[3];
-			BigDecimal amount = new BigDecimal(column[4], MathContext.DECIMAL64);
-			
-			expense = new Expense();
-			expense.setSubmitted(true);
-			expense.setAccount(accountService.findOneByUsername(username));
-			expense.setDocumentDate(documentDate);
-			expense.setCompany(company);
-			expense.setDescription(description);
-			expense.setAmount(amount);
-			
-			expenses.add(expense);
-		}
-		
-		repository.save(expenses);
-	}
+        //while (rows.hasNext()) {
+        for (int i = 1; i <= worksheet.getLastRowNum(); i++) {
+            //Row row = rows.next();
+            Row row = worksheet.getRow(i);
 
+            String username = row.getCell(0).getStringCellValue();
+            Date documentDate = row.getCell(1).getDateCellValue();
+            String company = row.getCell(2).getStringCellValue();
+            String description = row.getCell(3).getStringCellValue();
+            BigDecimal amount = new BigDecimal(row.getCell(4).getNumericCellValue(), MathContext.DECIMAL64);
+
+            expense = new Expense();
+            expense.setSubmitted(true);
+            expense.setAccount(accountService.findOneByUsername(username));
+            expense.setDocumentDate(new DateTime(documentDate));
+            expense.setCompany(company);
+            expense.setDescription(description);
+            expense.setAmount(amount);
+
+            expenses.add(expense);
+        }
+
+        repository.save(expenses);
+    }
 }

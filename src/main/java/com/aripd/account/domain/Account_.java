@@ -19,7 +19,7 @@ public class Account_ extends BaseEntity_ {
     public static volatile SingularAttribute<Account, String> username;
     public static volatile SingularAttribute<Account, String> email;
     public static volatile SingularAttribute<Account, Boolean> active;
-    public static volatile SingularAttribute<Account, Customer> customer;
+    public static volatile SingularAttribute<Account, Client> client;
     public static volatile SingularAttribute<Account, Region> region;
     public static volatile ListAttribute<Account, Role> roles;
 }

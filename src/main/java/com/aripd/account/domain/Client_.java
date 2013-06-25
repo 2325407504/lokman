@@ -10,9 +10,9 @@ import com.aripd.common.entity.BaseEntity_;
  *
  * @author cem
  */
-@StaticMetamodel(Customer.class)
-public class Customer_ extends BaseEntity_ {
+@StaticMetamodel(Client.class)
+public class Client_ extends BaseEntity_ {
 
-    public static volatile SingularAttribute<Customer, String> firstName;
-    public static volatile SingularAttribute<Customer, String> lastName;
+    public static volatile SingularAttribute<Client, String> firstName;
+    public static volatile SingularAttribute<Client, String> lastName;
 }

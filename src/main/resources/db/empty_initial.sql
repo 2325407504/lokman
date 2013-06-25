@@ -50,23 +50,23 @@ INSERT INTO `product` (`id`, `createdAt`, `updatedAt`, `code`, `name`, `productg
 (4, NOW(), NOW(), 'P4', 'Tekstil', 2),
 (5, NOW(), NOW(), 'P5', 'Çelik', 3);
 
-INSERT INTO `customer` (`id`, `createdAt`, `updatedAt`, `firstName`, `lastName`) VALUES
-(1, NOW(), NOW(), 'SA', 'ARIPD'),
-(2, NOW(), NOW(), 'ADMIN', 'ARIPD'),
-(3, NOW(), NOW(), 'USER', 'ARIPD'),
-(4, NOW(), NOW(), 'Fatih', 'Gemalmaz'),
-(5, NOW(), NOW(), 'Yusuf', 'Memnun'),
-(6, NOW(), NOW(), 'Murat', 'Doğan'),
-(7, NOW(), NOW(), 'Esma', 'Akkaya'),
-(8, NOW(), NOW(), 'Ömer', 'Hayır'),
-(9, NOW(), NOW(), 'Arif', 'Hayır'),
-(10, NOW(), NOW(), 'Banu', 'Çevikel'),
-(11, NOW(), NOW(), 'Hasan', 'Öztürk'),
-(12, NOW(), NOW(), 'Ergin', 'Oral'),
-(13, NOW(), NOW(), 'Armağan', 'Yılmazer'),
-(14, NOW(), NOW(), 'Oktay', 'Özsüer');
+INSERT INTO `client` (`id`, `createdAt`, `updatedAt`, `firstName`, `lastName`, `phonenumber`) VALUES
+(1, NOW(), NOW(), 'SA', 'ARIPD', ''),
+(2, NOW(), NOW(), 'ADMIN', 'ARIPD', ''),
+(3, NOW(), NOW(), 'USER', 'ARIPD', ''),
+(4, NOW(), NOW(), 'Fatih', 'Gemalmaz', ''),
+(5, NOW(), NOW(), 'Yusuf', 'Memnun', ''),
+(6, NOW(), NOW(), 'Murat', 'Doğan', ''),
+(7, NOW(), NOW(), 'Esma', 'Akkaya', ''),
+(8, NOW(), NOW(), 'Ömer', 'Hayır', ''),
+(9, NOW(), NOW(), 'Arif', 'Hayır', ''),
+(10, NOW(), NOW(), 'Banu', 'Çevikel', ''),
+(11, NOW(), NOW(), 'Hasan', 'Öztürk', ''),
+(12, NOW(), NOW(), 'Ergin', 'Oral', ''),
+(13, NOW(), NOW(), 'Armağan', 'Yılmazer', ''),
+(14, NOW(), NOW(), 'Oktay', 'Özsüer'i '');
 
-INSERT INTO `account` (`id`, `createdAt`, `updatedAt`, `active`, `email`, `password`, `username`, `customer_id`, `region_id`) VALUES
+INSERT INTO `account` (`id`, `createdAt`, `updatedAt`, `active`, `email`, `password`, `username`, `client_id`, `region_id`) VALUES
 (1, NOW(), NOW(), b'1', 'cem@aripd.com', MD5('cem'), 'cem', 1, 1),
 (2, NOW(), NOW(), b'1', 'admin@aripd.com', MD5('admin'), 'admin', 2, 1),
 (3, NOW(), NOW(), b'1', 'user@aripd.com', MD5('user'), 'user', 3, 1),

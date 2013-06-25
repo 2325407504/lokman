@@ -118,7 +118,7 @@ public class UatfController {
      * this response"
      */
     @RequestMapping(value = "/export/xls", method = RequestMethod.GET)
-    public void getXLS(HttpServletResponse response, Model model) {
+    public void exportAction(HttpServletResponse response, Model model) {
         uatfService.exportXLS(response);
     }
     @Value("${path.directory.import}")

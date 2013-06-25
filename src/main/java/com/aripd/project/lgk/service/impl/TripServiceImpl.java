@@ -354,47 +354,4 @@ public class TripServiceImpl implements TripService {
 
         repository.save(trips);
     }
-
-    @Override
-    public void importCSV(String content) {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm");
-
-        List<Trip> trips = new ArrayList<Trip>();
-        Trip trip;
-
-        String rows[] = content.split("\\r?\\n");
-        for (String row : rows) {
-            String column[] = row.split(",");
-
-            String username = column[0];
-            String truckPlate = column[1];
-            String driverCode = column[2];
-            String startingPoint = column[3];
-            Integer startingKm = new Integer(column[4]);
-            DateTime startingTime = formatter.parseDateTime(column[5]);
-            String endingPoint = column[6];
-            Integer endingKm = new Integer(column[7]);
-            DateTime endingTime = formatter.parseDateTime(column[8]);
-            Integer loadWeightInTonne = new Integer(column[9]);
-            String remark = column[10];
-
-            trip = new Trip();
-            trip.setSubmitted(true);
-            trip.setAccount(accountService.findOneByUsername(username));
-            trip.setTruck(truckService.findOneByPlate(truckPlate));
-            trip.setDriver(driverService.findOneByCode(driverCode));
-            trip.setStartingPoint(startingPoint);
-            trip.setStartingKm(startingKm);
-            trip.setStartingTime(startingTime);
-            trip.setEndingPoint(endingPoint);
-            trip.setEndingKm(endingKm);
-            trip.setEndingTime(new DateTime(endingTime));
-            trip.setLoadWeightInTonne(loadWeightInTonne);
-            trip.setRemark(remark);
-
-            trips.add(trip);
-        }
-
-        repository.save(trips);
-    }
 }

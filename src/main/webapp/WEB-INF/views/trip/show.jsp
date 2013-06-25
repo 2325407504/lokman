@@ -53,7 +53,7 @@
                 <label class="label">
                     <spring:message code="Account"></spring:message>
                     </label>
-                ${tripAttribute.account.customer.fullname}
+                ${tripAttribute.account.client.fullname}
             </li>
             <li>
                 <label class="label">

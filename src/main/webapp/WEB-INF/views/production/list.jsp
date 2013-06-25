@@ -4,8 +4,7 @@
 <spring:url var="productionList" value="/production/list" />
 <spring:url var="productionNew" value="/production/new" />
 <spring:url var="productionImport" value="/production/import/xls" />
-<spring:url var="productionExport" value="/production/export/xls" />
-<spring:url var="bigbagExport" value="/bigbag/export/xls" />
+<spring:url var="productionReport" value="/production/report" />
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
@@ -14,12 +13,11 @@
     <li class=""><a href="${productionImport}"><spring:message code="Import"></spring:message></a></li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Export"></spring:message>
+            <spring:message code="Reports"></spring:message>
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="${productionExport}"><spring:message code="Waybill"></spring:message></a></li>
-            <li><a href="${bigbagExport}"><spring:message code="UATF"></spring:message></a></li>
+                <li><a href="${productionReport}"><spring:message code="Report"></spring:message></a></li>
             </ul>
         </li>
     </ul>

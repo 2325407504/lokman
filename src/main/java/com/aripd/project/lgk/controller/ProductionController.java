@@ -7,7 +7,6 @@ import java.io.OutputStream;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -41,7 +40,6 @@ import com.aripd.project.lgk.service.MachinetimeService;
 import com.aripd.project.lgk.service.ProductService;
 import com.aripd.project.lgk.service.ProductionService;
 import com.aripd.project.lgk.service.ShiftService;
-import com.aripd.project.lgk.validator.ProductionValidator;
 import javax.validation.Valid;
 import org.joda.time.DateTime;
 
@@ -50,8 +48,6 @@ import org.joda.time.DateTime;
 @RequestMapping("/production")
 public class ProductionController {
 
-    @Autowired
-    private ProductionValidator productionValidator;
     @Resource(name = "productionService")
     private ProductionService productionService;
     @Resource(name = "accountService")
@@ -122,7 +118,6 @@ public class ProductionController {
             BindingResult result,
             Model model) {
 
-        //productionValidator.validate(formData, result);
         if (result.hasErrors()) {
             model.addAttribute("accounts", accountService.findAll());
             model.addAttribute("shifts", shiftService.findAll());
@@ -172,7 +167,7 @@ public class ProductionController {
      * this response"
      */
     @RequestMapping(value = "/export/xls", method = RequestMethod.GET)
-    public void getXLS(HttpServletResponse response, Model model) {
+    public void exportAction(HttpServletResponse response, Model model) {
         productionService.exportXLS(response);
     }
 
@@ -225,22 +220,6 @@ public class ProductionController {
         }
 
         productionService.importXLSX(fileName);
-        redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
-        return "redirect:/production/list";
-    }
-
-    @RequestMapping(value = "/import/csv", method = RequestMethod.POST)
-    public String importCSV(
-            final RedirectAttributes redirectAttributes,
-            CsvImportBean csvImportBean,
-            BindingResult result) {
-
-        if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("message", "Hata oluştu");
-            return "redirect:/production/import";
-        }
-
-        productionService.importCSV(csvImportBean.getContent());
         redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
         return "redirect:/production/list";
     }

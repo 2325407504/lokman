@@ -36,6 +36,4 @@ public interface TripService {
     public void exportByTruck(HttpServletResponse response, Principal principal, Truck truck);
 
     public void importXLSX(String fileName);
-
-    public void importCSV(String content);
 }

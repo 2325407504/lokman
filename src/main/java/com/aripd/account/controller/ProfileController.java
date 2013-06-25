@@ -60,8 +60,8 @@ public class ProfileController {
 
         Account account = accountService.findOneByUsername(principal.getName());
 
-        formData.getCustomer().setId(account.getCustomer().getId());
-        account.setCustomer(formData.getCustomer());
+        formData.getClient().setId(account.getClient().getId());
+        account.setClient(formData.getClient());
         account.setUsername(formData.getUsername());
         account.setEmail(formData.getEmail());
         if (formData.getPassword().length() == 0) {

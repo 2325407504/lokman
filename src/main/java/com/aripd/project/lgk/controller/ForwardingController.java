@@ -7,7 +7,6 @@ import java.io.OutputStream;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -35,7 +34,6 @@ import com.aripd.project.lgk.domain.Uatf;
 import com.aripd.project.lgk.service.ForwardingService;
 import com.aripd.project.lgk.service.QuotaService;
 import com.aripd.project.lgk.service.SubcontractorService;
-import com.aripd.project.lgk.validator.ForwardingValidator;
 import javax.validation.Valid;
 
 @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -43,8 +41,6 @@ import javax.validation.Valid;
 @RequestMapping("/forwarding")
 public class ForwardingController {
 
-    @Autowired
-    private ForwardingValidator forwardingValidator;
     @Resource(name = "forwardingService")
     private ForwardingService forwardingService;
     @Resource(name = "quotaService")
@@ -102,7 +98,6 @@ public class ForwardingController {
             BindingResult result,
             Model model) {
 
-        //forwardingValidator.validate(formData, result);
         if (result.hasErrors()) {
             model.addAttribute("accounts", accountService.findAll());
             model.addAttribute("quotas", quotaService.findAll());
@@ -140,7 +135,7 @@ public class ForwardingController {
      * this response"
      */
     @RequestMapping(value = "/export/xls", method = RequestMethod.GET)
-    public void getXLS(HttpServletResponse response, Model model) {
+    public void exportAction(HttpServletResponse response, Model model) {
         forwardingService.exportXLS(response);
     }
 
@@ -193,22 +188,6 @@ public class ForwardingController {
         }
 
         forwardingService.importXLSX(fileName);
-        redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
-        return "redirect:/forwarding/list";
-    }
-
-    @RequestMapping(value = "/import/csv", method = RequestMethod.POST)
-    public String importCSV(
-            final RedirectAttributes redirectAttributes,
-            CsvImportBean csvImportBean,
-            BindingResult result) {
-
-        if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("message", "Hata oluştu");
-            return "redirect:/forwarding/import";
-        }
-
-        forwardingService.importCSV(csvImportBean.getContent());
         redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
         return "redirect:/forwarding/list";
     }

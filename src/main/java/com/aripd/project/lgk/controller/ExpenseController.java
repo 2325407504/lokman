@@ -119,7 +119,7 @@ public class ExpenseController {
      * this response"
      */
     @RequestMapping(value = "/export/xls", method = RequestMethod.GET)
-    public void getXLS(HttpServletResponse response, Model model) {
+    public void exportAction(HttpServletResponse response, Model model) {
         expenseService.exportXLS(response);
     }
 
@@ -172,22 +172,6 @@ public class ExpenseController {
         }
 
         expenseService.importXLSX(fileName);
-        redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
-        return "redirect:/expense/list";
-    }
-
-    @RequestMapping(value = "/import/csv", method = RequestMethod.POST)
-    public String importCSV(
-            final RedirectAttributes redirectAttributes,
-            CsvImportBean csvImportBean,
-            BindingResult result) {
-
-        if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("message", "Hata oluştu");
-            return "redirect:/expense/import";
-        }
-
-        expenseService.importCSV(csvImportBean.getContent());
         redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
         return "redirect:/expense/list";
     }

@@ -16,7 +16,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Table(name = "uatf")
 public class Uatf extends BaseEntity {
 
-    private static final long serialVersionUID = 5180174134796884976L;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "forwarding_id")
@@ -80,10 +79,6 @@ public class Uatf extends BaseEntity {
 
     public void setLoadWeightInTonne(Integer loadWeightInTonne) {
         this.loadWeightInTonne = loadWeightInTonne;
-    }
-
-    public static long getSerialversionuid() {
-        return serialVersionUID;
     }
 
     public Forwarding getForwarding() {

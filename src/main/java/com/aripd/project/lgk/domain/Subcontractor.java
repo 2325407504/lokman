@@ -12,7 +12,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Table(name = "subcontractor")
 public class Subcontractor extends BaseEntity {
 
-    private static final long serialVersionUID = -7548528652541560063L;
     private boolean active;
     @Column(unique = true)
     private String code;
@@ -55,9 +54,5 @@ public class Subcontractor extends BaseEntity {
 
     public void setRegion(Region region) {
         this.region = region;
-    }
-
-    public static long getSerialversionuid() {
-        return serialVersionUID;
     }
 }

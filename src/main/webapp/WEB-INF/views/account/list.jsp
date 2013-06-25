@@ -15,7 +15,7 @@
 	<aripd:column label="Action" field="id"/>
 	<aripd:column label="Region" field="region.name"/>
 	<aripd:column label="Username" field="username"/>
-	<aripd:column label="Fullname" field="customer.fullname"/>
+	<aripd:column label="Fullname" field="client.fullname"/>
 	<aripd:column label="E-mail Address" field="email"/>
 </aripd:datatables>
 

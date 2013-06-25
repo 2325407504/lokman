@@ -11,7 +11,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Table(name = "quota")
 public class Quota extends BaseEntity {
 
-    private static final long serialVersionUID = -6317556886179089841L;
     private boolean active;
     @Column(unique = true)
     private String code;
@@ -44,9 +43,5 @@ public class Quota extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public static long getSerialversionuid() {
-        return serialVersionUID;
     }
 }

@@ -9,20 +9,19 @@ import com.aripd.project.lgk.domain.Region;
 
 public interface DriverService {
 
-	Driver findOne(Long id);
-	
-	Driver findOneByCode(String code);
-	
-	List<Driver> findAll();
-	
-	List<Driver> findByRegion(Region region);
+    Driver findOne(Long id);
 
-	Driver save(Driver driver);
-	
-	void delete(Long id);
-	
-	void delete(Driver driver);
+    Driver findOneByCode(String code);
 
-	ResultSet<Driver> getRecords(PagingCriteria criteria);
+    List<Driver> findAll();
 
+    List<Driver> findByRegion(Region region);
+
+    Driver save(Driver driver);
+
+    void delete(Long id);
+
+    void delete(Driver driver);
+
+    ResultSet<Driver> getRecords(PagingCriteria criteria);
 }

@@ -11,8 +11,7 @@ import com.aripd.project.lgk.domain.Quota;
 @Transactional
 public class QuotaValidator {
 
-	public void validate(Quota quota, Errors errors) {
+    public void validate(Quota quota, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "required", "It is required!");
-	}
-
+    }
 }

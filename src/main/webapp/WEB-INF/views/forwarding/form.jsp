@@ -47,12 +47,12 @@
                 </div>
                 <div class="control-group">
                     <form:label path="account"><spring:message code="Account"></spring:message></form:label>
-                    <form:select multiple="false" path="account.id" items="${accounts}" itemLabel="customer.fullname" itemValue="id" />
+                    <form:select multiple="false" path="account.id" items="${accounts}" itemLabel="client.fullname" itemValue="id" />
                     <form:errors cssClass="text-error" path="account" />
                 </div>
                 <div class="control-group">
                     <form:label path="waybillNo"><spring:message code="Waybill No"></spring:message></form:label>
-                    <form:input type="text" path="waybillNo" />
+                    <form:input path="waybillNo" />
                     <form:errors cssClass="text-error" path="waybillNo" />
                 </div>
                 <div class="control-group">

@@ -265,35 +265,4 @@ public class ProductionServiceImpl implements ProductionService {
 
         repository.save(productions);
     }
-
-    @Override
-    public void importCSV(String content) {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm");
-
-        List<Production> productions = new ArrayList<Production>();
-        Production production;
-
-        String rows[] = content.split("\\r?\\n");
-        for (String row : rows) {
-            String column[] = row.split(",");
-
-            String username = column[0];
-            DateTime shiftdate = formatter.parseDateTime(column[1]);
-            String shiftCode = column[2];
-            Double feed = new Double(column[3]);
-            String remark = column[4];
-
-            production = new Production();
-            production.setSubmitted(true);
-            production.setAccount(accountService.findOneByUsername(username));
-            production.setShiftdate(new DateTime(shiftdate));
-            production.setShift(shiftService.findOneByCode(shiftCode));
-            production.setFeed(feed);
-            production.setRemark(remark);
-
-            productions.add(production);
-        }
-
-        repository.save(productions);
-    }
 }

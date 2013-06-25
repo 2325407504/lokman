@@ -11,26 +11,23 @@ import com.aripd.project.lgk.domain.Forwarding;
 
 public interface ForwardingService {
 
-	Forwarding findOne(Long id);
-	
-	Forwarding findOneByAccountAndId(Account account, Long id);
-	
-	Forwarding findOneByWaybillNo(String waybillNo);
+    Forwarding findOne(Long id);
 
-	Forwarding save(Forwarding formData);
+    Forwarding findOneByAccountAndId(Account account, Long id);
 
-	void delete(Long id);
+    Forwarding findOneByWaybillNo(String waybillNo);
 
-	void delete(Forwarding forwarding);
-	
-	ResultSet<Forwarding> getRecords(PagingCriteria criteria);
+    Forwarding save(Forwarding formData);
 
-	ResultSet<Forwarding> getRecords(Principal principal, PagingCriteria criteria);
+    void delete(Long id);
 
-	void exportXLS(HttpServletResponse response);
+    void delete(Forwarding forwarding);
 
-	void importXLSX(String fileName);
+    ResultSet<Forwarding> getRecords(PagingCriteria criteria);
 
-	void importCSV(String content);
+    ResultSet<Forwarding> getRecords(Principal principal, PagingCriteria criteria);
 
+    void exportXLS(HttpServletResponse response);
+
+    void importXLSX(String fileName);
 }

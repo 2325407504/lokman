@@ -25,11 +25,13 @@
 <spring:url value="/driver/list" var="driver_list" />
 <spring:url value="/subcontractor/list" var="subcontractor_list" />
 <spring:url value="/quota/list" var="quota_list" />
+<spring:url value="/customer/list" var="customer_list" />
 
 <spring:url value="/expense/list" var="expense_list" />
 <spring:url value="/trip/list" var="trip_list" />
 <spring:url value="/forwarding/list" var="forwarding_list" />
 <spring:url value="/production/list" var="production_list" />
+<spring:url value="/waybill/list" var="waybill_list" />
 
 <spring:url value="/user/expense/list" var="user_expense_list" />
 <spring:url value="/user/trip/list" var="user_trip_list" />
@@ -79,6 +81,7 @@
                             <li><a href="${driver_list}"><spring:message code="Drivers"></spring:message></a></li>
                             <li><a href="${subcontractor_list}"><spring:message code="Subcontractors"></spring:message></a></li>
                             <li><a href="${quota_list}"><spring:message code="Quotas"></spring:message></a></li>
+                            <li><a href="${customer_list}"><spring:message code="Customers"></spring:message></a></li>
                             <li class="nav-header"><spring:message code="Personnel"></spring:message></li>
                             <li><a href="${expense_list}"><spring:message code="Expenses"></spring:message></a></li>
                             <li class="nav-header"><spring:message code="Logistics"></spring:message></li>
@@ -86,6 +89,7 @@
                             <li><a href="${forwarding_list}"><spring:message code="Forwardings"></spring:message></a></li>
                             <li class="nav-header"><spring:message code="Production"></spring:message></li>
                             <li><a href="${production_list}"><spring:message code="Production"></spring:message></a></li>
+                            <li><a href="${waybill_list}"><spring:message code="Waybills"></spring:message></a></li>
                             </ul>
                         </div>
                     </div>

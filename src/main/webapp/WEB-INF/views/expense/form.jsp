@@ -44,7 +44,7 @@
                 </div>
                 <div class="control-group">
                     <form:label path="account"><spring:message code="Account"></spring:message></form:label>
-                    <form:select multiple="false" path="account.id" items="${accounts}" itemLabel="customer.fullname" itemValue="id" />
+                    <form:select multiple="false" path="account.id" items="${accounts}" itemLabel="client.fullname" itemValue="id" />
                     <form:errors cssClass="text-error" path="account" />
                 </div>
                 <div class="control-group">

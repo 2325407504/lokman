@@ -13,7 +13,7 @@
 
 <aripd:description id="profile">
 	<aripd:descriptionitem label="Username" field="${profileAttribute.username}"></aripd:descriptionitem>
-	<aripd:descriptionitem label="Fullname" field="${profileAttribute.customer.fullname}"></aripd:descriptionitem>
+	<aripd:descriptionitem label="Fullname" field="${profileAttribute.client.fullname}"></aripd:descriptionitem>
 	<aripd:descriptionitem label="E-mail Address" field="${profileAttribute.email}"></aripd:descriptionitem>
 </aripd:description>
 

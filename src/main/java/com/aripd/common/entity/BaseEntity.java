@@ -19,7 +19,6 @@ import com.aripd.common.utils.ARIPDJodaDateTimeSerializer;
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = -343366475114401897L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -62,10 +61,6 @@ public abstract class BaseEntity implements Serializable {
 
     public Long getId() {
         return id;
-    }
-
-    public static long getSerialversionuid() {
-        return serialVersionUID;
     }
 
     public void setId(Long id) {

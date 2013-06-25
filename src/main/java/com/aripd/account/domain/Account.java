@@ -40,7 +40,7 @@ public class Account extends BaseEntity {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Role> roles;
     @ManyToOne(cascade = CascadeType.ALL)
-    private Customer customer;
+    private Client client;
     @ManyToOne
     private Region region;
 
@@ -93,12 +93,12 @@ public class Account extends BaseEntity {
         this.active = active;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public Client getClient() {
+        return client;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public Region getRegion() {

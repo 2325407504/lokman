@@ -11,24 +11,21 @@ import com.aripd.project.lgk.domain.Expense;
 
 public interface ExpenseService {
 
-	Expense findOne(Long id);
-	
-	Expense findOneByAccountAndId(Account account, Long id);
-	
-	Expense save(Expense expense);
-	
-	void delete(Long id);
-	
-	void delete(Expense expense);
+    Expense findOne(Long id);
 
-	ResultSet<Expense> getRecords(PagingCriteria criteria);
-	
-	ResultSet<Expense> getRecords(Principal principal, PagingCriteria criteria);
+    Expense findOneByAccountAndId(Account account, Long id);
 
-	void exportXLS(HttpServletResponse response);
-	
-	void importXLSX(String fileName);
+    Expense save(Expense expense);
 
-	void importCSV(String content);
+    void delete(Long id);
 
+    void delete(Expense expense);
+
+    ResultSet<Expense> getRecords(PagingCriteria criteria);
+
+    ResultSet<Expense> getRecords(Principal principal, PagingCriteria criteria);
+
+    void exportXLS(HttpServletResponse response);
+
+    void importXLSX(String fileName);
 }

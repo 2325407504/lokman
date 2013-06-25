@@ -281,47 +281,4 @@ public class ForwardingServiceImpl implements ForwardingService {
 
         repository.save(forwardings);
     }
-
-    @Override
-    public void importCSV(String content) {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm");
-
-        List<Forwarding> forwardings = new ArrayList<Forwarding>();
-        Forwarding forwarding;
-
-        String rows[] = content.split("\\r?\\n");
-        for (String row : rows) {
-            String column[] = row.split(",");
-
-            String username = column[0];
-            String waybillNo = column[1];
-            String driver = column[2];
-            String plate = column[3];
-            DateTime startingTime = formatter.parseDateTime(column[4]);
-            DateTime endingTime = formatter.parseDateTime(column[5]);
-            String endingPoint = column[6];
-            Integer loadWeightInTonne = new Integer(column[7]);
-            BigDecimal shippingCost = new BigDecimal(column[8], MathContext.DECIMAL64);
-            String subcontractorCode = column[9];
-            String quotaCode = column[10];
-
-            forwarding = new Forwarding();
-            forwarding.setSubmitted(true);
-            forwarding.setAccount(accountService.findOneByUsername(username));
-            forwarding.setWaybillNo(waybillNo);
-            forwarding.setDriver(driver);
-            forwarding.setPlate(plate);
-            forwarding.setStartingTime(startingTime);
-            forwarding.setEndingTime(endingTime);
-            forwarding.setEndingPoint(endingPoint);
-            forwarding.setLoadWeightInTonne(loadWeightInTonne);
-            forwarding.setShippingCost(shippingCost);
-            forwarding.setSubcontractor(subcontractorService.findOneByCode(subcontractorCode));
-            forwarding.setQuota(quotaService.findOneByCode(quotaCode));
-
-            forwardings.add(forwarding);
-        }
-
-        repository.save(forwardings);
-    }
 }

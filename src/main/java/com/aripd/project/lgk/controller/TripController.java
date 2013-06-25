@@ -196,22 +196,6 @@ public class TripController {
         return "redirect:/trip/list";
     }
 
-    @RequestMapping(value = "/import/csv", method = RequestMethod.POST)
-    public String importCSV(
-            final RedirectAttributes redirectAttributes,
-            CsvImportBean csvImportBean,
-            BindingResult result) {
-
-        if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("message", "Hata oluştu");
-            return "redirect:/trip/import";
-        }
-
-        tripService.importCSV(csvImportBean.getContent());
-        redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
-        return "redirect:/trip/list";
-    }
-
     @RequestMapping(value = "/chart")
     public String chartAction(Model model) {
         return "trip/chart";

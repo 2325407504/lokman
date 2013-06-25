@@ -7,22 +7,19 @@ import org.springframework.aop.interceptor.CustomizableTraceInterceptor;
 
 public class TraceInterceptor extends CustomizableTraceInterceptor {
 
-	private static final long serialVersionUID = 287162721460370957L;
-	
-	protected static Logger logger = Logger.getLogger(TraceInterceptor.class);
+    protected static Logger logger = Logger.getLogger(TraceInterceptor.class);
 
-	@Override
-	protected void writeToLog(Log logger, String message, Throwable ex) {
-		if (ex != null) {
-			logger.debug(message, ex);
-		} else {
-			logger.debug(message);
-		}
-	}
+    @Override
+    protected void writeToLog(Log logger, String message, Throwable ex) {
+        if (ex != null) {
+            logger.debug(message, ex);
+        } else {
+            logger.debug(message);
+        }
+    }
 
-	@Override
-	protected boolean isInterceptorEnabled(MethodInvocation invocation, Log logger) {
-		return true;
-	}
-	
+    @Override
+    protected boolean isInterceptorEnabled(MethodInvocation invocation, Log logger) {
+        return true;
+    }
 }

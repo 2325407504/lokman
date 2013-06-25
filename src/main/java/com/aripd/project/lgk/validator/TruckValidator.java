@@ -11,8 +11,7 @@ import com.aripd.project.lgk.domain.Truck;
 @Transactional
 public class TruckValidator {
 
-	public void validate(Truck truck, Errors errors) {
+    public void validate(Truck truck, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "plate", "required", "It is required!");
-	}
-
+    }
 }

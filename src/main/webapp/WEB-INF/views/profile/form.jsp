@@ -11,12 +11,12 @@
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <fieldset>
         <div class="control-group">
-            <form:label path="customer.firstName"><spring:message code="FirstName"></spring:message></form:label>
-            <span><form:input path="customer.firstName" /></span>
+            <form:label path="client.firstName"><spring:message code="FirstName"></spring:message></form:label>
+            <span><form:input path="client.firstName" /></span>
         </div>       
         <div class="control-group">
-            <form:label path="customer.lastName"><spring:message code="LastName"></spring:message></form:label>
-            <span><form:input path="customer.lastName" /></span>
+            <form:label path="client.lastName"><spring:message code="LastName"></spring:message></form:label>
+            <span><form:input path="client.lastName" /></span>
         </div>
         <div class="control-group">
             <form:label path="email"><spring:message code="E-mail Address"></spring:message></form:label>

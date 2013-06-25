@@ -4,7 +4,6 @@ import java.security.Principal;
 
 import javax.annotation.Resource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +28,6 @@ import com.aripd.project.lgk.domain.Uatf;
 import com.aripd.project.lgk.service.ForwardingService;
 import com.aripd.project.lgk.service.QuotaService;
 import com.aripd.project.lgk.service.SubcontractorService;
-import com.aripd.project.lgk.validator.ForwardingValidator;
 import javax.validation.Valid;
 
 @PreAuthorize("hasRole('ROLE_USER')")
@@ -37,8 +35,6 @@ import javax.validation.Valid;
 @RequestMapping("/user/forwarding")
 public class UserForwardingController {
 
-    @Autowired
-    private ForwardingValidator forwardingValidator;
     @Resource(name = "forwardingService")
     private ForwardingService forwardingService;
     @Resource(name = "quotaService")
@@ -123,7 +119,6 @@ public class UserForwardingController {
             BindingResult result,
             Model model) {
 
-        //forwardingValidator.validate(formData, result);
         if (result.hasErrors()) {
             Account account = accountService.findOneByUsername(principal.getName());
 

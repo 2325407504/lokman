@@ -6,13 +6,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.aripd.common.entity.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "driver")
 public class Driver extends BaseEntity {
 
-    private static final long serialVersionUID = -542748460992087952L;
     private boolean active;
     @ManyToOne
     private Region region;
@@ -21,6 +21,11 @@ public class Driver extends BaseEntity {
     @NotEmpty
     private String name;
     private String phonenumber;
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
 
     public boolean isActive() {
         return active;
@@ -60,9 +65,5 @@ public class Driver extends BaseEntity {
 
     public void setRegion(Region region) {
         this.region = region;
-    }
-
-    public static long getSerialversionuid() {
-        return serialVersionUID;
     }
 }

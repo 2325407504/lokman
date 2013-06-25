@@ -19,7 +19,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Table(name = "trip")
 public class Trip extends BaseEntity {
 
-    private static final long serialVersionUID = -8215609876889575062L;
     @Column(nullable = false)
     private boolean submitted = false;
     @ManyToOne
@@ -144,9 +143,5 @@ public class Trip extends BaseEntity {
 
     public void setSubmitted(boolean submitted) {
         this.submitted = submitted;
-    }
-
-    public static long getSerialversionuid() {
-        return serialVersionUID;
     }
 }

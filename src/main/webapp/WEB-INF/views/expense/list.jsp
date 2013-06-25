@@ -24,7 +24,7 @@
 
 <aripd:datatables datasource="/expense/get" id="expenses" dataUrlShow="/expense/show" dataUrlEdit="/expense/edit">
     <aripd:column label="Action" field="id"/>
-    <aripd:column label="Fullname" field="account.customer.fullname"/>
+    <aripd:column label="Fullname" field="account.client.fullname"/>
     <aripd:column label="Account" field="account.username"/>
     <aripd:column label="Expensetype" field="expensetype.name"/>
     <aripd:column label="Date" field="documentDate"/>

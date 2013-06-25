@@ -32,6 +32,4 @@ public interface ProductionService {
     public void exportXLS(HttpServletResponse response);
 
     public void importXLSX(String fileName);
-
-    public void importCSV(String content);
 }

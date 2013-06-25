@@ -49,7 +49,7 @@
                 <label class="label">
                     <spring:message code="Account"></spring:message>
                     </label>
-                ${productionAttribute.account.customer.fullname}
+                ${productionAttribute.account.client.fullname}
             </li>
             <li>
                 <label class="label">
