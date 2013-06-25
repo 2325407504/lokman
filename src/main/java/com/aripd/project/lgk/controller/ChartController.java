@@ -29,85 +29,84 @@ import com.googlecode.charts4j.Slice;
 @RequestMapping("/trip")
 public class ChartController {
 
-	protected static Logger logger = Logger.getLogger(ChartController.class);
+    protected static Logger logger = Logger.getLogger(ChartController.class);
 
-	@RequestMapping(value = "/report1", method = RequestMethod.GET)
-	public String report1(Model model) {
-		Slice s1 = Slice.newSlice(15, Color.newColor("CACACA"), "Mac", "Mac");
-		Slice s2 = Slice.newSlice(50, Color.newColor("DF7417"), "Windows", "Windows");
-		Slice s3 = Slice.newSlice(25, Color.newColor("951800"), "Linux", "Linux");
-		Slice s4 = Slice.newSlice(10, Color.newColor("01A1DB"), "Others", "Others");
+    @RequestMapping(value = "/report1", method = RequestMethod.GET)
+    public String report1(Model model) {
+        Slice s1 = Slice.newSlice(15, Color.newColor("CACACA"), "Mac", "Mac");
+        Slice s2 = Slice.newSlice(50, Color.newColor("DF7417"), "Windows", "Windows");
+        Slice s3 = Slice.newSlice(25, Color.newColor("951800"), "Linux", "Linux");
+        Slice s4 = Slice.newSlice(10, Color.newColor("01A1DB"), "Others", "Others");
 
-		PieChart pieChart = GCharts.newPieChart(s1, s2, s3, s4);
-		pieChart.setTitle("Google Pie Chart", Color.BLACK, 15);
-		pieChart.setSize(720, 360);
-		pieChart.setThreeD(true);
+        PieChart pieChart = GCharts.newPieChart(s1, s2, s3, s4);
+        pieChart.setTitle("Google Pie Chart", Color.BLACK, 15);
+        pieChart.setSize(720, 360);
+        pieChart.setThreeD(true);
 
-		model.addAttribute("pieUrl", pieChart.toURLString());
+        model.addAttribute("pieUrl", pieChart.toURLString());
 
-		return "trip/report1";
-	}
+        return "trip/report1";
+    }
 
-	@RequestMapping(value = "/report2", method = RequestMethod.GET)
-	public void report2(HttpServletResponse response) {
-		response.setContentType("image/png");
-		PieDataset pdSet = createDataSet();
+    @RequestMapping(value = "/report2", method = RequestMethod.GET)
+    public void report2(HttpServletResponse response) {
+        response.setContentType("image/png");
+        PieDataset pdSet = createDataSet();
 
-		JFreeChart chart = createChart(pdSet, "JFreeChart Pie Chart");
+        JFreeChart chart = createChart(pdSet, "JFreeChart Pie Chart");
 
-		try {
-			ChartUtilities.writeChartAsPNG(response.getOutputStream(), chart,
-					750, 400);
-			response.getOutputStream().close();
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-	}
+        try {
+            ChartUtilities.writeChartAsPNG(response.getOutputStream(), chart,
+                    750, 400);
+            response.getOutputStream().close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
-	@RequestMapping(value = "/report3", method = RequestMethod.GET)
-	public void report3(HttpServletResponse response) {
-		response.setContentType("image/png");
-		String query = "SELECT endingTime, loadWeightInTonne FROM trip ORDER BY endingTime ASC";
-		JDBCCategoryDataset dataset = null;
-		try {
-			dataset = new JDBCCategoryDataset(
-					"jdbc:mysql://localhost:3306/lokman",
-					"com.mysql.jdbc.Driver", "root", "root");
-			dataset.executeQuery(query);
-		} catch (ClassNotFoundException ex) {
-			ex.printStackTrace();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-		JFreeChart chart = ChartFactory.createBarChart3D(
-				"Yükleme/Üretim Miktarları", "Tarih", "Üretim Miktarı",
-				dataset, PlotOrientation.VERTICAL, true, true, false);
-		try {
-			ChartUtilities.writeChartAsPNG(response.getOutputStream(), chart,
-					1170, 300);
-			response.getOutputStream().close();
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-	}
+    @RequestMapping(value = "/report3", method = RequestMethod.GET)
+    public void report3(HttpServletResponse response) {
+        response.setContentType("image/png");
+        String query = "SELECT endingTime, loadWeightInTonne FROM trip ORDER BY endingTime ASC";
+        JDBCCategoryDataset dataset = null;
+        try {
+            dataset = new JDBCCategoryDataset(
+                    "jdbc:mysql://localhost:3306/lokman",
+                    "com.mysql.jdbc.Driver", "root", "root");
+            dataset.executeQuery(query);
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        JFreeChart chart = ChartFactory.createBarChart3D(
+                "Yükleme/Üretim Miktarları", "Tarih", "Üretim Miktarı",
+                dataset, PlotOrientation.VERTICAL, true, true, false);
+        try {
+            ChartUtilities.writeChartAsPNG(response.getOutputStream(), chart,
+                    1170, 300);
+            response.getOutputStream().close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
-	private JFreeChart createChart(PieDataset pdSet, String title) {
-		JFreeChart chart = ChartFactory.createPieChart3D(title, pdSet, true,
-				true, false);
-		PiePlot3D plot = (PiePlot3D) chart.getPlot();
-		plot.setStartAngle(290);
-		plot.setDirection(Rotation.CLOCKWISE);
-		plot.setForegroundAlpha(0.5f);
-		return chart;
-	}
+    private JFreeChart createChart(PieDataset pdSet, String title) {
+        JFreeChart chart = ChartFactory.createPieChart3D(title, pdSet, true,
+                true, false);
+        PiePlot3D plot = (PiePlot3D) chart.getPlot();
+        plot.setStartAngle(290);
+        plot.setDirection(Rotation.CLOCKWISE);
+        plot.setForegroundAlpha(0.5f);
+        return chart;
+    }
 
-	private PieDataset createDataSet() {
-		DefaultPieDataset dpd = new DefaultPieDataset();
-		dpd.setValue("Mac", 21);
-		dpd.setValue("Linux", 30);
-		dpd.setValue("Window", 40);
-		dpd.setValue("Others", 9);
-		return dpd;
-	}
-
+    private PieDataset createDataSet() {
+        DefaultPieDataset dpd = new DefaultPieDataset();
+        dpd.setValue("Mac", 21);
+        dpd.setValue("Linux", 30);
+        dpd.setValue("Window", 40);
+        dpd.setValue("Others", 9);
+        return dpd;
+    }
 }

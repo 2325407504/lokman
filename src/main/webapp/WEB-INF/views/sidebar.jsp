@@ -32,6 +32,7 @@
 <spring:url value="/forwarding/list" var="forwarding_list" />
 <spring:url value="/production/list" var="production_list" />
 <spring:url value="/waybill/list" var="waybill_list" />
+<spring:url value="/weighbridge/list" var="weighbridge_list" />
 
 <spring:url value="/user/expense/list" var="user_expense_list" />
 <spring:url value="/user/trip/list" var="user_trip_list" />
@@ -90,6 +91,7 @@
                             <li class="nav-header"><spring:message code="Production"></spring:message></li>
                             <li><a href="${production_list}"><spring:message code="Production"></spring:message></a></li>
                             <li><a href="${waybill_list}"><spring:message code="Waybills"></spring:message></a></li>
+                            <li><a href="${weighbridge_list}"><spring:message code="Weighbridges"></spring:message></a></li>
                             </ul>
                         </div>
                     </div>

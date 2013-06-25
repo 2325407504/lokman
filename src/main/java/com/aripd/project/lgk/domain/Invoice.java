@@ -1,5 +1,6 @@
 package com.aripd.project.lgk.domain;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -23,31 +24,38 @@ import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
-@Table(name = "waybill")
-public class Waybill extends BaseEntity {
+@Table(name = "invoice")
+public class Invoice extends BaseEntity {
 
+    @Column(nullable = false)
+    private boolean submitted = false;
     @ManyToOne
     @JoinColumn(nullable = false, insertable = true, updatable = true)
     private Account account;
-    @OneToOne
-    @JoinColumn(name = "invoice_id", referencedColumnName = "id")
-    private Invoice invoice;
+    private String documentNo;
     @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
     @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
     @Column(columnDefinition = "TIMESTAMP")
     private DateTime documentDate;
-    @Column(unique = true)
-    private String documentNo;
-    private String company;
-    private String driver;
-    private String plate;
-    @JsonIgnore
-    @OneToMany(mappedBy = "waybill", cascade = CascadeType.REMOVE)
-    private Set<Outgoing> outgoings;
+    @ManyToOne
+    private Customer customer;
+    @Column(nullable = false)
+    @NotNull
+    private BigDecimal amount;
+    @OneToOne(mappedBy = "invoice")
+    private Waybill waybill;
 
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+    public boolean isSubmitted() {
+        return submitted;
+    }
+
+    public void setSubmitted(boolean submitted) {
+        this.submitted = submitted;
     }
 
     public Account getAccount() {
@@ -58,12 +66,12 @@ public class Waybill extends BaseEntity {
         this.account = account;
     }
 
-    public Invoice getInvoice() {
-        return invoice;
+    public String getDocumentNo() {
+        return documentNo;
     }
 
-    public void setInvoice(Invoice invoice) {
-        this.invoice = invoice;
+    public void setDocumentNo(String documentNo) {
+        this.documentNo = documentNo;
     }
 
     public DateTime getDocumentDate() {
@@ -74,43 +82,27 @@ public class Waybill extends BaseEntity {
         this.documentDate = documentDate;
     }
 
-    public String getDocumentNo() {
-        return documentNo;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setDocumentNo(String documentNo) {
-        this.documentNo = documentNo;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    public String getCompany() {
-        return company;
+    public BigDecimal getAmount() {
+        return amount;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 
-    public String getDriver() {
-        return driver;
+    public Waybill getWaybill() {
+        return waybill;
     }
 
-    public void setDriver(String driver) {
-        this.driver = driver;
-    }
-
-    public String getPlate() {
-        return plate;
-    }
-
-    public void setPlate(String plate) {
-        this.plate = plate;
-    }
-
-    public Set<Outgoing> getOutgoings() {
-        return outgoings;
-    }
-
-    public void setOutgoings(Set<Outgoing> outgoings) {
-        this.outgoings = outgoings;
+    public void setWaybill(Waybill waybill) {
+        this.waybill = waybill;
     }
 }

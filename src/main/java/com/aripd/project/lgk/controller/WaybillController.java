@@ -29,26 +29,23 @@ import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.model.CsvImportBean;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
+import com.aripd.project.lgk.domain.Outgoing;
 import com.aripd.project.lgk.domain.Waybill;
-import com.aripd.project.lgk.domain.Uatf;
+import com.aripd.project.lgk.service.CustomerService;
 import com.aripd.project.lgk.service.WaybillService;
-import com.aripd.project.lgk.service.QuotaService;
-import com.aripd.project.lgk.service.SubcontractorService;
 import javax.validation.Valid;
 
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
 @Controller
 @RequestMapping("/waybill")
 public class WaybillController {
 
     @Resource(name = "waybillService")
     private WaybillService waybillService;
-    @Resource(name = "quotaService")
-    private QuotaService quotaService;
-    @Resource(name = "subcontractorService")
-    private SubcontractorService subcontractorService;
     @Resource(name = "accountService")
     private AccountService accountService;
+    @Resource(name = "customerService")
+    private CustomerService customerService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -73,8 +70,7 @@ public class WaybillController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
         model.addAttribute("accounts", accountService.findAll());
-        model.addAttribute("quotas", quotaService.findAll());
-        model.addAttribute("subcontractors", subcontractorService.findAll());
+        model.addAttribute("customers", customerService.findAll());
         model.addAttribute("waybillAttribute", new Waybill());
         return "waybill/form";
     }
@@ -83,10 +79,9 @@ public class WaybillController {
     public String editAction(
             @PathVariable Long id,
             Model model) {
-        model.addAttribute("uatfAttribute", new Uatf());
+        model.addAttribute("outgoingAttribute", new Outgoing());
         model.addAttribute("accounts", accountService.findAll());
-        model.addAttribute("quotas", quotaService.findAll());
-        model.addAttribute("subcontractors", subcontractorService.findAll());
+        model.addAttribute("customers", customerService.findAll());
         model.addAttribute("waybillAttribute", waybillService.findOne(id));
         return "waybill/form";
     }
@@ -100,8 +95,7 @@ public class WaybillController {
 
         if (result.hasErrors()) {
             model.addAttribute("accounts", accountService.findAll());
-            model.addAttribute("quotas", quotaService.findAll());
-            model.addAttribute("subcontractors", subcontractorService.findAll());
+            model.addAttribute("customers", customerService.findAll());
             return "/waybill/form";
         }
 
@@ -113,7 +107,7 @@ public class WaybillController {
     @RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)
     public String submitAction(@PathVariable Long id) {
         Waybill waybill = waybillService.findOne(id);
-        waybill.setSubmitted(true ^ waybill.isSubmitted());
+        //waybill.setSubmitted(true ^ waybill.isSubmitted());
         waybillService.save(waybill);
         return "redirect:/waybill/show/" + id;
     }

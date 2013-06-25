@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.aripd.common.entity.BaseEntity;
+import javax.persistence.CascadeType;
+import javax.persistence.OneToOne;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -14,6 +16,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Customer extends BaseEntity {
 
     private boolean active;
+    private boolean container;
     @Column(unique = true)
     private String taxNo;
     private String taxOffice;
@@ -21,8 +24,8 @@ public class Customer extends BaseEntity {
     private String name;
     private String address;
     private String phonenumber;
+    @OneToOne(cascade = CascadeType.ALL)
     private Account authorized;
-    private boolean container;
 
     @Override
     public String toString() {

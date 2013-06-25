@@ -38,20 +38,20 @@
     <div class="row-fluid">
         <div class="span6">
         <form:form modelAttribute="waybillAttribute" action="${waybillSave}" method="post">
-            <form:errors path="*" cssClass="alert alert-error" element="div" />
-            <form:hidden path="id" />
             <fieldset>
-                <div class="control-group">
-                    <form:checkbox path="submitted" /> <spring:message code="Submitted by user"></spring:message>
-                    <form:errors cssClass="text-error" path="submitted" />
-                </div>
+                <form:errors path="*" cssClass="alert alert-error" element="div" />
+                <form:hidden path="id" />
                 <div class="control-group">
                     <form:label path="account"><spring:message code="Account"></spring:message></form:label>
                     <form:select multiple="false" path="account.id" items="${accounts}" itemLabel="client.fullname" itemValue="id" />
                     <form:errors cssClass="text-error" path="account" />
                 </div>
-                <div class="control-group">
-                    <form:label path="documentDate"><spring:message code="Date"></spring:message></form:label>
+            </fieldset>
+            <fieldset>
+                <legend><spring:message code="Waybill"></spring:message></legend>
+
+                    <div class="control-group">
+                    <form:label path="documentDate"><spring:message code="Document Date"></spring:message></form:label>
                     <form:input type="datetime" path="documentDate" />
                     <form:errors cssClass="text-error" path="documentDate" />
                 </div>
@@ -75,25 +75,28 @@
                     <form:input path="plate" />
                     <form:errors cssClass="text-error" path="plate" />
                 </div>
-                <div class="control-group">
-                    <form:label path="invoiceCompany"><spring:message code="Company"></spring:message></form:label>
-                    <form:input path="invoiceCompany" />
-                    <form:errors cssClass="text-error" path="invoiceCompany" />
+            </fieldset>
+            <fieldset>
+                <legend><spring:message code="Invoice"></spring:message></legend>
+                    <div class="control-group">
+                    <form:label path="invoice.customer"><spring:message code="Customer"></spring:message></form:label>
+                    <form:select multiple="false" path="invoice.customer.id" items="${customers}" itemLabel="name" itemValue="id" />
+                    <form:errors cssClass="text-error" path="invoice.customer" />
                 </div>
                 <div class="control-group">
-                    <form:label path="invoiceNo"><spring:message code="Document No"></spring:message></form:label>
-                    <form:input path="invoiceNo" />
-                    <form:errors cssClass="text-error" path="invoiceNo" />
+                    <form:label path="invoice.documentNo"><spring:message code="Document No"></spring:message></form:label>
+                    <form:input path="invoice.documentNo" />
+                    <form:errors cssClass="text-error" path="invoice.documentNo" />
                 </div>
                 <div class="control-group">
-                    <form:label path="invoiceDate"><spring:message code="Date"></spring:message></form:label>
-                    <form:input type="datetime" path="invoiceDate" />
-                    <form:errors cssClass="text-error" path="invoiceDate" />
+                    <form:label path="invoice.documentDate"><spring:message code="Document Date"></spring:message></form:label>
+                    <form:input type="datetime" path="invoice.documentDate" />
+                    <form:errors cssClass="text-error" path="invoice.documentDate" />
                 </div>
                 <div class="control-group">
-                    <form:label path="invoiceAmount"><spring:message code="Amount"></spring:message></form:label>
-                    <form:input path="invoiceAmount" />
-                    <form:errors cssClass="text-error" path="invoiceAmount" />
+                    <form:label path="invoice.amount"><spring:message code="Amount"></spring:message></form:label>
+                    <form:input path="invoice.amount" />
+                    <form:errors cssClass="text-error" path="invoice.amount" />
                 </div>
                 <div class="form-actions">
                     <c:if test="${ !empty waybillAttribute.id }">

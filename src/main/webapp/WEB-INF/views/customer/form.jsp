@@ -22,86 +22,95 @@
 <form:form modelAttribute="customerAttribute" action="${customerSave}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <form:hidden path="id" />
-    <fieldset>
-        <legend>Firma Cari Bilgileri</legend>
-        <div class="control-group">
-            <form:label path="active">Aktif mi?</form:label>
-            <form:checkbox path="active" />
-            <form:errors cssClass="text-error" path="active" />
+    <form:hidden path="authorized.id" />
+    <div class="row-fluid">
+        <div class="span4">
+            <fieldset>
+                <legend>Firma Cari Bilgileri</legend>
+                <div class="control-group">
+                    <form:label path="taxNo"><spring:message code="Tax No"></spring:message></form:label>
+                    <form:input path="taxNo" />
+                    <form:errors cssClass="text-error" path="taxNo" />
+                </div>
+                <div class="control-group">
+                    <form:label path="taxOffice"><spring:message code="Tax Office"></spring:message></form:label>
+                    <form:input path="taxOffice" />
+                    <form:errors cssClass="text-error" path="taxOffice" />
+                </div>
+                <div class="control-group">
+                    <form:label path="name"><spring:message code="Company"></spring:message></form:label>
+                    <form:input path="name" />
+                    <form:errors cssClass="text-error" path="name" />
+                </div>
+                <div class="control-group">
+                    <form:label path="address"><spring:message code="Postal Address"></spring:message></form:label>
+                    <form:input path="address" />
+                    <form:errors cssClass="text-error" path="address" />
+                </div>
+                <div class="control-group">
+                    <form:label path="phonenumber"><spring:message code="Phone Number"></spring:message></form:label>
+                    <form:input path="phonenumber" />
+                    <form:errors cssClass="text-error" path="phonenumber" />
+                </div>
+            </fieldset>
         </div>
-        <div class="control-group">
-            <form:label path="taxNo"><spring:message code="Tax No"></spring:message></form:label>
-            <form:input path="taxNo" />
-            <form:errors cssClass="text-error" path="taxNo" />
+        <div class="span4">
+            <fieldset>
+                <legend>Firma Yetkilisi Bilgileri</legend>
+                <div class="control-group">
+                    <form:label path="authorized.username"><spring:message code="Username"></spring:message></form:label>
+                    <form:input path="authorized.username" />
+                    <form:errors cssClass="text-error" path="authorized.username" />
+                </div>       
+                <div class="control-group">
+                    <form:label path="authorized.password"><spring:message code="Password"></spring:message></form:label>
+                    <form:input type="password" path="authorized.password" />
+                    <form:errors cssClass="text-error" path="authorized.password" />
+                </div>       
+                <div class="control-group">
+                    <form:label path="authorized.email"><spring:message code="E-mail Address"></spring:message></form:label>
+                    <form:input path="authorized.email" />
+                    <form:errors cssClass="text-error" path="authorized.email" />
+                </div>       
+                <div class="control-group">
+                    <form:label path="authorized.client.firstName"><spring:message code="FirstName"></spring:message></form:label>
+                    <form:input path="authorized.client.firstName" />
+                    <form:errors cssClass="text-error" path="authorized.client.firstName" />
+                </div>       
+                <div class="control-group">
+                    <form:label path="authorized.client.lastName"><spring:message code="LastName"></spring:message></form:label>
+                    <form:input path="authorized.client.lastName" />
+                    <form:errors cssClass="text-error" path="authorized.client.lastName" />
+                </div>
+                <div class="control-group">
+                    <form:label path="authorized.client.phonenumber"><spring:message code="Phone Number"></spring:message></form:label>
+                    <form:input path="authorized.client.phonenumber" />
+                    <form:errors cssClass="text-error" path="authorized.client.phonenumber" />
+                </div>
+            </fieldset>
         </div>
-        <div class="control-group">
-            <form:label path="taxOffice"><spring:message code="Tax Office"></spring:message></form:label>
-            <form:input path="taxOffice" />
-            <form:errors cssClass="text-error" path="taxOffice" />
+        <div class="span4">
+            <fieldset>
+                <legend>Firma Diger Bilgileri</legend>
+                <div class="control-group">
+                    <form:label path="active">Aktif mi?</form:label>
+                    <form:checkbox path="active" />
+                    <form:errors cssClass="text-error" path="active" />
+                </div>
+                <div class="control-group">
+                    <form:label path="container">Konteyner mevcut mu?</form:label>
+                    <form:checkbox path="container" />
+                    <form:errors cssClass="text-error" path="container" />
+                </div>
+            </fieldset>
         </div>
-        <div class="control-group">
-            <form:label path="name"><spring:message code="Company"></spring:message></form:label>
-            <form:input path="name" />
-            <form:errors cssClass="text-error" path="name" />
+    </div>
+    <div class="form-actions">
+        <c:if test="${ !empty customerAttribute.id }">
+            <a class="btn btn-danger" href="javascript:$('#form-${customerAttribute.id}').submit();"><spring:message code="Delete"></spring:message></a>
+        </c:if>
+        <button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
         </div>
-        <div class="control-group">
-            <form:label path="address"><spring:message code="Postal Address"></spring:message></form:label>
-            <form:input path="address" />
-            <form:errors cssClass="text-error" path="address" />
-        </div>
-        <div class="control-group">
-            <form:label path="phonenumber"><spring:message code="Phone Number"></spring:message></form:label>
-            <form:input path="phonenumber" />
-            <form:errors cssClass="text-error" path="phonenumber" />
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>Firma Yetkilisi Bilgileri</legend>
-        <div class="control-group">
-            <form:label path="authorized.username"><spring:message code="Username"></spring:message></form:label>
-            <form:input path="authorized.username" />
-            <form:errors cssClass="text-error" path="authorized.username" />
-        </div>       
-        <div class="control-group">
-            <form:label path="authorized.password"><spring:message code="Password"></spring:message></form:label>
-            <form:input path="authorized.password" />
-            <form:errors cssClass="text-error" path="authorized.password" />
-        </div>       
-        <div class="control-group">
-            <form:label path="authorized.email"><spring:message code="E-mail Address"></spring:message></form:label>
-            <form:input path="authorized.email" />
-            <form:errors cssClass="text-error" path="authorized.email" />
-        </div>       
-        <div class="control-group">
-            <form:label path="authorized.client.firstName"><spring:message code="FirstName"></spring:message></form:label>
-            <form:input path="authorized.client.firstName" />
-            <form:errors cssClass="text-error" path="authorized.client.firstName" />
-        </div>       
-        <div class="control-group">
-            <form:label path="authorized.client.lastName"><spring:message code="LastName"></spring:message></form:label>
-            <form:input path="authorized.client.lastName" />
-            <form:errors cssClass="text-error" path="authorized.client.lastName" />
-        </div>
-        <div class="control-group">
-            <form:label path="authorized.client.phonenumber"><spring:message code="Phone Number"></spring:message></form:label>
-            <form:input path="authorized.client.phonenumber" />
-            <form:errors cssClass="text-error" path="authorized.client.phonenumber" />
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>Firma Diger Bilgileri</legend>
-        <div class="control-group">
-            <form:label path="container">Konteyner mevcut mu?</form:label>
-            <form:checkbox path="container" />
-            <form:errors cssClass="text-error" path="container" />
-        </div>
-        <div class="form-actions">
-            <c:if test="${ !empty customerAttribute.id }">
-                <a class="btn btn-danger" href="javascript:$('#form-${customerAttribute.id}').submit();"><spring:message code="Delete"></spring:message></a>
-            </c:if>
-            <button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
-            </div>
-        </fieldset>
 </form:form>
 
 <c:if test="${ !empty customerAttribute.id }">

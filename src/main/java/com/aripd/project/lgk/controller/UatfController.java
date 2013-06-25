@@ -39,7 +39,7 @@ import com.aripd.project.lgk.service.UatfService;
 import com.aripd.project.lgk.validator.UatfValidator;
 import javax.validation.Valid;
 
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
 @Controller
 @RequestMapping("/uatf")
 public class UatfController {

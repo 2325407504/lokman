@@ -36,7 +36,7 @@ import com.aripd.project.lgk.service.SubcontractorService;
 import com.aripd.project.lgk.service.BigbagService;
 import javax.validation.Valid;
 
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
 @Controller
 @RequestMapping("/bigbag")
 public class BigbagController {

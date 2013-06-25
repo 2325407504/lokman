@@ -24,7 +24,7 @@ import com.aripd.project.lgk.domain.Product;
 import com.aripd.project.lgk.service.ProductService;
 import com.aripd.project.lgk.service.ProductgroupService;
 
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
 @Controller
 @RequestMapping("/product")
 public class ProductController {

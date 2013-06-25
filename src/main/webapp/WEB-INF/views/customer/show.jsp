@@ -14,8 +14,7 @@
 </ul>
 
 <aripd:description id="customers">
-	<aripd:descriptionitem label="Region" field="${customerAttribute.region.name}"></aripd:descriptionitem>
-	<aripd:descriptionitem label="Code" field="${customerAttribute.code}"></aripd:descriptionitem>
+	<aripd:descriptionitem label="Tax No" field="${customerAttribute.taxNo}"></aripd:descriptionitem>
 	<aripd:descriptionitem label="Fullname" field="${customerAttribute.name}"></aripd:descriptionitem>
 	<aripd:descriptionitem label="Phone Number" field="${customerAttribute.phonenumber}"></aripd:descriptionitem>
 </aripd:description>

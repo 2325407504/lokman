@@ -43,7 +43,7 @@ import com.aripd.project.lgk.service.ShiftService;
 import javax.validation.Valid;
 import org.joda.time.DateTime;
 
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
 @Controller
 @RequestMapping("/production")
 public class ProductionController {

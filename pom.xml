@@ -37,7 +37,6 @@
 
         <!-- Plugins -->
         <maven.compiler.plugin.version>3.0</maven.compiler.plugin.version>
-        <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
     </properties>
 
     <dependencies>

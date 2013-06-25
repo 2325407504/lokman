@@ -54,7 +54,7 @@
                 </div>
                 <div class="control-group">
                     <form:label path="documentDate"><spring:message code="Date"></spring:message></form:label>
-                    <form:input type="text" path="documentDate" />
+                    <form:input type="datetime" path="documentDate" />
                     <form:errors cssClass="text-error" path="documentDate" />
                 </div>
                 <div class="control-group">

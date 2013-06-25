@@ -23,7 +23,7 @@ import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Region;
 import com.aripd.project.lgk.service.RegionService;
 
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
 @Controller
 @RequestMapping("/region")
 public class RegionController {

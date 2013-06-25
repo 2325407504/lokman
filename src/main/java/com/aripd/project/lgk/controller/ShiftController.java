@@ -23,7 +23,7 @@ import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Shift;
 import com.aripd.project.lgk.service.ShiftService;
 
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
 @Controller
 @RequestMapping("/shift")
 public class ShiftController {

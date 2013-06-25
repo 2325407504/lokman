@@ -262,18 +262,19 @@ public class WaybillServiceImpl implements WaybillService {
             BigDecimal invoiceAmount = new BigDecimal(row.getCell(9).getNumericCellValue());
 
             waybill = new Waybill();
-            waybill.setSubmitted(true);
-            waybill.setAccount(accountService.findOneByUsername(username));
-            waybill.setDocumentDate(new DateTime(documentDate));
-            waybill.setDocumentNo(documentNo);
-            waybill.setCompany(company);
-            waybill.setDriver(driver);
-            waybill.setPlate(plate);
-            waybill.setInvoiceCompany(invoiceCompany);
-            waybill.setInvoiceNo(invoiceNo);
-            waybill.setInvoiceDate(new DateTime(invoiceDate));
-            waybill.setInvoiceAmount(invoiceAmount);
-
+            /*
+             waybill.setSubmitted(true);
+             waybill.setAccount(accountService.findOneByUsername(username));
+             waybill.setDocumentDate(new DateTime(documentDate));
+             waybill.setDocumentNo(documentNo);
+             waybill.setCompany(company);
+             waybill.setDriver(driver);
+             waybill.setPlate(plate);
+             waybill.setInvoiceCompany(invoiceCompany);
+             waybill.setInvoiceNo(invoiceNo);
+             waybill.setInvoiceDate(new DateTime(invoiceDate));
+             waybill.setInvoiceAmount(invoiceAmount);
+             */
             waybills.add(waybill);
         }
 

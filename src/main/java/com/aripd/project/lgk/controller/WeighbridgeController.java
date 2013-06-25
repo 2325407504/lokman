@@ -6,6 +6,7 @@ import java.io.OutputStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,102 +30,80 @@ import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.model.CsvImportBean;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
-import com.aripd.project.lgk.domain.Forwarding;
-import com.aripd.project.lgk.domain.Uatf;
-import com.aripd.project.lgk.service.ForwardingService;
-import com.aripd.project.lgk.service.QuotaService;
-import com.aripd.project.lgk.service.SubcontractorService;
-import javax.validation.Valid;
+import com.aripd.project.lgk.domain.Weighbridge;
+import com.aripd.project.lgk.service.WeighbridgeService;
 
 @PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
 @Controller
-@RequestMapping("/forwarding")
-public class ForwardingController {
+@RequestMapping("/weighbridge")
+public class WeighbridgeController {
 
-    @Resource(name = "forwardingService")
-    private ForwardingService forwardingService;
-    @Resource(name = "quotaService")
-    private QuotaService quotaService;
-    @Resource(name = "subcontractorService")
-    private SubcontractorService subcontractorService;
+    @Resource(name = "weighbridgeService")
+    private WeighbridgeService weighbridgeService;
     @Resource(name = "accountService")
     private AccountService accountService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
-    WebResultSet<Forwarding> getDataTables(@TableParam PagingCriteria criteria) {
-        ResultSet<Forwarding> resultset = this.forwardingService.getRecords(criteria);
+    WebResultSet<Weighbridge> getDataTables(@TableParam PagingCriteria criteria) {
+        ResultSet<Weighbridge> resultset = this.weighbridgeService.getRecords(criteria);
         return ControllerUtils.getWebResultSet(criteria, resultset);
     }
 
     @RequestMapping(value = "/list")
     public String listAction(Model model) {
-        return "forwarding/list";
+        return "weighbridge/list";
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
-    public String showAction(
-            @PathVariable Long id,
-            Model model) {
-        model.addAttribute("forwardingAttribute", forwardingService.findOne(id));
-        return "forwarding/show";
+    public String showAction(@PathVariable Long id, Model model) {
+        model.addAttribute("weighbridgeAttribute", weighbridgeService.findOne(id));
+        return "weighbridge/show";
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
         model.addAttribute("accounts", accountService.findAll());
-        model.addAttribute("quotas", quotaService.findAll());
-        model.addAttribute("subcontractors", subcontractorService.findAll());
-        model.addAttribute("forwardingAttribute", new Forwarding());
-        return "forwarding/form";
+        model.addAttribute("weighbridgeAttribute", new Weighbridge());
+        return "weighbridge/form";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String editAction(
-            @PathVariable Long id,
-            Model model) {
-        model.addAttribute("uatfAttribute", new Uatf());
+    public String editAction(@PathVariable Long id, Model model) {
         model.addAttribute("accounts", accountService.findAll());
-        model.addAttribute("quotas", quotaService.findAll());
-        model.addAttribute("subcontractors", subcontractorService.findAll());
-        model.addAttribute("forwardingAttribute", forwardingService.findOne(id));
-        return "forwarding/form";
+        model.addAttribute("weighbridgeAttribute", weighbridgeService.findOne(id));
+        return "weighbridge/form";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAction(
-            final RedirectAttributes redirectAttributes,
-            @ModelAttribute("forwardingAttribute") @Valid Forwarding formData,
-            BindingResult result,
-            Model model) {
+    public String saveAction(final RedirectAttributes redirectAttributes,
+            @ModelAttribute("weighbridgeAttribute") @Valid Weighbridge formData,
+            BindingResult result, Model model) {
 
         if (result.hasErrors()) {
             model.addAttribute("accounts", accountService.findAll());
-            model.addAttribute("quotas", quotaService.findAll());
-            model.addAttribute("subcontractors", subcontractorService.findAll());
-            return "/forwarding/form";
+            return "/weighbridge/form";
         }
 
-        forwardingService.save(formData);
+        weighbridgeService.save(formData);
         redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
-        return "redirect:/forwarding/list";
+        return "redirect:/weighbridge/list";
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public String delete(final RedirectAttributes redirectAttributes,
+            @RequestParam(value = "id", required = true) Long id) {
+        weighbridgeService.delete(id);
+        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+        return "redirect:/weighbridge/list";
     }
 
     @RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)
     public String submitAction(@PathVariable Long id) {
-        Forwarding forwarding = forwardingService.findOne(id);
-        forwarding.setSubmitted(true ^ forwarding.isSubmitted());
-        forwardingService.save(forwarding);
-        return "redirect:/forwarding/show/" + id;
-    }
-
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public String delete(
-            final RedirectAttributes redirectAttributes,
-            @RequestParam(value = "id", required = true) Long id) {
-        forwardingService.delete(id);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
-        return "redirect:/forwarding/list";
+        Weighbridge weighbridge = weighbridgeService.findOne(id);
+        weighbridge.setSubmitted(true ^ weighbridge.isSubmitted());
+        weighbridgeService.save(weighbridge);
+        return "redirect:/weighbridge/show/" + id;
     }
 
     /**
@@ -136,14 +115,14 @@ public class ForwardingController {
      */
     @RequestMapping(value = "/export/xls", method = RequestMethod.GET)
     public void exportAction(HttpServletResponse response, Model model) {
-        forwardingService.exportXLS(response);
+        weighbridgeService.exportXLS(response);
     }
 
     @RequestMapping(value = "/import/xls", method = RequestMethod.GET)
     public String importAction(Model model) {
         model.addAttribute(new FileUploadBean());
         model.addAttribute(new CsvImportBean());
-        return "forwarding/import";
+        return "weighbridge/import";
     }
     @Value("${path.directory.import}")
     String pathDirectoryImport;
@@ -156,7 +135,7 @@ public class ForwardingController {
 
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("message", "Hata oluştu");
-            return "redirect:/forwarding/import";
+            return "redirect:/weighbridge/import";
         }
 
         String fileName = null;
@@ -168,7 +147,7 @@ public class ForwardingController {
                 inputStream = file.getInputStream();
                 if (file.getSize() > 1000000) {
                     redirectAttributes.addFlashAttribute("message", "Dosya boyutu büyük");
-                    return "redirect:/forwarding/import";
+                    return "redirect:/weighbridge/import";
                 }
 
                 fileName = pathDirectoryImport + file.getOriginalFilename();
@@ -187,8 +166,8 @@ public class ForwardingController {
             e.printStackTrace();
         }
 
-        forwardingService.importXLSX(fileName);
+        weighbridgeService.importXLSX(fileName);
         redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
-        return "redirect:/forwarding/list";
+        return "redirect:/weighbridge/list";
     }
 }

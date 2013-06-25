@@ -23,7 +23,7 @@ import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Electricmeter;
 import com.aripd.project.lgk.service.ElectricmeterService;
 
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
 @Controller
 @RequestMapping("/electricmeter")
 public class ElectricmeterController {
