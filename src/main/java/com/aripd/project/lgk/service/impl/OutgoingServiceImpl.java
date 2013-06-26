@@ -31,45 +31,48 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.SortField;
-import com.aripd.project.lgk.domain.Forwarding;
-import com.aripd.project.lgk.domain.Uatf;
-import com.aripd.project.lgk.domain.Uatf_;
-import com.aripd.project.lgk.report.uatf.FillManager;
-import com.aripd.project.lgk.report.uatf.Layouter;
-import com.aripd.project.lgk.report.uatf.Writer;
-import com.aripd.project.lgk.repository.UatfRepository;
-import com.aripd.project.lgk.service.ForwardingService;
-import com.aripd.project.lgk.service.UatfService;
+import com.aripd.project.lgk.domain.Waybill;
+import com.aripd.project.lgk.domain.Outgoing;
+import com.aripd.project.lgk.domain.Outgoing_;
+import com.aripd.project.lgk.report.outgoing.FillManager;
+import com.aripd.project.lgk.report.outgoing.Layouter;
+import com.aripd.project.lgk.report.outgoing.Writer;
+import com.aripd.project.lgk.repository.OutgoingRepository;
+import com.aripd.project.lgk.service.WaybillService;
+import com.aripd.project.lgk.service.OutgoingService;
+import com.aripd.project.lgk.service.ProductService;
 
-@Service("uatfService")
+@Service("outgoingService")
 @Transactional
-public class UatfServiceImpl implements UatfService {
+public class OutgoingServiceImpl implements OutgoingService {
 
     @PersistenceContext
     private EntityManager em;
     @Autowired
-    private UatfRepository repository;
+    private OutgoingRepository repository;
     @Autowired
-    private ForwardingService forwardingService;
+    private WaybillService waybillService;
+    @Autowired
+    private ProductService productService;
 
     @Transactional(readOnly = true)
-    public Uatf findOne(Long id) {
+    public Outgoing findOne(Long id) {
         return repository.findOne(id);
     }
 
     @Transactional(readOnly = true)
-    public List<Uatf> findAll() {
+    public List<Outgoing> findAll() {
         return repository.findAll();
     }
 
     @Transactional(readOnly = true)
-    public List<Uatf> findByForwardingId(Long forwarding_id) {
-        return repository.findByForwardingId(forwarding_id);
+    public List<Outgoing> findByWaybillId(Long waybill_id) {
+        return repository.findByWaybillId(waybill_id);
     }
 
     @Transactional(readOnly = false)
-    public Uatf save(Uatf uatf) {
-        return repository.save(uatf);
+    public Outgoing save(Outgoing outgoing) {
+        return repository.save(outgoing);
     }
 
     @Transactional(readOnly = false)
@@ -78,13 +81,13 @@ public class UatfServiceImpl implements UatfService {
     }
 
     @Transactional(readOnly = false)
-    public void delete(Uatf uatf) {
-        repository.delete(uatf);
+    public void delete(Outgoing outgoing) {
+        repository.delete(outgoing);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public ResultSet<Uatf> getRecords(Long forwarding_id, PagingCriteria criteria) {
+    public ResultSet<Outgoing> getRecords(Long waybill_id, PagingCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
         Integer pageNumber = criteria.getPageNumber();
@@ -92,17 +95,17 @@ public class UatfServiceImpl implements UatfService {
         List<SortField> sortFields = criteria.getSortFields();
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Uatf> cq = cb.createQuery(Uatf.class);
-        Root<Uatf> uatf = cq.from(Uatf.class);
+        CriteriaQuery<Outgoing> cq = cb.createQuery(Outgoing.class);
+        Root<Outgoing> outgoing = cq.from(Outgoing.class);
 
         // Filtering and Searching
         List<Predicate> predicateList = new ArrayList<Predicate>();
 
-        Predicate filter1 = cb.equal(uatf.get(Uatf_.forwarding), forwardingService.findOne(forwarding_id));
+        Predicate filter1 = cb.equal(outgoing.get(Outgoing_.waybill), waybillService.findOne(waybill_id));
         predicateList.add(filter1);
 
         if ((search != null) && (!(search.isEmpty()))) {
-            Predicate predicate = cb.like(uatf.get(Uatf_.code), "%" + search + "%");
+            Predicate predicate = cb.like(outgoing.get(Outgoing_.remark), "%" + search + "%");
             predicateList.add(predicate);
         }
 
@@ -111,25 +114,27 @@ public class UatfServiceImpl implements UatfService {
         cq.where(predicates);
 
         // Sorting
+        /*
         for (SortField sortField : sortFields) {
             String field = sortField.getField();
             String direction = sortField.getDirection().getDirection();
             if (direction.equalsIgnoreCase("asc")) {
-                cq.orderBy(cb.asc(uatf.get(field)));
+                cq.orderBy(cb.asc(outgoing.get(field)));
             } else if (direction.equalsIgnoreCase("desc")) {
-                cq.orderBy(cb.desc(uatf.get(field)));
+                cq.orderBy(cb.desc(outgoing.get(field)));
             }
         }
+        */
 
         Long totalRecords = (long) em.createQuery(cq).getResultList().size();
 
         // Pagination
-        TypedQuery<Uatf> typedQuery = em.createQuery(cq);
+        TypedQuery<Outgoing> typedQuery = em.createQuery(cq);
         typedQuery = typedQuery.setFirstResult(displayStart);
         typedQuery = typedQuery.setMaxResults(displaySize);
-        List<Uatf> resultList = typedQuery.getResultList();
+        List<Outgoing> resultList = typedQuery.getResultList();
 
-        return new ResultSet<Uatf>(resultList, totalRecords, displaySize);
+        return new ResultSet<Outgoing>(resultList, totalRecords, displaySize);
     }
 
     public void exportXLS(HttpServletResponse response) {
@@ -137,7 +142,7 @@ public class UatfServiceImpl implements UatfService {
         HSSFWorkbook workbook = new HSSFWorkbook();
 
         // 2. Create new worksheet
-        HSSFSheet worksheet = workbook.createSheet("Uatf Report");
+        HSSFSheet worksheet = workbook.createSheet("Outgoing Report");
 
         // 3. Define starting indices for rows and columns
         int startRowIndex = 0;
@@ -151,7 +156,7 @@ public class UatfServiceImpl implements UatfService {
         FillManager.fillReport(worksheet, startRowIndex, startColIndex, repository.findAll());
 
         // 6. Set the response properties
-        String fileName = "UatfReport.xls";
+        String fileName = "OutgoingReport.xls";
         response.setHeader("Content-Disposition", "inline; filename="
                 + fileName);
         // Make sure to set the correct content type
@@ -182,34 +187,30 @@ public class UatfServiceImpl implements UatfService {
         Sheet worksheet = workbook.getSheetAt(0);
         Iterator<Row> rows = worksheet.rowIterator();
 
-        List<Uatf> uatfs = new ArrayList<Uatf>();
+        List<Outgoing> outgoings = new ArrayList<Outgoing>();
 
         //while (rows.hasNext()) {
         for (int i = 1; i <= worksheet.getLastRowNum(); i++) {
             //Row row = rows.next();
             Row row = worksheet.getRow(i);
 
-            String waybillNo = row.getCell(0).getStringCellValue();
-            String code = row.getCell(1).getStringCellValue();
-            String company = row.getCell(2).getStringCellValue();
-            String county = row.getCell(3).getStringCellValue();
-            String city = row.getCell(4).getStringCellValue();
-            Integer loadWeightInTonne = (int) row.getCell(5).getNumericCellValue();
+            String documentNo = row.getCell(0).getStringCellValue();
+            String product_code = row.getCell(5).getStringCellValue();
+            Integer weight = (int) row.getCell(5).getNumericCellValue();
+            String remark = row.getCell(4).getStringCellValue();
 
-            Forwarding forwarding = forwardingService.findOneByWaybillNo(waybillNo);
-            if (forwarding != null) {
-                Uatf uatf = new Uatf();
-                uatf.setForwarding(forwarding);
-                uatf.setCode(code);
-                uatf.setCompany(company);
-                uatf.setCounty(county);
-                uatf.setCity(city);
-                uatf.setLoadWeightInTonne(loadWeightInTonne);
+            Waybill waybill = waybillService.findOneByDocumentNo(documentNo);
+            if (waybill != null) {
+                Outgoing outgoing = new Outgoing();
+                outgoing.setWaybill(waybill);
+                outgoing.setProduct(productService.findOneByCode(product_code));
+                outgoing.setWeight(weight);
+                outgoing.setRemark(remark);
 
-                uatfs.add(uatf);
+                outgoings.add(outgoing);
             }
         }
 
-        repository.save(uatfs);
+        repository.save(outgoings);
     }
 }

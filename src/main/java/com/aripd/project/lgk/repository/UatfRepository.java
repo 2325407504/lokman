@@ -8,5 +8,5 @@ import com.aripd.project.lgk.domain.Uatf;
 
 public interface UatfRepository extends JpaRepository<Uatf, Long> {
 
-    List<Uatf> findByForwardingId(Long id);
+    List<Uatf> findByForwardingId(Long forwarding_id);
 }

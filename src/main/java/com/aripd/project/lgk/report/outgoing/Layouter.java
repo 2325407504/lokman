@@ -1,5 +1,6 @@
-package com.aripd.project.lgk.report.uatf;
+package com.aripd.project.lgk.report.outgoing;
 
+import com.aripd.project.lgk.report.outgoing.*;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
@@ -69,7 +70,7 @@ public class Layouter {
         HSSFRow rowTitle = worksheet.createRow((short) startRowIndex);
         rowTitle.setHeight((short) 500);
         HSSFCell cellTitle = rowTitle.createCell(startColIndex);
-        cellTitle.setCellValue("Uatf Report");
+        cellTitle.setCellValue("Outgoing Report");
         cellTitle.setCellStyle(cellStyleTitle);
 
         // Create merged region for the report title
@@ -154,7 +155,7 @@ public class Layouter {
         cell10.setCellStyle(headerCellStyle);
 
         HSSFCell cell11 = rowHeader.createCell(startColIndex + 11);
-        cell11.setCellValue("Uatf");
+        cell11.setCellValue("Outgoing");
         cell11.setCellStyle(headerCellStyle);
 
         HSSFCell cell12 = rowHeader.createCell(startColIndex + 12);

@@ -74,4 +74,4 @@
                 "aoColumns": [<jsp:doBody />]
             });
         });
-</script>	
+</script>

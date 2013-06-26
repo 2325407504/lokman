@@ -140,10 +140,10 @@
 
             <hr>
 
-            <aripd:datatables datasource="/outgoing/get/${waybillAttribute.id}" id="outgoings" dataUrlDelete="/outgoing/delete" actionColumn="5" caption="Outgoings">
+            <aripd:datatables datasource="/outgoing/get/${waybillAttribute.id}" id="outgoings" dataUrlDelete="/outgoing/delete" actionColumn="4" caption="Outgoings">
                 <aripd:column label="Product" field="product.name"/>
                 <aripd:column label="Remark" field="remark"/>
-                <aripd:column label="Weight" field="weightß"/>
+                <aripd:column label="Weight" field="weight"/>
                 <aripd:column label="Action" field="id"/>
             </aripd:datatables>
         </div>
@@ -156,46 +156,6 @@
             maxDate: new Date()
         });
     });
-</script>
-
-<script type="text/javascript">
-<!--
-    var startDateTextBox = $('#startingTime');
-    var endDateTextBox = $('#endingTime');
-
-    startDateTextBox.datetimepicker({
-        onClose: function(dateText, inst) {
-            if (endDateTextBox.val() != '') {
-                var testStartDate = startDateTextBox.datetimepicker('getDate');
-                var testEndDate = endDateTextBox.datetimepicker('getDate');
-                if (testStartDate > testEndDate)
-                    endDateTextBox.datetimepicker('setDate', testStartDate);
-            }
-            else {
-                endDateTextBox.val(dateText);
-            }
-        },
-        onSelect: function(selectedDateTime) {
-            endDateTextBox.datetimepicker('option', 'minDate', startDateTextBox.datetimepicker('getDate'));
-        }
-    });
-    endDateTextBox.datetimepicker({
-        onClose: function(dateText, inst) {
-            if (startDateTextBox.val() != '') {
-                var testStartDate = startDateTextBox.datetimepicker('getDate');
-                var testEndDate = endDateTextBox.datetimepicker('getDate');
-                if (testStartDate > testEndDate)
-                    startDateTextBox.datetimepicker('setDate', testEndDate);
-            }
-            else {
-                startDateTextBox.val(dateText);
-            }
-        },
-        onSelect: function(selectedDateTime) {
-            startDateTextBox.datetimepicker('option', 'maxDate', endDateTextBox.datetimepicker('getDate'));
-        }
-    });
-//-->
 </script>
 
 <%@ include file="/WEB-INF/views/footer.jsp" %>

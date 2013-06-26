@@ -154,7 +154,7 @@ public class Layouter {
         cell10.setCellStyle(headerCellStyle);
 
         HSSFCell cell11 = rowHeader.createCell(startColIndex + 11);
-        cell11.setCellValue("UATF");
+        cell11.setCellValue("Outgoing");
         cell11.setCellStyle(headerCellStyle);
 
     }

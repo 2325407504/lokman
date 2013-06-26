@@ -20,7 +20,7 @@ public interface UatfService {
 
 	void delete(Uatf uatf);
 
-	List<Uatf> findByForwardingId(Long id);
+	List<Uatf> findByForwardingId(Long forwarding_id);
 
 	ResultSet<Uatf> getRecords(Long forwarding_id, PagingCriteria criteria);
 
