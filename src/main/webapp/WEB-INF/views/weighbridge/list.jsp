@@ -24,12 +24,18 @@
 
 <aripd:datatables datasource="/weighbridge/get" id="weighbridges" dataUrlShow="/weighbridge/show" dataUrlEdit="/weighbridge/edit">
     <aripd:column label="Action" field="id"/>
-    <aripd:column label="Fullname" field="account.client.fullname"/>
-    <aripd:column label="Account" field="account.username"/>
-    <aripd:column label="Date" field="documentDate"/>
-    <aripd:column label="Company" field="company"/>
-    <aripd:column label="Description" field="description"/>
-    <aripd:column label="Amount" field="amount"/>
+    <aripd:column label="Account" field="account.client.fullname"/>
+    <aripd:column label="Clerk" field="clerk"/>
+    <aripd:column label="Plate" field="plate"/>
+    <aripd:column label="Driver" field="driver"/>
+    <aripd:column label="Location From" field="locationFrom"/>
+    <aripd:column label="Location To" field="locationTo"/>
+    <aripd:column label="Check-in" field="checkin"/>
+    <aripd:column label="Check-out" field="checkout"/>
+    <aripd:column label="Good Type" field="goodtype"/>
+    <aripd:column label="Customer" field="customer"/>
+    <aripd:column label="First Weighing" field="firstWeighing"/>
+    <aripd:column label="Last Weighing" field="lastWeighing"/>
 </aripd:datatables>
 
 <%@ include file="/WEB-INF/views/footer.jsp" %>

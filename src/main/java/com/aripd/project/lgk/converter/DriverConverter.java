@@ -10,12 +10,11 @@ import com.aripd.project.lgk.service.DriverService;
 @Component
 public class DriverConverter implements Converter<String, Driver> {
 
-	@Autowired
-	DriverService driverService;
+    @Autowired
+    DriverService driverService;
 
-	@Override
-	public Driver convert(String source) {
-		return driverService.findOne(Long.valueOf(source));
-	}
-
+    @Override
+    public Driver convert(String source) {
+        return driverService.findOne(Long.valueOf(source));
+    }
 }

@@ -19,6 +19,7 @@ public class Weighbridge_ extends BaseEntity_ {
 
     public static volatile SingularAttribute<Weighbridge, Boolean> submitted;
     public static volatile SingularAttribute<Weighbridge, Account> account;
+    public static volatile SingularAttribute<Weighbridge, String> clerk;
     public static volatile SingularAttribute<Weighbridge, String> plate;
     public static volatile SingularAttribute<Weighbridge, String> driver;
     public static volatile SingularAttribute<Weighbridge, String> locationFrom;

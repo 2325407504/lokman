@@ -32,6 +32,7 @@ import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Weighbridge;
 import com.aripd.project.lgk.service.WeighbridgeService;
+import java.security.Principal;
 
 @PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
 @Controller
@@ -129,6 +130,7 @@ public class WeighbridgeController {
 
     @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
     public String importXLS(
+            Principal principal,
             final RedirectAttributes redirectAttributes,
             FileUploadBean fileUploadBean,
             BindingResult result) {
@@ -166,7 +168,7 @@ public class WeighbridgeController {
             e.printStackTrace();
         }
 
-        weighbridgeService.importXLSX(fileName);
+        weighbridgeService.importXLSX(fileName, principal);
         redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
         return "redirect:/weighbridge/list";
     }

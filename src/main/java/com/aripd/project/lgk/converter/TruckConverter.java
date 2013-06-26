@@ -10,12 +10,11 @@ import com.aripd.project.lgk.service.TruckService;
 @Component
 public class TruckConverter implements Converter<String, Truck> {
 
-	@Autowired
-	TruckService truckService;
+    @Autowired
+    TruckService truckService;
 
-	@Override
-	public Truck convert(String source) {
-		return truckService.findOne(Long.valueOf(source));
-	}
-
+    @Override
+    public Truck convert(String source) {
+        return truckService.findOne(Long.valueOf(source));
+    }
 }

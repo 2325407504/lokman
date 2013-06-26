@@ -1,12 +1,12 @@
 package com.aripd.project.lgk.service.impl;
 
+import com.aripd.account.domain.Account;
 import com.aripd.account.service.AccountService;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -41,7 +41,10 @@ import com.aripd.project.lgk.report.weighbridge.Layouter;
 import com.aripd.project.lgk.report.weighbridge.Writer;
 import com.aripd.project.lgk.repository.WeighbridgeRepository;
 import com.aripd.project.lgk.service.WeighbridgeService;
+import java.security.Principal;
 import javax.annotation.Resource;
+import org.apache.poi.ss.usermodel.Cell;
+import org.joda.time.format.DateTimeFormat;
 
 @Service("weighbridgeService")
 @Transactional(readOnly = true)
@@ -151,7 +154,7 @@ public class WeighbridgeServiceImpl implements WeighbridgeService {
 
     }
 
-    public void importXLSX(String fileName) {
+    public void importXLSX(String fileName, Principal principal) {
         InputStream iStream = null;
         try {
             iStream = new FileInputStream(fileName);
@@ -174,31 +177,57 @@ public class WeighbridgeServiceImpl implements WeighbridgeService {
         List<Weighbridge> weighbridges = new ArrayList<Weighbridge>();
         Weighbridge weighbridge;
 
+        Account account = accountService.findOneByUsername(principal.getName());
+
         //while (rows.hasNext()) {
         for (int i = 1; i <= worksheet.getLastRowNum(); i++) {
             //Row row = rows.next();
             Row row = worksheet.getRow(i);
 
-            String username = row.getCell(0).getStringCellValue();
+            //String clerk = row.getCell(0).getStringCellValue();
+            Cell cell_clerk = row.getCell(0, Row.RETURN_BLANK_AS_NULL);
+            String clerk = (cell_clerk != null) ? cell_clerk.getStringCellValue() : "---";
+
             String plate = row.getCell(1).getStringCellValue();
-            String driver = row.getCell(2).getStringCellValue();
-            String locationFrom = row.getCell(3).getStringCellValue();
-            String locationTo = row.getCell(4).getStringCellValue();
-            Date checkin = row.getCell(5).getDateCellValue();
-            Date checkout = row.getCell(6).getDateCellValue();
-            String goodtype = row.getCell(7).getStringCellValue();
-            String customer = row.getCell(8).getStringCellValue();
-            Integer firstWeighing = (int) row.getCell(9).getNumericCellValue();
-            Integer lastWeighing = (int) row.getCell(10).getNumericCellValue();
+
+            //String driver = row.getCell(2).getStringCellValue();
+            Cell cell_driver = row.getCell(2, Row.RETURN_BLANK_AS_NULL);
+            String driver = (cell_driver != null) ? cell_driver.getStringCellValue() : "---";
+
+            //String locationFrom = row.getCell(3).getStringCellValue();
+            //String locationTo = row.getCell(4).getStringCellValue();
+            Cell cell_locationFrom = row.getCell(3, Row.RETURN_BLANK_AS_NULL);
+            Cell cell_locationTo = row.getCell(4, Row.RETURN_BLANK_AS_NULL);
+            String locationFrom = (cell_locationFrom != null) ? cell_locationFrom.getStringCellValue() : "---";
+            String locationTo = (cell_locationTo != null) ? cell_locationTo.getStringCellValue() : "---";
+
+            DateTime _checkin_date = DateTime.parse(row.getCell(5).getStringCellValue(), DateTimeFormat.forPattern("dd.MM.yyyy"));
+            DateTime _checkin_time = new DateTime(row.getCell(6).getDateCellValue());
+            DateTime _checkout_date = DateTime.parse(row.getCell(7).getStringCellValue(), DateTimeFormat.forPattern("dd.MM.yyyy"));
+            DateTime _checkout_time = new DateTime(row.getCell(8).getDateCellValue());
+            DateTime checkin = new DateTime(_checkin_date.getYear(), _checkin_date.getMonthOfYear(), _checkin_date.getDayOfYear(), _checkin_time.getHourOfDay(), _checkin_time.getMinuteOfHour(), _checkin_time.getSecondOfMinute());
+            DateTime checkout = new DateTime(_checkout_date.getYear(), _checkout_date.getMonthOfYear(), _checkout_date.getDayOfYear(), _checkout_time.getHourOfDay(), _checkout_time.getMinuteOfHour(), _checkout_time.getSecondOfMinute());
+
+            //String goodtype = row.getCell(9).getStringCellValue();
+            //String customer = row.getCell(10).getStringCellValue();
+            Cell cell_goodtype = row.getCell(9, Row.RETURN_BLANK_AS_NULL);
+            Cell cell_customer = row.getCell(10, Row.RETURN_BLANK_AS_NULL);
+            String goodtype = (cell_goodtype != null) ? cell_goodtype.getStringCellValue() : "---";
+            String customer = (cell_customer != null) ? cell_customer.getStringCellValue() : "---";
+
+            Integer firstWeighing = (int) row.getCell(11).getNumericCellValue();
+            Integer lastWeighing = (int) row.getCell(12).getNumericCellValue();
 
             weighbridge = new Weighbridge();
             weighbridge.setSubmitted(true);
-            weighbridge.setAccount(accountService.findOneByUsername(username));
+            weighbridge.setAccount(account);
+            weighbridge.setClerk(clerk);
+            weighbridge.setPlate(plate);
             weighbridge.setDriver(driver);
             weighbridge.setLocationFrom(locationFrom);
             weighbridge.setLocationTo(locationTo);
-            weighbridge.setCheckin(new DateTime(checkin));
-            weighbridge.setCheckout(new DateTime(checkout));
+            weighbridge.setCheckin(checkin);
+            weighbridge.setCheckout(checkout);
             weighbridge.setGoodtype(goodtype);
             weighbridge.setCustomer(customer);
             weighbridge.setFirstWeighing(firstWeighing);

@@ -22,9 +22,12 @@ public class Weighbridge extends BaseEntity {
     @ManyToOne
     @JoinColumn(nullable = false, insertable = true, updatable = true)
     private Account account;
+    private String clerk;
     private String plate;
     private String driver;
+    @Column(nullable = true)
     private String locationFrom;
+    @Column(nullable = true)
     private String locationTo;
     @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
     @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
@@ -34,7 +37,9 @@ public class Weighbridge extends BaseEntity {
     @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
     @Column(columnDefinition = "TIMESTAMP")
     private DateTime checkout;
+    @Column(nullable = true)
     private String goodtype;
+    @Column(nullable = true)
     private String customer;
     private Integer firstWeighing;
     private Integer lastWeighing;
@@ -58,6 +63,14 @@ public class Weighbridge extends BaseEntity {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public String getClerk() {
+        return clerk;
+    }
+
+    public void setClerk(String clerk) {
+        this.clerk = clerk;
     }
 
     public String getPlate() {

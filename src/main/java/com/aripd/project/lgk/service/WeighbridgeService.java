@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.project.lgk.domain.Weighbridge;
+import java.security.Principal;
 
 public interface WeighbridgeService {
 
@@ -20,5 +21,5 @@ public interface WeighbridgeService {
 
     void exportXLS(HttpServletResponse response);
 
-    void importXLSX(String fileName);
+    void importXLSX(String fileName, Principal principal);
 }
