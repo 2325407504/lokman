@@ -44,16 +44,17 @@
         <aripd:description id="weighbridge">
             <aripd:descriptionitem label="Status" field="weighbridgeAttribute.submitted"></aripd:descriptionitem>
             <aripd:descriptionitem label="Account" field="weighbridgeAttribute.account.client.fullname"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Truck" field="weighbridgeAttribute.truck.plate"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Driver" field="weighbridgeAttribute.driver.name"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Starting Point" field="weighbridgeAttribute.startingPoint"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Starting Km" field="weighbridgeAttribute.startingKm"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Starting Time" field="weighbridgeAttribute.startingTime"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Ending Point" field="weighbridgeAttribute.endingPoint"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Ending Km" field="weighbridgeAttribute.endingKm"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Ending Time" field="weighbridgeAttribute.endingTime"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Weight" field="weighbridgeAttribute.loadWeightInTonne"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Remark" field="weighbridgeAttribute.remark"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Clerk" field="weighbridgeAttribute.clerk"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Plate" field="weighbridgeAttribute.plate"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Driver" field="weighbridgeAttribute.driver"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Location From" field="weighbridgeAttribute.locationFrom"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Location To" field="weighbridgeAttribute.locationTo"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Check-in" field="weighbridgeAttribute.checkin"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Check-out" field="weighbridgeAttribute.checkout"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Good Type" field="weighbridgeAttribute.goodtype"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Customer" field="weighbridgeAttribute.customer"></aripd:descriptionitem>
+            <aripd:descriptionitem label="First Weighing" field="weighbridgeAttribute.firstWeighing"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Last Weighing" field="weighbridgeAttribute.lastWeighing"></aripd:descriptionitem>
         </aripd:description>
     </div>
 </div>
