@@ -29,6 +29,7 @@ import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.model.CsvImportBean;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
+import com.aripd.project.lgk.domain.Expense;
 import com.aripd.project.lgk.domain.Outgoing;
 import com.aripd.project.lgk.domain.Waybill;
 import com.aripd.project.lgk.service.CustomerService;
@@ -104,14 +105,6 @@ public class WaybillController {
         return "redirect:/waybill/list";
     }
 
-    @RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)
-    public String submitAction(@PathVariable Long id) {
-        Waybill waybill = waybillService.findOne(id);
-        //waybill.setSubmitted(true ^ waybill.isSubmitted());
-        waybillService.save(waybill);
-        return "redirect:/waybill/show/" + id;
-    }
-
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public String delete(
             final RedirectAttributes redirectAttributes,
@@ -119,6 +112,14 @@ public class WaybillController {
         waybillService.delete(id);
         redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
         return "redirect:/waybill/list";
+    }
+
+    @RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)
+    public String submitAction(@PathVariable Long id) {
+        Waybill waybill = waybillService.findOne(id);
+        waybill.setSubmitted(true ^ waybill.isSubmitted());
+        waybillService.save(waybill);
+        return "redirect:/waybill/show/" + id;
     }
 
     /**

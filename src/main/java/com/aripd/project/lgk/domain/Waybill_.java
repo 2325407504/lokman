@@ -1,7 +1,5 @@
 package com.aripd.project.lgk.domain;
 
-import java.math.BigDecimal;
-
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
@@ -19,16 +17,13 @@ import com.aripd.common.entity.BaseEntity_;
 @StaticMetamodel(Waybill.class)
 public class Waybill_ extends BaseEntity_ {
 
-    public static volatile SingularAttribute<Waybill, Boolean> submitted;
+    public static volatile SingularAttribute<Expense, Boolean> submitted;
     public static volatile SingularAttribute<Waybill, Account> account;
+    public static volatile SingularAttribute<Waybill, Invoice> invoice;
     public static volatile SingularAttribute<Waybill, DateTime> documentDate;
     public static volatile SingularAttribute<Waybill, String> documentNo;
     public static volatile SingularAttribute<Waybill, String> company;
     public static volatile SingularAttribute<Waybill, String> driver;
     public static volatile SingularAttribute<Waybill, String> plate;
     public static volatile SetAttribute<Waybill, Outgoing> outgoings;
-    public static volatile SingularAttribute<Waybill, String> invoiceCompany;
-    public static volatile SingularAttribute<Waybill, String> invoiceNo;
-    public static volatile SingularAttribute<Waybill, DateTime> invoiceDate;
-    public static volatile SingularAttribute<Waybill, BigDecimal> invoiceAmount;
 }

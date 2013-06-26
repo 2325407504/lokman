@@ -1,17 +1,12 @@
 package com.aripd.project.lgk.domain;
 
 import java.math.BigDecimal;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
@@ -27,8 +22,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Table(name = "invoice")
 public class Invoice extends BaseEntity {
 
-    @Column(nullable = false)
-    private boolean submitted = false;
     @ManyToOne
     @JoinColumn(nullable = false, insertable = true, updatable = true)
     private Account account;
@@ -48,14 +41,6 @@ public class Invoice extends BaseEntity {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
-    }
-
-    public boolean isSubmitted() {
-        return submitted;
-    }
-
-    public void setSubmitted(boolean submitted) {
-        this.submitted = submitted;
     }
 
     public Account getAccount() {

@@ -35,24 +35,29 @@
         </li>
     </ul>
 
+<form:form modelAttribute="waybillAttribute" action="${waybillSave}" method="post">
     <div class="row-fluid">
-        <div class="span6">
-        <form:form modelAttribute="waybillAttribute" action="${waybillSave}" method="post">
+        <div class="span4">
             <fieldset>
                 <form:errors path="*" cssClass="alert alert-error" element="div" />
                 <form:hidden path="id" />
+                <div class="control-group">
+                    <form:checkbox path="submitted" /> <spring:message code="Submitted by user"></spring:message>
+                    <form:errors cssClass="text-error" path="submitted" />
+                </div>
                 <div class="control-group">
                     <form:label path="account"><spring:message code="Account"></spring:message></form:label>
                     <form:select multiple="false" path="account.id" items="${accounts}" itemLabel="client.fullname" itemValue="id" />
                     <form:errors cssClass="text-error" path="account" />
                 </div>
             </fieldset>
+        </div>
+        <div class="span4">
             <fieldset>
                 <legend><spring:message code="Waybill"></spring:message></legend>
-
                     <div class="control-group">
                     <form:label path="documentDate"><spring:message code="Document Date"></spring:message></form:label>
-                    <form:input type="datetime" path="documentDate" />
+                    <form:input type="datetime" id="waybillDate" path="documentDate" />
                     <form:errors cssClass="text-error" path="documentDate" />
                 </div>
                 <div class="control-group">
@@ -76,6 +81,8 @@
                     <form:errors cssClass="text-error" path="plate" />
                 </div>
             </fieldset>
+        </div>
+        <div class="span4">
             <fieldset>
                 <legend><spring:message code="Invoice"></spring:message></legend>
                     <div class="control-group">
@@ -90,7 +97,7 @@
                 </div>
                 <div class="control-group">
                     <form:label path="invoice.documentDate"><spring:message code="Document Date"></spring:message></form:label>
-                    <form:input type="datetime" path="invoice.documentDate" />
+                    <form:input type="datetime" id="invoiceDate" path="invoice.documentDate" />
                     <form:errors cssClass="text-error" path="invoice.documentDate" />
                 </div>
                 <div class="control-group">
@@ -98,23 +105,26 @@
                     <form:input path="invoice.amount" />
                     <form:errors cssClass="text-error" path="invoice.amount" />
                 </div>
-                <div class="form-actions">
-                    <c:if test="${ !empty waybillAttribute.id }">
-                        <a class="btn btn-danger" href="javascript:$('#form-${waybillAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete"></spring:message></a>
-                    </c:if>
-                    <button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
-                    </div>
-                </fieldset>
-        </form:form>
-
-        <c:if test="${ !empty waybillAttribute.id }">
-            <spring:url var="deleteUrl" value="/waybill/delete?id=${waybillAttribute.id}" />
-            <form:form id="form-${waybillAttribute.id}" modelAttribute="waybillAttribute" action="${deleteUrl}" method="delete">
-                <form:hidden path="id" />
-            </form:form>
-        </c:if>
+            </fieldset>
+        </div>
     </div>
-    <div class="span6">
+    <div class="form-actions">
+        <c:if test="${ !empty waybillAttribute.id }">
+            <a class="btn btn-danger" href="javascript:$('#form-${waybillAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete"></spring:message></a>
+        </c:if>
+        <button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
+        </div>
+</form:form>
+
+<c:if test="${ !empty waybillAttribute.id }">
+    <spring:url var="deleteUrl" value="/waybill/delete?id=${waybillAttribute.id}" />
+    <form:form id="form-${waybillAttribute.id}" modelAttribute="waybillAttribute" action="${deleteUrl}" method="delete">
+        <form:hidden path="id" />
+    </form:form>
+</c:if>
+
+<div class="row-fluid">
+    <div class="span12">
         <fmt:message key="Code" var="Code"/>
         <fmt:message key="Company" var="Company"/>
         <fmt:message key="County" var="County"/>
@@ -145,6 +155,14 @@
         </c:if>
     </div>
 </div>
+
+<script>
+    $(function() {
+        $("#waybillDate, #invoiceDate").datetimepicker({
+            maxDate: new Date()
+        });
+    });
+</script>
 
 <script type="text/javascript">
 <!--
