@@ -27,16 +27,11 @@
 <aripd:datatables datasource="/waybill/get" id="waybills" dataUrlShow="/waybill/show" dataUrlEdit="/waybill/edit">
 	<aripd:column label="Action" field="id"/>
 	<aripd:column label="Account" field="account.username"/>
-	<aripd:column label="Waybill No" field="waybillNo"/>
+	<aripd:column label="Document No" field="documentNo"/>
+	<aripd:column label="Document Date" field="documentDate"/>
+	<aripd:column label="Company" field="company"/>
 	<aripd:column label="Driver" field="driver"/>
-	<aripd:column label="Subcontractor" field="subcontractor.name"/>
-	<aripd:column label="Quota" field="quota.name"/>
 	<aripd:column label="Plate" field="plate"/>
-	<aripd:column label="Starting Time" field="startingTime"/>
-	<aripd:column label="Ending Time" field="endingTime"/>
-	<aripd:column label="Ending Point" field="endingPoint"/>
-	<aripd:column label="Weight" field="loadWeightInTonne"/>
-	<aripd:column label="Shipping Cost" field="shippingCost"/>
 </aripd:datatables>
 
 <%@ include file="/WEB-INF/views/footer.jsp" %>

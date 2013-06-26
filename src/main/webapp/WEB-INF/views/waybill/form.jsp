@@ -56,14 +56,14 @@
             <fieldset>
                 <legend><spring:message code="Waybill"></spring:message></legend>
                     <div class="control-group">
-                    <form:label path="documentDate"><spring:message code="Document Date"></spring:message></form:label>
-                    <form:input type="datetime" id="waybillDate" path="documentDate" />
-                    <form:errors cssClass="text-error" path="documentDate" />
-                </div>
-                <div class="control-group">
                     <form:label path="documentNo"><spring:message code="Document No"></spring:message></form:label>
                     <form:input path="documentNo" />
                     <form:errors cssClass="text-error" path="documentNo" />
+                </div>
+                <div class="control-group">
+                    <form:label path="documentDate"><spring:message code="Document Date"></spring:message></form:label>
+                    <form:input type="datetime" id="waybillDate" path="documentDate" />
+                    <form:errors cssClass="text-error" path="documentDate" />
                 </div>
                 <div class="control-group">
                     <form:label path="company"><spring:message code="Company"></spring:message></form:label>
@@ -123,38 +123,32 @@
     </form:form>
 </c:if>
 
-<div class="row-fluid">
-    <div class="span12">
-        <fmt:message key="Code" var="Code"/>
-        <fmt:message key="Company" var="Company"/>
-        <fmt:message key="County" var="County"/>
-        <fmt:message key="City" var="City"/>
-        <fmt:message key="Weight" var="Weight"/>
+<c:if test="${waybillAttribute.id != null}">
+    <div class="row-fluid">
+        <div class="span12">
+            <fmt:message key="Product" var="Product"/>
+            <fmt:message key="Weight" var="Weight"/>
+            <fmt:message key="Remark" var="Remark"/>
 
-        <c:if test="${waybillAttribute.id != null}">
             <form:form modelAttribute="outgoingAttribute" action="${outgoingSave}" method="post" class="form-inline">
                 <form:errors path="*" cssClass="alert alert-error" element="div" />
-                <form:input path="code" cssClass="input-small" placeholder="${Code}" />
-                <form:input path="company" cssClass="input-small" placeholder="${Company}" />
-                <form:input path="county" cssClass="input-small" placeholder="${County}" />
-                <form:input path="city" cssClass="input-small" placeholder="${City}" />
-                <form:input path="loadWeightInTonne" cssClass="input-mini" placeholder="${Weight}" />
+                <form:select multiple="false" path="product.id" items="${products}" itemLabel="name" itemValue="id" />
+                <form:input path="weight" cssClass="input-mini" placeholder="${Weight}" />
+                <form:input path="remark" cssClass="input-small" placeholder="${Remark}" />
                 <button class="btn" type="submit"><i class="icon-ok"></i></button>
                 </form:form>
 
             <hr>
 
-            <aripd:datatables datasource="/outgoing/get/${waybillAttribute.id}" id="outgoings" dataUrlDelete="/outgoing/delete" actionColumn="5">
-                <aripd:column label="Code" field="code"/>
-                <aripd:column label="Company" field="company"/>
-                <aripd:column label="County" field="county"/>
-                <aripd:column label="City" field="city"/>
-                <aripd:column label="Weight" field="loadWeightInTonne"/>
+            <aripd:datatables datasource="/outgoing/get/${waybillAttribute.id}" id="outgoings" dataUrlDelete="/outgoing/delete" actionColumn="5" caption="Outgoings">
+                <aripd:column label="Product" field="product.name"/>
+                <aripd:column label="Remark" field="remark"/>
+                <aripd:column label="Weight" field="weightß"/>
                 <aripd:column label="Action" field="id"/>
             </aripd:datatables>
-        </c:if>
+        </div>
     </div>
-</div>
+</c:if>
 
 <script>
     $(function() {

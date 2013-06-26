@@ -41,44 +41,20 @@
 
 <div class="row-fluid">
     <div class="span12">
-        <ul class="unstyled">
-            <li>
-                <label class="label">
-                    <spring:message code="Account"></spring:message>
-                    </label>
-                ${weighbridgeAttribute.account.client.fullname}
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Weighbridgetype"></spring:message>
-                    </label>
-                ${weighbridgeAttribute.weighbridgetype.name}
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Date"></spring:message>
-                    </label>
-                <spring:eval expression="weighbridgeAttribute.documentDate" />
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Company"></spring:message>
-                    </label>
-                ${weighbridgeAttribute.company}
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Description"></spring:message>
-                    </label>
-                ${weighbridgeAttribute.description}
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Amount"></spring:message>
-                    </label>
-                ${weighbridgeAttribute.amount}
-            </li>
-        </ul>
+        <aripd:description id="weighbridge">
+            <aripd:descriptionitem label="Status" field="weighbridgeAttribute.submitted"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Account" field="weighbridgeAttribute.account.client.fullname"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Truck" field="weighbridgeAttribute.truck.plate"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Driver" field="weighbridgeAttribute.driver.name"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Starting Point" field="weighbridgeAttribute.startingPoint"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Starting Km" field="weighbridgeAttribute.startingKm"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Starting Time" field="weighbridgeAttribute.startingTime"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Ending Point" field="weighbridgeAttribute.endingPoint"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Ending Km" field="weighbridgeAttribute.endingKm"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Ending Time" field="weighbridgeAttribute.endingTime"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Weight" field="weighbridgeAttribute.loadWeightInTonne"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Remark" field="weighbridgeAttribute.remark"></aripd:descriptionitem>
+        </aripd:description>
     </div>
 </div>
 

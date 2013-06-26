@@ -13,9 +13,9 @@
     <li class=""><a href="${shiftNew}"><spring:message code="New Entry"></spring:message></a></li>
     </ul>
 
-<aripd:description id="shifts">
-    <aripd:descriptionitem label="Code" field="${shiftAttribute.code}"></aripd:descriptionitem>
-    <aripd:descriptionitem label="Name" field="${shiftAttribute.name}"></aripd:descriptionitem>
+<aripd:description id="shift">
+    <aripd:descriptionitem label="Code" field="shiftAttribute.code"></aripd:descriptionitem>
+    <aripd:descriptionitem label="Name" field="shiftAttribute.name"></aripd:descriptionitem>
 </aripd:description>
 
 <div class="form-actions">

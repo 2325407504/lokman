@@ -30,7 +30,8 @@ public class Waybill extends BaseEntity {
     @ManyToOne
     @JoinColumn(nullable = false, insertable = true, updatable = true)
     private Account account;
-    @OneToOne
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "invoice_id", referencedColumnName = "id")
     private Invoice invoice;
     @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)

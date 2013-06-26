@@ -13,11 +13,11 @@
     <li class=""><a href="${driverNew}"><spring:message code="New Entry"></spring:message></a></li>
     </ul>
 
-<aripd:description id="drivers">
-    <aripd:descriptionitem label="Region" field="${driverAttribute.region.name}"></aripd:descriptionitem>
-    <aripd:descriptionitem label="Code" field="${driverAttribute.code}"></aripd:descriptionitem>
-    <aripd:descriptionitem label="Fullname" field="${driverAttribute.name}"></aripd:descriptionitem>
-    <aripd:descriptionitem label="Phone Number" field="${driverAttribute.phonenumber}"></aripd:descriptionitem>
+<aripd:description id="driver">
+    <aripd:descriptionitem label="Region" field="driverAttribute.region.name"></aripd:descriptionitem>
+    <aripd:descriptionitem label="Code" field="driverAttribute.code"></aripd:descriptionitem>
+    <aripd:descriptionitem label="Fullname" field="driverAttribute.name"></aripd:descriptionitem>
+    <aripd:descriptionitem label="Phone Number" field="driverAttribute.phonenumber"></aripd:descriptionitem>
 </aripd:description>
 
 <div class="form-actions">

@@ -48,74 +48,20 @@
 
 <div class="row-fluid">
     <div class="span12">
-        <ul class="unstyled">
-            <li>
-                <label class="label">
-                    <spring:message code="Account"></spring:message>
-                    </label>
-                ${tripAttribute.account.client.fullname}
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Truck"></spring:message>
-                    </label>
-                ${tripAttribute.truck.plate}
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Driver"></spring:message>
-                    </label>
-                ${tripAttribute.driver.name}
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Starting Point"></spring:message>
-                    </label>
-                ${tripAttribute.startingPoint}
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Starting Km"></spring:message>
-                    </label>
-                ${tripAttribute.startingKm}
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Starting Time"></spring:message>
-                    </label>
-                <spring:eval expression="tripAttribute.startingTime" />
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Ending Point"></spring:message>
-                    </label>
-                ${tripAttribute.endingPoint}
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Ending Km"></spring:message>
-                    </label>
-                ${tripAttribute.endingKm}
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Ending Time"></spring:message>
-                    </label>
-                <spring:eval expression="tripAttribute.endingTime" />
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Weight"></spring:message>
-                    </label>
-                ${tripAttribute.loadWeightInTonne}
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Remark"></spring:message>
-                    </label>
-                ${tripAttribute.remark}
-            </li>
-        </ul>
+        <aripd:description id="trip">
+            <aripd:descriptionitem label="Status" field="tripAttribute.submitted"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Account" field="tripAttribute.account.client.fullname"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Truck" field="tripAttribute.truck.plate"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Driver" field="tripAttribute.driver.name"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Starting Point" field="tripAttribute.startingPoint"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Starting Km" field="tripAttribute.startingKm"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Starting Time" field="tripAttribute.startingTime"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Ending Point" field="tripAttribute.endingPoint"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Ending Km" field="tripAttribute.endingKm"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Ending Time" field="tripAttribute.endingTime"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Weight" field="tripAttribute.loadWeightInTonne"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Remark" field="tripAttribute.remark"></aripd:descriptionitem>
+        </aripd:description>
     </div>
 </div>
 

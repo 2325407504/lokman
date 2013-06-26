@@ -29,10 +29,10 @@ import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.model.CsvImportBean;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
-import com.aripd.project.lgk.domain.Expense;
 import com.aripd.project.lgk.domain.Outgoing;
 import com.aripd.project.lgk.domain.Waybill;
 import com.aripd.project.lgk.service.CustomerService;
+import com.aripd.project.lgk.service.ProductService;
 import com.aripd.project.lgk.service.WaybillService;
 import javax.validation.Valid;
 
@@ -47,6 +47,8 @@ public class WaybillController {
     private AccountService accountService;
     @Resource(name = "customerService")
     private CustomerService customerService;
+    @Resource(name = "productService")
+    private ProductService productService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -83,6 +85,7 @@ public class WaybillController {
         model.addAttribute("outgoingAttribute", new Outgoing());
         model.addAttribute("accounts", accountService.findAll());
         model.addAttribute("customers", customerService.findAll());
+        model.addAttribute("products", productService.findAll());
         model.addAttribute("waybillAttribute", waybillService.findOne(id));
         return "waybill/form";
     }
@@ -100,6 +103,7 @@ public class WaybillController {
             return "/waybill/form";
         }
 
+        formData.getInvoice().setAccount(formData.getAccount());
         waybillService.save(formData);
         redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
         return "redirect:/waybill/list";

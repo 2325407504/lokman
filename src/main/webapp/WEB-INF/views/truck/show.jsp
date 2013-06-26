@@ -13,9 +13,9 @@
     <li class=""><a href="${truckNew}"><spring:message code="New Entry"></spring:message></a></li>
     </ul>
 
-<aripd:description id="trucks">
-    <aripd:descriptionitem label="Region" field="${truckAttribute.region.name}"></aripd:descriptionitem>
-    <aripd:descriptionitem label="Plate" field="${truckAttribute.plate}"></aripd:descriptionitem>
+<aripd:description id="truck">
+    <aripd:descriptionitem label="Region" field="truckAttribute.region.name"></aripd:descriptionitem>
+    <aripd:descriptionitem label="Plate" field="truckAttribute.plate"></aripd:descriptionitem>
 </aripd:description>
 
 <div class="form-actions">

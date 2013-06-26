@@ -4,4 +4,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <dt><spring:message code="${label}" /></dt>
-<dd>${field}</dd>
+<dd><spring:eval expression="${field}" /></dd>

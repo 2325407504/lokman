@@ -41,44 +41,14 @@
 
 <div class="row-fluid">
     <div class="span12">
-        <ul class="unstyled">
-            <li>
-                <label class="label">
-                    <spring:message code="Account"></spring:message>
-                    </label>
-                ${expenseAttribute.account.client.fullname}
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Expensetype"></spring:message>
-                    </label>
-                ${expenseAttribute.expensetype.name}
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Date"></spring:message>
-                    </label>
-                <spring:eval expression="expenseAttribute.documentDate" />
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Company"></spring:message>
-                    </label>
-                ${expenseAttribute.company}
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Description"></spring:message>
-                    </label>
-                ${expenseAttribute.description}
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Amount"></spring:message>
-                    </label>
-                ${expenseAttribute.amount}
-            </li>
-        </ul>
+        <aripd:description id="expense">
+            <aripd:descriptionitem label="Account" field="expenseAttribute.account.client.fullname"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Expensetype" field="expenseAttribute.expensetype.name"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Document Date" field="expenseAttribute.documentDate"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Company" field="expenseAttribute.company"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Description" field="expenseAttribute.description"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Amount" field="expenseAttribute.amount"></aripd:descriptionitem>
+        </aripd:description>
     </div>
 </div>
 

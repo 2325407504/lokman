@@ -44,38 +44,13 @@
 
 <div class="row-fluid">
     <div class="span4">
-        <ul class="unstyled">
-            <li>
-                <label class="label">
-                    <spring:message code="Account"></spring:message>
-                    </label>
-                ${productionAttribute.account.client.fullname}
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Date"></spring:message>
-                    </label>
-                <spring:eval expression="productionAttribute.shiftdate" />
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Shift"></spring:message>
-                    </label>
-                ${productionAttribute.shift.name}
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Weight"></spring:message>
-                    </label>
-                ${productionAttribute.feed}
-            </li>
-            <li>
-                <label class="label">
-                    <spring:message code="Remark"></spring:message>
-                    </label>
-                ${productionAttribute.remark}
-            </li>
-        </ul>
+        <aripd:description id="production">
+            <aripd:descriptionitem label="Account" field="productionAttribute.account.client.fullname"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Date" field="productionAttribute.shiftdate"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Shift" field="productionAttribute.shift.name"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Weight" field="productionAttribute.feed"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Remark" field="productionAttribute.remark"></aripd:descriptionitem>
+        </aripd:description>
     </div>
     <div class="span4">
         <table class="table">
