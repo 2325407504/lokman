@@ -6,8 +6,8 @@
 
 <ul class="nav nav-tabs">
 	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-	<li class="active"><a href="${expensetypeList}"><spring:message code="Expensetypes"></spring:message></a></li>
-	<li class=""><a href="${expensetypeNew}"><spring:message code="New Entry"></spring:message></a></li>
+	<li class="active"><a href="${expensetypeList}"><spring:message code="Expensetypes" /></a></li>
+	<li class=""><a href="${expensetypeNew}"><spring:message code="New Entry" /></a></li>
 </ul>
 
 <aripd:datatables datasource="/expensetype/get" id="expensetypes" dataUrlShow="/expensetype/show" dataUrlEdit="/expensetype/edit">

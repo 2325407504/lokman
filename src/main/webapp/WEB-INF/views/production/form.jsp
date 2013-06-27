@@ -13,24 +13,24 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${productionList}"><spring:message code="Productions"></spring:message></a></li>
+    <li class=""><a href="${productionList}"><spring:message code="Productions" /></a></li>
         <c:choose>
             <c:when test="${ !empty productionAttribute.id }">
-            <li class="active"><a href="${productionEdit}"><spring:message code="Entry No"></spring:message>: ${productionAttribute.id}</a></li>
+            <li class="active"><a href="${productionEdit}"><spring:message code="Entry No" />: ${productionAttribute.id}</a></li>
             </c:when>
             <c:otherwise>
-            <li class="active"><a href="${productionNew}"><spring:message code="New Entry"></spring:message></a></li>
+            <li class="active"><a href="${productionNew}"><spring:message code="New Entry" /></a></li>
             </c:otherwise>
         </c:choose>
-    <li class=""><a href="${productionImport}"><spring:message code="Import"></spring:message></a></li>
+    <li class=""><a href="${productionImport}"><spring:message code="Import" /></a></li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Export"></spring:message>
+            <spring:message code="Export" />
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="${productionExport}"><spring:message code="Waybill"></spring:message></a></li>
-            <li><a href="${bigbagExport}"><spring:message code="UATF"></spring:message></a></li>
+                <li><a href="${productionExport}"><spring:message code="Waybill" /></a></li>
+            <li><a href="${bigbagExport}"><spring:message code="UATF" /></a></li>
             </ul>
         </li>
     </ul>
@@ -42,31 +42,31 @@
         <div class="span4">
             <fieldset>
                 <div class="control-group">
-                    <form:checkbox path="submitted" /> <spring:message code="Submitted by user"></spring:message>
+                    <form:checkbox path="submitted" /> <spring:message code="Submitted by user" />
                     <form:errors cssClass="text-error" path="submitted" />
                 </div>
                 <div class="control-group">
-                    <form:label path="account"><spring:message code="Account"></spring:message></form:label>
+                    <form:label path="account"><spring:message code="Account" /></form:label>
                     <form:select multiple="false" path="account.id" items="${accounts}" itemLabel="client.fullname" itemValue="id" />
                     <form:errors cssClass="text-error" path="account" />
                 </div>
                 <div class="control-group">
-                    <form:label path="shiftdate"><spring:message code="Date"></spring:message></form:label>
+                    <form:label path="shiftdate"><spring:message code="Date" /></form:label>
                     <form:input id="shiftdate" type="text" path="shiftdate" />
                     <form:errors cssClass="text-error" path="shiftdate" />
                 </div>
                 <div class="control-group">
-                    <form:label path="shift"><spring:message code="Shift"></spring:message></form:label>
+                    <form:label path="shift"><spring:message code="Shift" /></form:label>
                     <form:select id="shiftId" path="shift.id" multiple="false" items="${shifts}" itemLabel="name" itemValue="id" />
                     <form:errors cssClass="text-error" path="shift" />
                 </div>
                 <div class="control-group">
-                    <form:label path="feed"><spring:message code="Feed" text="Feed"></spring:message></form:label>
+                    <form:label path="feed"><spring:message code="Feed" text="Feed" /></form:label>
                     <form:input path="feed" />
                     <form:errors cssClass="text-error" path="feed" />
                 </div>
                 <div class="control-group">
-                    <form:label path="remark"><spring:message code="Remark"></spring:message></form:label>
+                    <form:label path="remark"><spring:message code="Remark" /></form:label>
                     <form:textarea path="remark" />
                     <form:errors cssClass="text-error" path="remark" />
                 </div>
@@ -121,17 +121,16 @@
             </table>
         </div>
     </div>
-
     <div class="row-fluid">
         <div class="span12">
             <div class="form-actions">
                 <c:if test="${ !empty productionAttribute.id }">
-                    <a class="btn btn-danger" href="javascript:$('#form-${productionAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete"></spring:message></a>
+                    <a class="btn btn-danger" href="javascript:$('#form-${productionAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete" /></a>
                 </c:if>
-                <button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
-                </div>
+                <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
             </div>
         </div>
+    </div>
 </form:form>
 
 
@@ -141,6 +140,7 @@
         <form:hidden path="id" />
     </form:form>
 </c:if>
+
 <div class="row-fluid">
     <div class="span12">
         <fmt:message key="Product" var="Product"/>
@@ -154,8 +154,10 @@
                     <form:options items="${products}" itemLabel="name" itemValue="id"/>
                 </form:select>
                 <form:input path="weight" cssClass="input-small" placeholder="${Weight}" />
-                <button class="btn btn-primary" type="submit"><i class="icon-ok icon-white"></i></button>
-                </form:form>
+                <button class="btn btn-primary" type="submit">
+                    <i class="icon-ok icon-white"></i>
+                </button>
+            </form:form>
 
             <hr>
 

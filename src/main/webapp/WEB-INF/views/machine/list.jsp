@@ -6,8 +6,8 @@
 
 <ul class="nav nav-tabs">
 	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-	<li class="active"><a href="${machineList}"><spring:message code="Machines"></spring:message></a></li>
-	<li class=""><a href="${machineNew}"><spring:message code="New Entry"></spring:message></a></li>
+	<li class="active"><a href="${machineList}"><spring:message code="Machines" /></a></li>
+	<li class=""><a href="${machineNew}"><spring:message code="New Entry" /></a></li>
 </ul>
 
 <aripd:datatables datasource="/machine/get" id="machines" dataUrlShow="/machine/show" dataUrlEdit="/machine/edit">

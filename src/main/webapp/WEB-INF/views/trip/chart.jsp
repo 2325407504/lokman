@@ -3,8 +3,8 @@
 <spring:url value="/" var="homeUrl" />
 
 <ul class="breadcrumb">
-  <li><a href="${homeUrl}"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
-  <li class="active"><spring:message code="Trips"></spring:message></li>
+  <li><a href="${homeUrl}"><spring:message code="Home" /></a> <span class="divider">/</span></li>
+  <li class="active"><spring:message code="Trips" /></li>
 </ul>
 <div>
 	<spring:url var="chart1Url" value="/trip/report3" />

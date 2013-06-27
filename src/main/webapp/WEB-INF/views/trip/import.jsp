@@ -8,41 +8,41 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${tripList}"><spring:message code="Trips"></spring:message></a></li>
-    <li class=""><a href="${tripNew}"><spring:message code="New Entry"></spring:message></a></li>
-    <li class="active"><a href="${tripImportXLSX}"><spring:message code="Import"></spring:message></a></li>
+    <li class=""><a href="${tripList}"><spring:message code="Trips" /></a></li>
+    <li class=""><a href="${tripNew}"><spring:message code="New Entry" /></a></li>
+    <li class="active"><a href="${tripImportXLSX}"><spring:message code="Import" /></a></li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Export"></spring:message>
+            <spring:message code="Export" />
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="${tripExport}"><spring:message code="Trips"></spring:message></a></li>
+                <li><a href="${tripExport}"><spring:message code="Trips" /></a></li>
             </ul>
         </li>
     </ul>
 
-    <div class="bs-docs-example" data-content="<spring:message code="XLSX"></spring:message>">
+    <div class="bs-docs-example" data-content="<spring:message code="XLSX" />">
     <form:form modelAttribute="fileUploadBean" action="${tripImportXLSX}" method="post" enctype="multipart/form-data">
         <form:errors cssClass="text-error" path="file" />
         <form:input path="file" type="file"/>
-        <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload"></spring:message></button>
+        <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload" /></button>
     </form:form>
-    <div class="bs-docs-example" data-content="<spring:message code="Example"></spring:message>">
+    <div class="bs-docs-example" data-content="<spring:message code="Example" />">
             <table class="table">
                 <thead>
                     <tr>
-                        <th><spring:message code="Account"></spring:message></th>
-                    <th><spring:message code="Plate"></spring:message></th>
-                    <th><spring:message code="Driver"></spring:message></th>
-                    <th><spring:message code="Starting Point"></spring:message></th>
-                    <th><spring:message code="Starting Km"></spring:message></th>
-                    <th><spring:message code="Starting Time"></spring:message></th>
-                    <th><spring:message code="Ending Point"></spring:message></th>
-                    <th><spring:message code="Ending Km"></spring:message></th>
-                    <th><spring:message code="Ending Time"></spring:message></th>
-                    <th><spring:message code="Weight"></spring:message></th>
-                    <th><spring:message code="Remark"></spring:message></th>
+                        <th><spring:message code="Account" /></th>
+                    <th><spring:message code="Plate" /></th>
+                    <th><spring:message code="Driver" /></th>
+                    <th><spring:message code="Starting Point" /></th>
+                    <th><spring:message code="Starting Km" /></th>
+                    <th><spring:message code="Starting Time" /></th>
+                    <th><spring:message code="Ending Point" /></th>
+                    <th><spring:message code="Ending Km" /></th>
+                    <th><spring:message code="Ending Time" /></th>
+                    <th><spring:message code="Weight" /></th>
+                    <th><spring:message code="Remark" /></th>
                     </tr>
                 </thead>
                 <tbody>

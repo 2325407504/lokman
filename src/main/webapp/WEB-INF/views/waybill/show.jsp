@@ -12,33 +12,33 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${waybillList}"><spring:message code="Waybills"></spring:message></a></li>
-    <li class="active"><a href="${waybillShow}"><spring:message code="Entry No"></spring:message>: ${waybillAttribute.id}</a></li>
-    <li class=""><a href="${waybillNew}"><spring:message code="New Entry"></spring:message></a></li>
-    <li class=""><a href="${waybillImport}"><spring:message code="Import"></spring:message></a></li>
+    <li class=""><a href="${waybillList}"><spring:message code="Waybills" /></a></li>
+    <li class="active"><a href="${waybillShow}"><spring:message code="Entry No" />: ${waybillAttribute.id}</a></li>
+    <li class=""><a href="${waybillNew}"><spring:message code="New Entry" /></a></li>
+    <li class=""><a href="${waybillImport}"><spring:message code="Import" /></a></li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Export"></spring:message>
+            <spring:message code="Export" />
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="${waybillExport}"><spring:message code="Waybill"></spring:message></a></li>
-            <li><a href="${outgoingExport}"><spring:message code="Outgoing"></spring:message></a></li>
+                <li><a href="${waybillExport}"><spring:message code="Waybill" /></a></li>
+            <li><a href="${outgoingExport}"><spring:message code="Outgoing" /></a></li>
             </ul>
         </li>
     </ul>
 
 <c:if test="${waybillAttribute.submitted}">
     <div class="alert alert-error">
-        <spring:message code="Submitted by user"></spring:message>
-        <a href="${waybillEdit}"><i class="icon-pencil"></i> <spring:message code="Edit"></spring:message></a>
-        <a href="${waybillSubmit}"><i class="icon-envelope"></i> <spring:message code="Draw Back"></spring:message></a>
+        <spring:message code="Submitted by user" />
+        <a href="${waybillEdit}"><i class="icon-pencil"></i> <spring:message code="Edit" /></a>
+        <a href="${waybillSubmit}"><i class="icon-envelope"></i> <spring:message code="Draw Back" /></a>
         </div>
 </c:if>
 <c:if test="${!waybillAttribute.submitted}">
     <div class="alert alert-info">
-        <a href="${waybillEdit}"><i class="icon-pencil"></i> <spring:message code="Edit"></spring:message></a>
-        <a href="${waybillSubmit}"><i class="icon-envelope"></i> <spring:message code="Submit"></spring:message></a>
+        <a href="${waybillEdit}"><i class="icon-pencil"></i> <spring:message code="Edit" /></a>
+        <a href="${waybillSubmit}"><i class="icon-envelope"></i> <spring:message code="Submit" /></a>
         </div>
 </c:if>
 

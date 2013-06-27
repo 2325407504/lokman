@@ -10,42 +10,42 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${waybillList}"><spring:message code="Waybills"></spring:message></a></li>
-    <li class=""><a href="${waybillNew}"><spring:message code="New Entry"></spring:message></a></li>
-    <li class="active"><a href="${waybillImportXLSX}"><spring:message code="Import"></spring:message></a></li>
+    <li class=""><a href="${waybillList}"><spring:message code="Waybills" /></a></li>
+    <li class=""><a href="${waybillNew}"><spring:message code="New Entry" /></a></li>
+    <li class="active"><a href="${waybillImportXLSX}"><spring:message code="Import" /></a></li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Export"></spring:message>
+            <spring:message code="Export" />
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="${waybillExport}"><spring:message code="Waybill"></spring:message></a></li>
-            <li><a href="${outgoingExport}"><spring:message code="Outgoing"></spring:message></a></li>
+                <li><a href="${waybillExport}"><spring:message code="Waybill" /></a></li>
+            <li><a href="${outgoingExport}"><spring:message code="Outgoing" /></a></li>
             </ul>
         </li>
     </ul>
 
-    <div class="bs-docs-example" data-content="<spring:message code="XLSX"></spring:message> - <spring:message code="Waybill"></spring:message>">
+    <div class="bs-docs-example" data-content="<spring:message code="XLSX" /> - <spring:message code="Waybill" />">
     <form:form modelAttribute="fileUploadBean" action="${waybillImportXLSX}" method="post" enctype="multipart/form-data">
         <form:errors cssClass="text-error" path="file" />
         <form:input path="file" type="file"/>
-        <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload"></spring:message></button>
+        <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload" /></button>
     </form:form>
-    <div class="bs-docs-example" data-content="<spring:message code="Example"></spring:message>">
+    <div class="bs-docs-example" data-content="<spring:message code="Example" />">
             <table class="table">
                 <thead>
                     <tr>
-                        <th><spring:message code="Account"></spring:message></th>
-                    <th><spring:message code="Waybill"></spring:message></th>
-                    <th><spring:message code="Driver"></spring:message></th>
-                    <th><spring:message code="Plate"></spring:message></th>
-                    <th><spring:message code="Starting Time"></spring:message></th>
-                    <th><spring:message code="Ending Time"></spring:message></th>
-                    <th><spring:message code="Ending Point"></spring:message></th>
-                    <th><spring:message code="Weight"></spring:message></th>
-                    <th><spring:message code="Shipping Cost"></spring:message></th>
-                    <th><spring:message code="Subcontractor"></spring:message></th>
-                    <th><spring:message code="Quota"></spring:message></th>
+                        <th><spring:message code="Account" /></th>
+                    <th><spring:message code="Waybill" /></th>
+                    <th><spring:message code="Driver" /></th>
+                    <th><spring:message code="Plate" /></th>
+                    <th><spring:message code="Starting Time" /></th>
+                    <th><spring:message code="Ending Time" /></th>
+                    <th><spring:message code="Ending Point" /></th>
+                    <th><spring:message code="Weight" /></th>
+                    <th><spring:message code="Shipping Cost" /></th>
+                    <th><spring:message code="Subcontractor" /></th>
+                    <th><spring:message code="Quota" /></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -93,22 +93,22 @@
         </div>
     </div>
 
-    <div class="bs-docs-example" data-content="<spring:message code="XLSX"></spring:message> - <spring:message code="Outgoing"></spring:message>">
+    <div class="bs-docs-example" data-content="<spring:message code="XLSX" /> - <spring:message code="Outgoing" />">
     <form:form modelAttribute="fileUploadBean" action="${outgoingImportXLSX}" method="post" enctype="multipart/form-data">
         <form:errors cssClass="text-error" path="file" />
         <form:input path="file" type="file"/>
-        <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload"></spring:message></button>
+        <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload" /></button>
     </form:form>
-    <div class="bs-docs-example" data-content="<spring:message code="Example"></spring:message>">
+    <div class="bs-docs-example" data-content="<spring:message code="Example" />">
             <table class="table">
                 <thead>
                     <tr>
-                        <th><spring:message code="Waybill"></spring:message></th>
-                    <th><spring:message code="Outgoing"></spring:message></th>
-                    <th><spring:message code="Company"></spring:message></th>
-                    <th><spring:message code="County"></spring:message></th>
-                    <th><spring:message code="City"></spring:message></th>
-                    <th><spring:message code="Weight"></spring:message></th>
+                        <th><spring:message code="Waybill" /></th>
+                    <th><spring:message code="Outgoing" /></th>
+                    <th><spring:message code="Company" /></th>
+                    <th><spring:message code="County" /></th>
+                    <th><spring:message code="City" /></th>
+                    <th><spring:message code="Weight" /></th>
                     </tr>
                 </thead>
                 <tbody>

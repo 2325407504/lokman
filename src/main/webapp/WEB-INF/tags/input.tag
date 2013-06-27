@@ -7,14 +7,14 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:if test="${empty label}">
-	<c:set var="label" value="${fn:toUpperCase(fn:substring(path, 0, 1))}${fn:toLowerCase(fn:substring(path, 1,fn:length(path)))}" />
+    <c:set var="label" value="${fn:toUpperCase(fn:substring(path, 0, 1))}${fn:toLowerCase(fn:substring(path, 1,fn:length(path)))}" />
 </c:if>
 <div class="control-group ${status.error ? 'error' : '' }">
-	<label class="control-label" for="${path}">${label}<c:if test="${required}"><span class="required">*</span></c:if></label>
-	<div class="controls">
-		<form:input type="text" path="${path}" cssClass="${empty cssClass ? 'input-medium' : cssClass}" placeholder="${label}" />
-		<c:if test="${status.error}">
-			<span class="help-inline">${status.errorMessage}</span>
-		</c:if>
-	</div>
+    <label class="control-label" for="${path}">${label}<c:if test="${required}"><span class="required">*</span></c:if></label>
+        <div class="controls">
+        <form:input type="text" path="${path}" cssClass="${empty cssClass ? 'input-medium' : cssClass}" placeholder="${label}" />
+        <c:if test="${status.error}">
+            <span class="help-inline">${status.errorMessage}</span>
+        </c:if>
+    </div>
 </div>

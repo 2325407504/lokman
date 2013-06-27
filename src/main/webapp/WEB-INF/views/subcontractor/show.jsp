@@ -8,9 +8,9 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${subcontractorList}"><spring:message code="Subcontractors"></spring:message></a></li>
-    <li class="active"><a href="${subcontractorShow}"><spring:message code="Entry No"></spring:message>: ${subcontractorAttribute.id}</a></li>
-    <li class=""><a href="${subcontractorNew}"><spring:message code="New Entry"></spring:message></a></li>
+    <li class=""><a href="${subcontractorList}"><spring:message code="Subcontractors" /></a></li>
+    <li class="active"><a href="${subcontractorShow}"><spring:message code="Entry No" />: ${subcontractorAttribute.id}</a></li>
+    <li class=""><a href="${subcontractorNew}"><spring:message code="New Entry" /></a></li>
     </ul>
 
 <aripd:description id="subcontractor">
@@ -20,7 +20,7 @@
 </aripd:description>
 
 <div class="form-actions">
-    <a class="btn" href="${subcontractorEdit}"><spring:message code="Edit"></spring:message></a>
+    <a class="btn" href="${subcontractorEdit}"><spring:message code="Edit" /></a>
     </div>
 
 <%@ include file="/WEB-INF/views/footer.jsp" %>

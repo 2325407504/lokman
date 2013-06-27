@@ -9,18 +9,18 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${tripList}"><spring:message code="Trips"></spring:message></a></li>
-    <li class="active"><a href="${tripShow}"><spring:message code="Entry No"></spring:message>: ${tripAttribute.id}</a></li>
-    <li class=""><a href="${tripNew}"><spring:message code="New Entry"></spring:message></a></li>
+    <li class=""><a href="${tripList}"><spring:message code="Trips" /></a></li>
+    <li class="active"><a href="${tripShow}"><spring:message code="Entry No" />: ${tripAttribute.id}</a></li>
+    <li class=""><a href="${tripNew}"><spring:message code="New Entry" /></a></li>
     </ul>
 
 <c:if test="${tripAttribute.submitted}">
-    <div class="alert alert-error"><spring:message code="You cannot edit this record anymore"></spring:message></div>
+    <div class="alert alert-error"><spring:message code="You cannot edit this record anymore" /></div>
 </c:if>
 <c:if test="${!tripAttribute.submitted}">
     <div class="alert alert-info">
-        <a href="${tripEdit}"><i class="icon-pencil"></i> <spring:message code="Edit"></spring:message></a>
-        <a href="${tripSubmit}"><i class="icon-envelope"></i> <spring:message code="Submit"></spring:message></a>
+        <a href="${tripEdit}"><i class="icon-pencil"></i> <spring:message code="Edit" /></a>
+        <a href="${tripSubmit}"><i class="icon-envelope"></i> <spring:message code="Submit" /></a>
         </div>
 </c:if>
 

@@ -6,8 +6,8 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class="active"><a href="${shiftList}"><spring:message code="Shifts"></spring:message></a></li>
-    <li class=""><a href="${shiftNew}"><spring:message code="New Entry"></spring:message></a></li>
+    <li class="active"><a href="${shiftList}"><spring:message code="Shifts" /></a></li>
+    <li class=""><a href="${shiftNew}"><spring:message code="New Entry" /></a></li>
     </ul>
 
 <aripd:datatables datasource="/shift/get" id="shifts" dataUrlShow="/shift/show" dataUrlEdit="/shift/edit">

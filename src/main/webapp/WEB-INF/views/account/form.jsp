@@ -4,9 +4,9 @@
 <spring:url value="/account/list" var="account_list" />
 
 <ul class="breadcrumb">
-    <li><a href="${homeUrl}"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
-    <li><a href="${account_list}"><spring:message code="Accounts"></spring:message></a> <span class="divider">/</span></li>
-    <li class="active"><spring:message code="New Entry"></spring:message></li>
+    <li><a href="${homeUrl}"><spring:message code="Home" /></a> <span class="divider">/</span></li>
+    <li><a href="${account_list}"><spring:message code="Accounts" /></a> <span class="divider">/</span></li>
+    <li class="active"><spring:message code="New Entry" /></li>
     </ul>
 <spring:url var="saveUrl" value="/account/save" />
 <form:form modelAttribute="accountAttribute" action="${saveUrl}" method="post">
@@ -20,40 +20,40 @@
             <form:errors cssClass="text-error" path="active" />
         </div>
         <div class="control-group">
-            <form:label path="region"><spring:message code="Region"></spring:message></form:label>
+            <form:label path="region"><spring:message code="Region" /></form:label>
             <form:select multiple="false" path="region.id" items="${regions}" itemLabel="name" itemValue="id" />
             <form:errors cssClass="text-error" path="region" />
         </div>
         <div class="control-group">
-            <form:label path="client.firstName"><spring:message code="FirstName"></spring:message></form:label>
+            <form:label path="client.firstName"><spring:message code="FirstName" /></form:label>
             <form:input path="client.firstName" />
             <form:errors cssClass="text-error" path="client.firstName" />
         </div>       
         <div class="control-group">
-            <form:label path="client.lastName"><spring:message code="LastName"></spring:message></form:label>
+            <form:label path="client.lastName"><spring:message code="LastName" /></form:label>
             <form:input path="client.lastName" />
             <form:errors cssClass="text-error" path="client.lastName" />
         </div>
         <div class="control-group">
-            <form:label path="email"><spring:message code="E-mail Address"></spring:message></form:label>
+            <form:label path="email"><spring:message code="E-mail Address" /></form:label>
             <form:input path="email" />
             <form:errors cssClass="text-error" path="email" />
         </div>
         <div class="control-group">
-            <form:label path="username"><spring:message code="Username"></spring:message></form:label>
+            <form:label path="username"><spring:message code="Username" /></form:label>
             <form:input path="username" />
             <form:errors cssClass="text-error" path="username" />
         </div>
         <div class="control-group">
-            <form:label path="password"><spring:message code="Password"></spring:message></form:label>
+            <form:label path="password"><spring:message code="Password" /></form:label>
             <form:password path="password" />
             <form:errors cssClass="text-error" path="password" />
         </div>
         <div class="form-actions">
             <c:if test="${ !empty accountAttribute.id }">
-                <a class="btn btn-danger" href="javascript:$('#form-${accountAttribute.id}').submit();"><spring:message code="Delete"></spring:message></a>
+                <a class="btn btn-danger" href="javascript:$('#form-${accountAttribute.id}').submit();"><spring:message code="Delete" /></a>
             </c:if>
-            <button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
+            <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
             </div>
         </fieldset>
 </form:form>

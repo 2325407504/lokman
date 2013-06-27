@@ -9,13 +9,13 @@
 
 <ul class="nav nav-tabs">
 	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-	<li class=""><a href="${tripList}"><spring:message code="Trips"></spring:message></a></li>
+	<li class=""><a href="${tripList}"><spring:message code="Trips" /></a></li>
 	<c:choose>
 		<c:when test="${ !empty tripAttribute.id }">
-			<li class="active"><a href="${tripEdit}"><spring:message code="Entry No"></spring:message>: ${tripAttribute.id}</a></li>
+			<li class="active"><a href="${tripEdit}"><spring:message code="Entry No" />: ${tripAttribute.id}</a></li>
 		</c:when>
 		<c:otherwise>
-			<li class="active"><a href="${tripNew}"><spring:message code="New Entry"></spring:message></a></li>
+			<li class="active"><a href="${tripNew}"><spring:message code="New Entry" /></a></li>
 		</c:otherwise>
 	</c:choose>
 </ul>
@@ -27,60 +27,60 @@
 			<form:hidden path="id" />
 			<fieldset>
 				<div class="control-group">
-					<form:label path="truck"><spring:message code="Truck"></spring:message></form:label>
+					<form:label path="truck"><spring:message code="Truck" /></form:label>
 					<form:select multiple="false" path="truck.id" items="${trucks}" itemLabel="plate" itemValue="id" />
 					<form:errors cssClass="text-error" path="truck" />
 				</div>
 				<div class="control-group">
-					<form:label path="driver"><spring:message code="Driver"></spring:message></form:label>
+					<form:label path="driver"><spring:message code="Driver" /></form:label>
 					<form:select path="driver.id" multiple="false" items="${drivers}" itemLabel="name" itemValue="id" />
 					<form:errors cssClass="text-error" path="driver" />
 				</div>
 				<div class="control-group">
-					<form:label path="startingPoint"><spring:message code="Starting Point"></spring:message></form:label>
+					<form:label path="startingPoint"><spring:message code="Starting Point" /></form:label>
 					<span><form:input path="startingPoint" /></span>
 					<form:errors cssClass="text-error" path="startingPoint" />
 				</div>
 				<div class="control-group">
-					<form:label path="startingKm"><spring:message code="Starting Km"></spring:message></form:label>
+					<form:label path="startingKm"><spring:message code="Starting Km" /></form:label>
 					<span><form:input path="startingKm" /></span>
 					<form:errors cssClass="text-error" path="startingKm" />
 				</div>
 				<div class="control-group">
-					<form:label path="startingTime"><spring:message code="Starting Time"></spring:message></form:label>
+					<form:label path="startingTime"><spring:message code="Starting Time" /></form:label>
 					<span><form:input type="datetime" path="startingTime" /></span>
 					<form:errors cssClass="text-error" path="startingTime" />
 				</div>
 				<div class="control-group">
-					<form:label path="endingPoint"><spring:message code="Ending Point"></spring:message></form:label>
+					<form:label path="endingPoint"><spring:message code="Ending Point" /></form:label>
 					<span><form:input path="endingPoint" /></span>
 					<form:errors cssClass="text-error" path="endingPoint" />
 				</div>
 				<div class="control-group">
-					<form:label path="endingKm"><spring:message code="Ending Km"></spring:message></form:label>
+					<form:label path="endingKm"><spring:message code="Ending Km" /></form:label>
 					<span><form:input path="endingKm" /></span>
 					<form:errors cssClass="text-error" path="endingKm" />
 				</div>
 				<div class="control-group">
-					<form:label path="endingTime"><spring:message code="Ending Time"></spring:message></form:label>
+					<form:label path="endingTime"><spring:message code="Ending Time" /></form:label>
 					<span><form:input type="datetime" path="endingTime" /></span>
 					<form:errors cssClass="text-error" path="endingTime" />
 				</div>
 				<div class="control-group">
-					<form:label path="loadWeightInTonne"><spring:message code="Weight"></spring:message></form:label>
+					<form:label path="loadWeightInTonne"><spring:message code="Weight" /></form:label>
 					<span><form:input path="loadWeightInTonne" /></span>
 					<form:errors cssClass="text-error" path="loadWeightInTonne" />
 				</div>
 				<div class="control-group">
-					<form:label path="remark" class="control-label"><spring:message code="Remark"></spring:message></form:label>
+					<form:label path="remark" class="control-label"><spring:message code="Remark" /></form:label>
 					<div class="controls"><form:textarea path="remark" cssClass="span6" /></div>
 					<form:errors cssClass="text-error" path="remark" />
 				</div>
 				<div class="form-actions">
 					<c:if test="${ !empty tripAttribute.id }">
-					<a class="btn btn-danger" href="javascript:$('#form-${tripAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete"></spring:message></a>
+					<a class="btn btn-danger" href="javascript:$('#form-${tripAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete" /></a>
 					</c:if>
-					<button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
+					<button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
 				</div>
 			</fieldset>
 		</form:form>

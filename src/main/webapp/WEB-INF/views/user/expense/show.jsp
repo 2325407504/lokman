@@ -9,18 +9,18 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${expenseList}"><spring:message code="Expenses"></spring:message></a></li>
-    <li class="active"><a href="${expenseShow}"><spring:message code="Entry No"></spring:message>: ${expenseAttribute.id}</a></li>
-    <li class=""><a href="${expenseNew}"><spring:message code="New Entry"></spring:message></a></li>
+    <li class=""><a href="${expenseList}"><spring:message code="Expenses" /></a></li>
+    <li class="active"><a href="${expenseShow}"><spring:message code="Entry No" />: ${expenseAttribute.id}</a></li>
+    <li class=""><a href="${expenseNew}"><spring:message code="New Entry" /></a></li>
     </ul>
 
 <c:if test="${expenseAttribute.submitted}">
-    <div class="alert alert-error"><spring:message code="You cannot edit this record anymore"></spring:message></div>
+    <div class="alert alert-error"><spring:message code="You cannot edit this record anymore" /></div>
 </c:if>
 <c:if test="${!expenseAttribute.submitted}">
     <div class="alert alert-info">
-        <a href="${expenseEdit}"><i class="icon-pencil"></i> <spring:message code="Edit"></spring:message></a>
-        <a href="${expenseSubmit}"><i class="icon-envelope"></i> <spring:message code="Submit"></spring:message></a>
+        <a href="${expenseEdit}"><i class="icon-pencil"></i> <spring:message code="Edit" /></a>
+        <a href="${expenseSubmit}"><i class="icon-envelope"></i> <spring:message code="Submit" /></a>
         </div>
 </c:if>
 

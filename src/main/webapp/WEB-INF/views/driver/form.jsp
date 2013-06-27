@@ -8,13 +8,13 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${driverList}"><spring:message code="Drivers"></spring:message></a></li>
+    <li class=""><a href="${driverList}"><spring:message code="Drivers" /></a></li>
         <c:choose>
             <c:when test="${ !empty driverAttribute.id }">
-            <li class="active"><a href="${driverEdit}"><spring:message code="Entry No"></spring:message>: ${driverAttribute.id}</a></li>
+            <li class="active"><a href="${driverEdit}"><spring:message code="Entry No" />: ${driverAttribute.id}</a></li>
             </c:when>
             <c:otherwise>
-            <li class="active"><a href="${driverNew}"><spring:message code="New Entry"></spring:message></a></li>
+            <li class="active"><a href="${driverNew}"><spring:message code="New Entry" /></a></li>
             </c:otherwise>
         </c:choose>
 </ul>
@@ -24,30 +24,30 @@
     <form:hidden path="id" />
     <fieldset>
         <div class="control-group">
-            <form:label path="region"><spring:message code="Region"></spring:message></form:label>
+            <form:label path="region"><spring:message code="Region" /></form:label>
             <form:select multiple="false" path="region.id" items="${regions}" itemLabel="name" itemValue="id" />
             <form:errors cssClass="text-error" path="region" />
         </div>
         <div class="control-group">
-            <form:label path="code"><spring:message code="Code"></spring:message></form:label>
+            <form:label path="code"><spring:message code="Code" /></form:label>
             <span><form:input path="code" /></span>
             <form:errors cssClass="text-error" path="code" />
         </div>
         <div class="control-group">
-            <form:label path="name"><spring:message code="Fullname"></spring:message></form:label>
+            <form:label path="name"><spring:message code="Fullname" /></form:label>
             <span><form:input path="name" /></span>
             <form:errors cssClass="text-error" path="name" />
         </div>
         <div class="control-group">
-            <form:label path="phonenumber"><spring:message code="Phone Number"></spring:message></form:label>
+            <form:label path="phonenumber"><spring:message code="Phone Number" /></form:label>
             <span><form:input path="phonenumber" /></span>
             <form:errors cssClass="text-error" path="phonenumber" />
         </div>
         <div class="form-actions">
             <c:if test="${ !empty driverAttribute.id }">
-                <a class="btn btn-danger" href="javascript:$('#form-${driverAttribute.id}').submit();"><spring:message code="Delete"></spring:message></a>
+                <a class="btn btn-danger" href="javascript:$('#form-${driverAttribute.id}').submit();"><spring:message code="Delete" /></a>
             </c:if>
-            <button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
+            <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
             </div>
         </fieldset>
 </form:form>

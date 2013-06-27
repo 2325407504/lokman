@@ -16,24 +16,24 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${tripList}"><spring:message code="Trips"></spring:message></a></li>
+    <li class=""><a href="${tripList}"><spring:message code="Trips" /></a></li>
         <c:choose>
             <c:when test="${ !empty tripAttribute.id }">
-            <li class="active"><a href="${tripEdit}"><spring:message code="Entry No"></spring:message>: ${tripAttribute.id}</a></li>
+            <li class="active"><a href="${tripEdit}"><spring:message code="Entry No" />: ${tripAttribute.id}</a></li>
             </c:when>
             <c:otherwise>
-            <li class="active"><a href="${tripNew}"><spring:message code="New Entry"></spring:message></a></li>
+            <li class="active"><a href="${tripNew}"><spring:message code="New Entry" /></a></li>
             </c:otherwise>
         </c:choose>
-    <li class=""><a href="${tripImport}"><spring:message code="Import"></spring:message></a></li>
+    <li class=""><a href="${tripImport}"><spring:message code="Import" /></a></li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Export"></spring:message>
+            <spring:message code="Export" />
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="${tripExport}"><spring:message code="Export"></spring:message></a></li>
-            <li><a href="${tripChart}"><spring:message code="Chart"></spring:message></a></li>
+                <li><a href="${tripExport}"><spring:message code="Export" /></a></li>
+            <li><a href="${tripChart}"><spring:message code="Chart" /></a></li>
             </ul>
         </li>
     </ul>
@@ -45,16 +45,16 @@
             <form:hidden path="id" />
             <fieldset>
                 <div class="control-group">
-                    <form:checkbox path="submitted" /> <spring:message code="Submitted by user"></spring:message>
+                    <form:checkbox path="submitted" /> <spring:message code="Submitted by user" />
                     <form:errors cssClass="text-error" path="submitted" />
                 </div>
                 <div class="control-group">
-                    <form:label path="account"><spring:message code="Account"></spring:message></form:label>
+                    <form:label path="account"><spring:message code="Account" /></form:label>
                     <form:select multiple="false" path="account.id" items="${accounts}" itemLabel="client.fullname" itemValue="id" />
                     <form:errors cssClass="text-error" path="account" />
                 </div>
                 <div class="control-group">
-                    <form:label path="truck"><spring:message code="Truck"></spring:message></form:label>
+                    <form:label path="truck"><spring:message code="Truck" /></form:label>
                     <c:if test="${ !empty tripAttribute.id }">
                         <form:select id="truck" multiple="false" path="truck.id" items="${trucks}" itemLabel="plate" itemValue="id" />
                     </c:if>
@@ -64,13 +64,13 @@
                     <form:errors cssClass="text-error" path="truck" />
                 </div>
                 <div class="control-group">
-                    <form:label path="driver"><spring:message code="Driver"></spring:message></form:label>
+                    <form:label path="driver"><spring:message code="Driver" /></form:label>
                     <form:select path="driver.id" multiple="false" items="${drivers}" itemLabel="name" itemValue="id" />
                     <form:errors cssClass="text-error" path="driver" />
                 </div>
                 <div class="control-group">
-                    <spring:message code="Starting Point" var="startingPoint"></spring:message>
-                    <spring:message code="Ending Point" var="endingPoint"></spring:message>
+                    <spring:message code="Starting Point" var="startingPoint" />
+                    <spring:message code="Ending Point" var="endingPoint" />
                     <form:label path="startingPoint">${startingPoint} - ${endingPoint}</form:label>
                     <form:input path="startingPoint" cssClass="input-medium" placeholder="${startingPoint}" />
                     <form:errors cssClass="text-error" path="startingPoint" />
@@ -78,8 +78,8 @@
                     <form:errors cssClass="text-error" path="endingPoint" />
                 </div>
                 <div class="control-group">
-                    <spring:message code="Starting Km" var="startingKm"></spring:message>
-                    <spring:message code="Ending Km" var="endingKm"></spring:message>
+                    <spring:message code="Starting Km" var="startingKm" />
+                    <spring:message code="Ending Km" var="endingKm" />
                     <form:label path="startingKm">${startingKm} - ${endingKm}</form:label>
                     <form:input path="startingKm" cssClass="input-medium" placeholder="${startingKm}" />
                     <form:errors cssClass="text-error" path="startingKm" />
@@ -87,8 +87,8 @@
                     <form:errors cssClass="text-error" path="endingKm" />
                 </div>
                 <div class="control-group">
-                    <spring:message code="Starting Time" var="startingTime"></spring:message>
-                    <spring:message code="Ending Time" var="endingTime"></spring:message>
+                    <spring:message code="Starting Time" var="startingTime" />
+                    <spring:message code="Ending Time" var="endingTime" />
                     <form:label path="startingTime">${startingTime} - ${endingTime}</form:label>
                     <form:input type="datetime" path="startingTime" cssClass="input-medium" placeholder="${startingTime}" />
                     <form:errors cssClass="text-error" path="startingTime" />
@@ -96,20 +96,20 @@
                     <form:errors cssClass="text-error" path="endingTime" />
                 </div>
                 <div class="control-group">
-                    <form:label path="loadWeightInTonne"><spring:message code="Weight"></spring:message></form:label>
+                    <form:label path="loadWeightInTonne"><spring:message code="Weight" /></form:label>
                     <form:input path="loadWeightInTonne" />
                     <form:errors cssClass="text-error" path="loadWeightInTonne" />
                 </div>
                 <div class="control-group">
-                    <form:label path="remark" class="control-label"><spring:message code="Remark"></spring:message></form:label>
+                    <form:label path="remark" class="control-label"><spring:message code="Remark" /></form:label>
                     <form:textarea path="remark" />
                     <form:errors cssClass="text-error" path="remark" />
                 </div>
                 <div class="form-actions">
                     <c:if test="${ !empty tripAttribute.id }">
-                        <a class="btn btn-danger" href="javascript:$('#form-${tripAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete"></spring:message></a>
+                        <a class="btn btn-danger" href="javascript:$('#form-${tripAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete" /></a>
                     </c:if>
-                    <button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
+                    <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
                     </div>
                 </fieldset>
         </form:form>

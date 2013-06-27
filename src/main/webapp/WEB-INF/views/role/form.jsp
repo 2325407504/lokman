@@ -4,9 +4,9 @@
 <spring:url value="/role/list" var="role_list" />
 
 <ul class="breadcrumb">
-    <li><a href="${homeUrl}"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
-    <li><a href="${role_list}"><spring:message code="Roles"></spring:message></a> <span class="divider">/</span></li>
-    <li class="active"><spring:message code="New Entry"></spring:message></li>
+    <li><a href="${homeUrl}"><spring:message code="Home" /></a> <span class="divider">/</span></li>
+    <li><a href="${role_list}"><spring:message code="Roles" /></a> <span class="divider">/</span></li>
+    <li class="active"><spring:message code="New Entry" /></li>
     </ul>
 <spring:url var="saveUrl" value="/role/save" />
 <form:form modelAttribute="roleAttribute" action="${saveUrl}" method="post">
@@ -14,20 +14,20 @@
     <form:hidden path="id" />
     <fieldset>
         <div class="control-group">
-            <form:label path="code"><spring:message code="Code"></spring:message></form:label>
+            <form:label path="code"><spring:message code="Code" /></form:label>
             <form:input path="code" />
             <form:errors cssClass="text-error" path="code" />
         </div>
         <div class="control-group">
-            <form:label path="name"><spring:message code="Name"></spring:message></form:label>
+            <form:label path="name"><spring:message code="Name" /></form:label>
             <form:input path="name" />
             <form:errors cssClass="text-error" path="name" />
         </div>
         <div class="form-actions">
             <c:if test="${ !empty roleAttribute.id }">
-                <a class="btn btn-danger" href="javascript:$('#form-${roleAttribute.id}').submit();"><spring:message code="Delete"></spring:message></a>
+                <a class="btn btn-danger" href="javascript:$('#form-${roleAttribute.id}').submit();"><spring:message code="Delete" /></a>
             </c:if>
-            <button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
+            <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
             </div>
         </fieldset>
 </form:form>

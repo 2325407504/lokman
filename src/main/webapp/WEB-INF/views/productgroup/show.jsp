@@ -8,9 +8,9 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${productgroupList}"><spring:message code="Product Groups"></spring:message></a></li>
-    <li class="active"><a href="${productgroupShow}"><spring:message code="Entry No"></spring:message>: ${productgroupAttribute.id}</a></li>
-    <li class=""><a href="${productgroupNew}"><spring:message code="New Entry"></spring:message></a></li>
+    <li class=""><a href="${productgroupList}"><spring:message code="Product Groups" /></a></li>
+    <li class="active"><a href="${productgroupShow}"><spring:message code="Entry No" />: ${productgroupAttribute.id}</a></li>
+    <li class=""><a href="${productgroupNew}"><spring:message code="New Entry" /></a></li>
     </ul>
 
 <aripd:description id="productgroup">
@@ -18,7 +18,7 @@
 </aripd:description>
 
 <div class="form-actions">
-    <a class="btn" href="${productgroupEdit}"><spring:message code="Edit"></spring:message></a>
+    <a class="btn" href="${productgroupEdit}"><spring:message code="Edit" /></a>
     </div>
 
 <%@ include file="/WEB-INF/views/footer.jsp" %>

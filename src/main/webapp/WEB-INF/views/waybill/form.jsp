@@ -13,24 +13,24 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${waybillList}"><spring:message code="Waybills"></spring:message></a></li>
+    <li class=""><a href="${waybillList}"><spring:message code="Waybills" /></a></li>
         <c:choose>
             <c:when test="${ !empty waybillAttribute.id }">
-            <li class="active"><a href="${waybillEdit}"><spring:message code="Entry No"></spring:message>: ${waybillAttribute.id}</a></li>
+            <li class="active"><a href="${waybillEdit}"><spring:message code="Entry No" />: ${waybillAttribute.id}</a></li>
             </c:when>
             <c:otherwise>
-            <li class="active"><a href="${waybillNew}"><spring:message code="New Entry"></spring:message></a></li>
+            <li class="active"><a href="${waybillNew}"><spring:message code="New Entry" /></a></li>
             </c:otherwise>
         </c:choose>
-    <li class=""><a href="${waybillImport}"><spring:message code="Import"></spring:message></a></li>
+    <li class=""><a href="${waybillImport}"><spring:message code="Import" /></a></li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Export"></spring:message>
+            <spring:message code="Export" />
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="${waybillExport}"><spring:message code="Waybill"></spring:message></a></li>
-            <li><a href="${outgoingExport}"><spring:message code="Outgoings"></spring:message></a></li>
+                <li><a href="${waybillExport}"><spring:message code="Waybill" /></a></li>
+            <li><a href="${outgoingExport}"><spring:message code="Outgoings" /></a></li>
             </ul>
         </li>
     </ul>
@@ -42,11 +42,11 @@
                 <form:errors path="*" cssClass="alert alert-error" element="div" />
                 <form:hidden path="id" />
                 <div class="control-group">
-                    <form:checkbox path="submitted" /> <spring:message code="Submitted by user"></spring:message>
+                    <form:checkbox path="submitted" /> <spring:message code="Submitted by user" />
                     <form:errors cssClass="text-error" path="submitted" />
                 </div>
                 <div class="control-group">
-                    <form:label path="account"><spring:message code="Account"></spring:message></form:label>
+                    <form:label path="account"><spring:message code="Account" /></form:label>
                     <form:select multiple="false" path="account.id" items="${accounts}" itemLabel="client.fullname" itemValue="id" />
                     <form:errors cssClass="text-error" path="account" />
                 </div>
@@ -54,29 +54,29 @@
         </div>
         <div class="span4">
             <fieldset>
-                <legend><spring:message code="Waybill"></spring:message></legend>
+                <legend><spring:message code="Waybill" /></legend>
                     <div class="control-group">
-                    <form:label path="documentNo"><spring:message code="Document No"></spring:message></form:label>
+                    <form:label path="documentNo"><spring:message code="Document No" /></form:label>
                     <form:input path="documentNo" />
                     <form:errors cssClass="text-error" path="documentNo" />
                 </div>
                 <div class="control-group">
-                    <form:label path="documentDate"><spring:message code="Document Date"></spring:message></form:label>
+                    <form:label path="documentDate"><spring:message code="Document Date" /></form:label>
                     <form:input type="datetime" id="waybillDate" path="documentDate" />
                     <form:errors cssClass="text-error" path="documentDate" />
                 </div>
                 <div class="control-group">
-                    <form:label path="company"><spring:message code="Company"></spring:message></form:label>
+                    <form:label path="company"><spring:message code="Company" /></form:label>
                     <form:input path="company" />
                     <form:errors cssClass="text-error" path="company" />
                 </div>
                 <div class="control-group">
-                    <form:label path="driver"><spring:message code="Driver"></spring:message></form:label>
+                    <form:label path="driver"><spring:message code="Driver" /></form:label>
                     <form:input path="driver" />
                     <form:errors cssClass="text-error" path="driver" />
                 </div>
                 <div class="control-group">
-                    <form:label path="plate"><spring:message code="Plate"></spring:message></form:label>
+                    <form:label path="plate"><spring:message code="Plate" /></form:label>
                     <form:input path="plate" />
                     <form:errors cssClass="text-error" path="plate" />
                 </div>
@@ -84,24 +84,24 @@
         </div>
         <div class="span4">
             <fieldset>
-                <legend><spring:message code="Invoice"></spring:message></legend>
+                <legend><spring:message code="Invoice" /></legend>
                     <div class="control-group">
-                    <form:label path="invoice.customer"><spring:message code="Customer"></spring:message></form:label>
+                    <form:label path="invoice.customer"><spring:message code="Customer" /></form:label>
                     <form:select multiple="false" path="invoice.customer.id" items="${customers}" itemLabel="name" itemValue="id" />
                     <form:errors cssClass="text-error" path="invoice.customer" />
                 </div>
                 <div class="control-group">
-                    <form:label path="invoice.documentNo"><spring:message code="Document No"></spring:message></form:label>
+                    <form:label path="invoice.documentNo"><spring:message code="Document No" /></form:label>
                     <form:input path="invoice.documentNo" />
                     <form:errors cssClass="text-error" path="invoice.documentNo" />
                 </div>
                 <div class="control-group">
-                    <form:label path="invoice.documentDate"><spring:message code="Document Date"></spring:message></form:label>
+                    <form:label path="invoice.documentDate"><spring:message code="Document Date" /></form:label>
                     <form:input type="datetime" id="invoiceDate" path="invoice.documentDate" />
                     <form:errors cssClass="text-error" path="invoice.documentDate" />
                 </div>
                 <div class="control-group">
-                    <form:label path="invoice.amount"><spring:message code="Amount"></spring:message></form:label>
+                    <form:label path="invoice.amount"><spring:message code="Amount" /></form:label>
                     <form:input path="invoice.amount" />
                     <form:errors cssClass="text-error" path="invoice.amount" />
                 </div>
@@ -110,9 +110,9 @@
     </div>
     <div class="form-actions">
         <c:if test="${ !empty waybillAttribute.id }">
-            <a class="btn btn-danger" href="javascript:$('#form-${waybillAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete"></spring:message></a>
+            <a class="btn btn-danger" href="javascript:$('#form-${waybillAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete" /></a>
         </c:if>
-        <button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
+        <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
         </div>
 </form:form>
 

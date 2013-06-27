@@ -8,13 +8,13 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${shiftList}"><spring:message code="Shifts"></spring:message></a></li>
+    <li class=""><a href="${shiftList}"><spring:message code="Shifts" /></a></li>
         <c:choose>
             <c:when test="${ !empty shiftAttribute.id }">
-            <li class="active"><a href="${shiftEdit}"><spring:message code="Entry No"></spring:message>: ${shiftAttribute.id}</a></li>
+            <li class="active"><a href="${shiftEdit}"><spring:message code="Entry No" />: ${shiftAttribute.id}</a></li>
             </c:when>
             <c:otherwise>
-            <li class="active"><a href="${shiftNew}"><spring:message code="New Entry"></spring:message></a></li>
+            <li class="active"><a href="${shiftNew}"><spring:message code="New Entry" /></a></li>
             </c:otherwise>
         </c:choose>
 </ul>
@@ -24,20 +24,20 @@
     <form:hidden path="id" />
     <fieldset>
         <div class="control-group">
-            <form:label path="code"><spring:message code="Code"></spring:message></form:label>
+            <form:label path="code"><spring:message code="Code" /></form:label>
             <span><form:input path="code" /></span>
             <form:errors cssClass="text-error" path="code" />
         </div>
         <div class="control-group">
-            <form:label path="name"><spring:message code="Name"></spring:message></form:label>
+            <form:label path="name"><spring:message code="Name" /></form:label>
             <span><form:input path="name" /></span>
             <form:errors cssClass="text-error" path="name" />
         </div>
         <div class="form-actions">
             <c:if test="${ !empty shiftAttribute.id }">
-                <a class="btn btn-danger" href="javascript:$('#form-${shiftAttribute.id}').submit();"><spring:message code="Delete"></spring:message></a>
+                <a class="btn btn-danger" href="javascript:$('#form-${shiftAttribute.id}').submit();"><spring:message code="Delete" /></a>
             </c:if>
-            <button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
+            <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
             </div>
         </fieldset>
 </form:form>

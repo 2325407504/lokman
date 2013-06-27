@@ -8,13 +8,13 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${productList}"><spring:message code="Products"></spring:message></a></li>
+    <li class=""><a href="${productList}"><spring:message code="Products" /></a></li>
         <c:choose>
             <c:when test="${ !empty productAttribute.id }">
-            <li class="active"><a href="${productEdit}"><spring:message code="Entry No"></spring:message>: ${productAttribute.id}</a></li>
+            <li class="active"><a href="${productEdit}"><spring:message code="Entry No" />: ${productAttribute.id}</a></li>
             </c:when>
             <c:otherwise>
-            <li class="active"><a href="${productNew}"><spring:message code="New Entry"></spring:message></a></li>
+            <li class="active"><a href="${productNew}"><spring:message code="New Entry" /></a></li>
             </c:otherwise>
         </c:choose>
 </ul>
@@ -24,25 +24,25 @@
     <form:hidden path="id" />
     <fieldset>
         <div class="control-group">
-            <form:label path="productgroup"><spring:message code="Product Group"></spring:message></form:label>
+            <form:label path="productgroup"><spring:message code="Product Group" /></form:label>
             <form:select path="productgroup.id" multiple="false" items="${productgroups}" itemLabel="name" itemValue="id"/>
             <form:errors cssClass="text-error" path="productgroup" />
         </div>
         <div class="control-group">
-            <form:label path="code"><spring:message code="Code"></spring:message></form:label>
+            <form:label path="code"><spring:message code="Code" /></form:label>
             <span><form:input path="code" /></span>
             <form:errors cssClass="text-error" path="code" />
         </div>
         <div class="control-group">
-            <form:label path="name"><spring:message code="Name"></spring:message></form:label>
+            <form:label path="name"><spring:message code="Name" /></form:label>
             <span><form:input path="name" /></span>
             <form:errors cssClass="text-error" path="name" />
         </div>
         <div class="form-actions">
             <c:if test="${ !empty productAttribute.id }">
-                <a class="btn btn-danger" href="javascript:$('#form-${productAttribute.id}').submit();"><spring:message code="Delete"></spring:message></a>
+                <a class="btn btn-danger" href="javascript:$('#form-${productAttribute.id}').submit();"><spring:message code="Delete" /></a>
             </c:if>
-            <button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
+            <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
             </div>
         </fieldset>
 </form:form>

@@ -8,9 +8,9 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${expensetypeList}"><spring:message code="Expensetypes"></spring:message></a></li>
-    <li class="active"><a href="${expensetypeShow}"><spring:message code="Entry No"></spring:message>: ${expensetypeAttribute.id}</a></li>
-    <li class=""><a href="${expensetypeNew}"><spring:message code="New Entry"></spring:message></a></li>
+    <li class=""><a href="${expensetypeList}"><spring:message code="Expensetypes" /></a></li>
+    <li class="active"><a href="${expensetypeShow}"><spring:message code="Entry No" />: ${expensetypeAttribute.id}</a></li>
+    <li class=""><a href="${expensetypeNew}"><spring:message code="New Entry" /></a></li>
     </ul>
 
 <aripd:description id="expensetype">
@@ -18,7 +18,7 @@
 </aripd:description>
 
 <div class="form-actions">
-    <a class="btn" href="${expensetypeEdit}"><spring:message code="Edit"></spring:message></a>
+    <a class="btn" href="${expensetypeEdit}"><spring:message code="Edit" /></a>
     </div>
 
 <%@ include file="/WEB-INF/views/footer.jsp" %>

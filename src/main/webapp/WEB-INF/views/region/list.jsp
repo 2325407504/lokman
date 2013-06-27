@@ -6,8 +6,8 @@
 
 <ul class="nav nav-tabs">
 	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-	<li class="active"><a href="${regionList}"><spring:message code="Regions"></spring:message></a></li>
-	<li class=""><a href="${regionNew}"><spring:message code="New Entry"></spring:message></a></li>
+	<li class="active"><a href="${regionList}"><spring:message code="Regions" /></a></li>
+	<li class=""><a href="${regionNew}"><spring:message code="New Entry" /></a></li>
 </ul>
 
 <aripd:datatables datasource="/region/get" id="regions" dataUrlShow="/region/show" dataUrlEdit="/region/edit">

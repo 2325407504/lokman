@@ -8,16 +8,16 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class="active"><a href="${weighbridgeList}"><spring:message code="Weighbridges"></spring:message></a></li>
-    <li class=""><a href="${weighbridgeNew}"><spring:message code="New Entry"></spring:message></a></li>
-    <li class=""><a href="${weighbridgeImport}"><spring:message code="Import"></spring:message></a></li>
+    <li class="active"><a href="${weighbridgeList}"><spring:message code="Weighbridges" /></a></li>
+    <li class=""><a href="${weighbridgeNew}"><spring:message code="New Entry" /></a></li>
+    <li class=""><a href="${weighbridgeImport}"><spring:message code="Import" /></a></li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Export"></spring:message>
+            <spring:message code="Export" />
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="${weighbridgeExport}"><spring:message code="Weighbridges"></spring:message></a></li>
+                <li><a href="${weighbridgeExport}"><spring:message code="Weighbridges" /></a></li>
             </ul>
         </li>
     </ul>

@@ -9,18 +9,18 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${forwardingList}"><spring:message code="Forwardings"></spring:message></a></li>
-    <li class="active"><a href="${forwardingShow}"><spring:message code="Entry No"></spring:message>: ${forwardingAttribute.id}</a></li>
-    <li class=""><a href="${forwardingNew}"><spring:message code="New Entry"></spring:message></a></li>
+    <li class=""><a href="${forwardingList}"><spring:message code="Forwardings" /></a></li>
+    <li class="active"><a href="${forwardingShow}"><spring:message code="Entry No" />: ${forwardingAttribute.id}</a></li>
+    <li class=""><a href="${forwardingNew}"><spring:message code="New Entry" /></a></li>
     </ul>
 
 <c:if test="${forwardingAttribute.submitted}">
-    <div class="alert alert-error"><spring:message code="You cannot edit this record anymore"></spring:message></div>
+    <div class="alert alert-error"><spring:message code="You cannot edit this record anymore" /></div>
 </c:if>
 <c:if test="${!forwardingAttribute.submitted}">
     <div class="alert alert-info">
-        <a href="${forwardingEdit}"><i class="icon-pencil"></i> <spring:message code="Edit"></spring:message></a>
-        <a href="${forwardingSubmit}"><i class="icon-envelope"></i> <spring:message code="Submit"></spring:message></a>
+        <a href="${forwardingEdit}"><i class="icon-pencil"></i> <spring:message code="Edit" /></a>
+        <a href="${forwardingSubmit}"><i class="icon-envelope"></i> <spring:message code="Submit" /></a>
         </div>
 </c:if>
 

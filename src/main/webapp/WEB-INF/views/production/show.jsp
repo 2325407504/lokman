@@ -12,33 +12,33 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${productionList}"><spring:message code="Productions"></spring:message></a></li>
-    <li class="active"><a href="${productionShow}"><spring:message code="Entry No"></spring:message>: ${productionAttribute.id}</a></li>
-    <li class=""><a href="${productionNew}"><spring:message code="New Entry"></spring:message></a></li>
-    <li class=""><a href="${productionImport}"><spring:message code="Import"></spring:message></a></li>
+    <li class=""><a href="${productionList}"><spring:message code="Productions" /></a></li>
+    <li class="active"><a href="${productionShow}"><spring:message code="Entry No" />: ${productionAttribute.id}</a></li>
+    <li class=""><a href="${productionNew}"><spring:message code="New Entry" /></a></li>
+    <li class=""><a href="${productionImport}"><spring:message code="Import" /></a></li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Export"></spring:message>
+            <spring:message code="Export" />
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="${productionExport}"><spring:message code="Waybill"></spring:message></a></li>
-            <li><a href="${bigbagExport}"><spring:message code="UATF"></spring:message></a></li>
+                <li><a href="${productionExport}"><spring:message code="Waybill" /></a></li>
+            <li><a href="${bigbagExport}"><spring:message code="UATF" /></a></li>
             </ul>
         </li>
     </ul>
 
 <c:if test="${productionAttribute.submitted}">
     <div class="alert alert-error">
-        <spring:message code="Submitted by user"></spring:message>
-        <a href="${productionEdit}"><i class="icon-pencil"></i> <spring:message code="Edit"></spring:message></a>
-        <a href="${productionSubmit}"><i class="icon-envelope"></i> <spring:message code="Draw Back"></spring:message></a>
+        <spring:message code="Submitted by user" />
+        <a href="${productionEdit}"><i class="icon-pencil"></i> <spring:message code="Edit" /></a>
+        <a href="${productionSubmit}"><i class="icon-envelope"></i> <spring:message code="Draw Back" /></a>
         </div>
 </c:if>
 <c:if test="${!productionAttribute.submitted}">
     <div class="alert alert-info">
-        <a href="${productionEdit}"><i class="icon-pencil"></i> <spring:message code="Edit"></spring:message></a>
-        <a href="${productionSubmit}"><i class="icon-envelope"></i> <spring:message code="Submit"></spring:message></a>
+        <a href="${productionEdit}"><i class="icon-pencil"></i> <spring:message code="Edit" /></a>
+        <a href="${productionSubmit}"><i class="icon-envelope"></i> <spring:message code="Submit" /></a>
         </div>
 </c:if>
 

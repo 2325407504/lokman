@@ -10,13 +10,13 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${forwardingList}"><spring:message code="Forwardings"></spring:message></a></li>
+    <li class=""><a href="${forwardingList}"><spring:message code="Forwardings" /></a></li>
         <c:choose>
             <c:when test="${ !empty forwardingAttribute.id }">
-            <li class="active"><a href="${forwardingEdit}"><spring:message code="Entry No"></spring:message>: ${forwardingAttribute.id}</a></li>
+            <li class="active"><a href="${forwardingEdit}"><spring:message code="Entry No" />: ${forwardingAttribute.id}</a></li>
             </c:when>
             <c:otherwise>
-            <li class="active"><a href="${forwardingNew}"><spring:message code="New Entry"></spring:message></a></li>
+            <li class="active"><a href="${forwardingNew}"><spring:message code="New Entry" /></a></li>
             </c:otherwise>
         </c:choose>
 </ul>
@@ -28,60 +28,60 @@
             <form:hidden path="id" />
             <fieldset>
                 <div class="control-group">
-                    <form:label path="waybillNo"><spring:message code="Waybill No"></spring:message></form:label>
+                    <form:label path="waybillNo"><spring:message code="Waybill No" /></form:label>
                     <span><form:input type="text" path="waybillNo" /></span>
                     <form:errors cssClass="text-error" path="waybillNo" />
                 </div>
                 <div class="control-group">
-                    <form:label path="driver"><spring:message code="Driver"></spring:message></form:label>
+                    <form:label path="driver"><spring:message code="Driver" /></form:label>
                     <span><form:input path="driver" /></span>
                     <form:errors cssClass="text-error" path="driver" />
                 </div>
                 <div class="control-group">
-                    <form:label path="plate"><spring:message code="Plate"></spring:message></form:label>
+                    <form:label path="plate"><spring:message code="Plate" /></form:label>
                     <span><form:input path="plate" /></span>
                     <form:errors cssClass="text-error" path="plate" />
                 </div>
                 <div class="control-group">
-                    <form:label path="startingTime"><spring:message code="Starting Time"></spring:message></form:label>
+                    <form:label path="startingTime"><spring:message code="Starting Time" /></form:label>
                     <span><form:input type="text" path="startingTime" /></span>
                     <form:errors cssClass="text-error" path="startingTime" />
                 </div>
                 <div class="control-group">
-                    <form:label path="endingTime"><spring:message code="Ending Time"></spring:message></form:label>
+                    <form:label path="endingTime"><spring:message code="Ending Time" /></form:label>
                     <span><form:input type="text" path="endingTime" /></span>
                     <form:errors cssClass="text-error" path="endingTime" />
                 </div>
                 <div class="control-group">
-                    <form:label path="endingPoint"><spring:message code="Ending Point"></spring:message></form:label>
+                    <form:label path="endingPoint"><spring:message code="Ending Point" /></form:label>
                     <span><form:input path="endingPoint" /></span>
                     <form:errors cssClass="text-error" path="endingPoint" />
                 </div>
                 <div class="control-group">
-                    <form:label path="loadWeightInTonne"><spring:message code="Weight"></spring:message></form:label>
+                    <form:label path="loadWeightInTonne"><spring:message code="Weight" /></form:label>
                     <span><form:input path="loadWeightInTonne" /></span>
                     <form:errors cssClass="text-error" path="loadWeightInTonne" />
                 </div>
                 <div class="control-group">
-                    <form:label path="shippingCost"><spring:message code="Shipping Cost"></spring:message></form:label>
+                    <form:label path="shippingCost"><spring:message code="Shipping Cost" /></form:label>
                     <span><form:input path="shippingCost" /></span>
                     <form:errors cssClass="text-error" path="shippingCost" />
                 </div>
                 <div class="control-group">
-                    <form:label path="subcontractor"><spring:message code="Subcontractor"></spring:message></form:label>
+                    <form:label path="subcontractor"><spring:message code="Subcontractor" /></form:label>
                     <form:select path="subcontractor.id" multiple="false" items="${subcontractors}" itemLabel="name" itemValue="id"/>
                     <form:errors cssClass="text-error" path="subcontractor" />
                 </div>
                 <div class="control-group">
-                    <form:label path="quota"><spring:message code="Quota"></spring:message></form:label>
+                    <form:label path="quota"><spring:message code="Quota" /></form:label>
                     <form:select path="quota.id" multiple="false" items="${quotas}" itemLabel="name" itemValue="id"/>
                     <form:errors cssClass="text-error" path="quota" />
                 </div>
                 <div class="form-actions">
                     <c:if test="${ !empty forwardingAttribute.id }">
-                        <a class="btn btn-danger" href="javascript:$('#form-${forwardingAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete"></spring:message></a>
+                        <a class="btn btn-danger" href="javascript:$('#form-${forwardingAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete" /></a>
                     </c:if>
-                    <button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
+                    <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
                     </div>
                 </fieldset>
         </form:form>

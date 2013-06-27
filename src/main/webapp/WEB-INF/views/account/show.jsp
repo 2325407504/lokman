@@ -4,14 +4,14 @@
 <spring:url value="/account/list" var="account_list" />
 
 <ul class="breadcrumb">
-    <li><a href="${homeUrl}"><spring:message code="Home"></spring:message></a> <span class="divider">/</span></li>
-    <li><a href="${account_list}"><spring:message code="Accounts"></spring:message></a> <span class="divider">/</span></li>
-    <li class="active"><spring:message code="Entry No"></spring:message>: ${accountAttribute.id}</li>
-        <li class="pull-right">
+    <li><a href="${homeUrl}"><spring:message code="Home" /></a> <span class="divider">/</span></li>
+    <li><a href="${account_list}"><spring:message code="Accounts" /></a> <span class="divider">/</span></li>
+    <li class="active"><spring:message code="Entry No" />: ${accountAttribute.id}</li>
+    <li class="pull-right">
         <spring:url var="editUrl" value="/account/edit/${accountAttribute.id}" />
-        <a class="btn btn-mini" href="${editUrl}"><spring:message code="Edit"></spring:message></a>
-        </li>
-    </ul>
+        <a class="btn btn-mini" href="${editUrl}"><spring:message code="Edit" /></a>
+    </li>
+</ul>
 
 <c:forEach var="role" items="${accountAttribute.roles}"><span class="label label-success">${role.name}</span>&nbsp;</c:forEach>
 <aripd:description id="account">

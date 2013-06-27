@@ -9,17 +9,17 @@
 
 <ul class="nav nav-tabs">
 	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-	<li class="active"><a href="${waybillList}"><spring:message code="Waybills"></spring:message></a></li>
-	<li class=""><a href="${waybillNew}"><spring:message code="New Entry"></spring:message></a></li>
-	<li class=""><a href="${waybillImport}"><spring:message code="Import"></spring:message></a></li>
+	<li class="active"><a href="${waybillList}"><spring:message code="Waybills" /></a></li>
+	<li class=""><a href="${waybillNew}"><spring:message code="New Entry" /></a></li>
+	<li class=""><a href="${waybillImport}"><spring:message code="Import" /></a></li>
 	<li class="dropdown">
 		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-			<spring:message code="Export"></spring:message>
+			<spring:message code="Export" />
 			<b class="caret"></b>
 		</a>
 		<ul class="dropdown-menu">
-			<li><a href="${waybillExport}"><spring:message code="Waybill"></spring:message></a></li>
-			<li><a href="${outgoingExport}"><spring:message code="Outgoing"></spring:message></a></li>
+			<li><a href="${waybillExport}"><spring:message code="Waybill" /></a></li>
+			<li><a href="${outgoingExport}"><spring:message code="Outgoing" /></a></li>
 		</ul>
 	</li>
 </ul>

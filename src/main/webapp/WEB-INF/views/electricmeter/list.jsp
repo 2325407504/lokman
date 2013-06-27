@@ -6,8 +6,8 @@
 
 <ul class="nav nav-tabs">
 	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-	<li class="active"><a href="${electricmeterList}"><spring:message code="Electricmeters"></spring:message></a></li>
-	<li class=""><a href="${electricmeterNew}"><spring:message code="New Entry"></spring:message></a></li>
+	<li class="active"><a href="${electricmeterList}"><spring:message code="Electricmeters" /></a></li>
+	<li class=""><a href="${electricmeterNew}"><spring:message code="New Entry" /></a></li>
 </ul>
 
 <aripd:datatables datasource="/electricmeter/get" id="electricmeters" dataUrlShow="/electricmeter/show" dataUrlEdit="/electricmeter/edit">

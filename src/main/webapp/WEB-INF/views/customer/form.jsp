@@ -8,13 +8,13 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${customerList}"><spring:message code="Customers"></spring:message></a></li>
+    <li class=""><a href="${customerList}"><spring:message code="Customers" /></a></li>
         <c:choose>
             <c:when test="${ !empty customerAttribute.id }">
-            <li class="active"><a href="${customerEdit}"><spring:message code="Entry No"></spring:message>: ${customerAttribute.id}</a></li>
+            <li class="active"><a href="${customerEdit}"><spring:message code="Entry No" />: ${customerAttribute.id}</a></li>
             </c:when>
             <c:otherwise>
-            <li class="active"><a href="${customerNew}"><spring:message code="New Entry"></spring:message></a></li>
+            <li class="active"><a href="${customerNew}"><spring:message code="New Entry" /></a></li>
             </c:otherwise>
         </c:choose>
 </ul>
@@ -28,27 +28,27 @@
             <fieldset>
                 <legend>Firma Cari Bilgileri</legend>
                 <div class="control-group">
-                    <form:label path="taxNo"><spring:message code="Tax No"></spring:message></form:label>
+                    <form:label path="taxNo"><spring:message code="Tax No" /></form:label>
                     <form:input path="taxNo" />
                     <form:errors cssClass="text-error" path="taxNo" />
                 </div>
                 <div class="control-group">
-                    <form:label path="taxOffice"><spring:message code="Tax Office"></spring:message></form:label>
+                    <form:label path="taxOffice"><spring:message code="Tax Office" /></form:label>
                     <form:input path="taxOffice" />
                     <form:errors cssClass="text-error" path="taxOffice" />
                 </div>
                 <div class="control-group">
-                    <form:label path="name"><spring:message code="Company"></spring:message></form:label>
+                    <form:label path="name"><spring:message code="Company" /></form:label>
                     <form:input path="name" />
                     <form:errors cssClass="text-error" path="name" />
                 </div>
                 <div class="control-group">
-                    <form:label path="address"><spring:message code="Postal Address"></spring:message></form:label>
+                    <form:label path="address"><spring:message code="Postal Address" /></form:label>
                     <form:input path="address" />
                     <form:errors cssClass="text-error" path="address" />
                 </div>
                 <div class="control-group">
-                    <form:label path="phonenumber"><spring:message code="Phone Number"></spring:message></form:label>
+                    <form:label path="phonenumber"><spring:message code="Phone Number" /></form:label>
                     <form:input path="phonenumber" />
                     <form:errors cssClass="text-error" path="phonenumber" />
                 </div>
@@ -58,32 +58,32 @@
             <fieldset>
                 <legend>Firma Yetkilisi Bilgileri</legend>
                 <div class="control-group">
-                    <form:label path="authorized.username"><spring:message code="Username"></spring:message></form:label>
+                    <form:label path="authorized.username"><spring:message code="Username" /></form:label>
                     <form:input path="authorized.username" />
                     <form:errors cssClass="text-error" path="authorized.username" />
                 </div>       
                 <div class="control-group">
-                    <form:label path="authorized.password"><spring:message code="Password"></spring:message></form:label>
+                    <form:label path="authorized.password"><spring:message code="Password" /></form:label>
                     <form:input type="password" path="authorized.password" />
                     <form:errors cssClass="text-error" path="authorized.password" />
                 </div>       
                 <div class="control-group">
-                    <form:label path="authorized.email"><spring:message code="E-mail Address"></spring:message></form:label>
+                    <form:label path="authorized.email"><spring:message code="E-mail Address" /></form:label>
                     <form:input path="authorized.email" />
                     <form:errors cssClass="text-error" path="authorized.email" />
                 </div>       
                 <div class="control-group">
-                    <form:label path="authorized.client.firstName"><spring:message code="FirstName"></spring:message></form:label>
+                    <form:label path="authorized.client.firstName"><spring:message code="FirstName" /></form:label>
                     <form:input path="authorized.client.firstName" />
                     <form:errors cssClass="text-error" path="authorized.client.firstName" />
                 </div>       
                 <div class="control-group">
-                    <form:label path="authorized.client.lastName"><spring:message code="LastName"></spring:message></form:label>
+                    <form:label path="authorized.client.lastName"><spring:message code="LastName" /></form:label>
                     <form:input path="authorized.client.lastName" />
                     <form:errors cssClass="text-error" path="authorized.client.lastName" />
                 </div>
                 <div class="control-group">
-                    <form:label path="authorized.client.phonenumber"><spring:message code="Phone Number"></spring:message></form:label>
+                    <form:label path="authorized.client.phonenumber"><spring:message code="Phone Number" /></form:label>
                     <form:input path="authorized.client.phonenumber" />
                     <form:errors cssClass="text-error" path="authorized.client.phonenumber" />
                 </div>
@@ -107,9 +107,9 @@
     </div>
     <div class="form-actions">
         <c:if test="${ !empty customerAttribute.id }">
-            <a class="btn btn-danger" href="javascript:$('#form-${customerAttribute.id}').submit();"><spring:message code="Delete"></spring:message></a>
+            <a class="btn btn-danger" href="javascript:$('#form-${customerAttribute.id}').submit();"><spring:message code="Delete" /></a>
         </c:if>
-        <button class="btn btn-primary" type="submit"><spring:message code="Save"></spring:message></button>
+        <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
         </div>
 </form:form>
 

@@ -8,16 +8,16 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class="active"><a href="${productionList}"><spring:message code="Productions"></spring:message></a></li>
-    <li class=""><a href="${productionNew}"><spring:message code="New Entry"></spring:message></a></li>
-    <li class=""><a href="${productionImport}"><spring:message code="Import"></spring:message></a></li>
+    <li class="active"><a href="${productionList}"><spring:message code="Productions" /></a></li>
+    <li class=""><a href="${productionNew}"><spring:message code="New Entry" /></a></li>
+    <li class=""><a href="${productionImport}"><spring:message code="Import" /></a></li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Reports"></spring:message>
+            <spring:message code="Reports" />
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="${productionReport}"><spring:message code="Report"></spring:message></a></li>
+                <li><a href="${productionReport}"><spring:message code="Report" /></a></li>
             </ul>
         </li>
     </ul>
