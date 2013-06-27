@@ -43,7 +43,7 @@ import com.aripd.project.lgk.service.OutgoingService;
 import com.aripd.project.lgk.service.ProductService;
 
 @Service("outgoingService")
-@Transactional
+@Transactional(readOnly = true)
 public class OutgoingServiceImpl implements OutgoingService {
 
     @PersistenceContext
@@ -55,37 +55,33 @@ public class OutgoingServiceImpl implements OutgoingService {
     @Autowired
     private ProductService productService;
 
-    @Transactional(readOnly = true)
     public Outgoing findOne(Long id) {
         return repository.findOne(id);
     }
 
-    @Transactional(readOnly = true)
     public List<Outgoing> findAll() {
         return repository.findAll();
     }
 
-    @Transactional(readOnly = true)
     public List<Outgoing> findByWaybillId(Long waybill_id) {
         return repository.findByWaybillId(waybill_id);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     public Outgoing save(Outgoing outgoing) {
         return repository.save(outgoing);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     public void delete(Long id) {
         repository.delete(id);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     public void delete(Outgoing outgoing) {
         repository.delete(outgoing);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public ResultSet<Outgoing> getRecords(Long waybill_id, PagingCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
@@ -115,16 +111,16 @@ public class OutgoingServiceImpl implements OutgoingService {
 
         // Sorting
         /*
-        for (SortField sortField : sortFields) {
-            String field = sortField.getField();
-            String direction = sortField.getDirection().getDirection();
-            if (direction.equalsIgnoreCase("asc")) {
-                cq.orderBy(cb.asc(outgoing.get(field)));
-            } else if (direction.equalsIgnoreCase("desc")) {
-                cq.orderBy(cb.desc(outgoing.get(field)));
-            }
-        }
-        */
+         for (SortField sortField : sortFields) {
+         String field = sortField.getField();
+         String direction = sortField.getDirection().getDirection();
+         if (direction.equalsIgnoreCase("asc")) {
+         cq.orderBy(cb.asc(outgoing.get(field)));
+         } else if (direction.equalsIgnoreCase("desc")) {
+         cq.orderBy(cb.desc(outgoing.get(field)));
+         }
+         }
+         */
 
         Long totalRecords = (long) em.createQuery(cq).getResultList().size();
 

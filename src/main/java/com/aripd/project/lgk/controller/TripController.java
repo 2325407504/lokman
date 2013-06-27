@@ -131,18 +131,6 @@ public class TripController {
         return "redirect:/trip/list";
     }
 
-    /**
-     * Exports the report as an Excel format.
-     * <p>
-     * Make sure this method doesn't return any model. Otherwise, you'll get an
-     * "IllegalStateException: getOutputStream() has already been called for
-     * this response"
-     */
-    @RequestMapping(value = "/export/xls", method = RequestMethod.GET)
-    public void exportAll(HttpServletResponse response, Model model) {
-        tripService.exportAll(response);
-    }
-
     @RequestMapping(value = "/import/xls", method = RequestMethod.GET)
     public String importAction(Model model) {
         model.addAttribute(new FileUploadBean());
@@ -205,6 +193,18 @@ public class TripController {
     public String reportAction(Model model) {
         model.addAttribute("trucks", truckService.findAll());
         return "trip/report";
+    }
+
+    /**
+     * Exports the report as an Excel format.
+     * <p>
+     * Make sure this method doesn't return any model. Otherwise, you'll get an
+     * "IllegalStateException: getOutputStream() has already been called for
+     * this response"
+     */
+    @RequestMapping(value = "/export/xls", method = RequestMethod.GET)
+    public void exportAll(HttpServletResponse response, Model model) {
+        tripService.exportAll(response);
     }
 
     @RequestMapping(value = "/report/truck/{id}/xls", method = RequestMethod.GET)

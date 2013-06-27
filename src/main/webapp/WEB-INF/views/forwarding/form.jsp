@@ -23,20 +23,20 @@
             </c:otherwise>
         </c:choose>
     <li class=""><a href="${forwardingImport}"><spring:message code="Import" /></a></li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
             <spring:message code="Export" />
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="${forwardingExport}"><spring:message code="Waybill" /></a></li>
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="${forwardingExport}"><spring:message code="Waybill" /></a></li>
             <li><a href="${uatfExport}"><spring:message code="UATF" /></a></li>
-            </ul>
-        </li>
-    </ul>
+        </ul>
+    </li>
+</ul>
 
-    <div class="row-fluid">
-        <div class="span6">
+<div class="row-fluid">
+    <div class="span6">
         <form:form modelAttribute="forwardingAttribute" action="${forwardingSave}" method="post">
             <form:errors path="*" cssClass="alert alert-error" element="div" />
             <form:hidden path="id" />
@@ -104,8 +104,8 @@
                         <a class="btn btn-danger" href="javascript:$('#form-${forwardingAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete" /></a>
                     </c:if>
                     <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
-                    </div>
-                </fieldset>
+                </div>
+            </fieldset>
         </form:form>
 
         <c:if test="${ !empty forwardingAttribute.id }">
@@ -130,8 +130,10 @@
                 <form:input path="county" cssClass="input-small" placeholder="${County}" />
                 <form:input path="city" cssClass="input-small" placeholder="${City}" />
                 <form:input path="loadWeightInTonne" cssClass="input-mini" placeholder="${Weight}" />
-                <button class="btn" type="submit"><i class="icon-ok"></i></button>
-                </form:form>
+                <button class="btn" type="submit">
+                    <i class="icon-ok"></i>
+                </button>
+            </form:form>
 
             <hr>
 
@@ -148,7 +150,6 @@
 </div>
 
 <script type="text/javascript">
-<!--
     var startDateTextBox = $('#startingTime');
     var endDateTextBox = $('#endingTime');
 
@@ -184,7 +185,6 @@
             startDateTextBox.datetimepicker('option', 'maxDate', endDateTextBox.datetimepicker('getDate'));
         }
     });
-//-->
 </script>
 
 <%@ include file="/WEB-INF/views/footer.jsp" %>

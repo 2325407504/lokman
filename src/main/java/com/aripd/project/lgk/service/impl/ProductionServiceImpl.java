@@ -28,8 +28,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,6 +73,30 @@ public class ProductionServiceImpl implements ProductionService {
 
     public Production findOneByShiftdateAndShift(DateTime shiftdate, Shift shift) {
         return repository.findOneByShiftdateAndShift(shiftdate, shift);
+    }
+
+    public List<Production> findByInterval(DateTime startingTime, DateTime endingTime) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Production> cq = cb.createQuery(Production.class);
+        Root<Production> root = cq.from(Production.class);
+        //Join<Production, Account> account = root.join(Production_.account);
+
+        // Filtering and Searching
+        List<Predicate> predicateList = new ArrayList<Predicate>();
+        Predicate predicate1 = cb.between(root.get(Production_.shiftdate), startingTime, endingTime);
+        predicateList.add(predicate1);
+
+        Predicate[] predicates = new Predicate[predicateList.size()];
+        predicateList.toArray(predicates);
+        cq.where(predicates);
+
+        Long totalRecords = (long) em.createQuery(cq).getResultList().size();
+
+        // Pagination
+        TypedQuery<Production> typedQuery = em.createQuery(cq);
+        List<Production> resultList = typedQuery.getResultList();
+
+        return resultList;
     }
 
     @Transactional
@@ -264,5 +286,33 @@ public class ProductionServiceImpl implements ProductionService {
         }
 
         repository.save(productions);
+    }
+
+    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime) {
+        // 1. Create new workbook
+        HSSFWorkbook workbook = new HSSFWorkbook();
+
+        // 2. Create new worksheet
+        HSSFSheet worksheet = workbook.createSheet("Production Report");
+
+        // 3. Define starting indices for rows and columns
+        int startRowIndex = 0;
+        int startColIndex = 0;
+
+        // 4. Build layout
+        // Build title, date, and column headers
+        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
+
+        // 5. Fill report
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByInterval(startingTime, endingTime));
+
+        // 6. Set the response properties
+        String fileName = "ProductionReport.xls";
+        response.setHeader("Content-Disposition", "inline; filename=" + fileName);
+        // Make sure to set the correct content type
+        response.setContentType("application/vnd.ms-excel");
+
+        // 7. Write to the output stream
+        Writer.write(response, worksheet);
     }
 }

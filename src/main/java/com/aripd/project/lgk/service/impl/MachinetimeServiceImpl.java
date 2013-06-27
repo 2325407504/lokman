@@ -18,7 +18,7 @@ import com.aripd.project.lgk.service.ProductService;
 import com.aripd.project.lgk.service.ShiftService;
 
 @Service("machinetimeService")
-@Transactional
+@Transactional(readOnly = true)
 public class MachinetimeServiceImpl implements MachinetimeService {
 
     @PersistenceContext
@@ -32,37 +32,33 @@ public class MachinetimeServiceImpl implements MachinetimeService {
     @Autowired
     private ProductService productService;
 
-    @Transactional(readOnly = true)
     public Machinetime findOne(Long id) {
         return repository.findOne(id);
     }
 
-    @Transactional(readOnly = true)
     public Machinetime findOneByProductionAndMachine(Production production, Machine machine) {
         return repository.findOneByProductionAndMachine(production, machine);
     }
 
-    @Transactional(readOnly = true)
     public List<Machinetime> findAll() {
         return repository.findAll();
     }
 
-    @Transactional(readOnly = true)
     public List<Machinetime> findByProduction(Production production) {
         return repository.findByProduction(production);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     public Machinetime save(Machinetime machinetime) {
         return repository.save(machinetime);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     public void delete(Long id) {
         repository.delete(id);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     public void delete(Machinetime machinetime) {
         repository.delete(machinetime);
     }

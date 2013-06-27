@@ -41,7 +41,7 @@ import java.util.Date;
 import org.joda.time.DateTime;
 
 @Service("bigbagService")
-@Transactional
+@Transactional(readOnly = true)
 public class BigbagServiceImpl implements BigbagService {
 
     @PersistenceContext
@@ -55,37 +55,33 @@ public class BigbagServiceImpl implements BigbagService {
     @Autowired
     private ProductService productService;
 
-    @Transactional(readOnly = true)
     public Bigbag findOne(Long id) {
         return repository.findOne(id);
     }
 
-    @Transactional(readOnly = true)
     public List<Bigbag> findAll() {
         return repository.findAll();
     }
 
-    @Transactional(readOnly = true)
     public List<Bigbag> findByProductionId(Long id) {
         return repository.findByProductionId(id);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     public Bigbag save(Bigbag bigbag) {
         return repository.save(bigbag);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     public void delete(Long id) {
         repository.delete(id);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     public void delete(Bigbag bigbag) {
         repository.delete(bigbag);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public ResultSet<Bigbag> getRecords(Long production_id, PagingCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();

@@ -9,6 +9,7 @@ import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.project.lgk.domain.Production;
 import com.aripd.project.lgk.domain.Shift;
+import java.util.List;
 import org.joda.time.DateTime;
 
 public interface ProductionService {
@@ -18,6 +19,8 @@ public interface ProductionService {
     public Production findOneByAccountAndId(Account account, Long id);
 
     public Production findOneByShiftdateAndShift(DateTime dateTime, Shift shift);
+
+    public List<Production> findByInterval(DateTime startingTime, DateTime endingTime);
 
     public Production save(Production formData);
 
@@ -32,4 +35,6 @@ public interface ProductionService {
     public void exportXLS(HttpServletResponse response);
 
     public void importXLSX(String fileName);
+
+    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

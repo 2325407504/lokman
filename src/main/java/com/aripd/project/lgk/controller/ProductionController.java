@@ -33,6 +33,8 @@ import com.aripd.project.lgk.domain.Bigbag;
 import com.aripd.project.lgk.domain.Compensation;
 import com.aripd.project.lgk.domain.Machinetime;
 import com.aripd.project.lgk.domain.Production;
+import com.aripd.project.lgk.model.CompensationFilterByIntervalForm;
+import com.aripd.project.lgk.model.ProductionFilterByIntervalForm;
 import com.aripd.project.lgk.service.CompensationService;
 import com.aripd.project.lgk.service.ElectricmeterService;
 import com.aripd.project.lgk.service.MachineService;
@@ -42,6 +44,7 @@ import com.aripd.project.lgk.service.ProductionService;
 import com.aripd.project.lgk.service.ShiftService;
 import javax.validation.Valid;
 import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
 @Controller
@@ -157,6 +160,32 @@ public class ProductionController {
         productionService.delete(id);
         redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
         return "redirect:/production/list";
+    }
+
+    @RequestMapping(value = "/report", method = RequestMethod.GET)
+    public String reportAction(Model model) {
+        model.addAttribute("productionFilterByIntervalForm", new CompensationFilterByIntervalForm());
+        return "production/report";
+    }
+
+    @RequestMapping(value = "/report", method = RequestMethod.POST)
+    public String reportAction(
+            final RedirectAttributes redirectAttributes,
+            @ModelAttribute("productionFilterByIntervalForm") @Valid ProductionFilterByIntervalForm formData,
+            BindingResult result,
+            @RequestParam("startingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime startingTime,
+            @RequestParam("endingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime endingTime,
+            HttpServletResponse response,
+            Model model) {
+
+        if (result.hasErrors()) {
+            return "/production/report";
+        }
+
+        productionService.exportByInterval(response, startingTime, endingTime);
+
+        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
+        return "redirect:/production/report";
     }
 
     /**

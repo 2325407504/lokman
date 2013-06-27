@@ -1,4 +1,4 @@
-package com.aripd.project.lgk.report.production;
+package com.aripd.project.lgk.report.compensation;
 
 import java.util.Date;
 
@@ -28,7 +28,6 @@ public class Layouter {
         worksheet.setColumnWidth(1, 5000);
         worksheet.setColumnWidth(2, 5000);
         worksheet.setColumnWidth(3, 5000);
-        worksheet.setColumnWidth(4, 5000);
 
         // Build the title and date headers
         buildTitle(worksheet, startRowIndex, startColIndex);
@@ -61,11 +60,11 @@ public class Layouter {
         HSSFRow rowTitle = worksheet.createRow((short) startRowIndex);
         rowTitle.setHeight((short) 500);
         HSSFCell cellTitle = rowTitle.createCell(startColIndex);
-        cellTitle.setCellValue("Production Report");
+        cellTitle.setCellValue("Compensation Report");
         cellTitle.setCellStyle(cellStyleTitle);
 
         // Create merged region for the report title
-        worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 4));
+        worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 3));
 
         // Create date header
         HSSFRow dateTitle = worksheet.createRow((short) startRowIndex + 1);
@@ -102,24 +101,20 @@ public class Layouter {
         rowHeader.setHeight((short) 500);
 
         HSSFCell cell0 = rowHeader.createCell(startColIndex + 0);
-        cell0.setCellValue("Shift Date");
+        cell0.setCellValue("Id");
         cell0.setCellStyle(headerCellStyle);
 
         HSSFCell cell1 = rowHeader.createCell(startColIndex + 1);
-        cell1.setCellValue("Shift");
+        cell1.setCellValue("Shift Date");
         cell1.setCellStyle(headerCellStyle);
 
         HSSFCell cell2 = rowHeader.createCell(startColIndex + 2);
-        cell2.setCellValue("Account");
+        cell2.setCellValue("Electric Meter");
         cell2.setCellStyle(headerCellStyle);
 
         HSSFCell cell3 = rowHeader.createCell(startColIndex + 3);
-        cell3.setCellValue("Remark");
+        cell3.setCellValue("Value");
         cell3.setCellStyle(headerCellStyle);
-
-        HSSFCell cell4 = rowHeader.createCell(startColIndex + 4);
-        cell4.setCellValue("Bigbag");
-        cell4.setCellStyle(headerCellStyle);
 
     }
 }

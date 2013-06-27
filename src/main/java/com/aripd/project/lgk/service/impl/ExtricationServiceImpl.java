@@ -18,7 +18,7 @@ import com.aripd.project.lgk.service.ProductService;
 import com.aripd.project.lgk.service.ShiftService;
 
 @Service("extricationService")
-@Transactional
+@Transactional(readOnly = true)
 public class ExtricationServiceImpl implements ExtricationService {
 
     @PersistenceContext
@@ -32,32 +32,29 @@ public class ExtricationServiceImpl implements ExtricationService {
     @Autowired
     private ProductService productService;
 
-    @Transactional(readOnly = true)
     public Extrication findOne(Long id) {
         return repository.findOne(id);
     }
 
-    @Transactional(readOnly = true)
     public Extrication findOneByWeighbridgeAndWaste(Weighbridge weighbridge, Waste waste) {
         return repository.findOneByWeighbridgeAndWaste(weighbridge, waste);
     }
 
-    @Transactional(readOnly = true)
     public List<Extrication> findAll() {
         return repository.findAll();
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     public Extrication save(Extrication extrication) {
         return repository.save(extrication);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     public void delete(Long id) {
         repository.delete(id);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     public void delete(Extrication extrication) {
         repository.delete(extrication);
     }

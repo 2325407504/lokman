@@ -42,7 +42,7 @@ import com.aripd.project.lgk.service.ForwardingService;
 import com.aripd.project.lgk.service.UatfService;
 
 @Service("uatfService")
-@Transactional
+@Transactional(readOnly = true)
 public class UatfServiceImpl implements UatfService {
 
     @PersistenceContext
@@ -52,37 +52,33 @@ public class UatfServiceImpl implements UatfService {
     @Autowired
     private ForwardingService forwardingService;
 
-    @Transactional(readOnly = true)
     public Uatf findOne(Long id) {
         return repository.findOne(id);
     }
 
-    @Transactional(readOnly = true)
     public List<Uatf> findAll() {
         return repository.findAll();
     }
 
-    @Transactional(readOnly = true)
     public List<Uatf> findByForwardingId(Long forwarding_id) {
         return repository.findByForwardingId(forwarding_id);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     public Uatf save(Uatf uatf) {
         return repository.save(uatf);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     public void delete(Long id) {
         repository.delete(id);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     public void delete(Uatf uatf) {
         repository.delete(uatf);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public ResultSet<Uatf> getRecords(Long forwarding_id, PagingCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
