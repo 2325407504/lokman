@@ -14,33 +14,33 @@
     <li class=""><a href="${weighbridgeList}"><spring:message code="Weighbridges" /></a></li>
     <li class="active"><a href="${weighbridgeShow}"><spring:message code="Entry No" />: ${weighbridgeAttribute.id}</a></li>
     <li class=""><a href="${weighbridgeNew}"><spring:message code="New Entry" /></a></li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
             <spring:message code="Export" />
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="${weighbridgeExport}"><spring:message code="Weighbridges" /></a></li>
-            </ul>
-        </li>
-    </ul>
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="${weighbridgeExport}"><spring:message code="Weighbridges" /></a></li>
+        </ul>
+    </li>
+</ul>
 
 <c:if test="${weighbridgeAttribute.submitted}">
     <div class="alert alert-error">
         <spring:message code="Submitted by user" />
         <a href="${weighbridgeEdit}"><i class="icon-pencil"></i> <spring:message code="Edit" /></a>
         <a href="${weighbridgeSubmit}"><i class="icon-envelope"></i> <spring:message code="Draw Back" /></a>
-        </div>
+    </div>
 </c:if>
 <c:if test="${!weighbridgeAttribute.submitted}">
     <div class="alert alert-info">
         <a href="${weighbridgeEdit}"><i class="icon-pencil"></i> <spring:message code="Edit" /></a>
         <a href="${weighbridgeSubmit}"><i class="icon-envelope"></i> <spring:message code="Submit" /></a>
-        </div>
+    </div>
 </c:if>
 
 <div class="row-fluid">
-    <div class="span12">
+    <div class="span4">
         <aripd:description id="weighbridge">
             <aripd:descriptionitem label="Status" field="weighbridgeAttribute.submitted"></aripd:descriptionitem>
             <aripd:descriptionitem label="Account" field="weighbridgeAttribute.account.client.fullname"></aripd:descriptionitem>
@@ -56,6 +56,17 @@
             <aripd:descriptionitem label="First Weighing" field="weighbridgeAttribute.firstWeighing"></aripd:descriptionitem>
             <aripd:descriptionitem label="Last Weighing" field="weighbridgeAttribute.lastWeighing"></aripd:descriptionitem>
         </aripd:description>
+    </div>
+    <div class="span4">
+        <table class="table">
+            <caption><spring:message code="Extrications" /></caption>
+            <c:forEach items="${weighbridgeAttribute.extrications}" var="extrication">
+                <tr>
+                    <td>${extrication.waste.name}</td>
+                    <td>${extrication.val}</td>
+                </tr>
+            </c:forEach>
+        </table>
     </div>
 </div>
 

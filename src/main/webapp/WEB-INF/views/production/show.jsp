@@ -16,30 +16,30 @@
     <li class="active"><a href="${productionShow}"><spring:message code="Entry No" />: ${productionAttribute.id}</a></li>
     <li class=""><a href="${productionNew}"><spring:message code="New Entry" /></a></li>
     <li class=""><a href="${productionImport}"><spring:message code="Import" /></a></li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
             <spring:message code="Export" />
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="${productionExport}"><spring:message code="Waybill" /></a></li>
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="${productionExport}"><spring:message code="Waybill" /></a></li>
             <li><a href="${bigbagExport}"><spring:message code="UATF" /></a></li>
-            </ul>
-        </li>
-    </ul>
+        </ul>
+    </li>
+</ul>
 
 <c:if test="${productionAttribute.submitted}">
     <div class="alert alert-error">
         <spring:message code="Submitted by user" />
         <a href="${productionEdit}"><i class="icon-pencil"></i> <spring:message code="Edit" /></a>
         <a href="${productionSubmit}"><i class="icon-envelope"></i> <spring:message code="Draw Back" /></a>
-        </div>
+    </div>
 </c:if>
 <c:if test="${!productionAttribute.submitted}">
     <div class="alert alert-info">
         <a href="${productionEdit}"><i class="icon-pencil"></i> <spring:message code="Edit" /></a>
         <a href="${productionSubmit}"><i class="icon-envelope"></i> <spring:message code="Submit" /></a>
-        </div>
+    </div>
 </c:if>
 
 <div class="row-fluid">
@@ -65,7 +65,7 @@
     </div>
     <div class="span4">
         <table class="table">
-            <caption><spring:message code="Compensation Table" /></caption>
+            <caption><spring:message code="Compensations" /></caption>
             <c:forEach items="${productionAttribute.compensations}" var="compensation">
                 <tr>
                     <td>${compensation.electricmeter.name}</td>

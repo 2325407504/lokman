@@ -3,14 +3,21 @@ package com.aripd.project.lgk.domain;
 import com.aripd.account.domain.Account;
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.common.utils.ARIPDJodaDateTimeSerializer;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
 @Entity
@@ -23,6 +30,7 @@ public class Weighbridge extends BaseEntity {
     @JoinColumn(nullable = false, insertable = true, updatable = true)
     private Account account;
     private String clerk;
+    @NotBlank
     private String plate;
     private String driver;
     @Column(nullable = true)
@@ -43,6 +51,10 @@ public class Weighbridge extends BaseEntity {
     private String customer;
     private Integer firstWeighing;
     private Integer lastWeighing;
+    @JsonIgnore
+    @OneToMany(mappedBy = "weighbridge", cascade = CascadeType.REMOVE)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Extrication> extrications;
 
     @Override
     public String toString() {
@@ -151,5 +163,13 @@ public class Weighbridge extends BaseEntity {
 
     public void setLastWeighing(Integer lastWeighing) {
         this.lastWeighing = lastWeighing;
+    }
+
+    public List<Extrication> getExtrications() {
+        return extrications;
+    }
+
+    public void setExtrications(List<Extrication> extrications) {
+        this.extrications = extrications;
     }
 }

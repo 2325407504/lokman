@@ -30,7 +30,10 @@ import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.model.CsvImportBean;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
+import com.aripd.project.lgk.domain.Extrication;
 import com.aripd.project.lgk.domain.Weighbridge;
+import com.aripd.project.lgk.service.ExtricationService;
+import com.aripd.project.lgk.service.WasteService;
 import com.aripd.project.lgk.service.WeighbridgeService;
 import java.security.Principal;
 
@@ -43,6 +46,10 @@ public class WeighbridgeController {
     private WeighbridgeService weighbridgeService;
     @Resource(name = "accountService")
     private AccountService accountService;
+    @Resource(name = "wasteService")
+    private WasteService wasteService;
+    @Resource(name = "extricationService")
+    private ExtricationService extricationService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -65,6 +72,7 @@ public class WeighbridgeController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
         model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("wastes", wasteService.findAll());
         model.addAttribute("weighbridgeAttribute", new Weighbridge());
         return "weighbridge/form";
     }
@@ -72,20 +80,31 @@ public class WeighbridgeController {
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
         model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("wastes", wasteService.findAll());
         model.addAttribute("weighbridgeAttribute", weighbridgeService.findOne(id));
         return "weighbridge/form";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAction(final RedirectAttributes redirectAttributes,
+    public String saveAction(
+            final RedirectAttributes redirectAttributes,
             @ModelAttribute("weighbridgeAttribute") @Valid Weighbridge formData,
-            BindingResult result, Model model) {
+            BindingResult result,
+            Model model) {
 
         if (result.hasErrors()) {
             model.addAttribute("accounts", accountService.findAll());
+            model.addAttribute("wastes", wasteService.findAll());
             return "/weighbridge/form";
         }
 
+        Weighbridge weighbridge = weighbridgeService.save(formData);
+
+        for (Extrication extrication : formData.getExtrications()) {
+            extrication.setWeighbridge(weighbridge);
+            extricationService.save(extrication);
+        }
+        
         weighbridgeService.save(formData);
         redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
         return "redirect:/weighbridge/list";

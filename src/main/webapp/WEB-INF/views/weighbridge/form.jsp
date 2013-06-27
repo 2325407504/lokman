@@ -21,16 +21,16 @@
             </c:otherwise>
         </c:choose>
     <li class=""><a href="${weighbridgeImport}"><spring:message code="Import" /></a></li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
             <spring:message code="Export" />
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="${weighbridgeExport}"><spring:message code="Weighbridges" /></a></li>
-            </ul>
-        </li>
-    </ul>
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="${weighbridgeExport}"><spring:message code="Weighbridges" /></a></li>
+        </ul>
+    </li>
+</ul>
 
 <form:form modelAttribute="weighbridgeAttribute" action="${weighbridgeSave}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
@@ -75,12 +75,12 @@
                 </div>
                 <div class="control-group">
                     <form:label path="checkin"><spring:message code="Check-in" text="Check-in" /></form:label>
-                    <form:input type="datetime" path="checkin" />
+                    <form:input id="checkin" type="datetime" path="checkin" />
                     <form:errors cssClass="text-error" path="checkin" />
                 </div>
                 <div class="control-group">
                     <form:label path="checkout"><spring:message code="Check-out" text="Check-out" /></form:label>
-                    <form:input type="datetime" path="checkout" />
+                    <form:input id="checkout" type="datetime" path="checkout" />
                     <form:errors cssClass="text-error" path="checkout" />
                 </div>
                 <div class="control-group">
@@ -107,23 +107,21 @@
         </div>
         <div class="span4">
             <table class="table">
-                <caption><spring:message code="Machine Times" /></caption>
+                <caption><spring:message code="Extrications" /></caption>
                 <thead>
                     <tr>
-                        <th><spring:message code="Machine" /></th>
-                        <th><spring:message code="Value" /></th>
+                        <th><spring:message code="Waste" /></th>
                         <th><spring:message code="Value" /></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${machines}" var="machine" varStatus="status">
+                    <c:forEach items="${wastes}" var="waste" varStatus="status">
                         <tr>
-                            <td>${machine.name}</td>
-                            <td id="machine_${machine.id}"></td>
+                            <td>${waste.name}</td>
                             <td>
-                                <input type="hidden" class="input-mini" name="machinetimes[${status.index}].id" value="${productionAttribute.machinetimes[status.index].id}"/>
-                                <input type="hidden" class="input-mini" name="machinetimes[${status.index}].machine.id" value="${machine.id}"/>
-                                <input class="input-mini" name="machinetimes[${status.index}].val" value="${productionAttribute.machinetimes[status.index].val}"/>
+                                <input type="hidden" class="input-mini" name="extrications[${status.index}].id" value="${weighbridgeAttribute.extrications[status.index].id}"/>
+                                <input type="hidden" class="input-mini" name="extrications[${status.index}].waste.id" value="${waste.id}"/>
+                                <input class="input-mini" name="extrications[${status.index}].val" value="${weighbridgeAttribute.extrications[status.index].val}"/>
                             </td>
                         </tr>
                     </c:forEach>
@@ -152,7 +150,9 @@
 
 <script>
     $(function() {
-        $("#documentDate").datetimepicker();
+        $("#checkin, #checkout").datetimepicker({
+            maxDate: new Date()
+        });
     });
 </script>
 

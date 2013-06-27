@@ -79,14 +79,12 @@
                     <tr>
                         <th><spring:message code="Machine" /></th>
                         <th><spring:message code="Value" /></th>
-                        <th><spring:message code="Value" /></th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach items="${machines}" var="machine" varStatus="status">
                         <tr>
                             <td>${machine.name}</td>
-                            <td id="machine_${machine.id}"></td>
                             <td>
                                 <input type="hidden" class="input-mini" name="machinetimes[${status.index}].id" value="${productionAttribute.machinetimes[status.index].id}"/>
                                 <input type="hidden" class="input-mini" name="machinetimes[${status.index}].machine.id" value="${machine.id}"/>
@@ -99,7 +97,7 @@
         </div>
         <div class="span4">
             <table class="table">
-                <caption><spring:message code="Compensation Table" /></caption>
+                <caption><spring:message code="Compensations" /></caption>
                 <thead>
                     <tr>
                         <th><spring:message code="Electricmeter" /></th>

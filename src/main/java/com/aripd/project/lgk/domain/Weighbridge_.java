@@ -8,6 +8,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import org.joda.time.DateTime;
 
 import com.aripd.common.entity.BaseEntity_;
+import javax.persistence.metamodel.ListAttribute;
 
 /**
  * A meta model class used to create type safe queries.
@@ -30,4 +31,5 @@ public class Weighbridge_ extends BaseEntity_ {
     public static volatile SingularAttribute<Weighbridge, String> customer;
     public static volatile SingularAttribute<Weighbridge, Integer> firstWeighing;
     public static volatile SingularAttribute<Weighbridge, Integer> lastWeighing;
+    public static volatile ListAttribute<Weighbridge, Extrication> extrications;
 }

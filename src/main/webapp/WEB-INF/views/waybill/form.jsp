@@ -55,15 +55,15 @@
         <div class="span4">
             <fieldset>
                 <legend><spring:message code="Waybill" /></legend>
-                    <div class="control-group">
-                    <form:label path="documentNo"><spring:message code="Document No" /></form:label>
-                    <form:input path="documentNo" />
-                    <form:errors cssClass="text-error" path="documentNo" />
-                </div>
                 <div class="control-group">
                     <form:label path="documentDate"><spring:message code="Document Date" /></form:label>
                     <form:input type="datetime" id="waybillDate" path="documentDate" />
                     <form:errors cssClass="text-error" path="documentDate" />
+                </div>
+                    <div class="control-group">
+                    <form:label path="documentNo"><spring:message code="Document No" /></form:label>
+                    <form:input path="documentNo" />
+                    <form:errors cssClass="text-error" path="documentNo" />
                 </div>
                 <div class="control-group">
                     <form:label path="company"><spring:message code="Company" /></form:label>
@@ -91,14 +91,14 @@
                     <form:errors cssClass="text-error" path="invoice.customer" />
                 </div>
                 <div class="control-group">
-                    <form:label path="invoice.documentNo"><spring:message code="Document No" /></form:label>
-                    <form:input path="invoice.documentNo" />
-                    <form:errors cssClass="text-error" path="invoice.documentNo" />
-                </div>
-                <div class="control-group">
                     <form:label path="invoice.documentDate"><spring:message code="Document Date" /></form:label>
                     <form:input type="datetime" id="invoiceDate" path="invoice.documentDate" />
                     <form:errors cssClass="text-error" path="invoice.documentDate" />
+                </div>
+                <div class="control-group">
+                    <form:label path="invoice.documentNo"><spring:message code="Document No" /></form:label>
+                    <form:input path="invoice.documentNo" />
+                    <form:errors cssClass="text-error" path="invoice.documentNo" />
                 </div>
                 <div class="control-group">
                     <form:label path="invoice.amount"><spring:message code="Amount" /></form:label>
