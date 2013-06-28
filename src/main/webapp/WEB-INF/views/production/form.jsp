@@ -4,47 +4,16 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url var="homeUrl" value="/" />
-<spring:url var="productionList" value="/production/list" />
-<spring:url var="productionShow" value="/production/show/${productionAttribute.id}" />
-<spring:url var="productionEdit" value="/production/edit/${productionAttribute.id}" />
-<spring:url var="productionNew" value="/production/new" />
-<spring:url var="productionImport" value="/production/import/xls" />
-<spring:url var="productionExport" value="/production/export/xls" />
-<spring:url var="bigbagExport" value="/bigbag/export/xls" />
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Productions" />
+    <jsp:param name="property" value="production" />
+    <jsp:param name="import" value="true" />
+    <jsp:param name="report" value="true" />
+    <jsp:param name="submit" value="true" />
+    <jsp:param name="active" value="form" />
+</jsp:include>
+
 <spring:url var="productionSave" value="/production/save" />
-<spring:url var="bigbagSave" value="/bigbag/save/${productionAttribute.id}" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class="">
-        <a href="${productionList}"><spring:message code="Productions" /></a>
-    </li>
-    <c:choose>
-        <c:when test="${ !empty productionAttribute.id }">
-            <li class="active">
-                <a href="${productionEdit}"><spring:message code="Entry No" />: ${productionAttribute.id}</a>
-            </li>
-        </c:when>
-        <c:otherwise>
-            <li class="active">
-                <a href="${productionNew}"><spring:message code="New Entry" /></a>
-            </li>
-        </c:otherwise>
-    </c:choose>
-    <li class=""><a href="${productionImport}"><spring:message code="Import" /></a></li>
-    <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Export" />
-            <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="${productionExport}"><spring:message code="Production" /></a></li>
-            <li><a href="${bigbagExport}"><spring:message code="BigBag" /></a></li>
-        </ul>
-    </li>
-</ul>
-
 <form:form id="production" modelAttribute="productionAttribute" action="${productionSave}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <form:hidden path="id" />
@@ -143,7 +112,9 @@
 
 
 <c:if test="${ !empty productionAttribute.id }">
-    <spring:url var="deleteUrl" value="/production/delete?id=${productionAttribute.id}" />
+    <spring:url var="deleteUrl" value="/production/delete">
+        <spring:param name="id" value="${productionAttribute.id}" />
+    </spring:url>
     <form:form id="form-${productionAttribute.id}" modelAttribute="productionAttribute" action="${deleteUrl}" method="delete">
         <form:hidden path="id" />
     </form:form>
@@ -155,6 +126,9 @@
         <fmt:message key="Weight" var="Weight"/>
 
         <c:if test="${productionAttribute.id != null}">
+            <spring:url var="bigbagSave" value="/bigbag/save/{id}">
+                <spring:param name="id" value="${productionAttribute.id}" />
+            </spring:url>
             <form:form modelAttribute="bigbagAttribute" action="${bigbagSave}" method="post" class="form-inline">
                 <form:errors path="*" cssClass="alert alert-error" element="div" />
                 <form:select path="product.id" multiple="false">
@@ -169,7 +143,10 @@
 
             <hr>
 
-            <aripd:datatables datasource="/bigbag/get/${productionAttribute.id}" id="bigbags" caption="Production Amounts" dataUrlDelete="/bigbag/delete" actionColumn="2">
+            <spring:url var="bigbagDatasource" value="/bigbag/get/{id}">
+                <spring:param name="id" value="${productionAttribute.id}" />
+            </spring:url>
+            <aripd:datatables datasource="${bigbagDatasource}" id="bigbags" caption="Production Amounts" dataUrlDelete="/bigbag/delete" actionColumn="2">
                 <aripd:column label="Product" field="product.name"/>
                 <aripd:column label="Weight" field="weight"/>
                 <aripd:column label="Action" field="id"/>

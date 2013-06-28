@@ -1,7 +1,5 @@
 package com.aripd.project.lgk.controller;
 
-import com.aripd.project.lgk.domain.Production;
-import com.aripd.project.lgk.domain.Shift;
 import com.aripd.project.lgk.model.CompensationFilterByIntervalForm;
 import javax.annotation.Resource;
 
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.aripd.project.lgk.service.CompensationService;
 import com.aripd.project.lgk.service.ProductionService;
-import com.aripd.project.lgk.service.ShiftService;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.joda.time.DateTime;
@@ -31,14 +28,6 @@ public class CompensationController {
     private CompensationService compensationService;
     @Resource(name = "productionService")
     private ProductionService productionService;
-    @Resource(name = "shiftService")
-    private ShiftService shiftService;
-
-    @RequestMapping(value = "/report", method = RequestMethod.GET)
-    public String reportAction(Model model) {
-        model.addAttribute("compensationFilterByIntervalForm", new CompensationFilterByIntervalForm());
-        return "compensation/report";
-    }
 
     @RequestMapping(value = "/report", method = RequestMethod.POST)
     public String reportAction(

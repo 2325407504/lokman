@@ -4,25 +4,13 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url value="/" var="homeUrl" />
-<spring:url var="regionList" value="/region/list" />
-<spring:url var="regionEdit" value="/region/edit/${regionAttribute.id}" />
-<spring:url var="regionNew" value="/region/new" />
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Regions" />
+    <jsp:param name="property" value="region" />
+    <jsp:param name="active" value="form" />
+</jsp:include>
+
 <spring:url var="regionSave" value="/region/save" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${regionList}"><spring:message code="Regions" /></a></li>
-        <c:choose>
-            <c:when test="${ !empty regionAttribute.id }">
-            <li class="active"><a href="${regionEdit}"><spring:message code="Entry No" />: ${regionAttribute.id}</a></li>
-            </c:when>
-            <c:otherwise>
-            <li class="active"><a href="${regionNew}"><spring:message code="New Entry" /></a></li>
-            </c:otherwise>
-        </c:choose>
-</ul>
-
 <form:form modelAttribute="regionAttribute" action="${regionSave}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <form:hidden path="id" />
@@ -37,8 +25,8 @@
                 <a class="btn btn-danger" href="javascript:$('#form-${regionAttribute.id}').submit();"><spring:message code="Delete" /></a>
             </c:if>
             <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
-            </div>
-        </fieldset>
+        </div>
+    </fieldset>
 </form:form>
 
 <c:if test="${ !empty regionAttribute.id }">

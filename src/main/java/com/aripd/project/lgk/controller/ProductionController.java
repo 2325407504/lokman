@@ -164,7 +164,8 @@ public class ProductionController {
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public String reportAction(Model model) {
-        model.addAttribute("productionFilterByIntervalForm", new CompensationFilterByIntervalForm());
+        model.addAttribute("productionFilterByIntervalForm", new ProductionFilterByIntervalForm());
+        model.addAttribute("compensationFilterByIntervalForm", new CompensationFilterByIntervalForm());
         return "production/report";
     }
 

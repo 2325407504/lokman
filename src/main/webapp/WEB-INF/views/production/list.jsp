@@ -4,29 +4,14 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url var="homeUrl" value="/" />
-<spring:url var="productionList" value="/production/list" />
-<spring:url var="productionNew" value="/production/new" />
-<spring:url var="productionImport" value="/production/import/xls" />
-<spring:url var="productionReport" value="/production/report" />
-<spring:url var="compensationReport" value="/compensation/report" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class="active"><a href="${productionList}"><spring:message code="Productions" /></a></li>
-    <li class=""><a href="${productionNew}"><spring:message code="New Entry" /></a></li>
-    <li class=""><a href="${productionImport}"><spring:message code="Import" /></a></li>
-    <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Reports" />
-            <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="${productionReport}"><spring:message code="Production" /></a></li>
-            <li><a href="${compensationReport}"><spring:message code="Compensation" /></a></li>
-        </ul>
-    </li>
-</ul>
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Productions" />
+    <jsp:param name="property" value="production" />
+    <jsp:param name="import" value="true" />
+    <jsp:param name="report" value="true" />
+    <jsp:param name="submit" value="true" />
+    <jsp:param name="active" value="list" />
+</jsp:include>
 
 <aripd:datatables datasource="/production/get" id="productions" dataUrlShow="/production/show" dataUrlEdit="/production/edit">
     <aripd:column label="Action" field="id"/>

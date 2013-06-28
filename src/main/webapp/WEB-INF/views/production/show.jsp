@@ -4,47 +4,14 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url var="homeUrl" value="/" />
-<spring:url var="productionList" value="/production/list" />
-<spring:url var="productionShow" value="/production/show/${productionAttribute.id}" />
-<spring:url var="productionEdit" value="/production/edit/${productionAttribute.id}" />
-<spring:url var="productionSubmit" value="/production/submit/${productionAttribute.id}" />
-<spring:url var="productionNew" value="/production/new" />
-<spring:url var="productionImport" value="/production/import/xls" />
-<spring:url var="productionExport" value="/production/export/xls" />
-<spring:url var="bigbagExport" value="/bigbag/export/xls" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${productionList}"><spring:message code="Productions" /></a></li>
-    <li class="active"><a href="${productionShow}"><spring:message code="Entry No" />: ${productionAttribute.id}</a></li>
-    <li class=""><a href="${productionNew}"><spring:message code="New Entry" /></a></li>
-    <li class=""><a href="${productionImport}"><spring:message code="Import" /></a></li>
-    <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Export" />
-            <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="${productionExport}"><spring:message code="Waybill" /></a></li>
-            <li><a href="${bigbagExport}"><spring:message code="UATF" /></a></li>
-        </ul>
-    </li>
-</ul>
-
-<c:if test="${productionAttribute.submitted}">
-    <div class="alert alert-error">
-        <spring:message code="Submitted by user" />
-        <a href="${productionEdit}"><i class="icon-pencil"></i> <spring:message code="Edit" /></a>
-        <a href="${productionSubmit}"><i class="icon-envelope"></i> <spring:message code="Draw Back" /></a>
-    </div>
-</c:if>
-<c:if test="${!productionAttribute.submitted}">
-    <div class="alert alert-info">
-        <a href="${productionEdit}"><i class="icon-pencil"></i> <spring:message code="Edit" /></a>
-        <a href="${productionSubmit}"><i class="icon-envelope"></i> <spring:message code="Submit" /></a>
-    </div>
-</c:if>
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Productions" />
+    <jsp:param name="property" value="production" />
+    <jsp:param name="import" value="true" />
+    <jsp:param name="report" value="true" />
+    <jsp:param name="submit" value="true" />
+    <jsp:param name="active" value="show" />
+</jsp:include>
 
 <div class="row-fluid">
     <div class="span4">

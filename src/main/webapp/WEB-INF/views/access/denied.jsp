@@ -1,7 +1,7 @@
 <%@include file="/WEB-INF/views/includes.jsp" %>
 
 <jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="title" value="" />
+    <jsp:param name="title" value="Unauthorized" />
 </jsp:include>
 
 <h1 id="banner">Unauthorized</h1>

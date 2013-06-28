@@ -1,7 +1,7 @@
 <%@include file="/WEB-INF/views/includes.jsp" %>
 
 <jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="title" value="" />
+    <jsp:param name="title" value="Login" />
 </jsp:include>
 
 <form class="form-signin" action="j_spring_security_check" method="post">

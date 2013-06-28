@@ -4,16 +4,11 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url value="/" var="homeUrl" />
-<spring:url var="addUrl" value="/account/new" />
-
-<ul class="breadcrumb">
-  <li><a href="${homeUrl}"><spring:message code="Home" /></a> <span class="divider">/</span></li>
-  <li class="active"><spring:message code="Accounts" /></li>
-	<li class="pull-right">
-		<a class="btn btn-mini" href="${addUrl}"><spring:message code="New Entry" /></a>
-	</li>
-</ul>
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Accounts" />
+    <jsp:param name="property" value="account" />
+    <jsp:param name="active" value="list" />
+</jsp:include>
 
 <aripd:datatables datasource="/account/get" id="accounts" dataUrlShow="/account/show" dataUrlEdit="/account/edit">
 	<aripd:column label="Action" field="id"/>

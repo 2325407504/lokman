@@ -4,14 +4,12 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url value="/" var="homeUrl" />
-<spring:url value="/account/list" var="account_list" />
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Accounts" />
+    <jsp:param name="property" value="account" />
+    <jsp:param name="active" value="form" />
+</jsp:include>
 
-<ul class="breadcrumb">
-    <li><a href="${homeUrl}"><spring:message code="Home" /></a> <span class="divider">/</span></li>
-    <li><a href="${account_list}"><spring:message code="Accounts" /></a> <span class="divider">/</span></li>
-    <li class="active"><spring:message code="New Entry" /></li>
-    </ul>
 <spring:url var="saveUrl" value="/account/save" />
 <form:form modelAttribute="accountAttribute" action="${saveUrl}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
