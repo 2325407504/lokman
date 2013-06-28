@@ -1,4 +1,8 @@
-<%@ include file="/WEB-INF/views/header.jsp" %>
+<%@include file="/WEB-INF/views/includes.jsp" %>
+
+<jsp:include page="/WEB-INF/views/header.jsp">
+    <jsp:param name="title" value="" />
+</jsp:include>
 
 <spring:url value="/" var="homeUrl" />
 <spring:url value="/account/list" var="account_list" />
@@ -21,4 +25,4 @@
     <aripd:descriptionitem label="Region" field="accountAttribute.region.name"></aripd:descriptionitem>
 </aripd:description>
 
-<%@ include file="/WEB-INF/views/footer.jsp" %>
+<jsp:include page="/WEB-INF/views/footer.jsp" />

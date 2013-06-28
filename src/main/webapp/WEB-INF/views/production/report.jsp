@@ -1,8 +1,7 @@
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@include file="/WEB-INF/views/includes.jsp" %>
 
 <jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="title" value="Production Report" />
+    <jsp:param name="title" value="" />
 </jsp:include>
 
 <jsp:include page="subbar.jsp" >

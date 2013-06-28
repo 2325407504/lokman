@@ -1,4 +1,8 @@
-<%@ include file="/WEB-INF/views/header.jsp" %>
+<%@include file="/WEB-INF/views/includes.jsp" %>
+
+<jsp:include page="/WEB-INF/views/header.jsp">
+    <jsp:param name="title" value="" />
+</jsp:include>
 
 <spring:url var="homeUrl" value="/" />
 <spring:url var="productgroupList" value="/productgroup/list" />
@@ -11,7 +15,7 @@
     <li class=""><a href="${productgroupList}"><spring:message code="Product Groups" /></a></li>
     <li class="active"><a href="${productgroupShow}"><spring:message code="Entry No" />: ${productgroupAttribute.id}</a></li>
     <li class=""><a href="${productgroupNew}"><spring:message code="New Entry" /></a></li>
-    </ul>
+</ul>
 
 <aripd:description id="productgroup">
     <aripd:descriptionitem label="Name" field="productgroupAttribute.name"></aripd:descriptionitem>
@@ -19,6 +23,6 @@
 
 <div class="form-actions">
     <a class="btn" href="${productgroupEdit}"><spring:message code="Edit" /></a>
-    </div>
+</div>
 
-<%@ include file="/WEB-INF/views/footer.jsp" %>
+<jsp:include page="/WEB-INF/views/footer.jsp" />

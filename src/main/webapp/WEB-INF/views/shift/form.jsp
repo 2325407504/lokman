@@ -1,4 +1,8 @@
-<%@ include file="/WEB-INF/views/header.jsp" %>
+<%@include file="/WEB-INF/views/includes.jsp" %>
+
+<jsp:include page="/WEB-INF/views/header.jsp">
+    <jsp:param name="title" value="" />
+</jsp:include>
 
 <spring:url value="/" var="homeUrl" />
 <spring:url var="shiftList" value="/shift/list" />
@@ -49,4 +53,4 @@
     </form:form>
 </c:if>
 
-<%@ include file="/WEB-INF/views/footer.jsp" %>
+<jsp:include page="/WEB-INF/views/footer.jsp" />

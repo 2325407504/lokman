@@ -1,4 +1,8 @@
-<%@ include file="/WEB-INF/views/header.jsp" %>
+<%@include file="/WEB-INF/views/includes.jsp" %>
+
+<jsp:include page="/WEB-INF/views/header.jsp">
+    <jsp:param name="title" value="" />
+</jsp:include>
 
 <spring:url var="homeUrl" value="/" />
 <spring:url var="wastegroupList" value="/wastegroup/list" />
@@ -15,4 +19,4 @@
 	<aripd:column label="Name" field="name"/>
 </aripd:datatables>
 
-<%@ include file="/WEB-INF/views/footer.jsp" %>
+<jsp:include page="/WEB-INF/views/footer.jsp" />

@@ -1,4 +1,8 @@
-<%@ include file="/WEB-INF/views/header.jsp" %>
+<%@include file="/WEB-INF/views/includes.jsp" %>
+
+<jsp:include page="/WEB-INF/views/header.jsp">
+    <jsp:param name="title" value="Roles" />
+</jsp:include>
 
 <spring:url value="/" var="homeUrl" />
 <spring:url value="/role/list" var="role_list" />
@@ -19,4 +23,4 @@
     <aripd:descriptionitem label="Name" field="roleAttribute.name"></aripd:descriptionitem>
 </aripd:description>
 
-<%@ include file="/WEB-INF/views/footer.jsp" %>
+<jsp:include page="/WEB-INF/views/footer.jsp" />

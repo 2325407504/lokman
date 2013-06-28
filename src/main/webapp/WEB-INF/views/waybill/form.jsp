@@ -1,4 +1,8 @@
-<%@ include file="/WEB-INF/views/header.jsp" %>
+<%@include file="/WEB-INF/views/includes.jsp" %>
+
+<jsp:include page="/WEB-INF/views/header.jsp">
+    <jsp:param name="title" value="" />
+</jsp:include>
 
 <spring:url var="homeUrl" value="/" />
 <spring:url var="waybillList" value="/waybill/list" />
@@ -158,4 +162,4 @@
     });
 </script>
 
-<%@ include file="/WEB-INF/views/footer.jsp" %>
+<jsp:include page="/WEB-INF/views/footer.jsp" />

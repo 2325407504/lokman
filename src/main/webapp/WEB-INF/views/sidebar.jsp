@@ -1,10 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@include file="/WEB-INF/views/includes.jsp" %>
 
 <spring:url value="/role/list" var="role_list" />
 <c:if test="${requestScope['javax.servlet.forward.request_uri'] == role_list}"><c:set var="role_class" value="active" /></c:if>
@@ -69,7 +63,7 @@
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a class="accordion-toggle nav-header" data-toggle="collapse" data-parent="#accordion2" href="#collapse1">
-                        SÃ¼per admin
+                        Süper admin
                     </a>
                 </div>
                 <div id="collapse1" class="accordion-body in collapse">
