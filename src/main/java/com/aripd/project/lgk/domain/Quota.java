@@ -6,14 +6,17 @@ import javax.persistence.Table;
 
 import com.aripd.common.entity.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "quota")
 public class Quota extends BaseEntity {
 
     private boolean active;
+    @NotBlank
     @Column(unique = true)
     private String code;
+    @NotBlank
     private String name;
 
     @Override

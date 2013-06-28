@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -36,7 +35,6 @@ import com.aripd.project.lgk.service.ForwardingService;
 import com.aripd.project.lgk.service.QuotaService;
 import com.aripd.project.lgk.service.SubcontractorService;
 import com.aripd.project.lgk.service.UatfService;
-import com.aripd.project.lgk.validator.UatfValidator;
 import javax.validation.Valid;
 
 @PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
@@ -44,8 +42,6 @@ import javax.validation.Valid;
 @RequestMapping("/uatf")
 public class UatfController {
 
-    @Autowired
-    private UatfValidator uatfValidator;
     @Resource(name = "forwardingService")
     private ForwardingService forwardingService;
     @Resource(name = "uatfService")
@@ -81,7 +77,6 @@ public class UatfController {
             return "redirect:/forwarding/list";
         }
 
-        //uatfValidator.validate(formData, result);
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("message", "Bütün alanları doldurmalısınız");
             return "redirect:/forwarding/edit/" + forwarding_id;

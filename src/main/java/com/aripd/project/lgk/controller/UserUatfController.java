@@ -2,7 +2,6 @@ package com.aripd.project.lgk.controller;
 
 import javax.annotation.Resource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +22,6 @@ import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Uatf;
 import com.aripd.project.lgk.service.ForwardingService;
 import com.aripd.project.lgk.service.UatfService;
-import com.aripd.project.lgk.validator.UatfValidator;
 import javax.validation.Valid;
 
 @PreAuthorize("hasRole('ROLE_USER')")
@@ -31,8 +29,6 @@ import javax.validation.Valid;
 @RequestMapping("/user/uatf")
 public class UserUatfController {
 
-    @Autowired
-    private UatfValidator uatfValidator;
     @Resource(name = "forwardingService")
     private ForwardingService forwardingService;
     @Resource(name = "uatfService")
@@ -59,7 +55,6 @@ public class UserUatfController {
             return "redirect:/user/forwarding/list";
         }
 
-        //uatfValidator.validate(formData, result);
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("message", "Bütün alanları doldurmalısınız");
             return "redirect:/user/forwarding/edit/" + forwarding_id;
