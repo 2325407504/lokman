@@ -1,6 +1,7 @@
 package com.aripd.project.lgk.report.production;
 
 import com.aripd.project.lgk.domain.Bigbag;
+import com.aripd.project.lgk.domain.Compensation;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -28,8 +29,7 @@ public class FillManager {
      * @param startColIndex starting column offset
      * @param datasource the data source
      */
-    public static void fillReport(HSSFSheet worksheet, int startRowIndex,
-            int startColIndex, List<Production> datasource) {
+    public static void fillReport(HSSFSheet worksheet, int startRowIndex, int startColIndex, List<Production> datasource) {
         // Row offset
         startRowIndex += 2;
 
@@ -71,6 +71,15 @@ public class FillManager {
             }
             cell4.setCellValue(sb.toString());
             cell4.setCellStyle(bodyCellStyle);
+
+            int dyn = 1;
+            List<Compensation> compensations = datasource.get(i - 2).getCompensations();
+            for (Compensation compensation : compensations) {
+                HSSFCell cellc = row.createCell(startColIndex + 4 + dyn);
+                cellc.setCellValue(compensation.getVal());
+                cellc.setCellStyle(bodyCellStyle);
+                dyn++;
+            }
 
         }
     }

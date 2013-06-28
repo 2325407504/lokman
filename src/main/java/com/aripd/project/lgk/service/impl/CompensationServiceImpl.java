@@ -66,7 +66,6 @@ public class CompensationServiceImpl implements CompensationService {
         Root<Compensation> root = cq.from(Compensation.class);
         Join<Compensation, Production> production = root.join(Compensation_.production);
 
-        // Filtering and Searching
         List<Predicate> predicateList = new ArrayList<Predicate>();
         Predicate predicate1 = cb.between(production.get(Production_.shiftdate), startingTime, endingTime);
         predicateList.add(predicate1);
@@ -75,9 +74,6 @@ public class CompensationServiceImpl implements CompensationService {
         predicateList.toArray(predicates);
         cq.where(predicates);
 
-        Long totalRecords = (long) em.createQuery(cq).getResultList().size();
-
-        // Pagination
         TypedQuery<Compensation> typedQuery = em.createQuery(cq);
         List<Compensation> resultList = typedQuery.getResultList();
 

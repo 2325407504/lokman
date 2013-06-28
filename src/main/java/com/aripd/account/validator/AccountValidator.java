@@ -16,26 +16,26 @@ import com.aripd.common.validator.EmailValidator;
 @Transactional
 public class AccountValidator {
 
-	@Resource(name="accountService")
-	private AccountService accountService;
-	
-	public void validate(Account account, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "required", "It is required!");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "required", "It is required!");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "required", "It is required!");
-		//ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword", "required", "Password confirmation is required!");
+    @Resource(name = "accountService")
+    private AccountService accountService;
 
-		//if(!(account.getPassword().equals(account.getConfirmPassword()))){
-			//errors.rejectValue("password", "notmatch.password");
-		//}
-		
-		String email = account.getEmail();
+    public void validate(Account account, Errors errors) {
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "required", "It is required!");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "required", "It is required!");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "required", "It is required!");
+        //ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirmPassword", "required", "Password confirmation is required!");
+
+        //if(!(account.getPassword().equals(account.getConfirmPassword()))){
+        //errors.rejectValue("password", "notmatch.password");
+        //}
+
+        String email = account.getEmail();
         if (StringUtils.hasLength(email)) {
             EmailValidator emailValidator = new EmailValidator();
-            if (!emailValidator.validate(account.getEmail()))
-            	errors.rejectValue("email", "email.invalid", new Object[] { email },
+            if (!emailValidator.validate(account.getEmail())) {
+                errors.rejectValue("email", "email.invalid", new Object[]{email},
                         "Invalid email format.");
+            }
         }
-	}
-
+    }
 }

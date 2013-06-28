@@ -79,9 +79,7 @@ public class ProductionServiceImpl implements ProductionService {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Production> cq = cb.createQuery(Production.class);
         Root<Production> root = cq.from(Production.class);
-        //Join<Production, Account> account = root.join(Production_.account);
 
-        // Filtering and Searching
         List<Predicate> predicateList = new ArrayList<Predicate>();
         Predicate predicate1 = cb.between(root.get(Production_.shiftdate), startingTime, endingTime);
         predicateList.add(predicate1);
@@ -90,9 +88,6 @@ public class ProductionServiceImpl implements ProductionService {
         predicateList.toArray(predicates);
         cq.where(predicates);
 
-        Long totalRecords = (long) em.createQuery(cq).getResultList().size();
-
-        // Pagination
         TypedQuery<Production> typedQuery = em.createQuery(cq);
         List<Production> resultList = typedQuery.getResultList();
 
@@ -208,36 +203,6 @@ public class ProductionServiceImpl implements ProductionService {
         List<Production> resultList = typedQuery.getResultList();
 
         return new ResultSet<Production>(resultList, totalRecords, displaySize);
-    }
-
-    public void exportXLS(HttpServletResponse response) {
-        // 1. Create new workbook
-        HSSFWorkbook workbook = new HSSFWorkbook();
-
-        // 2. Create new worksheet
-        HSSFSheet worksheet = workbook.createSheet("Production Report");
-
-        // 3. Define starting indices for rows and columns
-        int startRowIndex = 0;
-        int startColIndex = 0;
-
-        // 4. Build layout
-        // Build title, date, and column headers
-        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
-
-        // 5. Fill report
-        FillManager.fillReport(worksheet, startRowIndex, startColIndex, repository.findAll());
-
-        // 6. Set the response properties
-        String fileName = "ProductionReport.xls";
-        response.setHeader("Content-Disposition", "inline; filename="
-                + fileName);
-        // Make sure to set the correct content type
-        response.setContentType("application/vnd.ms-excel");
-
-        // 7. Write to the output stream
-        Writer.write(response, worksheet);
-
     }
 
     public void importXLSX(String fileName) {

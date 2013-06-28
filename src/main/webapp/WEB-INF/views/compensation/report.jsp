@@ -4,6 +4,7 @@
 <spring:url var="productionList" value="/production/list" />
 <spring:url var="productionNew" value="/production/new" />
 <spring:url var="productionImport" value="/production/import/xls" />
+<spring:url var="productionReport" value="/production/report" />
 <spring:url var="compensationReport" value="/compensation/report" />
 
 <ul class="nav nav-tabs">
@@ -17,6 +18,7 @@
             <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
+            <li><a href="${productionReport}"><spring:message code="Production" /></a></li>
             <li><a href="${compensationReport}"><spring:message code="Compensation" /></a></li>
         </ul>
     </li>

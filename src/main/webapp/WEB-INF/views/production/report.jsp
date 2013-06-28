@@ -1,28 +1,13 @@
-<%@ include file="/WEB-INF/views/header.jsp" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<spring:url var="homeUrl" value="/" />
-<spring:url var="productionList" value="/production/list" />
-<spring:url var="productionNew" value="/production/new" />
-<spring:url var="productionImport" value="/production/import/xls" />
-<spring:url var="productionReport" value="/production/report" />
-<spring:url var="compensationReport" value="/compensation/report" />
+<jsp:include page="/WEB-INF/views/header.jsp">
+    <jsp:param name="title" value="Production Report" />
+</jsp:include>
 
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${productionList}"><spring:message code="Productions" /></a></li>
-    <li class=""><a href="${productionNew}"><spring:message code="New Entry" /></a></li>
-    <li class=""><a href="${productionImport}"><spring:message code="Import" /></a></li>
-    <li class="active dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Reports" />
-            <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="${productionReport}"><spring:message code="Production" /></a></li>
-            <li><a href="${compensationReport}"><spring:message code="Compensation" /></a></li>
-        </ul>
-    </li>
-</ul>
+<jsp:include page="subbar.jsp" >
+    <jsp:param name="title" value="Production Report" />
+</jsp:include>
 
 <p class="lead"><spring:message code="Production" /></p>
 <spring:url var="productionReport" value="/production/report" />
@@ -74,4 +59,4 @@
     });
 </script>
 
-<%@ include file="/WEB-INF/views/footer.jsp" %>
+<jsp:include page="/WEB-INF/views/footer.jsp" />

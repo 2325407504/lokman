@@ -13,27 +13,33 @@
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${productionList}"><spring:message code="Productions" /></a></li>
-        <c:choose>
-            <c:when test="${ !empty productionAttribute.id }">
-            <li class="active"><a href="${productionEdit}"><spring:message code="Entry No" />: ${productionAttribute.id}</a></li>
-            </c:when>
-            <c:otherwise>
-            <li class="active"><a href="${productionNew}"><spring:message code="New Entry" /></a></li>
-            </c:otherwise>
-        </c:choose>
+    <li class="">
+        <a href="${productionList}"><spring:message code="Productions" /></a>
+    </li>
+    <c:choose>
+        <c:when test="${ !empty productionAttribute.id }">
+            <li class="active">
+                <a href="${productionEdit}"><spring:message code="Entry No" />: ${productionAttribute.id}</a>
+            </li>
+        </c:when>
+        <c:otherwise>
+            <li class="active">
+                <a href="${productionNew}"><spring:message code="New Entry" /></a>
+            </li>
+        </c:otherwise>
+    </c:choose>
     <li class=""><a href="${productionImport}"><spring:message code="Import" /></a></li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
             <spring:message code="Export" />
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="${productionExport}"><spring:message code="Waybill" /></a></li>
-            <li><a href="${bigbagExport}"><spring:message code="UATF" /></a></li>
-            </ul>
-        </li>
-    </ul>
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="${productionExport}"><spring:message code="Production" /></a></li>
+            <li><a href="${bigbagExport}"><spring:message code="BigBag" /></a></li>
+        </ul>
+    </li>
+</ul>
 
 <form:form id="production" modelAttribute="productionAttribute" action="${productionSave}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
