@@ -4,25 +4,13 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url value="/" var="homeUrl" />
-<spring:url var="customerList" value="/customer/list" />
-<spring:url var="customerEdit" value="/customer/edit/${customerAttribute.id}" />
-<spring:url var="customerNew" value="/customer/new" />
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Customers" />
+    <jsp:param name="property" value="customer" />
+    <jsp:param name="active" value="form" />
+</jsp:include>
+
 <spring:url var="customerSave" value="/customer/save" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${customerList}"><spring:message code="Customers" /></a></li>
-        <c:choose>
-            <c:when test="${ !empty customerAttribute.id }">
-            <li class="active"><a href="${customerEdit}"><spring:message code="Entry No" />: ${customerAttribute.id}</a></li>
-            </c:when>
-            <c:otherwise>
-            <li class="active"><a href="${customerNew}"><spring:message code="New Entry" /></a></li>
-            </c:otherwise>
-        </c:choose>
-</ul>
-
 <form:form modelAttribute="customerAttribute" action="${customerSave}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <form:hidden path="id" />
@@ -114,7 +102,7 @@
             <a class="btn btn-danger" href="javascript:$('#form-${customerAttribute.id}').submit();"><spring:message code="Delete" /></a>
         </c:if>
         <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
-        </div>
+    </div>
 </form:form>
 
 <c:if test="${ !empty customerAttribute.id }">

@@ -4,27 +4,16 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url var="homeUrl" value="/" />
-<spring:url var="customerList" value="/customer/list" />
-<spring:url var="customerShow" value="/customer/show/${customerAttribute.id}" />
-<spring:url var="customerNew" value="/customer/new" />
-<spring:url var="customerEdit" value="/customer/edit/${customerAttribute.id}" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${customerList}"><spring:message code="Customers" /></a></li>
-    <li class="active"><a href="${customerShow}"><spring:message code="Entry No" />: ${customerAttribute.id}</a></li>
-    <li class=""><a href="${customerNew}"><spring:message code="New Entry" /></a></li>
-    </ul>
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Customers" />
+    <jsp:param name="property" value="customer" />
+    <jsp:param name="active" value="show" />
+</jsp:include>
 
 <aripd:description id="customer">
     <aripd:descriptionitem label="Tax No" field="customerAttribute.taxNo"></aripd:descriptionitem>
     <aripd:descriptionitem label="Fullname" field="customerAttribute.name"></aripd:descriptionitem>
     <aripd:descriptionitem label="Phone Number" field="customerAttribute.phonenumber"></aripd:descriptionitem>
 </aripd:description>
-
-<div class="form-actions">
-    <a class="btn" href="${customerEdit}"><spring:message code="Edit" /></a>
-    </div>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

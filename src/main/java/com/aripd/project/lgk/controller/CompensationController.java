@@ -40,12 +40,12 @@ public class CompensationController {
             Model model) {
 
         if (result.hasErrors()) {
-            return "/compensation/report";
+            return "/production/report";
         }
 
         compensationService.exportByInterval(response, startingTime, endingTime);
 
         redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
-        return "redirect:/compensation/report";
+        return "redirect:/production/report";
     }
 }

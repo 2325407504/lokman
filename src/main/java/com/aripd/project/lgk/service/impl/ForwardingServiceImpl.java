@@ -43,6 +43,8 @@ import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.SortField;
 import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Forwarding_;
+import com.aripd.project.lgk.domain.Forwarding;
+import com.aripd.project.lgk.domain.Forwarding_;
 import com.aripd.project.lgk.report.forwarding.FillManager;
 import com.aripd.project.lgk.report.forwarding.Layouter;
 import com.aripd.project.lgk.report.forwarding.Writer;
@@ -79,6 +81,25 @@ public class ForwardingServiceImpl implements ForwardingService {
 
     public Forwarding findOneByAccountAndId(Account account, Long id) {
         return repository.findOneByAccountAndId(account, id);
+    }
+
+    public List<Forwarding> findByInterval(DateTime startingTime, DateTime endingTime) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Forwarding> cq = cb.createQuery(Forwarding.class);
+        Root<Forwarding> root = cq.from(Forwarding.class);
+
+        List<Predicate> predicateList = new ArrayList<Predicate>();
+        Predicate predicate1 = cb.between(root.get(Forwarding_.startingTime), startingTime, endingTime);
+        predicateList.add(predicate1);
+
+        Predicate[] predicates = new Predicate[predicateList.size()];
+        predicateList.toArray(predicates);
+        cq.where(predicates);
+
+        TypedQuery<Forwarding> typedQuery = em.createQuery(cq);
+        List<Forwarding> resultList = typedQuery.getResultList();
+
+        return resultList;
     }
 
     @Transactional
@@ -192,36 +213,6 @@ public class ForwardingServiceImpl implements ForwardingService {
         return new ResultSet<Forwarding>(resultList, totalRecords, displaySize);
     }
 
-    public void exportXLS(HttpServletResponse response) {
-        // 1. Create new workbook
-        HSSFWorkbook workbook = new HSSFWorkbook();
-
-        // 2. Create new worksheet
-        HSSFSheet worksheet = workbook.createSheet("Forwarding Report");
-
-        // 3. Define starting indices for rows and columns
-        int startRowIndex = 0;
-        int startColIndex = 0;
-
-        // 4. Build layout
-        // Build title, date, and column headers
-        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
-
-        // 5. Fill report
-        FillManager.fillReport(worksheet, startRowIndex, startColIndex, repository.findAll());
-
-        // 6. Set the response properties
-        String fileName = "ForwardingReport.xls";
-        response.setHeader("Content-Disposition", "inline; filename="
-                + fileName);
-        // Make sure to set the correct content type
-        response.setContentType("application/vnd.ms-excel");
-
-        // 7. Write to the output stream
-        Writer.write(response, worksheet);
-
-    }
-
     public void importXLSX(String fileName) {
         InputStream iStream = null;
         try {
@@ -280,5 +271,35 @@ public class ForwardingServiceImpl implements ForwardingService {
         }
 
         repository.save(forwardings);
+    }
+
+    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime) {
+        // 1. Create new workbook
+        HSSFWorkbook workbook = new HSSFWorkbook();
+
+        // 2. Create new worksheet
+        HSSFSheet worksheet = workbook.createSheet("Forwarding Report");
+
+        // 3. Define starting indices for rows and columns
+        int startRowIndex = 0;
+        int startColIndex = 0;
+
+        // 4. Build layout
+        // Build title, date, and column headers
+        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
+
+        // 5. Fill report
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByInterval(startingTime, endingTime));
+
+        // 6. Set the response properties
+        String fileName = "ForwardingReport.xls";
+        response.setHeader("Content-Disposition", "inline; filename="
+                + fileName);
+        // Make sure to set the correct content type
+        response.setContentType("application/vnd.ms-excel");
+
+        // 7. Write to the output stream
+        Writer.write(response, worksheet);
+
     }
 }

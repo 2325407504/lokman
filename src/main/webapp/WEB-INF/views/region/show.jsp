@@ -14,8 +14,4 @@
     <aripd:descriptionitem label="Name" field="regionAttribute.name"></aripd:descriptionitem>
 </aripd:description>
 
-<div class="form-actions">
-    <a class="btn" href="${regionEdit}"><spring:message code="Edit" /></a>
-</div>
-
 <jsp:include page="/WEB-INF/views/footer.jsp" />

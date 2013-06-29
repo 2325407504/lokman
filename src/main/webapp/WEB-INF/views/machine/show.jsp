@@ -4,25 +4,14 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url var="homeUrl" value="/" />
-<spring:url var="machineList" value="/machine/list" />
-<spring:url var="machineShow" value="/machine/show/${machineAttribute.id}" />
-<spring:url var="machineNew" value="/machine/new" />
-<spring:url var="machineEdit" value="/machine/edit/${machineAttribute.id}" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${machineList}"><spring:message code="Machines" /></a></li>
-    <li class="active"><a href="${machineShow}"><spring:message code="Entry No" />: ${machineAttribute.id}</a></li>
-    <li class=""><a href="${machineNew}"><spring:message code="New Entry" /></a></li>
-    </ul>
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Machines" />
+    <jsp:param name="property" value="machine" />
+    <jsp:param name="active" value="show" />
+</jsp:include>
 
 <aripd:description id="machine">
     <aripd:descriptionitem label="Name" field="machineAttribute.name"></aripd:descriptionitem>
 </aripd:description>
-
-<div class="form-actions">
-    <a class="btn" href="${machineEdit}"><spring:message code="Edit" /></a>
-    </div>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

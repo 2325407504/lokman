@@ -4,40 +4,18 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url var="homeUrl" value="/" />
-<spring:url var="expenseList" value="/expense/list" />
-<spring:url var="expenseShow" value="/expense/show/${expenseAttribute.id}" />
-<spring:url var="expenseEdit" value="/expense/edit/${expenseAttribute.id}" />
-<spring:url var="expenseNew" value="/expense/new" />
-<spring:url var="expenseImport" value="/expense/import/xls" />
-<spring:url var="expenseExport" value="/expense/export/xls" />
-<spring:url var="expenseSave" value="/expense/save" />
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Expenses" />
+    <jsp:param name="property" value="expense" />
+    <jsp:param name="import" value="true" />
+    <jsp:param name="report" value="true" />
+    <jsp:param name="submit" value="true" />
+    <jsp:param name="active" value="form" />
+</jsp:include>
 
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${expenseList}"><spring:message code="Expenses" /></a></li>
-        <c:choose>
-            <c:when test="${ !empty expenseAttribute.id }">
-            <li class="active"><a href="${expenseEdit}"><spring:message code="Entry No" />: ${expenseAttribute.id}</a></li>
-            </c:when>
-            <c:otherwise>
-            <li class="active"><a href="${expenseNew}"><spring:message code="New Entry" /></a></li>
-            </c:otherwise>
-        </c:choose>
-    <li class=""><a href="${expenseImport}"><spring:message code="Import" /></a></li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Export" />
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="${expenseExport}"><spring:message code="Expenses" /></a></li>
-            </ul>
-        </li>
-    </ul>
-
-    <div class="row-fluid">
-        <div class="span12">
+<div class="row-fluid">
+    <div class="span12">
+        <spring:url var="expenseSave" value="/expense/save" />
         <form:form modelAttribute="expenseAttribute" action="${expenseSave}" method="post">
             <form:errors path="*" cssClass="alert alert-error" element="div" />
             <form:hidden path="id" />
@@ -81,8 +59,8 @@
                         <a class="btn btn-danger" href="javascript:$('#form-${expenseAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete" /></a>
                     </c:if>
                     <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
-                    </div>
-                </fieldset>
+                </div>
+            </fieldset>
         </form:form>
 
         <c:if test="${ !empty expenseAttribute.id }">

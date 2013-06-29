@@ -4,27 +4,14 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url var="homeUrl" value="/" />
-<spring:url var="expenseList" value="/expense/list" />
-<spring:url var="expenseNew" value="/expense/new" />
-<spring:url var="expenseImport" value="/expense/import/xls" />
-<spring:url var="expenseExport" value="/expense/export/xls" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class="active"><a href="${expenseList}"><spring:message code="Expenses" /></a></li>
-    <li class=""><a href="${expenseNew}"><spring:message code="New Entry" /></a></li>
-    <li class=""><a href="${expenseImport}"><spring:message code="Import" /></a></li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Export" />
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="${expenseExport}"><spring:message code="Expenses" /></a></li>
-            </ul>
-        </li>
-    </ul>
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Expenses" />
+    <jsp:param name="property" value="expense" />
+    <jsp:param name="import" value="true" />
+    <jsp:param name="report" value="true" />
+    <jsp:param name="submit" value="true" />
+    <jsp:param name="active" value="list" />
+</jsp:include>
 
 <aripd:datatables datasource="/expense/get" id="expenses" dataUrlShow="/expense/show" dataUrlEdit="/expense/edit">
     <aripd:column label="Action" field="id"/>

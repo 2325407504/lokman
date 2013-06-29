@@ -4,24 +4,11 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url value="/" var="homeUrl" />
-<spring:url var="driverList" value="/driver/list" />
-<spring:url var="driverEdit" value="/driver/edit/${driverAttribute.id}" />
-<spring:url var="driverNew" value="/driver/new" />
-<spring:url var="driverSave" value="/driver/save" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${driverList}"><spring:message code="Drivers" /></a></li>
-        <c:choose>
-            <c:when test="${ !empty driverAttribute.id }">
-            <li class="active"><a href="${driverEdit}"><spring:message code="Entry No" />: ${driverAttribute.id}</a></li>
-            </c:when>
-            <c:otherwise>
-            <li class="active"><a href="${driverNew}"><spring:message code="New Entry" /></a></li>
-            </c:otherwise>
-        </c:choose>
-</ul>
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Drivers" />
+    <jsp:param name="property" value="driver" />
+    <jsp:param name="active" value="form" />
+</jsp:include>
 
 <form:form modelAttribute="driverAttribute" action="${driverSave}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
@@ -52,8 +39,8 @@
                 <a class="btn btn-danger" href="javascript:$('#form-${driverAttribute.id}').submit();"><spring:message code="Delete" /></a>
             </c:if>
             <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
-            </div>
-        </fieldset>
+        </div>
+    </fieldset>
 </form:form>
 
 <c:if test="${ !empty driverAttribute.id }">

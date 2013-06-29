@@ -4,19 +4,15 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url var="homeUrl" value="/" />
-<spring:url var="wastegroupList" value="/wastegroup/list" />
-<spring:url var="wastegroupNew" value="/wastegroup/new" />
-
-<ul class="nav nav-tabs">
-	<li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-	<li class="active"><a href="${wastegroupList}"><spring:message code="Waste Groups" /></a></li>
-	<li class=""><a href="${wastegroupNew}"><spring:message code="New Entry" /></a></li>
-</ul>
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Wastegroups" />
+    <jsp:param name="property" value="wastegroup" />
+    <jsp:param name="active" value="list" />
+</jsp:include>
 
 <aripd:datatables datasource="/wastegroup/get" id="wastegroups" dataUrlShow="/wastegroup/show" dataUrlEdit="/wastegroup/edit">
-	<aripd:column label="Action" field="id"/>
-	<aripd:column label="Name" field="name"/>
+    <aripd:column label="Action" field="id"/>
+    <aripd:column label="Name" field="name"/>
 </aripd:datatables>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

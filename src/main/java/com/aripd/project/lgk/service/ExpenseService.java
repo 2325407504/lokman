@@ -8,24 +8,28 @@ import com.aripd.account.domain.Account;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.project.lgk.domain.Expense;
+import java.util.List;
+import org.joda.time.DateTime;
 
 public interface ExpenseService {
 
-    Expense findOne(Long id);
+    public Expense findOne(Long id);
 
-    Expense findOneByAccountAndId(Account account, Long id);
+    public Expense findOneByAccountAndId(Account account, Long id);
 
-    Expense save(Expense expense);
+    public List<Expense> findByInterval(DateTime startingTime, DateTime endingTime);
 
-    void delete(Long id);
+    public Expense save(Expense expense);
 
-    void delete(Expense expense);
+    public void delete(Long id);
 
-    ResultSet<Expense> getRecords(PagingCriteria criteria);
+    public void delete(Expense expense);
 
-    ResultSet<Expense> getRecords(Principal principal, PagingCriteria criteria);
+    public ResultSet<Expense> getRecords(PagingCriteria criteria);
 
-    void exportXLS(HttpServletResponse response);
+    public ResultSet<Expense> getRecords(Principal principal, PagingCriteria criteria);
 
-    void importXLSX(String fileName);
+    public void importXLSX(String fileName);
+
+    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

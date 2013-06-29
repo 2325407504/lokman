@@ -9,7 +9,8 @@
 <ul class="breadcrumb">
     <li><a href="${homeUrl}"><spring:message code="Home" /></a> <span class="divider">/</span></li>
     <li class="active"><spring:message code="Profile" /></li>
-    </ul>
+</ul>
+
 <spring:url var="saveUrl" value="/profile/save" />
 <form:form modelAttribute="profileAttribute" action="${saveUrl}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
@@ -39,8 +40,8 @@
         </div>
         <div class="form-actions">
             <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
-            </div>
-        </fieldset>
+        </div>
+    </fieldset>
 </form:form>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

@@ -27,12 +27,14 @@ import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.TableParam;
 import com.aripd.common.dto.WebResultSet;
-import com.aripd.common.model.CsvImportBean;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Expense;
+import com.aripd.project.lgk.model.ExpenseFilterByIntervalForm;
 import com.aripd.project.lgk.service.ExpenseService;
 import com.aripd.project.lgk.service.ExpensetypeService;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
 @Controller
@@ -95,14 +97,6 @@ public class ExpenseController {
         return "redirect:/expense/list";
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public String delete(final RedirectAttributes redirectAttributes,
-            @RequestParam(value = "id", required = true) Long id) {
-        expenseService.delete(id);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
-        return "redirect:/expense/list";
-    }
-
     @RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)
     public String submitAction(@PathVariable Long id) {
         Expense expense = expenseService.findOne(id);
@@ -111,22 +105,43 @@ public class ExpenseController {
         return "redirect:/expense/show/" + id;
     }
 
-    /**
-     * Exports the report as an Excel format.
-     * <p>
-     * Make sure this method doesn't return any model. Otherwise, you'll get an
-     * "IllegalStateException: getOutputStream() has already been called for
-     * this response"
-     */
-    @RequestMapping(value = "/export/xls", method = RequestMethod.GET)
-    public void exportAction(HttpServletResponse response, Model model) {
-        expenseService.exportXLS(response);
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public String delete(final RedirectAttributes redirectAttributes,
+            @RequestParam(value = "id", required = true) Long id) {
+        expenseService.delete(id);
+        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+        return "redirect:/expense/list";
+    }
+
+    @RequestMapping(value = "/report", method = RequestMethod.GET)
+    public String reportAction(Model model) {
+        model.addAttribute("expenseFilterByIntervalForm", new ExpenseFilterByIntervalForm());
+        return "expense/report";
+    }
+
+    @RequestMapping(value = "/report", method = RequestMethod.POST)
+    public String reportAction(
+            final RedirectAttributes redirectAttributes,
+            @ModelAttribute("expenseFilterByIntervalForm") @Valid ExpenseFilterByIntervalForm formData,
+            BindingResult result,
+            @RequestParam("startingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime startingTime,
+            @RequestParam("endingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime endingTime,
+            HttpServletResponse response,
+            Model model) {
+
+        if (result.hasErrors()) {
+            return "/expense/report";
+        }
+
+        expenseService.exportByInterval(response, startingTime, endingTime);
+
+        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
+        return "redirect:/expense/report";
     }
 
     @RequestMapping(value = "/import/xls", method = RequestMethod.GET)
     public String importAction(Model model) {
         model.addAttribute(new FileUploadBean());
-        model.addAttribute(new CsvImportBean());
         return "expense/import";
     }
     @Value("${path.directory.import}")

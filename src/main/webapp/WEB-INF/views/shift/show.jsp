@@ -4,26 +4,15 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url var="homeUrl" value="/" />
-<spring:url var="shiftList" value="/shift/list" />
-<spring:url var="shiftShow" value="/shift/show/${shiftAttribute.id}" />
-<spring:url var="shiftNew" value="/shift/new" />
-<spring:url var="shiftEdit" value="/shift/edit/${shiftAttribute.id}" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${shiftList}"><spring:message code="Shifts" /></a></li>
-    <li class="active"><a href="${shiftShow}"><spring:message code="Entry No" />: ${shiftAttribute.id}</a></li>
-    <li class=""><a href="${shiftNew}"><spring:message code="New Entry" /></a></li>
-    </ul>
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Shifts" />
+    <jsp:param name="property" value="shift" />
+    <jsp:param name="active" value="show" />
+</jsp:include>
 
 <aripd:description id="shift">
     <aripd:descriptionitem label="Code" field="shiftAttribute.code"></aripd:descriptionitem>
     <aripd:descriptionitem label="Name" field="shiftAttribute.name"></aripd:descriptionitem>
 </aripd:description>
-
-<div class="form-actions">
-    <a class="btn" href="${shiftEdit}"><spring:message code="Edit" /></a>
-    </div>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

@@ -82,7 +82,7 @@
     </div>
 </div>
 
-<div class="bs-docs-example" data-content="<spring:message code="XLSX" /> - <spring:message code="UATF" />">
+<div class="bs-docs-example" data-content="<spring:message code="XLSX" /> - <spring:message code="Uatf" />">
     <spring:url var="bigbagImportXLSX" value="/bigbag/import/xls" />
     <form:form modelAttribute="fileUploadBean" action="${bigbagImportXLSX}" method="post" enctype="multipart/form-data">
         <form:errors cssClass="text-error" path="file" />
@@ -94,7 +94,7 @@
             <thead>
                 <tr>
                     <th><spring:message code="Waybill" /></th>
-                    <th><spring:message code="UATF" /></th>
+                    <th><spring:message code="Uatf" /></th>
                     <th><spring:message code="Company" /></th>
                     <th><spring:message code="County" /></th>
                     <th><spring:message code="City" /></th>

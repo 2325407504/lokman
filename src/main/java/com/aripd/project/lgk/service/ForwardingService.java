@@ -8,26 +8,30 @@ import com.aripd.account.domain.Account;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.project.lgk.domain.Forwarding;
+import java.util.List;
+import org.joda.time.DateTime;
 
 public interface ForwardingService {
 
-    Forwarding findOne(Long id);
+    public Forwarding findOne(Long id);
 
-    Forwarding findOneByAccountAndId(Account account, Long id);
+    public Forwarding findOneByAccountAndId(Account account, Long id);
 
-    Forwarding findOneByWaybillNo(String waybillNo);
+    public Forwarding findOneByWaybillNo(String waybillNo);
 
-    Forwarding save(Forwarding formData);
+    public List<Forwarding> findByInterval(DateTime startingTime, DateTime endingTime);
 
-    void delete(Long id);
+    public Forwarding save(Forwarding formData);
 
-    void delete(Forwarding forwarding);
+    public void delete(Long id);
 
-    ResultSet<Forwarding> getRecords(PagingCriteria criteria);
+    public void delete(Forwarding forwarding);
 
-    ResultSet<Forwarding> getRecords(Principal principal, PagingCriteria criteria);
+    public ResultSet<Forwarding> getRecords(PagingCriteria criteria);
 
-    void exportXLS(HttpServletResponse response);
+    public ResultSet<Forwarding> getRecords(Principal principal, PagingCriteria criteria);
 
-    void importXLSX(String fileName);
+    public void importXLSX(String fileName);
+
+    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

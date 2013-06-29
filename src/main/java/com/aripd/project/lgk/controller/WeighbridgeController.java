@@ -27,7 +27,6 @@ import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.TableParam;
 import com.aripd.common.dto.WebResultSet;
-import com.aripd.common.model.CsvImportBean;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Extrication;
@@ -141,7 +140,6 @@ public class WeighbridgeController {
     @RequestMapping(value = "/import/xls", method = RequestMethod.GET)
     public String importAction(Model model) {
         model.addAttribute(new FileUploadBean());
-        model.addAttribute(new CsvImportBean());
         return "weighbridge/import";
     }
     @Value("${path.directory.import}")

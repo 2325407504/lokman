@@ -4,15 +4,11 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url var="homeUrl" value="/" />
-<spring:url var="truckList" value="/truck/list" />
-<spring:url var="truckNew" value="/truck/new" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class="active"><a href="${truckList}"><spring:message code="Trucks" /></a></li>
-    <li class=""><a href="${truckNew}"><spring:message code="New Entry" /></a></li>
-    </ul>
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Trucks" />
+    <jsp:param name="property" value="truck" />
+    <jsp:param name="active" value="list" />
+</jsp:include>
 
 <aripd:datatables datasource="/truck/get" id="trucks" dataUrlShow="/truck/show" dataUrlEdit="/truck/edit">
     <aripd:column label="Action" field="id"/>

@@ -26,8 +26,8 @@ public class BackupController {
         return "backup/list";
     }
 
-    @RequestMapping(value = "/take", method = RequestMethod.GET)
-    public String takeAction(
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public String newAction(
             final RedirectAttributes redirectAttributes,
             Model model) {
         backupService.backup();

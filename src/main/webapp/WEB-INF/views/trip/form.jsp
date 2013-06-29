@@ -4,46 +4,19 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url var="homeUrl" value="/" />
-<spring:url var="tripList" value="/trip/list" />
-<spring:url var="tripShow" value="/trip/show/{id}">
-    <spring:param name="id" value="${tripAttribute.id}" />
-</spring:url>
-<spring:url var="tripEdit" value="/trip/edit/{id}">
-    <spring:param name="id" value="${tripAttribute.id}" />
-</spring:url>
-<spring:url var="tripNew" value="/trip/new" />
-<spring:url var="tripSave" value="/trip/save" />
-<spring:url var="tripImport" value="/trip/import/xls" />
-<spring:url var="tripExport" value="/trip/export/xls" />
-<spring:url var="tripChart" value="/trip/chart" />
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Trips" />
+    <jsp:param name="property" value="trip" />
+    <jsp:param name="import" value="true" />
+    <jsp:param name="report" value="true" />
+    <jsp:param name="submit" value="true" />
+    <jsp:param name="active" value="form" />
+</jsp:include>
 
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${tripList}"><spring:message code="Trips" /></a></li>
-        <c:choose>
-            <c:when test="${ !empty tripAttribute.id }">
-            <li class="active"><a href="${tripEdit}"><spring:message code="Entry No" />: ${tripAttribute.id}</a></li>
-            </c:when>
-            <c:otherwise>
-            <li class="active"><a href="${tripNew}"><spring:message code="New Entry" /></a></li>
-            </c:otherwise>
-        </c:choose>
-    <li class=""><a href="${tripImport}"><spring:message code="Import" /></a></li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Export" />
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="${tripExport}"><spring:message code="Export" /></a></li>
-            <li><a href="${tripChart}"><spring:message code="Chart" /></a></li>
-            </ul>
-        </li>
-    </ul>
 
-    <div class="row-fluid">
-        <div class="span12">
+<div class="row-fluid">
+    <div class="span12">
+        <spring:url var="tripSave" value="/trip/save" />
         <form:form id="trip" modelAttribute="tripAttribute" action="${tripSave}" method="post">
             <form:errors path="*" cssClass="alert alert-error" element="div" />
             <form:hidden path="id" />
@@ -114,8 +87,8 @@
                         <a class="btn btn-danger" href="javascript:$('#form-${tripAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete" /></a>
                     </c:if>
                     <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
-                    </div>
-                </fieldset>
+                </div>
+            </fieldset>
         </form:form>
     </div>
 </div>

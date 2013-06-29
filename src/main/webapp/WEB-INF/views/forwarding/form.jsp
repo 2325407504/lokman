@@ -4,43 +4,18 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url var="homeUrl" value="/" />
-<spring:url var="forwardingList" value="/forwarding/list" />
-<spring:url var="forwardingShow" value="/forwarding/show/${forwardingAttribute.id}" />
-<spring:url var="forwardingEdit" value="/forwarding/edit/${forwardingAttribute.id}" />
-<spring:url var="forwardingNew" value="/forwarding/new" />
-<spring:url var="forwardingImport" value="/forwarding/import/xls" />
-<spring:url var="forwardingExport" value="/forwarding/export/xls" />
-<spring:url var="uatfExport" value="/uatf/export/xls" />
-<spring:url var="forwardingSave" value="/forwarding/save" />
-<spring:url var="uatfSave" value="/uatf/save/${forwardingAttribute.id}" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${forwardingList}"><spring:message code="Forwardings" /></a></li>
-        <c:choose>
-            <c:when test="${ !empty forwardingAttribute.id }">
-            <li class="active"><a href="${forwardingEdit}"><spring:message code="Entry No" />: ${forwardingAttribute.id}</a></li>
-            </c:when>
-            <c:otherwise>
-            <li class="active"><a href="${forwardingNew}"><spring:message code="New Entry" /></a></li>
-            </c:otherwise>
-        </c:choose>
-    <li class=""><a href="${forwardingImport}"><spring:message code="Import" /></a></li>
-    <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Export" />
-            <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="${forwardingExport}"><spring:message code="Waybill" /></a></li>
-            <li><a href="${uatfExport}"><spring:message code="UATF" /></a></li>
-        </ul>
-    </li>
-</ul>
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Forwardings" />
+    <jsp:param name="property" value="forwarding" />
+    <jsp:param name="import" value="true" />
+    <jsp:param name="report" value="true" />
+    <jsp:param name="submit" value="true" />
+    <jsp:param name="active" value="form" />
+</jsp:include>
 
 <div class="row-fluid">
     <div class="span6">
+        <spring:url var="forwardingSave" value="/forwarding/save" />
         <form:form modelAttribute="forwardingAttribute" action="${forwardingSave}" method="post">
             <form:errors path="*" cssClass="alert alert-error" element="div" />
             <form:hidden path="id" />
@@ -127,6 +102,7 @@
         <fmt:message key="Weight" var="Weight"/>
 
         <c:if test="${forwardingAttribute.id != null}">
+            <spring:url var="uatfSave" value="/uatf/save/${forwardingAttribute.id}" />
             <form:form modelAttribute="uatfAttribute" action="${uatfSave}" method="post" class="form-inline">
                 <form:errors path="*" cssClass="alert alert-error" element="div" />
                 <form:input path="code" cssClass="input-small" placeholder="${Code}" />

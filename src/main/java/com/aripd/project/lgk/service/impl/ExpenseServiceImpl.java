@@ -68,6 +68,25 @@ public class ExpenseServiceImpl implements ExpenseService {
         return repository.findOneByAccountAndId(account, id);
     }
 
+    public List<Expense> findByInterval(DateTime startingTime, DateTime endingTime) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Expense> cq = cb.createQuery(Expense.class);
+        Root<Expense> root = cq.from(Expense.class);
+
+        List<Predicate> predicateList = new ArrayList<Predicate>();
+        Predicate predicate1 = cb.between(root.get(Expense_.documentDate), startingTime, endingTime);
+        predicateList.add(predicate1);
+
+        Predicate[] predicates = new Predicate[predicateList.size()];
+        predicateList.toArray(predicates);
+        cq.where(predicates);
+
+        TypedQuery<Expense> typedQuery = em.createQuery(cq);
+        List<Expense> resultList = typedQuery.getResultList();
+
+        return resultList;
+    }
+
     @Transactional
     public Expense save(Expense expense) {
         return repository.save(expense);
@@ -185,37 +204,6 @@ public class ExpenseServiceImpl implements ExpenseService {
         return new ResultSet<Expense>(resultList, totalRecords, displaySize);
     }
 
-    public void exportXLS(HttpServletResponse response) {
-        // 1. Create new workbook
-        HSSFWorkbook workbook = new HSSFWorkbook();
-
-        // 2. Create new worksheet
-        HSSFSheet worksheet = workbook.createSheet("Expenses");
-
-        // 3. Define starting indices for rows and columns
-        int startRowIndex = 0;
-        int startColIndex = 0;
-
-        // 4. Build layout
-        // Build title, date, and column headers
-        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
-
-        // 5. Fill report
-        FillManager.fillReport(worksheet, startRowIndex, startColIndex,
-                repository.findAll());
-
-        // 6. Set the response properties
-        String fileName = "ExpenseReport.xls";
-        response.setHeader("Content-Disposition", "inline; filename="
-                + fileName);
-        // Make sure to set the correct content type
-        response.setContentType("application/vnd.ms-excel");
-
-        // 7. Write to the output stream
-        Writer.write(response, worksheet);
-
-    }
-
     public void importXLSX(String fileName) {
         InputStream iStream = null;
         try {
@@ -263,4 +251,35 @@ public class ExpenseServiceImpl implements ExpenseService {
 
         repository.save(expenses);
     }
+
+    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime) {
+        // 1. Create new workbook
+        HSSFWorkbook workbook = new HSSFWorkbook();
+
+        // 2. Create new worksheet
+        HSSFSheet worksheet = workbook.createSheet("Expenses");
+
+        // 3. Define starting indices for rows and columns
+        int startRowIndex = 0;
+        int startColIndex = 0;
+
+        // 4. Build layout
+        // Build title, date, and column headers
+        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
+
+        // 5. Fill report
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByInterval(startingTime, endingTime));
+
+        // 6. Set the response properties
+        String fileName = "ExpenseReport.xls";
+        response.setHeader("Content-Disposition", "inline; filename="
+                + fileName);
+        // Make sure to set the correct content type
+        response.setContentType("application/vnd.ms-excel");
+
+        // 7. Write to the output stream
+        Writer.write(response, worksheet);
+
+    }
+
 }

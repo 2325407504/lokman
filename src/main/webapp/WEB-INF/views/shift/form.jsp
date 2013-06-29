@@ -4,25 +4,13 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url value="/" var="homeUrl" />
-<spring:url var="shiftList" value="/shift/list" />
-<spring:url var="shiftEdit" value="/shift/edit/${shiftAttribute.id}" />
-<spring:url var="shiftNew" value="/shift/new" />
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Shifts" />
+    <jsp:param name="property" value="shift" />
+    <jsp:param name="active" value="form" />
+</jsp:include>
+
 <spring:url var="shiftSave" value="/shift/save" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${shiftList}"><spring:message code="Shifts" /></a></li>
-        <c:choose>
-            <c:when test="${ !empty shiftAttribute.id }">
-            <li class="active"><a href="${shiftEdit}"><spring:message code="Entry No" />: ${shiftAttribute.id}</a></li>
-            </c:when>
-            <c:otherwise>
-            <li class="active"><a href="${shiftNew}"><spring:message code="New Entry" /></a></li>
-            </c:otherwise>
-        </c:choose>
-</ul>
-
 <form:form modelAttribute="shiftAttribute" action="${shiftSave}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <form:hidden path="id" />
@@ -42,8 +30,8 @@
                 <a class="btn btn-danger" href="javascript:$('#form-${shiftAttribute.id}').submit();"><spring:message code="Delete" /></a>
             </c:if>
             <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
-            </div>
-        </fieldset>
+        </div>
+    </fieldset>
 </form:form>
 
 <c:if test="${ !empty shiftAttribute.id }">

@@ -5,17 +5,17 @@
 </jsp:include>
 
 <jsp:include page="/WEB-INF/views/subnav.jsp" >
-    <jsp:param name="title" value="Productions" />
-    <jsp:param name="property" value="production" />
+    <jsp:param name="title" value="Forwardings" />
+    <jsp:param name="property" value="forwarding" />
     <jsp:param name="import" value="true" />
     <jsp:param name="report" value="true" />
     <jsp:param name="submit" value="true" />
     <jsp:param name="active" value="report" />
 </jsp:include>
 
-<p class="lead"><spring:message code="Production" /></p>
-<spring:url var="productionReport" value="/production/report" />
-<form:form modelAttribute="productionFilterByIntervalForm" action="${productionReport}" method="post" class="form-inline">
+<p class="lead"><spring:message code="Forwarding" /></p>
+<spring:url var="forwardingReport" value="/forwarding/report" />
+<form:form modelAttribute="forwardingFilterByIntervalForm" action="${forwardingReport}" method="post" class="form-inline">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <form:input id="start1" path="startingTime" />
     <form:input id="end1" path="endingTime" />
@@ -24,9 +24,9 @@
     </button>
 </form:form>
 
-<p class="lead"><spring:message code="Compensation" /></p>
-<spring:url var="compensationReport" value="/compensation/report" />
-<form:form modelAttribute="compensationFilterByIntervalForm" action="${compensationReport}" method="post" class="form-inline">
+<p class="lead"><spring:message code="Uatf" /></p>
+<spring:url var="uatfReport" value="/uatf/report" />
+<form:form modelAttribute="uatfFilterByIntervalForm" action="${uatfReport}" method="post" class="form-inline">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <form:input id="start2" path="startingTime" />
     <form:input id="end2" path="endingTime" />

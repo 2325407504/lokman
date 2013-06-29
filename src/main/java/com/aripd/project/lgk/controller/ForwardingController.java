@@ -26,15 +26,18 @@ import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.TableParam;
 import com.aripd.common.dto.WebResultSet;
-import com.aripd.common.model.CsvImportBean;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Uatf;
+import com.aripd.project.lgk.model.ForwardingFilterByIntervalForm;
+import com.aripd.project.lgk.model.UatfFilterByIntervalForm;
 import com.aripd.project.lgk.service.ForwardingService;
 import com.aripd.project.lgk.service.QuotaService;
 import com.aripd.project.lgk.service.SubcontractorService;
 import javax.validation.Valid;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
 @Controller
@@ -49,6 +52,8 @@ public class ForwardingController {
     private SubcontractorService subcontractorService;
     @Resource(name = "accountService")
     private AccountService accountService;
+    @Value("${path.directory.import}")
+    String pathDirectoryImport;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -127,26 +132,38 @@ public class ForwardingController {
         return "redirect:/forwarding/list";
     }
 
-    /**
-     * Exports the report as an Excel format.
-     * <p>
-     * Make sure this method doesn't return any model. Otherwise, you'll get an
-     * "IllegalStateException: getOutputStream() has already been called for
-     * this response"
-     */
-    @RequestMapping(value = "/export/xls", method = RequestMethod.GET)
-    public void exportAction(HttpServletResponse response, Model model) {
-        forwardingService.exportXLS(response);
+    @RequestMapping(value = "/report", method = RequestMethod.GET)
+    public String reportAction(Model model) {
+        model.addAttribute("forwardingFilterByIntervalForm", new ForwardingFilterByIntervalForm());
+        model.addAttribute("uatfFilterByIntervalForm", new UatfFilterByIntervalForm());
+        return "forwarding/report";
+    }
+
+    @RequestMapping(value = "/report", method = RequestMethod.POST)
+    public String reportAction(
+            final RedirectAttributes redirectAttributes,
+            @ModelAttribute("forwardingFilterByIntervalForm") @Valid ForwardingFilterByIntervalForm formData,
+            BindingResult result,
+            @RequestParam("startingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime startingTime,
+            @RequestParam("endingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime endingTime,
+            HttpServletResponse response,
+            Model model) {
+
+        if (result.hasErrors()) {
+            return "/forwarding/report";
+        }
+
+        forwardingService.exportByInterval(response, startingTime, endingTime);
+
+        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
+        return "redirect:/forwarding/report";
     }
 
     @RequestMapping(value = "/import/xls", method = RequestMethod.GET)
     public String importAction(Model model) {
         model.addAttribute(new FileUploadBean());
-        model.addAttribute(new CsvImportBean());
         return "forwarding/import";
     }
-    @Value("${path.directory.import}")
-    String pathDirectoryImport;
 
     @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
     public String importXLS(

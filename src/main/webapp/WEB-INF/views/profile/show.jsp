@@ -9,11 +9,11 @@
 <ul class="breadcrumb">
     <li><a href="${homeUrl}"><spring:message code="Home" /></a> <span class="divider">/</span></li>
     <li class="active"><spring:message code="Profile" /></li>
-        <li class="pull-right">
+    <li class="pull-right">
         <spring:url var="profile_edit" value="/profile/edit" />
         <a class="btn btn-mini" href="${profile_edit}"><spring:message code="Edit" /></a>
-        </li>
-    </ul>
+    </li>
+</ul>
 
 <aripd:description id="profile">
     <aripd:descriptionitem label="Username" field="profileAttribute.username"></aripd:descriptionitem>

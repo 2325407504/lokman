@@ -4,47 +4,14 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url var="homeUrl" value="/" />
-<spring:url var="forwardingList" value="/forwarding/list" />
-<spring:url var="forwardingShow" value="/forwarding/show/${forwardingAttribute.id}" />
-<spring:url var="forwardingEdit" value="/forwarding/edit/${forwardingAttribute.id}" />
-<spring:url var="forwardingSubmit" value="/forwarding/submit/${forwardingAttribute.id}" />
-<spring:url var="forwardingNew" value="/forwarding/new" />
-<spring:url var="forwardingImport" value="/forwarding/import/xls" />
-<spring:url var="forwardingExport" value="/forwarding/export/xls" />
-<spring:url var="uatfExport" value="/uatf/export/xls" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${forwardingList}"><spring:message code="Forwardings" /></a></li>
-    <li class="active"><a href="${forwardingShow}"><spring:message code="Entry No" />: ${forwardingAttribute.id}</a></li>
-    <li class=""><a href="${forwardingNew}"><spring:message code="New Entry" /></a></li>
-    <li class=""><a href="${forwardingImport}"><spring:message code="Import" /></a></li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Export" />
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="${forwardingExport}"><spring:message code="Waybill" /></a></li>
-            <li><a href="${uatfExport}"><spring:message code="UATF" /></a></li>
-            </ul>
-        </li>
-    </ul>
-
-<c:if test="${forwardingAttribute.submitted}">
-    <div class="alert alert-error">
-        <spring:message code="Submitted by user" />
-        <a href="${forwardingEdit}"><i class="icon-pencil"></i> <spring:message code="Edit" /></a>
-        <a href="${forwardingSubmit}"><i class="icon-envelope"></i> <spring:message code="Draw Back" /></a>
-        </div>
-</c:if>
-<c:if test="${!forwardingAttribute.submitted}">
-    <div class="alert alert-info">
-        <a href="${forwardingEdit}"><i class="icon-pencil"></i> <spring:message code="Edit" /></a>
-        <a href="${forwardingSubmit}"><i class="icon-envelope"></i> <spring:message code="Submit" /></a>
-        </div>
-</c:if>
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Forwardings" />
+    <jsp:param name="property" value="forwarding" />
+    <jsp:param name="import" value="true" />
+    <jsp:param name="report" value="true" />
+    <jsp:param name="submit" value="true" />
+    <jsp:param name="active" value="show" />
+</jsp:include>
 
 <div class="row-fluid">
     <div class="span4">

@@ -7,25 +7,29 @@ import javax.servlet.http.HttpServletResponse;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.project.lgk.domain.Uatf;
+import org.joda.time.DateTime;
 
 public interface UatfService {
 
-	Uatf findOne(Long id);
+    public Uatf findOne(Long id);
 
-	List<Uatf> findAll();
+    public List<Uatf> findAll();
 
-	Uatf save(Uatf uatf);
+    public List<Uatf> findByInterval(DateTime startingTime, DateTime endingTime);
 
-	void delete(Long id);
+    public Uatf save(Uatf uatf);
 
-	void delete(Uatf uatf);
+    public void delete(Long id);
 
-	List<Uatf> findByForwardingId(Long forwarding_id);
+    public void delete(Uatf uatf);
 
-	ResultSet<Uatf> getRecords(Long forwarding_id, PagingCriteria criteria);
+    public List<Uatf> findByForwardingId(Long forwarding_id);
 
-	void exportXLS(HttpServletResponse response);
+    public ResultSet<Uatf> getRecords(Long forwarding_id, PagingCriteria criteria);
 
-	void importXLSX(String fileName);
+    public void exportXLS(HttpServletResponse response);
 
+    public void importXLSX(String fileName);
+
+    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

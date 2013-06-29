@@ -4,25 +4,13 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url value="/" var="homeUrl" />
-<spring:url var="productList" value="/product/list" />
-<spring:url var="productEdit" value="/product/edit/${productAttribute.id}" />
-<spring:url var="productNew" value="/product/new" />
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Products" />
+    <jsp:param name="property" value="product" />
+    <jsp:param name="active" value="form" />
+</jsp:include>
+
 <spring:url var="productSave" value="/product/save" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${productList}"><spring:message code="Products" /></a></li>
-        <c:choose>
-            <c:when test="${ !empty productAttribute.id }">
-            <li class="active"><a href="${productEdit}"><spring:message code="Entry No" />: ${productAttribute.id}</a></li>
-            </c:when>
-            <c:otherwise>
-            <li class="active"><a href="${productNew}"><spring:message code="New Entry" /></a></li>
-            </c:otherwise>
-        </c:choose>
-</ul>
-
 <form:form modelAttribute="productAttribute" action="${productSave}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <form:hidden path="id" />

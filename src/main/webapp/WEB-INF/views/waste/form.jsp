@@ -4,25 +4,13 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url value="/" var="homeUrl" />
-<spring:url var="wasteList" value="/waste/list" />
-<spring:url var="wasteEdit" value="/waste/edit/${wasteAttribute.id}" />
-<spring:url var="wasteNew" value="/waste/new" />
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Wastes" />
+    <jsp:param name="property" value="waste" />
+    <jsp:param name="active" value="form" />
+</jsp:include>
+
 <spring:url var="wasteSave" value="/waste/save" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${wasteList}"><spring:message code="Wastes" /></a></li>
-        <c:choose>
-            <c:when test="${ !empty wasteAttribute.id }">
-            <li class="active"><a href="${wasteEdit}"><spring:message code="Entry No" />: ${wasteAttribute.id}</a></li>
-            </c:when>
-            <c:otherwise>
-            <li class="active"><a href="${wasteNew}"><spring:message code="New Entry" /></a></li>
-            </c:otherwise>
-        </c:choose>
-</ul>
-
 <form:form modelAttribute="wasteAttribute" action="${wasteSave}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <form:hidden path="id" />
@@ -47,8 +35,8 @@
                 <a class="btn btn-danger" href="javascript:$('#form-${wasteAttribute.id}').submit();"><spring:message code="Delete" /></a>
             </c:if>
             <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
-            </div>
-        </fieldset>
+        </div>
+    </fieldset>
 </form:form>
 
 <c:if test="${ !empty wasteAttribute.id }">

@@ -30,8 +30,8 @@
                 <a class="btn btn-danger" href="javascript:$('#form-${roleAttribute.id}').submit();"><spring:message code="Delete" /></a>
             </c:if>
             <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
-            </div>
-        </fieldset>
+        </div>
+    </fieldset>
 </form:form>
 
 <c:if test="${ !empty roleAttribute.id }">

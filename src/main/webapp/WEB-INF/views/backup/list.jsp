@@ -1,19 +1,14 @@
 <%@include file="/WEB-INF/views/includes.jsp" %>
 
 <jsp:include page="/WEB-INF/views/header.jsp">
-    <jsp:param name="title" value="" />
+    <jsp:param name="title" value="Backups" />
 </jsp:include>
 
-<spring:url value="/" var="homeUrl" />
-<spring:url var="backup_take" value="/backup/take"/>
-
-<ul class="breadcrumb">
-    <li><a href="${homeUrl}"><spring:message code="Home" /></a> <span class="divider">/</span></li>
-    <li class="active"><spring:message code="Roles" /></li>
-    <li class="pull-right">
-        <a class="btn btn-mini" href="${backup_take}"><spring:message code="Take Backup" /></a>
-    </li>
-</ul>
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Backups" />
+    <jsp:param name="property" value="backup" />
+    <jsp:param name="active" value="list" />
+</jsp:include>
 
 <table class="table">
     <thead>
