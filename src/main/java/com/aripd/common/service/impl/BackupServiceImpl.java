@@ -87,8 +87,7 @@ public class BackupServiceImpl implements BackupService {
         String tables = Joiner.on(" ").join(table);
 
 
-        // mysqldump --skip-triggers --compact --no-create-info -u username -ppassword database table1 table2 --result-file=filename.sql
-        String cmd = pathProgramMysqldump + " --skip-triggers --compact --no-create-info -u " + jdbcUsername + " -p"
+        String cmd = pathProgramMysqldump + " --skip-triggers --compact --no-create-info --skip-tz-utc -u " + jdbcUsername + " -p"
                 + jdbcPassword + " " + jdbcDbname + " " + tables + " --result-file="
                 + pathDirectoryExport + strDate + ".sql";
         try {
