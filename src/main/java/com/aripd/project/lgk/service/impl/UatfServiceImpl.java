@@ -151,36 +151,6 @@ public class UatfServiceImpl implements UatfService {
         return new ResultSet<Uatf>(resultList, totalRecords, displaySize);
     }
 
-    public void exportXLS(HttpServletResponse response) {
-        // 1. Create new workbook
-        HSSFWorkbook workbook = new HSSFWorkbook();
-
-        // 2. Create new worksheet
-        HSSFSheet worksheet = workbook.createSheet("Uatf Report");
-
-        // 3. Define starting indices for rows and columns
-        int startRowIndex = 0;
-        int startColIndex = 0;
-
-        // 4. Build layout
-        // Build title, date, and column headers
-        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
-
-        // 5. Fill report
-        FillManager.fillReport(worksheet, startRowIndex, startColIndex, repository.findAll());
-
-        // 6. Set the response properties
-        String fileName = "UatfReport.xls";
-        response.setHeader("Content-Disposition", "inline; filename="
-                + fileName);
-        // Make sure to set the correct content type
-        response.setContentType("application/vnd.ms-excel");
-
-        // 7. Write to the output stream
-        Writer.write(response, worksheet);
-
-    }
-
     public void importXLSX(String fileName) {
         InputStream iStream = null;
         try {

@@ -7,27 +7,32 @@ import javax.servlet.http.HttpServletResponse;
 import com.aripd.account.domain.Account;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
+import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Waybill;
+import java.util.List;
+import org.joda.time.DateTime;
 
 public interface WaybillService {
 
-    Waybill findOne(Long id);
+    public Waybill findOne(Long id);
 
-    Waybill findOneByAccountAndId(Account account, Long id);
+    public Waybill findOneByAccountAndId(Account account, Long id);
 
-    Waybill findOneByDocumentNo(String documentNo);
+    public Waybill findOneByDocumentNo(String documentNo);
 
-    Waybill save(Waybill formData);
+    public List<Waybill> findByInterval(DateTime startingTime, DateTime endingTime);
 
-    void delete(Long id);
+    public Waybill save(Waybill formData);
 
-    void delete(Waybill waybill);
+    public void delete(Long id);
 
-    ResultSet<Waybill> getRecords(PagingCriteria criteria);
+    public void delete(Waybill waybill);
 
-    ResultSet<Waybill> getRecords(Principal principal, PagingCriteria criteria);
+    public ResultSet<Waybill> getRecords(PagingCriteria criteria);
 
-    void exportXLS(HttpServletResponse response);
+    public ResultSet<Waybill> getRecords(Principal principal, PagingCriteria criteria);
 
-    void importXLSX(String fileName);
+    public void importXLSX(String fileName);
+
+    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

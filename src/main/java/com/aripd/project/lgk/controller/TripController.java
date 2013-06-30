@@ -51,6 +51,8 @@ public class TripController {
     private DriverService driverService;
     @Resource(name = "accountService")
     private AccountService accountService;
+    @Value("${path.directory.import}")
+    String pathDirectoryImport;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -135,8 +137,6 @@ public class TripController {
         model.addAttribute(new FileUploadBean());
         return "trip/import";
     }
-    @Value("${path.directory.import}")
-    String pathDirectoryImport;
 
     @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
     public String importXLS(

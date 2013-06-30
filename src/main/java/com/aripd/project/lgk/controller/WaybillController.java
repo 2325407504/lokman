@@ -30,10 +30,14 @@ import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Outgoing;
 import com.aripd.project.lgk.domain.Waybill;
+import com.aripd.project.lgk.model.WaybillFilterByIntervalForm;
+import com.aripd.project.lgk.model.OutgoingFilterByIntervalForm;
 import com.aripd.project.lgk.service.CustomerService;
 import com.aripd.project.lgk.service.ProductService;
 import com.aripd.project.lgk.service.WaybillService;
 import javax.validation.Valid;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
 @Controller
@@ -48,6 +52,8 @@ public class WaybillController {
     private CustomerService customerService;
     @Resource(name = "productService")
     private ProductService productService;
+    @Value("${path.directory.import}")
+    String pathDirectoryImport;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -125,16 +131,31 @@ public class WaybillController {
         return "redirect:/waybill/show/" + id;
     }
 
-    /**
-     * Exports the report as an Excel format.
-     * <p>
-     * Make sure this method doesn't return any model. Otherwise, you'll get an
-     * "IllegalStateException: getOutputStream() has already been called for
-     * this response"
-     */
-    @RequestMapping(value = "/export/xls", method = RequestMethod.GET)
-    public void exportAction(HttpServletResponse response, Model model) {
-        waybillService.exportXLS(response);
+    @RequestMapping(value = "/report", method = RequestMethod.GET)
+    public String reportAction(Model model) {
+        model.addAttribute("waybillFilterByIntervalForm", new WaybillFilterByIntervalForm());
+        model.addAttribute("outgoingFilterByIntervalForm", new OutgoingFilterByIntervalForm());
+        return "waybill/report";
+    }
+
+    @RequestMapping(value = "/report", method = RequestMethod.POST)
+    public String reportAction(
+            final RedirectAttributes redirectAttributes,
+            @ModelAttribute("waybillFilterByIntervalForm") @Valid WaybillFilterByIntervalForm formData,
+            BindingResult result,
+            @RequestParam("startingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime startingTime,
+            @RequestParam("endingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime endingTime,
+            HttpServletResponse response,
+            Model model) {
+
+        if (result.hasErrors()) {
+            return "/waybill/report";
+        }
+
+        waybillService.exportByInterval(response, startingTime, endingTime);
+
+        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
+        return "redirect:/waybill/report";
     }
 
     @RequestMapping(value = "/import/xls", method = RequestMethod.GET)
@@ -142,8 +163,6 @@ public class WaybillController {
         model.addAttribute(new FileUploadBean());
         return "waybill/import";
     }
-    @Value("${path.directory.import}")
-    String pathDirectoryImport;
 
     @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
     public String importXLS(

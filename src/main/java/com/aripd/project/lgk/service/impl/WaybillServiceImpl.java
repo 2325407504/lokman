@@ -43,6 +43,8 @@ import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.SortField;
 import com.aripd.project.lgk.domain.Waybill;
 import com.aripd.project.lgk.domain.Waybill_;
+import com.aripd.project.lgk.domain.Waybill;
+import com.aripd.project.lgk.domain.Waybill_;
 import com.aripd.project.lgk.report.waybill.FillManager;
 import com.aripd.project.lgk.report.waybill.Layouter;
 import com.aripd.project.lgk.report.waybill.Writer;
@@ -81,6 +83,25 @@ public class WaybillServiceImpl implements WaybillService {
         return repository.findOneByAccountAndId(account, id);
     }
 
+    public List<Waybill> findByInterval(DateTime startingTime, DateTime endingTime) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Waybill> cq = cb.createQuery(Waybill.class);
+        Root<Waybill> root = cq.from(Waybill.class);
+
+        List<Predicate> predicateList = new ArrayList<Predicate>();
+        Predicate predicate1 = cb.between(root.get(Waybill_.documentDate), startingTime, endingTime);
+        predicateList.add(predicate1);
+
+        Predicate[] predicates = new Predicate[predicateList.size()];
+        predicateList.toArray(predicates);
+        cq.where(predicates);
+
+        TypedQuery<Waybill> typedQuery = em.createQuery(cq);
+        List<Waybill> resultList = typedQuery.getResultList();
+
+        return resultList;
+    }
+    
     @Transactional
     public Waybill save(Waybill waybill) {
         return repository.save(waybill);
@@ -192,36 +213,6 @@ public class WaybillServiceImpl implements WaybillService {
         return new ResultSet<Waybill>(resultList, totalRecords, displaySize);
     }
 
-    public void exportXLS(HttpServletResponse response) {
-        // 1. Create new workbook
-        HSSFWorkbook workbook = new HSSFWorkbook();
-
-        // 2. Create new worksheet
-        HSSFSheet worksheet = workbook.createSheet("Waybill Report");
-
-        // 3. Define starting indices for rows and columns
-        int startRowIndex = 0;
-        int startColIndex = 0;
-
-        // 4. Build layout
-        // Build title, date, and column headers
-        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
-
-        // 5. Fill report
-        FillManager.fillReport(worksheet, startRowIndex, startColIndex, repository.findAll());
-
-        // 6. Set the response properties
-        String fileName = "WaybillReport.xls";
-        response.setHeader("Content-Disposition", "inline; filename="
-                + fileName);
-        // Make sure to set the correct content type
-        response.setContentType("application/vnd.ms-excel");
-
-        // 7. Write to the output stream
-        Writer.write(response, worksheet);
-
-    }
-
     public void importXLSX(String fileName) {
         InputStream iStream = null;
         try {
@@ -280,4 +271,35 @@ public class WaybillServiceImpl implements WaybillService {
 
         repository.save(waybills);
     }
+
+    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime) {
+        // 1. Create new workbook
+        HSSFWorkbook workbook = new HSSFWorkbook();
+
+        // 2. Create new worksheet
+        HSSFSheet worksheet = workbook.createSheet("Waybill Report");
+
+        // 3. Define starting indices for rows and columns
+        int startRowIndex = 0;
+        int startColIndex = 0;
+
+        // 4. Build layout
+        // Build title, date, and column headers
+        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
+
+        // 5. Fill report
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByInterval(startingTime, endingTime));
+
+        // 6. Set the response properties
+        String fileName = "WaybillReport.xls";
+        response.setHeader("Content-Disposition", "inline; filename="
+                + fileName);
+        // Make sure to set the correct content type
+        response.setContentType("application/vnd.ms-excel");
+
+        // 7. Write to the output stream
+        Writer.write(response, worksheet);
+
+    }
+
 }

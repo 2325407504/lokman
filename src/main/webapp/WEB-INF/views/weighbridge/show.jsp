@@ -4,44 +4,14 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url var="homeUrl" value="/" />
-<spring:url var="weighbridgeList" value="/weighbridge/list" />
-<spring:url var="weighbridgeShow" value="/weighbridge/show/${weighbridgeAttribute.id}" />
-<spring:url var="weighbridgeEdit" value="/weighbridge/edit/${weighbridgeAttribute.id}" />
-<spring:url var="weighbridgeSubmit" value="/weighbridge/submit/${weighbridgeAttribute.id}" />
-<spring:url var="weighbridgeNew" value="/weighbridge/new" />
-<spring:url var="weighbridgeExport" value="/weighbridge/export/xls" />
-<spring:url var="uatfExport" value="/uatf/export/xls" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${weighbridgeList}"><spring:message code="Weighbridges" /></a></li>
-    <li class="active"><a href="${weighbridgeShow}"><spring:message code="Entry No" />: ${weighbridgeAttribute.id}</a></li>
-    <li class=""><a href="${weighbridgeNew}"><spring:message code="New Entry" /></a></li>
-    <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Export" />
-            <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="${weighbridgeExport}"><spring:message code="Weighbridges" /></a></li>
-        </ul>
-    </li>
-</ul>
-
-<c:if test="${weighbridgeAttribute.submitted}">
-    <div class="alert alert-error">
-        <spring:message code="Submitted by user" />
-        <a href="${weighbridgeEdit}"><i class="icon-pencil"></i> <spring:message code="Edit" /></a>
-        <a href="${weighbridgeSubmit}"><i class="icon-envelope"></i> <spring:message code="Draw Back" /></a>
-    </div>
-</c:if>
-<c:if test="${!weighbridgeAttribute.submitted}">
-    <div class="alert alert-info">
-        <a href="${weighbridgeEdit}"><i class="icon-pencil"></i> <spring:message code="Edit" /></a>
-        <a href="${weighbridgeSubmit}"><i class="icon-envelope"></i> <spring:message code="Submit" /></a>
-    </div>
-</c:if>
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Weighbridges" />
+    <jsp:param name="property" value="weighbridge" />
+    <jsp:param name="import" value="true" />
+    <jsp:param name="report" value="true" />
+    <jsp:param name="submit" value="true" />
+    <jsp:param name="active" value="show" />
+</jsp:include>
 
 <div class="row-fluid">
     <div class="span4">

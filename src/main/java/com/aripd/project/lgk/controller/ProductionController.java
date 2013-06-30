@@ -66,6 +66,8 @@ public class ProductionController {
     private CompensationService compensationService;
     @Resource(name = "machinetimeService")
     private MachinetimeService machinetimeService;
+    @Value("${path.directory.import}")
+    String pathDirectoryImport;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -193,8 +195,6 @@ public class ProductionController {
         model.addAttribute(new FileUploadBean());
         return "production/import";
     }
-    @Value("${path.directory.import}")
-    String pathDirectoryImport;
 
     @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
     public String importXLS(

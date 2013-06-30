@@ -31,12 +31,16 @@ import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Waybill;
 import com.aripd.project.lgk.domain.Outgoing;
+import com.aripd.project.lgk.model.OutgoingFilterByIntervalForm;
 import com.aripd.project.lgk.service.DriverService;
 import com.aripd.project.lgk.service.WaybillService;
 import com.aripd.project.lgk.service.QuotaService;
 import com.aripd.project.lgk.service.SubcontractorService;
 import com.aripd.project.lgk.service.OutgoingService;
 import javax.validation.Valid;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
 @Controller
@@ -55,6 +59,8 @@ public class OutgoingController {
     private DriverService driverService;
     @Resource(name = "accountService")
     private AccountService accountService;
+    @Value("${path.directory.import}")
+    String pathDirectoryImport;
 
     @RequestMapping(value = "/get/{waybill_id}", method = RequestMethod.GET)
     public @ResponseBody
@@ -106,20 +112,6 @@ public class OutgoingController {
         return "redirect:/waybill/edit/" + outgoing.getWaybill().getId();
     }
 
-    /**
-     * Exports the report as an Excel format.
-     * <p>
-     * Make sure this method doesn't return any model. Otherwise, you'll get an
-     * "IllegalStateException: getOutputStream() has already been called for
-     * this response"
-     */
-    @RequestMapping(value = "/export/xls", method = RequestMethod.GET)
-    public void exportAction(HttpServletResponse response, Model model) {
-        outgoingService.exportXLS(response);
-    }
-    @Value("${path.directory.import}")
-    String pathDirectoryImport;
-
     @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
     public String importXLS(
             final RedirectAttributes redirectAttributes,
@@ -162,5 +154,25 @@ public class OutgoingController {
         outgoingService.importXLSX(fileName);
         redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
         return "redirect:/waybill/list";
+    }
+
+    @RequestMapping(value = "/report", method = RequestMethod.POST)
+    public String reportAction(
+            final RedirectAttributes redirectAttributes,
+            @ModelAttribute("outgoingFilterByIntervalForm") @Valid OutgoingFilterByIntervalForm formData,
+            BindingResult result,
+            @RequestParam("startingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime startingTime,
+            @RequestParam("endingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime endingTime,
+            HttpServletResponse response,
+            Model model) {
+
+        if (result.hasErrors()) {
+            return "/forwarding/report";
+        }
+
+        outgoingService.exportByInterval(response, startingTime, endingTime);
+
+        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
+        return "redirect:/forwarding/report";
     }
 }

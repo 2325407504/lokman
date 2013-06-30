@@ -111,26 +111,6 @@ public class UatfController {
         return "redirect:/forwarding/edit/" + uatf.getForwarding().getId();
     }
 
-    @RequestMapping(value = "/report", method = RequestMethod.POST)
-    public String reportAction(
-            final RedirectAttributes redirectAttributes,
-            @ModelAttribute("uatfFilterByIntervalForm") @Valid UatfFilterByIntervalForm formData,
-            BindingResult result,
-            @RequestParam("startingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime startingTime,
-            @RequestParam("endingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime endingTime,
-            HttpServletResponse response,
-            Model model) {
-
-        if (result.hasErrors()) {
-            return "/forwarding/report";
-        }
-
-        uatfService.exportByInterval(response, startingTime, endingTime);
-
-        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
-        return "redirect:/forwarding/report";
-    }
-
     @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
     public String importXLS(
             final RedirectAttributes redirectAttributes,
@@ -173,5 +153,25 @@ public class UatfController {
         uatfService.importXLSX(fileName);
         redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
         return "redirect:/forwarding/list";
+    }
+
+    @RequestMapping(value = "/report", method = RequestMethod.POST)
+    public String reportAction(
+            final RedirectAttributes redirectAttributes,
+            @ModelAttribute("uatfFilterByIntervalForm") @Valid UatfFilterByIntervalForm formData,
+            BindingResult result,
+            @RequestParam("startingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime startingTime,
+            @RequestParam("endingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime endingTime,
+            HttpServletResponse response,
+            Model model) {
+
+        if (result.hasErrors()) {
+            return "/forwarding/report";
+        }
+
+        uatfService.exportByInterval(response, startingTime, endingTime);
+
+        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
+        return "redirect:/forwarding/report";
     }
 }

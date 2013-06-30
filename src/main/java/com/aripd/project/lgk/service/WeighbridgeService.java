@@ -6,20 +6,24 @@ import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.project.lgk.domain.Weighbridge;
 import java.security.Principal;
+import java.util.List;
+import org.joda.time.DateTime;
 
 public interface WeighbridgeService {
 
-    Weighbridge findOne(Long id);
+    public Weighbridge findOne(Long id);
 
-    Weighbridge save(Weighbridge weighbridge);
+    public List<Weighbridge> findByInterval(DateTime startingTime, DateTime endingTime);
 
-    void delete(Long id);
+    public Weighbridge save(Weighbridge weighbridge);
 
-    void delete(Weighbridge weighbridge);
+    public void delete(Long id);
 
-    ResultSet<Weighbridge> getRecords(PagingCriteria criteria);
+    public void delete(Weighbridge weighbridge);
 
-    void exportXLS(HttpServletResponse response);
+    public ResultSet<Weighbridge> getRecords(PagingCriteria criteria);
 
-    void importXLSX(String fileName, Principal principal);
+    public void importXLSX(String fileName, Principal principal);
+
+    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

@@ -31,10 +31,13 @@ import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Extrication;
 import com.aripd.project.lgk.domain.Weighbridge;
+import com.aripd.project.lgk.model.WeighbridgeFilterByIntervalForm;
 import com.aripd.project.lgk.service.ExtricationService;
 import com.aripd.project.lgk.service.WasteService;
 import com.aripd.project.lgk.service.WeighbridgeService;
 import java.security.Principal;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
 @Controller
@@ -49,6 +52,8 @@ public class WeighbridgeController {
     private WasteService wasteService;
     @Resource(name = "extricationService")
     private ExtricationService extricationService;
+    @Value("${path.directory.import}")
+    String pathDirectoryImport;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -125,16 +130,30 @@ public class WeighbridgeController {
         return "redirect:/weighbridge/show/" + id;
     }
 
-    /**
-     * Exports the report as an Excel format.
-     * <p>
-     * Make sure this method doesn't return any model. Otherwise, you'll get an
-     * "IllegalStateException: getOutputStream() has already been called for
-     * this response"
-     */
-    @RequestMapping(value = "/export/xls", method = RequestMethod.GET)
-    public void exportAction(HttpServletResponse response, Model model) {
-        weighbridgeService.exportXLS(response);
+    @RequestMapping(value = "/report", method = RequestMethod.GET)
+    public String reportAction(Model model) {
+        model.addAttribute("weighbridgeFilterByIntervalForm", new WeighbridgeFilterByIntervalForm());
+        return "weighbridge/report";
+    }
+
+    @RequestMapping(value = "/report", method = RequestMethod.POST)
+    public String reportAction(
+            final RedirectAttributes redirectAttributes,
+            @ModelAttribute("weighbridgeFilterByIntervalForm") @Valid WeighbridgeFilterByIntervalForm formData,
+            BindingResult result,
+            @RequestParam("startingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime startingTime,
+            @RequestParam("endingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime endingTime,
+            HttpServletResponse response,
+            Model model) {
+
+        if (result.hasErrors()) {
+            return "/weighbridge/report";
+        }
+
+        weighbridgeService.exportByInterval(response, startingTime, endingTime);
+
+        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
+        return "redirect:/weighbridge/report";
     }
 
     @RequestMapping(value = "/import/xls", method = RequestMethod.GET)
@@ -142,8 +161,6 @@ public class WeighbridgeController {
         model.addAttribute(new FileUploadBean());
         return "weighbridge/import";
     }
-    @Value("${path.directory.import}")
-    String pathDirectoryImport;
 
     @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
     public String importXLS(

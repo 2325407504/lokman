@@ -61,6 +61,25 @@ public class WeighbridgeServiceImpl implements WeighbridgeService {
         return repository.findOne(id);
     }
 
+    public List<Weighbridge> findByInterval(DateTime startingTime, DateTime endingTime) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Weighbridge> cq = cb.createQuery(Weighbridge.class);
+        Root<Weighbridge> root = cq.from(Weighbridge.class);
+
+        List<Predicate> predicateList = new ArrayList<Predicate>();
+        Predicate predicate1 = cb.between(root.get(Weighbridge_.checkin), startingTime, endingTime);
+        predicateList.add(predicate1);
+
+        Predicate[] predicates = new Predicate[predicateList.size()];
+        predicateList.toArray(predicates);
+        cq.where(predicates);
+
+        TypedQuery<Weighbridge> typedQuery = em.createQuery(cq);
+        List<Weighbridge> resultList = typedQuery.getResultList();
+
+        return resultList;
+    }
+    
     @Transactional
     public Weighbridge save(Weighbridge weighbridge) {
         return repository.save(weighbridge);
@@ -121,37 +140,6 @@ public class WeighbridgeServiceImpl implements WeighbridgeService {
         List<Weighbridge> resultList = typedQuery.getResultList();
 
         return new ResultSet<Weighbridge>(resultList, totalRecords, displaySize);
-    }
-
-    public void exportXLS(HttpServletResponse response) {
-        // 1. Create new workbook
-        HSSFWorkbook workbook = new HSSFWorkbook();
-
-        // 2. Create new worksheet
-        HSSFSheet worksheet = workbook.createSheet("Weighbridges");
-
-        // 3. Define starting indices for rows and columns
-        int startRowIndex = 0;
-        int startColIndex = 0;
-
-        // 4. Build layout
-        // Build title, date, and column headers
-        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
-
-        // 5. Fill report
-        FillManager.fillReport(worksheet, startRowIndex, startColIndex,
-                repository.findAll());
-
-        // 6. Set the response properties
-        String fileName = "WeighbridgeReport.xls";
-        response.setHeader("Content-Disposition", "inline; filename="
-                + fileName);
-        // Make sure to set the correct content type
-        response.setContentType("application/vnd.ms-excel");
-
-        // 7. Write to the output stream
-        Writer.write(response, worksheet);
-
     }
 
     public void importXLSX(String fileName, Principal principal) {
@@ -238,4 +226,35 @@ public class WeighbridgeServiceImpl implements WeighbridgeService {
 
         repository.save(weighbridges);
     }
+
+    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime) {
+        // 1. Create new workbook
+        HSSFWorkbook workbook = new HSSFWorkbook();
+
+        // 2. Create new worksheet
+        HSSFSheet worksheet = workbook.createSheet("Weighbridges");
+
+        // 3. Define starting indices for rows and columns
+        int startRowIndex = 0;
+        int startColIndex = 0;
+
+        // 4. Build layout
+        // Build title, date, and column headers
+        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
+
+        // 5. Fill report
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByInterval(startingTime, endingTime));
+
+        // 6. Set the response properties
+        String fileName = "WeighbridgeReport.xls";
+        response.setHeader("Content-Disposition", "inline; filename="
+                + fileName);
+        // Make sure to set the correct content type
+        response.setContentType("application/vnd.ms-excel");
+
+        // 7. Write to the output stream
+        Writer.write(response, worksheet);
+
+    }
+
 }

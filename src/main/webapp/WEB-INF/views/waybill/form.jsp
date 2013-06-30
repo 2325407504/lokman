@@ -4,41 +4,16 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url var="homeUrl" value="/" />
-<spring:url var="waybillList" value="/waybill/list" />
-<spring:url var="waybillShow" value="/waybill/show/${waybillAttribute.id}" />
-<spring:url var="waybillEdit" value="/waybill/edit/${waybillAttribute.id}" />
-<spring:url var="waybillNew" value="/waybill/new" />
-<spring:url var="waybillImport" value="/waybill/import/xls" />
-<spring:url var="waybillExport" value="/waybill/export/xls" />
-<spring:url var="outgoingExport" value="/outgoing/export/xls" />
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Waybills" />
+    <jsp:param name="property" value="waybill" />
+    <jsp:param name="import" value="true" />
+    <jsp:param name="report" value="true" />
+    <jsp:param name="submit" value="true" />
+    <jsp:param name="active" value="form" />
+</jsp:include>
+
 <spring:url var="waybillSave" value="/waybill/save" />
-<spring:url var="outgoingSave" value="/outgoing/save/${waybillAttribute.id}" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${waybillList}"><spring:message code="Waybills" /></a></li>
-        <c:choose>
-            <c:when test="${ !empty waybillAttribute.id }">
-            <li class="active"><a href="${waybillEdit}"><spring:message code="Entry No" />: ${waybillAttribute.id}</a></li>
-            </c:when>
-            <c:otherwise>
-            <li class="active"><a href="${waybillNew}"><spring:message code="New Entry" /></a></li>
-            </c:otherwise>
-        </c:choose>
-    <li class=""><a href="${waybillImport}"><spring:message code="Import" /></a></li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Export" />
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="${waybillExport}"><spring:message code="Waybill" /></a></li>
-            <li><a href="${outgoingExport}"><spring:message code="Outgoings" /></a></li>
-            </ul>
-        </li>
-    </ul>
-
 <form:form modelAttribute="waybillAttribute" action="${waybillSave}" method="post">
     <div class="row-fluid">
         <div class="span4">
@@ -64,7 +39,7 @@
                     <form:input type="datetime" id="waybillDate" path="documentDate" />
                     <form:errors cssClass="text-error" path="documentDate" />
                 </div>
-                    <div class="control-group">
+                <div class="control-group">
                     <form:label path="documentNo"><spring:message code="Document No" /></form:label>
                     <form:input path="documentNo" />
                     <form:errors cssClass="text-error" path="documentNo" />
@@ -89,7 +64,7 @@
         <div class="span4">
             <fieldset>
                 <legend><spring:message code="Invoice" /></legend>
-                    <div class="control-group">
+                <div class="control-group">
                     <form:label path="invoice.customer"><spring:message code="Customer" /></form:label>
                     <form:select multiple="false" path="invoice.customer.id" items="${customers}" itemLabel="name" itemValue="id" />
                     <form:errors cssClass="text-error" path="invoice.customer" />
@@ -117,7 +92,7 @@
             <a class="btn btn-danger" href="javascript:$('#form-${waybillAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete" /></a>
         </c:if>
         <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
-        </div>
+    </div>
 </form:form>
 
 <c:if test="${ !empty waybillAttribute.id }">
@@ -134,6 +109,7 @@
             <fmt:message key="Weight" var="Weight"/>
             <fmt:message key="Remark" var="Remark"/>
 
+            <spring:url var="outgoingSave" value="/outgoing/save/${waybillAttribute.id}" />
             <form:form modelAttribute="outgoingAttribute" action="${outgoingSave}" method="post" class="form-inline">
                 <form:errors path="*" cssClass="alert alert-error" element="div" />
                 <form:select multiple="false" path="product.id" items="${products}" itemLabel="name" itemValue="id" />

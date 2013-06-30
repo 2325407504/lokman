@@ -27,8 +27,6 @@ public interface UatfService {
 
     public ResultSet<Uatf> getRecords(Long forwarding_id, PagingCriteria criteria);
 
-    public void exportXLS(HttpServletResponse response);
-
     public void importXLSX(String fileName);
 
     public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);

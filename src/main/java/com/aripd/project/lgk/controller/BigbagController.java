@@ -53,6 +53,8 @@ public class BigbagController {
     private DriverService driverService;
     @Resource(name = "accountService")
     private AccountService accountService;
+    @Value("${path.directory.import}")
+    String pathDirectoryImport;
 
     @RequestMapping(value = "/get/{production_id}", method = RequestMethod.GET)
     public @ResponseBody
@@ -103,8 +105,6 @@ public class BigbagController {
         bigbagService.delete(bigbag);
         return "redirect:/production/edit/" + bigbag.getProduction().getId();
     }
-    @Value("${path.directory.import}")
-    String pathDirectoryImport;
 
     @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
     public String importXLS(

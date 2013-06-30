@@ -47,6 +47,8 @@ public class ExpenseController {
     private AccountService accountService;
     @Resource(name = "expensetypeService")
     private ExpensetypeService expensetypeService;
+    @Value("${path.directory.import}")
+    String pathDirectoryImport;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -144,8 +146,6 @@ public class ExpenseController {
         model.addAttribute(new FileUploadBean());
         return "expense/import";
     }
-    @Value("${path.directory.import}")
-    String pathDirectoryImport;
 
     @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
     public String importXLS(

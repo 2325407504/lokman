@@ -2,30 +2,31 @@ package com.aripd.project.lgk.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.project.lgk.domain.Outgoing;
+import javax.servlet.http.HttpServletResponse;
+import org.joda.time.DateTime;
 
 public interface OutgoingService {
 
-	Outgoing findOne(Long id);
+    public Outgoing findOne(Long id);
 
-	List<Outgoing> findAll();
+    public List<Outgoing> findAll();
 
-	Outgoing save(Outgoing outgoing);
+    public List<Outgoing> findByInterval(DateTime startingTime, DateTime endingTime);
 
-	void delete(Long id);
+    public Outgoing save(Outgoing outgoing);
 
-	void delete(Outgoing outgoing);
+    public void delete(Long id);
 
-	List<Outgoing> findByWaybillId(Long waybill_id);
+    public void delete(Outgoing outgoing);
 
-	ResultSet<Outgoing> getRecords(Long waybill_id, PagingCriteria criteria);
+    public List<Outgoing> findByWaybillId(Long waybill_id);
 
-	void exportXLS(HttpServletResponse response);
+    public ResultSet<Outgoing> getRecords(Long waybill_id, PagingCriteria criteria);
 
-	void importXLSX(String fileName);
+    public void importXLSX(String fileName);
 
+    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

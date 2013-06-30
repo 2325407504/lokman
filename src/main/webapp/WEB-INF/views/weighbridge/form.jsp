@@ -4,38 +4,16 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url var="homeUrl" value="/" />
-<spring:url var="weighbridgeList" value="/weighbridge/list" />
-<spring:url var="weighbridgeShow" value="/weighbridge/show/${weighbridgeAttribute.id}" />
-<spring:url var="weighbridgeEdit" value="/weighbridge/edit/${weighbridgeAttribute.id}" />
-<spring:url var="weighbridgeNew" value="/weighbridge/new" />
-<spring:url var="weighbridgeImport" value="/weighbridge/import/xls" />
-<spring:url var="weighbridgeExport" value="/weighbridge/export/xls" />
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Weighbridges" />
+    <jsp:param name="property" value="weighbridge" />
+    <jsp:param name="import" value="true" />
+    <jsp:param name="report" value="true" />
+    <jsp:param name="submit" value="true" />
+    <jsp:param name="active" value="form" />
+</jsp:include>
+
 <spring:url var="weighbridgeSave" value="/weighbridge/save" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${weighbridgeList}"><spring:message code="Weighbridges" /></a></li>
-        <c:choose>
-            <c:when test="${ !empty weighbridgeAttribute.id }">
-            <li class="active"><a href="${weighbridgeEdit}"><spring:message code="Entry No" />: ${weighbridgeAttribute.id}</a></li>
-            </c:when>
-            <c:otherwise>
-            <li class="active"><a href="${weighbridgeNew}"><spring:message code="New Entry" /></a></li>
-            </c:otherwise>
-        </c:choose>
-    <li class=""><a href="${weighbridgeImport}"><spring:message code="Import" /></a></li>
-    <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <spring:message code="Export" />
-            <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="${weighbridgeExport}"><spring:message code="Weighbridges" /></a></li>
-        </ul>
-    </li>
-</ul>
-
 <form:form modelAttribute="weighbridgeAttribute" action="${weighbridgeSave}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <form:hidden path="id" />
