@@ -40,7 +40,6 @@ import com.aripd.project.lgk.service.MachineService;
 import com.aripd.project.lgk.service.MachinetimeService;
 import com.aripd.project.lgk.service.ProductService;
 import com.aripd.project.lgk.service.ProductionService;
-import com.aripd.project.lgk.service.ShiftService;
 import javax.validation.Valid;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -56,8 +55,6 @@ public class ProductionController {
     private AccountService accountService;
     @Resource(name = "productService")
     private ProductService productService;
-    @Resource(name = "shiftService")
-    private ShiftService shiftService;
     @Resource(name = "electricmeterService")
     private ElectricmeterService electricmeterService;
     @Resource(name = "machineService")
@@ -92,12 +89,9 @@ public class ProductionController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
         model.addAttribute("accounts", accountService.findAll());
-        model.addAttribute("shifts", shiftService.findAll());
         model.addAttribute("electricmeters", electricmeterService.findAll());
         model.addAttribute("machines", machineService.findAll());
-        Production production = new Production();
-        production.setShiftdate(new DateTime());
-        model.addAttribute("productionAttribute", production);
+        model.addAttribute("productionAttribute", new Production());
         return "production/form";
     }
 
@@ -107,7 +101,6 @@ public class ProductionController {
             Model model) {
         model.addAttribute("bigbagAttribute", new Bigbag());
         model.addAttribute("accounts", accountService.findAll());
-        model.addAttribute("shifts", shiftService.findAll());
         model.addAttribute("electricmeters", electricmeterService.findAll());
         model.addAttribute("machines", machineService.findAll());
         model.addAttribute("products", productService.findAll());
@@ -124,7 +117,6 @@ public class ProductionController {
 
         if (result.hasErrors()) {
             model.addAttribute("accounts", accountService.findAll());
-            model.addAttribute("shifts", shiftService.findAll());
             model.addAttribute("electricmeters", electricmeterService.findAll());
             model.addAttribute("machines", machineService.findAll());
             return "/production/form";

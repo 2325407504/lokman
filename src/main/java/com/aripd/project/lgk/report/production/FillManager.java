@@ -51,15 +51,15 @@ public class FillManager {
             cell0.setCellStyle(bodyCellStyle);
 
             HSSFCell cell1 = row.createCell(startColIndex + 1);
-            cell1.setCellValue(datasource.get(i - 2).getShift().getName());
+            cell1.setCellValue(datasource.get(i - 2).getAccount().getUsername());
             cell1.setCellStyle(bodyCellStyle);
 
             HSSFCell cell2 = row.createCell(startColIndex + 2);
-            cell2.setCellValue(datasource.get(i - 2).getAccount().getUsername());
+            cell2.setCellValue(datasource.get(i - 2).getRemark());
             cell2.setCellStyle(bodyCellStyle);
 
             HSSFCell cell3 = row.createCell(startColIndex + 3);
-            cell3.setCellValue(datasource.get(i - 2).getRemark());
+            cell3.setCellValue(datasource.get(i - 2).getFeed());
             cell3.setCellStyle(bodyCellStyle);
 
             HSSFCell cell4 = row.createCell(startColIndex + 4);
@@ -79,9 +79,11 @@ public class FillManager {
                 cellc1.setCellValue(compensation.getVal());
                 cellc1.setCellStyle(bodyCellStyle);
 
-                HSSFCell cellc2 = row.createCell(startColIndex + 4 + dyn + 1);
+                dyn++;
+
+                HSSFCell cellc2 = row.createCell(startColIndex + 4 + dyn);
                 cellc2.setCellType(HSSFCell.CELL_TYPE_FORMULA);
-                cellc2.setCellFormula(cellc2.getRowIndex()+cellc2.getColumnIndex()+"*2070");
+                cellc2.setCellFormula(compensation.getVal() + "*2070");
                 cellc2.setCellStyle(bodyCellStyle);
 
                 dyn++;

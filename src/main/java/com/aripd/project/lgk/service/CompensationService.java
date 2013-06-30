@@ -14,6 +14,8 @@ public interface CompensationService {
 
     public Compensation findOneByProductionAndElectricmeter(Production production, Electricmeter electricmeter);
 
+    public Compensation findPrev(Long id);
+
     public List<Compensation> findAll();
 
     public List<Compensation> findByInterval(DateTime startingTime, DateTime endingTime);

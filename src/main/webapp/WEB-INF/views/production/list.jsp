@@ -17,7 +17,6 @@
     <aripd:column label="Action" field="id"/>
     <aripd:column label="Account" field="account.username"/>
     <aripd:column label="Date" field="shiftdate"/>
-    <aripd:column label="Shift" field="shift.name"/>
     <aripd:column label="Weight" field="feed"/>
     <aripd:column label="Remark" field="remark"/>
 </aripd:datatables>

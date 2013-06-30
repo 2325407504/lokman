@@ -39,14 +39,12 @@ import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.SortField;
 import com.aripd.project.lgk.domain.Production;
 import com.aripd.project.lgk.domain.Production_;
-import com.aripd.project.lgk.domain.Shift;
 import com.aripd.project.lgk.report.production.FillManager;
 import com.aripd.project.lgk.report.production.Layouter;
 import com.aripd.project.lgk.report.production.Writer;
 import com.aripd.project.lgk.repository.ProductionRepository;
 import com.aripd.project.lgk.repository.BigbagRepository;
 import com.aripd.project.lgk.service.ProductionService;
-import com.aripd.project.lgk.service.ShiftService;
 
 @Service("productionService")
 @Transactional(readOnly = true)
@@ -60,8 +58,6 @@ public class ProductionServiceImpl implements ProductionService {
     private BigbagRepository bigbagRepository;
     @Resource(name = "accountService")
     private AccountService accountService;
-    @Resource(name = "shiftService")
-    private ShiftService shiftService;
 
     public Production findOne(Long id) {
         return repository.findOne(id);
@@ -71,8 +67,8 @@ public class ProductionServiceImpl implements ProductionService {
         return repository.findOneByAccountAndId(account, id);
     }
 
-    public Production findOneByShiftdateAndShift(DateTime shiftdate, Shift shift) {
-        return repository.findOneByShiftdateAndShift(shiftdate, shift);
+    public Production findOneByShiftdate(DateTime shiftdate) {
+        return repository.findOneByShiftdate(shiftdate);
     }
 
     public List<Production> findByInterval(DateTime startingTime, DateTime endingTime) {
@@ -235,15 +231,13 @@ public class ProductionServiceImpl implements ProductionService {
 
             String username = row.getCell(0).getStringCellValue();
             Date shiftdate = row.getCell(1).getDateCellValue();
-            String shiftCode = row.getCell(2).getStringCellValue();
-            Double feed = row.getCell(3).getNumericCellValue();
-            String remark = row.getCell(4).getStringCellValue();
+            Double feed = row.getCell(2).getNumericCellValue();
+            String remark = row.getCell(3).getStringCellValue();
 
             production = new Production();
             production.setSubmitted(true);
             production.setAccount(accountService.findOneByUsername(username));
             production.setShiftdate(new DateTime(shiftdate));
-            production.setShift(shiftService.findOneByCode(shiftCode));
             production.setFeed(feed);
             production.setRemark(remark);
 

@@ -15,7 +15,6 @@ import com.aripd.project.lgk.repository.MachinetimeRepository;
 import com.aripd.project.lgk.service.ProductionService;
 import com.aripd.project.lgk.service.MachinetimeService;
 import com.aripd.project.lgk.service.ProductService;
-import com.aripd.project.lgk.service.ShiftService;
 
 @Service("machinetimeService")
 @Transactional(readOnly = true)
@@ -27,8 +26,6 @@ public class MachinetimeServiceImpl implements MachinetimeService {
     private MachinetimeRepository repository;
     @Autowired
     private ProductionService productionService;
-    @Autowired
-    private ShiftService shiftService;
     @Autowired
     private ProductService productService;
 

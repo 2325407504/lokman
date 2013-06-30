@@ -22,8 +22,6 @@
 <c:if test="${requestScope['javax.servlet.forward.request_uri'] == machine_list}"><c:set var="machine_class" value="active" /></c:if>
 <spring:url value="/expensetype/list" var="expensetype_list" />
 <c:if test="${requestScope['javax.servlet.forward.request_uri'] == expensetype_list}"><c:set var="expensetype_class" value="active" /></c:if>
-<spring:url value="/shift/list" var="shift_list" />
-<c:if test="${requestScope['javax.servlet.forward.request_uri'] == shift_list}"><c:set var="shift_class" value="active" /></c:if>
 <spring:url value="/truck/list" var="truck_list" />
 <c:if test="${requestScope['javax.servlet.forward.request_uri'] == truck_list}"><c:set var="truck_class" value="active" /></c:if>
 <spring:url value="/driver/list" var="driver_list" />
@@ -97,7 +95,6 @@
                             <li class="${electricmeter_class}"><a href="${electricmeter_list}"><spring:message code="Electricmeters" /></a></li>
                             <li class="${machine_class}"><a href="${machine_list}"><spring:message code="Machines" /></a></li>
                             <li class="${expensetype_class}"><a href="${expensetype_list}"><spring:message code="Expensetypes" /></a></li>
-                            <li class="${shift_class}"><a href="${shift_list}"><spring:message code="Shifts" /></a></li>
                             <li class="${truck_class}"><a href="${truck_list}"><spring:message code="Trucks" /></a></li>
                             <li class="${driver_class}"><a href="${driver_list}"><spring:message code="Drivers" /></a></li>
                             <li class="${subcontractor_class}"><a href="${subcontractor_list}"><spring:message code="Subcontractors" /></a></li>

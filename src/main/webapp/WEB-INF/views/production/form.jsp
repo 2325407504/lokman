@@ -30,14 +30,9 @@
                     <form:errors cssClass="text-error" path="account" />
                 </div>
                 <div class="control-group">
-                    <form:label path="shiftdate"><spring:message code="Date" /></form:label>
+                    <form:label path="shiftdate"><spring:message code="Shift" /></form:label>
                     <form:input id="shiftdate" type="text" path="shiftdate" />
                     <form:errors cssClass="text-error" path="shiftdate" />
-                </div>
-                <div class="control-group">
-                    <form:label path="shift"><spring:message code="Shift" /></form:label>
-                    <form:select id="shiftId" path="shift.id" multiple="false" items="${shifts}" itemLabel="name" itemValue="id" />
-                    <form:errors cssClass="text-error" path="shift" />
                 </div>
                 <div class="control-group">
                     <form:label path="feed"><spring:message code="Feed" text="Feed" /></form:label>
@@ -155,7 +150,15 @@
 <script>
     $(function() {
         $("#shiftdate").datetimepicker({
-            maxDate: new Date()
+            showButtonPanel: false,
+            maxDate: new Date(),
+            showMinute: false,
+            hourGrid: 8,
+            stepHour: 8,
+            hourText: "Vardiya",
+            onClose: function(e) {
+                console.log(e);
+            }
         });
     });
 </script>

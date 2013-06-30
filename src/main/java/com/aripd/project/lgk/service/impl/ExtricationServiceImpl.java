@@ -15,7 +15,6 @@ import com.aripd.project.lgk.repository.ExtricationRepository;
 import com.aripd.project.lgk.service.ProductionService;
 import com.aripd.project.lgk.service.ExtricationService;
 import com.aripd.project.lgk.service.ProductService;
-import com.aripd.project.lgk.service.ShiftService;
 
 @Service("extricationService")
 @Transactional(readOnly = true)
@@ -27,8 +26,6 @@ public class ExtricationServiceImpl implements ExtricationService {
     private ExtricationRepository repository;
     @Autowired
     private ProductionService productionService;
-    @Autowired
-    private ShiftService shiftService;
     @Autowired
     private ProductService productService;
 

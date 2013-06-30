@@ -30,7 +30,6 @@ import com.aripd.common.dto.SortField;
 import com.aripd.project.lgk.domain.Production;
 import com.aripd.project.lgk.domain.Production_;
 import com.aripd.project.lgk.domain.Product;
-import com.aripd.project.lgk.domain.Shift;
 import com.aripd.project.lgk.domain.Bigbag;
 import com.aripd.project.lgk.domain.Bigbag_;
 import com.aripd.project.lgk.report.bigbag.FillManager;
@@ -40,7 +39,6 @@ import com.aripd.project.lgk.repository.BigbagRepository;
 import com.aripd.project.lgk.service.ProductionService;
 import com.aripd.project.lgk.service.BigbagService;
 import com.aripd.project.lgk.service.ProductService;
-import com.aripd.project.lgk.service.ShiftService;
 import java.util.Date;
 import javax.persistence.criteria.Join;
 import javax.servlet.http.HttpServletResponse;
@@ -58,8 +56,6 @@ public class BigbagServiceImpl implements BigbagService {
     private BigbagRepository repository;
     @Autowired
     private ProductionService productionService;
-    @Autowired
-    private ShiftService shiftService;
     @Autowired
     private ProductService productService;
 
@@ -187,11 +183,10 @@ public class BigbagServiceImpl implements BigbagService {
             Row row = worksheet.getRow(i);
 
             Date shiftdate = row.getCell(0).getDateCellValue();
-            Shift shift = shiftService.findOneByCode(row.getCell(1).getStringCellValue());
             Product product = productService.findOneByCode(row.getCell(2).getStringCellValue());
             Double weight = row.getCell(3).getNumericCellValue();
 
-            Production production = productionService.findOneByShiftdateAndShift(new DateTime(shiftdate), shift);
+            Production production = productionService.findOneByShiftdate(new DateTime(shiftdate));
             if (production != null) {
                 Bigbag bigbag = new Bigbag();
                 bigbag.setProduction(production);

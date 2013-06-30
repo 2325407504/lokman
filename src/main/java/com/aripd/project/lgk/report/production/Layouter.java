@@ -121,14 +121,17 @@ public class Layouter {
 
         int dyn = 1;
         List<Compensation> compensations = datasource.get(0).getCompensations();
+        HSSFCell cellc;
         for (Compensation compensation : compensations) {
-            HSSFCell cellc = rowHeader.createCell(startColIndex + 4 + dyn);
-            cellc.setCellValue(compensation.getElectricmeter().getName());
-            cellc.setCellStyle(headerCellStyle);
+            HSSFCell cellc1 = rowHeader.createCell(startColIndex + 4 + dyn);
+            cellc1.setCellValue(compensation.getElectricmeter().getName());
+            cellc1.setCellStyle(headerCellStyle);
 
-            cellc = rowHeader.createCell(startColIndex + 4 + dyn + 1);
-            cellc.setCellValue(compensation.getElectricmeter().getName() + "\nkWh");
-            cellc.setCellStyle(headerCellStyle);
+            dyn++;
+            
+            HSSFCell cellc2 = rowHeader.createCell(startColIndex + 4 + dyn);
+            cellc2.setCellValue(compensation.getElectricmeter().getName() + "\nkWh");
+            cellc2.setCellStyle(headerCellStyle);
 
             dyn++;
         }

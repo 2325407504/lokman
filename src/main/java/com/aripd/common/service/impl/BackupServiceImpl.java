@@ -58,7 +58,6 @@ public class BackupServiceImpl implements BackupService {
             "electricmeter",
             "machine",
             "expensetype",
-            "shift",
             "productgroup",
             "product",
             "wastegroup",

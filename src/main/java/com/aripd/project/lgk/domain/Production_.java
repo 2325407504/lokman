@@ -21,7 +21,6 @@ public class Production_ extends BaseEntity_ {
     public static volatile SingularAttribute<Production, Boolean> submitted;
     public static volatile SingularAttribute<Production, Account> account;
     public static volatile SingularAttribute<Production, DateTime> shiftdate;
-    public static volatile SingularAttribute<Production, Shift> shift;
     public static volatile SingularAttribute<Production, Double> feed;
     public static volatile SingularAttribute<Production, String> remark;
     public static volatile SetAttribute<Production, Bigbag> bigbags;

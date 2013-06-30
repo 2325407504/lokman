@@ -24,7 +24,6 @@ import javax.validation.constraints.Past;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "production")
@@ -41,8 +40,6 @@ public class Production extends BaseEntity {
     @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
     @Column(columnDefinition = "TIMESTAMP")
     private DateTime shiftdate;
-    @ManyToOne
-    private Shift shift;
     @Column(nullable = false)
     @NotNull
     private Double feed;
@@ -87,14 +84,6 @@ public class Production extends BaseEntity {
 
     public void setShiftdate(DateTime shiftdate) {
         this.shiftdate = shiftdate;
-    }
-
-    public Shift getShift() {
-        return shift;
-    }
-
-    public void setShift(Shift shift) {
-        this.shift = shift;
     }
 
     public Double getFeed() {

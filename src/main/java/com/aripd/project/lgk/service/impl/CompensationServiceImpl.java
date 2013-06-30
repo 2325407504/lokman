@@ -20,7 +20,6 @@ import com.aripd.project.lgk.repository.CompensationRepository;
 import com.aripd.project.lgk.service.ProductionService;
 import com.aripd.project.lgk.service.CompensationService;
 import com.aripd.project.lgk.service.ProductService;
-import com.aripd.project.lgk.service.ShiftService;
 import java.util.ArrayList;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -44,8 +43,6 @@ public class CompensationServiceImpl implements CompensationService {
     @Autowired
     private ProductionService productionService;
     @Autowired
-    private ShiftService shiftService;
-    @Autowired
     private ProductService productService;
 
     public Compensation findOne(Long id) {
@@ -54,6 +51,10 @@ public class CompensationServiceImpl implements CompensationService {
 
     public Compensation findOneByProductionAndElectricmeter(Production production, Electricmeter electricmeter) {
         return repository.findOneByProductionAndElectricmeter(production, electricmeter);
+    }
+
+    public Compensation findPrev(Long id) {
+        return findOne(id);
     }
 
     public List<Compensation> findAll() {
