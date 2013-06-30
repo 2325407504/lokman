@@ -37,8 +37,7 @@ public class UserUatfController {
     @RequestMapping(value = "/get/{forwarding_id}", method = RequestMethod.GET)
     public @ResponseBody
     WebResultSet<Uatf> getDataTables(@PathVariable Long forwarding_id, @TableParam PagingCriteria criteria) {
-        ResultSet<Uatf> customers = this.uatfService.getRecords(forwarding_id, criteria);
-        return ControllerUtils.getWebResultSet(criteria, customers);
+        return ControllerUtils.getWebResultSet(criteria, this.uatfService.getRecords(forwarding_id, criteria));
     }
 
     @RequestMapping(value = "/save/{forwarding_id}", method = RequestMethod.POST)

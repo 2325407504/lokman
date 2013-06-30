@@ -9,8 +9,6 @@
 <spring:url var="forwardingShow" value="/user/forwarding/show/${forwardingAttribute.id}" />
 <spring:url var="forwardingEdit" value="/user/forwarding/edit/${forwardingAttribute.id}" />
 <spring:url var="forwardingNew" value="/user/forwarding/new" />
-<spring:url var="forwardingSave" value="/user/forwarding/save" />
-<spring:url var="uatfSave" value="/user/uatf/save/${forwardingAttribute.id}" />
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
@@ -27,48 +25,49 @@
 
 <div class="row-fluid">
     <div class="span4">
-        <form:form modelAttribute="forwardingAttribute" action="${forwardingSave}" method="post">
+        <spring:url var="save" value="/user/forwarding/save" />
+        <form:form modelAttribute="forwardingAttribute" action="${save}" method="post">
             <form:errors path="*" cssClass="alert alert-error" element="div" />
             <form:hidden path="id" />
             <fieldset>
                 <div class="control-group">
                     <form:label path="waybillNo"><spring:message code="Waybill No" /></form:label>
-                    <span><form:input type="text" path="waybillNo" /></span>
+                    <form:input type="text" path="waybillNo" />
                     <form:errors cssClass="text-error" path="waybillNo" />
                 </div>
                 <div class="control-group">
                     <form:label path="driver"><spring:message code="Driver" /></form:label>
-                    <span><form:input path="driver" /></span>
+                    <form:input path="driver" />
                     <form:errors cssClass="text-error" path="driver" />
                 </div>
                 <div class="control-group">
                     <form:label path="plate"><spring:message code="Plate" /></form:label>
-                    <span><form:input path="plate" /></span>
+                    <form:input path="plate" />
                     <form:errors cssClass="text-error" path="plate" />
                 </div>
                 <div class="control-group">
                     <form:label path="startingTime"><spring:message code="Starting Time" /></form:label>
-                    <span><form:input type="text" path="startingTime" /></span>
+                    <form:input type="text" path="startingTime" />
                     <form:errors cssClass="text-error" path="startingTime" />
                 </div>
                 <div class="control-group">
                     <form:label path="endingTime"><spring:message code="Ending Time" /></form:label>
-                    <span><form:input type="text" path="endingTime" /></span>
+                    <form:input type="text" path="endingTime" />
                     <form:errors cssClass="text-error" path="endingTime" />
                 </div>
                 <div class="control-group">
                     <form:label path="endingPoint"><spring:message code="Ending Point" /></form:label>
-                    <span><form:input path="endingPoint" /></span>
+                    <form:input path="endingPoint" />
                     <form:errors cssClass="text-error" path="endingPoint" />
                 </div>
                 <div class="control-group">
                     <form:label path="loadWeightInTonne"><spring:message code="Weight" /></form:label>
-                    <span><form:input path="loadWeightInTonne" /></span>
+                    <form:input path="loadWeightInTonne" />
                     <form:errors cssClass="text-error" path="loadWeightInTonne" />
                 </div>
                 <div class="control-group">
                     <form:label path="shippingCost"><spring:message code="Shipping Cost" /></form:label>
-                    <span><form:input path="shippingCost" /></span>
+                    <form:input path="shippingCost" />
                     <form:errors cssClass="text-error" path="shippingCost" />
                 </div>
                 <div class="control-group">
@@ -86,8 +85,8 @@
                         <a class="btn btn-danger" href="javascript:$('#form-${forwardingAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete" /></a>
                     </c:if>
                     <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
-                    </div>
-                </fieldset>
+                </div>
+            </fieldset>
         </form:form>
 
         <c:if test="${ !empty forwardingAttribute.id }">
@@ -105,6 +104,7 @@
         <fmt:message key="Weight" var="Weight"/>
 
         <c:if test="${forwardingAttribute.id != null}">
+            <spring:url var="uatfSave" value="/user/uatf/save/${forwardingAttribute.id}" />
             <form:form modelAttribute="uatfAttribute" action="${uatfSave}" method="post" class="form-inline">
                 <form:errors path="*" cssClass="alert alert-error" element="div" />
                 <form:input path="code" cssClass="input-small" placeholder="${Code}" />

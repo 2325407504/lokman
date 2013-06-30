@@ -13,12 +13,12 @@
     <jsp:param name="active" value="form" />
 </jsp:include>
 
-<div class="row-fluid">
-    <div class="span6">
-        <spring:url var="forwardingSave" value="/forwarding/save" />
-        <form:form modelAttribute="forwardingAttribute" action="${forwardingSave}" method="post">
-            <form:errors path="*" cssClass="alert alert-error" element="div" />
-            <form:hidden path="id" />
+<spring:url var="save" value="/forwarding/save" />
+<form:form modelAttribute="forwardingAttribute" action="${save}" method="post">
+    <form:errors path="*" cssClass="alert alert-error" element="div" />
+    <form:hidden path="id" />
+    <div class="row-fluid">
+        <div class="span4">
             <fieldset>
                 <div class="control-group">
                     <form:checkbox path="submitted" /> <spring:message code="Submitted by user" />
@@ -29,6 +29,10 @@
                     <form:select multiple="false" path="account.id" items="${accounts}" itemLabel="client.fullname" itemValue="id" />
                     <form:errors cssClass="text-error" path="account" />
                 </div>
+            </fieldset>
+        </div>
+        <div class="span4">
+            <fieldset>
                 <div class="control-group">
                     <form:label path="waybillNo"><spring:message code="Waybill No" /></form:label>
                     <form:input path="waybillNo" />
@@ -58,6 +62,10 @@
                     <form:input path="endingPoint" />
                     <form:errors cssClass="text-error" path="endingPoint" />
                 </div>
+            </fieldset>
+        </div>
+        <div class="span4">
+            <fieldset>
                 <div class="control-group">
                     <form:label path="loadWeightInTonne"><spring:message code="Weight" /></form:label>
                     <form:input path="loadWeightInTonne" />
@@ -78,23 +86,32 @@
                     <form:select path="quota.id" multiple="false" items="${quotas}" itemLabel="name" itemValue="id"/>
                     <form:errors cssClass="text-error" path="quota" />
                 </div>
-                <div class="form-actions">
-                    <c:if test="${ !empty forwardingAttribute.id }">
-                        <a class="btn btn-danger" href="javascript:$('#form-${forwardingAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete" /></a>
-                    </c:if>
-                    <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
-                </div>
-            </fieldset>
-        </form:form>
-
-        <c:if test="${ !empty forwardingAttribute.id }">
-            <spring:url var="deleteUrl" value="/forwarding/delete?id=${forwardingAttribute.id}" />
-            <form:form id="form-${forwardingAttribute.id}" modelAttribute="forwardingAttribute" action="${deleteUrl}" method="delete">
-                <form:hidden path="id" />
-            </form:form>
-        </c:if>
+        </div>
     </div>
-    <div class="span6">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="form-actions">
+                <c:if test="${ !empty forwardingAttribute.id }">
+                    <a class="btn btn-danger" href="javascript:$('#form-${forwardingAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete" /></a>
+                </c:if>
+                <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
+            </div>
+            </fieldset>
+        </div>
+    </div>
+</form:form>
+
+<c:if test="${ !empty forwardingAttribute.id }">
+    <spring:url var="delete" value="/forwarding/delete">
+        <spring:param name="id" value="${forwardingAttribute.id}" />
+    </spring:url>
+    <form:form id="form-${forwardingAttribute.id}" modelAttribute="forwardingAttribute" action="${delete}" method="delete">
+        <form:hidden path="id" />
+    </form:form>
+</c:if>
+
+<div class="row-fluid">
+    <div class="span12">
         <fmt:message key="Code" var="Code"/>
         <fmt:message key="Company" var="Company"/>
         <fmt:message key="County" var="County"/>
@@ -117,7 +134,7 @@
 
             <hr>
 
-            <aripd:datatables datasource="/uatf/get/${forwardingAttribute.id}" id="uatfs" dataUrlDelete="/uatf/delete" actionColumn="5">
+            <aripd:datatables datasource="/uatf/get/${forwardingAttribute.id}" id="uatfs" dataUrlDelete="/uatf/delete" actionColumn="5" caption="Uatf">
                 <aripd:column label="Code" field="code"/>
                 <aripd:column label="Company" field="company"/>
                 <aripd:column label="County" field="county"/>

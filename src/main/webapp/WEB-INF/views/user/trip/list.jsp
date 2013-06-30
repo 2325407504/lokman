@@ -13,16 +13,16 @@
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
     <li class="active"><a href="${tripList}"><spring:message code="Trips" /></a></li>
     <li class=""><a href="${tripNew}"><spring:message code="New Entry" /></a></li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
             <spring:message code="Reports" />
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="${tripReport}"><spring:message code="Report" /></a></li>
-            </ul>
-        </li>
-    </ul>
+            <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="${tripReport}"><spring:message code="Report" /></a></li>
+        </ul>
+    </li>
+</ul>
 
 <aripd:datatables datasource="/user/trip/get" id="trips" dataUrlShow="/user/trip/show" dataUrlEdit="/user/trip/edit">
     <aripd:column label="Action" field="id"/>

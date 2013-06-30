@@ -143,10 +143,7 @@
 
             <hr>
 
-            <spring:url var="bigbagDatasource" value="/bigbag/get/{id}">
-                <spring:param name="id" value="${productionAttribute.id}" />
-            </spring:url>
-            <aripd:datatables datasource="${bigbagDatasource}" id="bigbags" caption="Production Amounts" dataUrlDelete="/bigbag/delete" actionColumn="2">
+            <aripd:datatables datasource="/bigbag/get/${productionAttribute.id}" id="bigbags" caption="Production Amounts" dataUrlDelete="/bigbag/delete" actionColumn="2">
                 <aripd:column label="Product" field="product.name"/>
                 <aripd:column label="Weight" field="weight"/>
                 <aripd:column label="Action" field="id"/>

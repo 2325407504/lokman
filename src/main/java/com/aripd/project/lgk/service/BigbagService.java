@@ -5,22 +5,29 @@ import java.util.List;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.project.lgk.domain.Bigbag;
+import com.aripd.project.lgk.domain.Uatf;
+import javax.servlet.http.HttpServletResponse;
+import org.joda.time.DateTime;
 
 public interface BigbagService {
 
-    Bigbag findOne(Long id);
+    public Bigbag findOne(Long id);
 
-    List<Bigbag> findAll();
+    public List<Bigbag> findAll();
 
-    Bigbag save(Bigbag bigbag);
+    public List<Bigbag> findByInterval(DateTime startingTime, DateTime endingTime);
 
-    void delete(Long id);
+    public Bigbag save(Bigbag bigbag);
 
-    void delete(Bigbag bigbag);
+    public void delete(Long id);
 
-    List<Bigbag> findByProductionId(Long id);
+    public void delete(Bigbag bigbag);
 
-    ResultSet<Bigbag> getRecords(Long production_id, PagingCriteria criteria);
+    public List<Bigbag> findByProductionId(Long id);
 
-    void importXLSX(String fileName);
+    public ResultSet<Bigbag> getRecords(Long production_id, PagingCriteria criteria);
+
+    public void importXLSX(String fileName);
+
+    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

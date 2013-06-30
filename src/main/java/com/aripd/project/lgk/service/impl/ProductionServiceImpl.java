@@ -265,11 +265,12 @@ public class ProductionServiceImpl implements ProductionService {
         int startColIndex = 0;
 
         // 4. Build layout
+        List<Production> datasource = this.findByInterval(startingTime, endingTime);
         // Build title, date, and column headers
-        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
+        Layouter.buildReport(worksheet, startRowIndex, startColIndex, datasource);
 
         // 5. Fill report
-        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByInterval(startingTime, endingTime));
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, datasource);
 
         // 6. Set the response properties
         String fileName = "ProductionReport.xls";

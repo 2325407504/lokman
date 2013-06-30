@@ -14,7 +14,7 @@
 </jsp:include>
 
 <div class="row-fluid">
-    <div class="span4">
+    <div class="span12">
         <aripd:description id="forwarding">
             <aripd:descriptionitem label="Account" field="forwardingAttribute.account.client.fullname"></aripd:descriptionitem>
             <aripd:descriptionitem label="Waybill No" field="forwardingAttribute.waybillNo"></aripd:descriptionitem>
@@ -29,8 +29,10 @@
             <aripd:descriptionitem label="Quota" field="forwardingAttribute.quota.name"></aripd:descriptionitem>
         </aripd:description>
     </div>
-    <div class="span8">
-        <aripd:datatables datasource="/uatf/get/${forwardingAttribute.id}" id="uatfs">
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        <aripd:datatables datasource="/uatf/get/${forwardingAttribute.id}" id="uatfs" caption="Uatf">
             <aripd:column label="Code" field="code"/>
             <aripd:column label="Company" field="company"/>
             <aripd:column label="County" field="county"/>

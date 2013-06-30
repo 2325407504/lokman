@@ -1,10 +1,7 @@
-package com.aripd.project.lgk.report.production;
+package com.aripd.project.lgk.report.bigbag;
 
-import com.aripd.project.lgk.domain.Bigbag;
-import com.aripd.project.lgk.domain.Compensation;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -14,7 +11,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import com.aripd.project.lgk.domain.Production;
+import com.aripd.project.lgk.domain.Bigbag;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 
 public class FillManager {
@@ -29,7 +26,8 @@ public class FillManager {
      * @param startColIndex starting column offset
      * @param datasource the data source
      */
-    public static void fillReport(HSSFSheet worksheet, int startRowIndex, int startColIndex, List<Production> datasource) {
+    public static void fillReport(HSSFSheet worksheet, int startRowIndex,
+            int startColIndex, List<Bigbag> datasource) {
         // Row offset
         startRowIndex += 2;
 
@@ -47,45 +45,21 @@ public class FillManager {
             HSSFRow row = worksheet.createRow((short) i + 1);
 
             HSSFCell cell0 = row.createCell(startColIndex + 0);
-            cell0.setCellValue(formatter.print(datasource.get(i - 2).getShiftdate()));
+            cell0.setCellValue(formatter.print(datasource.get(i - 2).getProduction().getShiftdate()));
             cell0.setCellStyle(bodyCellStyle);
 
+
             HSSFCell cell1 = row.createCell(startColIndex + 1);
-            cell1.setCellValue(datasource.get(i - 2).getShift().getName());
+            cell1.setCellValue(datasource.get(i - 2).getProduction().getAccount().getUsername());
             cell1.setCellStyle(bodyCellStyle);
 
             HSSFCell cell2 = row.createCell(startColIndex + 2);
-            cell2.setCellValue(datasource.get(i - 2).getAccount().getUsername());
+            cell2.setCellValue(datasource.get(i - 2).getProduction().getFeed());
             cell2.setCellStyle(bodyCellStyle);
 
             HSSFCell cell3 = row.createCell(startColIndex + 3);
-            cell3.setCellValue(datasource.get(i - 2).getRemark());
+            cell3.setCellValue(datasource.get(i - 2).getProduction().getRemark());
             cell3.setCellStyle(bodyCellStyle);
-
-            HSSFCell cell4 = row.createCell(startColIndex + 4);
-            StringBuilder sb = new StringBuilder();
-            Set<Bigbag> bigbags = datasource.get(i - 2).getBigbags();
-            for (Bigbag bigbag : bigbags) {
-                sb.append(bigbag.getWeight());
-                sb.append("\n");
-            }
-            cell4.setCellValue(sb.toString());
-            cell4.setCellStyle(bodyCellStyle);
-
-            int dyn = 1;
-            List<Compensation> compensations = datasource.get(i - 2).getCompensations();
-            for (Compensation compensation : compensations) {
-                HSSFCell cellc1 = row.createCell(startColIndex + 4 + dyn);
-                cellc1.setCellValue(compensation.getVal());
-                cellc1.setCellStyle(bodyCellStyle);
-
-                HSSFCell cellc2 = row.createCell(startColIndex + 4 + dyn + 1);
-                cellc2.setCellType(HSSFCell.CELL_TYPE_FORMULA);
-                cellc2.setCellFormula(cellc2.getRowIndex()+cellc2.getColumnIndex()+"*2070");
-                cellc2.setCellStyle(bodyCellStyle);
-
-                dyn++;
-            }
 
         }
     }

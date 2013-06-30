@@ -10,7 +10,8 @@
     <jsp:param name="active" value="form" />
 </jsp:include>
 
-<form:form modelAttribute="driverAttribute" action="${driverSave}" method="post">
+<spring:url var="save" value="/driver/save" />
+<form:form modelAttribute="driverAttribute" action="${save}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <form:hidden path="id" />
     <fieldset>
@@ -21,17 +22,17 @@
         </div>
         <div class="control-group">
             <form:label path="code"><spring:message code="Code" /></form:label>
-            <span><form:input path="code" /></span>
+            <form:input path="code" />
             <form:errors cssClass="text-error" path="code" />
         </div>
         <div class="control-group">
             <form:label path="name"><spring:message code="Fullname" /></form:label>
-            <span><form:input path="name" /></span>
+            <form:input path="name" />
             <form:errors cssClass="text-error" path="name" />
         </div>
         <div class="control-group">
             <form:label path="phonenumber"><spring:message code="Phone Number" /></form:label>
-            <span><form:input path="phonenumber" /></span>
+            <form:input path="phonenumber" />
             <form:errors cssClass="text-error" path="phonenumber" />
         </div>
         <div class="form-actions">
@@ -44,8 +45,10 @@
 </form:form>
 
 <c:if test="${ !empty driverAttribute.id }">
-    <spring:url var="deleteUrl" value="/driver/delete?id=${driverAttribute.id}" />
-    <form:form id="form-${driverAttribute.id}" modelAttribute="driverAttribute" action="${deleteUrl}" method="delete">
+    <spring:url var="delete" value="/driver/delete">
+        <spring:param name="id" value="${driverAttribute.id}" />
+    </spring:url>
+    <form:form id="form-${driverAttribute.id}" modelAttribute="driverAttribute" action="${delete}" method="delete">
         <form:hidden path="id" />
     </form:form>
 </c:if>

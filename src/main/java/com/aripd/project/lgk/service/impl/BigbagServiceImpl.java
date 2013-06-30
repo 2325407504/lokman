@@ -28,16 +28,24 @@ import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.SortField;
 import com.aripd.project.lgk.domain.Production;
-import com.aripd.project.lgk.domain.Bigbag;
-import com.aripd.project.lgk.domain.Bigbag_;
+import com.aripd.project.lgk.domain.Production_;
 import com.aripd.project.lgk.domain.Product;
 import com.aripd.project.lgk.domain.Shift;
+import com.aripd.project.lgk.domain.Bigbag;
+import com.aripd.project.lgk.domain.Bigbag_;
+import com.aripd.project.lgk.report.bigbag.FillManager;
+import com.aripd.project.lgk.report.bigbag.Layouter;
+import com.aripd.project.lgk.report.bigbag.Writer;
 import com.aripd.project.lgk.repository.BigbagRepository;
 import com.aripd.project.lgk.service.ProductionService;
 import com.aripd.project.lgk.service.BigbagService;
 import com.aripd.project.lgk.service.ProductService;
 import com.aripd.project.lgk.service.ShiftService;
 import java.util.Date;
+import javax.persistence.criteria.Join;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.joda.time.DateTime;
 
 @Service("bigbagService")
@@ -65,6 +73,26 @@ public class BigbagServiceImpl implements BigbagService {
 
     public List<Bigbag> findByProductionId(Long id) {
         return repository.findByProductionId(id);
+    }
+
+    public List<Bigbag> findByInterval(DateTime startingTime, DateTime endingTime) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Bigbag> cq = cb.createQuery(Bigbag.class);
+        Root<Bigbag> root = cq.from(Bigbag.class);
+        Join<Bigbag, Production> production = root.join(Bigbag_.production);
+
+        List<Predicate> predicateList = new ArrayList<Predicate>();
+        Predicate predicate1 = cb.between(production.get(Production_.shiftdate), startingTime, endingTime);
+        predicateList.add(predicate1);
+
+        Predicate[] predicates = new Predicate[predicateList.size()];
+        predicateList.toArray(predicates);
+        cq.where(predicates);
+
+        TypedQuery<Bigbag> typedQuery = em.createQuery(cq);
+        List<Bigbag> resultList = typedQuery.getResultList();
+
+        return resultList;
     }
 
     @Transactional
@@ -175,5 +203,34 @@ public class BigbagServiceImpl implements BigbagService {
         }
 
         repository.save(bigbags);
+    }
+
+    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime) {
+        // 1. Create new workbook
+        HSSFWorkbook workbook = new HSSFWorkbook();
+
+        // 2. Create new worksheet
+        HSSFSheet worksheet = workbook.createSheet("Bigbag Report");
+
+        // 3. Define starting indices for rows and columns
+        int startRowIndex = 0;
+        int startColIndex = 0;
+
+        // 4. Build layout
+        // Build title, date, and column headers
+        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
+
+        // 5. Fill report
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByInterval(startingTime, endingTime));
+
+        // 6. Set the response properties
+        String fileName = "BigbagReport.xls";
+        response.setHeader("Content-Disposition", "inline; filename="
+                + fileName);
+        // Make sure to set the correct content type
+        response.setContentType("application/vnd.ms-excel");
+
+        // 7. Write to the output stream
+        Writer.write(response, worksheet);
     }
 }

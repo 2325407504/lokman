@@ -9,7 +9,6 @@
 <spring:url var="expenseShow" value="/user/expense/show/${expenseAttribute.id}" />
 <spring:url var="expenseEdit" value="/user/expense/edit/${expenseAttribute.id}" />
 <spring:url var="expenseNew" value="/user/expense/new" />
-<spring:url var="expenseSave" value="/user/expense/save" />
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
@@ -26,7 +25,8 @@
 
 <div class="row-fluid">
     <div class="span12">
-        <form:form modelAttribute="expenseAttribute" action="${expenseSave}" method="post">
+        <spring:url var="save" value="/user/expense/save" />
+        <form:form modelAttribute="expenseAttribute" action="${save}" method="post">
             <form:errors path="*" cssClass="alert alert-error" element="div" />
             <form:hidden path="id" />
             <fieldset>
@@ -60,8 +60,8 @@
                         <a class="btn btn-danger" href="javascript:$('#form-${expenseAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete" /></a>
                     </c:if>
                     <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
-                    </div>
-                </fieldset>
+                </div>
+            </fieldset>
         </form:form>
 
         <c:if test="${ !empty expenseAttribute.id }">

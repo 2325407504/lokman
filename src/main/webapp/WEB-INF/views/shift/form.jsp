@@ -17,12 +17,12 @@
     <fieldset>
         <div class="control-group">
             <form:label path="code"><spring:message code="Code" /></form:label>
-            <span><form:input path="code" /></span>
+            <form:input path="code" />
             <form:errors cssClass="text-error" path="code" />
         </div>
         <div class="control-group">
             <form:label path="name"><spring:message code="Name" /></form:label>
-            <span><form:input path="name" /></span>
+            <form:input path="name" />
             <form:errors cssClass="text-error" path="name" />
         </div>
         <div class="form-actions">

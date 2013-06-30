@@ -6,6 +6,7 @@ import java.io.OutputStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,19 +23,22 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aripd.account.service.AccountService;
 import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.TableParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.utils.ControllerUtils;
 import com.aripd.project.lgk.domain.Production;
 import com.aripd.project.lgk.domain.Bigbag;
+import com.aripd.project.lgk.model.BigbagFilterByIntervalForm;
 import com.aripd.project.lgk.service.DriverService;
 import com.aripd.project.lgk.service.ProductionService;
 import com.aripd.project.lgk.service.QuotaService;
 import com.aripd.project.lgk.service.SubcontractorService;
 import com.aripd.project.lgk.service.BigbagService;
 import javax.validation.Valid;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
 @Controller
@@ -59,8 +63,7 @@ public class BigbagController {
     @RequestMapping(value = "/get/{production_id}", method = RequestMethod.GET)
     public @ResponseBody
     WebResultSet<Bigbag> getDataTables(@PathVariable Long production_id, @TableParam PagingCriteria criteria) {
-        ResultSet<Bigbag> customers = this.bigbagService.getRecords(production_id, criteria);
-        return ControllerUtils.getWebResultSet(criteria, customers);
+        return ControllerUtils.getWebResultSet(criteria, this.bigbagService.getRecords(production_id, criteria));
     }
 
     @RequestMapping(value = "/save/{production_id}", method = RequestMethod.POST)
@@ -148,5 +151,25 @@ public class BigbagController {
         bigbagService.importXLSX(fileName);
         redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
         return "redirect:/production/list";
+    }
+
+    @RequestMapping(value = "/report", method = RequestMethod.POST)
+    public String reportAction(
+            final RedirectAttributes redirectAttributes,
+            @ModelAttribute("bigbagFilterByIntervalForm") @Valid BigbagFilterByIntervalForm formData,
+            BindingResult result,
+            @RequestParam("startingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime startingTime,
+            @RequestParam("endingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime endingTime,
+            HttpServletResponse response,
+            Model model) {
+
+        if (result.hasErrors()) {
+            return "/production/report";
+        }
+
+        bigbagService.exportByInterval(response, startingTime, endingTime);
+
+        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
+        return "redirect:/production/report";
     }
 }

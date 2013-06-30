@@ -229,6 +229,5 @@ public class UatfServiceImpl implements UatfService {
 
         // 7. Write to the output stream
         Writer.write(response, worksheet);
-
     }
 }

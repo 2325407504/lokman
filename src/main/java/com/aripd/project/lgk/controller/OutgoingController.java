@@ -65,8 +65,7 @@ public class OutgoingController {
     @RequestMapping(value = "/get/{waybill_id}", method = RequestMethod.GET)
     public @ResponseBody
     WebResultSet<Outgoing> getDataTables(@PathVariable Long waybill_id, @TableParam PagingCriteria criteria) {
-        ResultSet<Outgoing> customers = this.outgoingService.getRecords(waybill_id, criteria);
-        return ControllerUtils.getWebResultSet(criteria, customers);
+        return ControllerUtils.getWebResultSet(criteria, this.outgoingService.getRecords(waybill_id, criteria));
     }
 
     @RequestMapping(value = "/save/{waybill_id}", method = RequestMethod.POST)

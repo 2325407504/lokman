@@ -17,25 +17,25 @@
     <fieldset>
         <div class="control-group">
             <form:label path="client.firstName"><spring:message code="FirstName" /></form:label>
-            <span><form:input path="client.firstName" /></span>
+            <form:input path="client.firstName" />
         </div>       
         <div class="control-group">
             <form:label path="client.lastName"><spring:message code="LastName" /></form:label>
-            <span><form:input path="client.lastName" /></span>
+            <form:input path="client.lastName" />
         </div>
         <div class="control-group">
             <form:label path="email"><spring:message code="E-mail Address" /></form:label>
-            <span><form:input path="email" /></span>
+            <form:input path="email" />
             <form:errors cssClass="text-error" path="email" />
         </div>
         <div class="control-group">
             <form:label path="username"><spring:message code="Username" /></form:label>
-            <span><form:input path="username" /></span>
+            <form:input path="username" />
             <form:errors cssClass="text-error" path="username" />
         </div>
         <div class="control-group">
             <form:label path="password"><spring:message code="New Password" /></form:label>
-            <span><form:password path="password" /></span>
+            <form:password path="password" />
             <form:errors cssClass="text-error" path="password" />
         </div>
         <div class="form-actions">

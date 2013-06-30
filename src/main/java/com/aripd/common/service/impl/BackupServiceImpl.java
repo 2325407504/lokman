@@ -52,7 +52,39 @@ public class BackupServiceImpl implements BackupService {
 
         Process p;
 
-        String[] table = {"role", "region", "electricmeter", "machine", "expensetype", "shift", "productgroup", "product", "customer", "account", "account_role", "driver", "truck", "quota", "subcontractor", "expense", "forwarding", "trip", "uatf"};
+        String[] table = {
+            "role",
+            "region",
+            "electricmeter",
+            "machine",
+            "expensetype",
+            "shift",
+            "productgroup",
+            "product",
+            "wastegroup",
+            "waste",
+            "client",
+            "account",
+            "account_role",
+            "customer",
+            "driver",
+            "truck",
+            "quota",
+            "subcontractor",
+            "expense",
+            "trip",
+            "forwarding",
+            "uatf",
+            "production",
+            "bigbag",
+            "compensation",
+            "extrication",
+            "invoice",
+            "waybill",
+            "weighbridge",
+            "outgoing",
+            "machinetime"
+        };
         String tables = Joiner.on(" ").join(table);
 
 
