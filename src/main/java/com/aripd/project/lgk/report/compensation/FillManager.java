@@ -63,7 +63,7 @@ public class FillManager {
             List<Compensation> compensations = datasource.get(i - 2).getCompensations();
             for (Compensation compensation : compensations) {
                 HSSFCell cellc1 = row.createCell(startColIndex + 0 + dyn);
-                cellc1.setCellValue(compensation.getVal());
+                cellc1.setCellValue(Integer.valueOf(compensation.getVal()));
                 cellc1.setCellStyle(numericStyle);
 
                 dyn++;

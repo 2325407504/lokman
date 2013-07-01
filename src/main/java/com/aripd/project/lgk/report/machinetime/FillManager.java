@@ -63,7 +63,7 @@ public class FillManager {
             List<Machinetime> machinetimes = datasource.get(i - 2).getMachinetimes();
             for (Machinetime machinetime : machinetimes) {
                 HSSFCell cellc1 = row.createCell(startColIndex + 0 + dyn);
-                cellc1.setCellValue(machinetime.getVal());
+                cellc1.setCellValue(Integer.valueOf(machinetime.getVal()));
                 cellc1.setCellStyle(numericStyle);
 
                 dyn++;

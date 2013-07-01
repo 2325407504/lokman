@@ -1,8 +1,11 @@
 package com.aripd.project.lgk.domain;
 
 import com.aripd.common.entity.BaseEntity;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -16,7 +19,20 @@ public class Compensation extends BaseEntity {
     private Production production;
     @ManyToOne
     private Electricmeter electricmeter;
+    @Column(nullable = false)
     private Integer val;
+
+    @PreUpdate
+    @Override
+    public void preUpdate() {
+        val = (val == null) ? 0 : val;
+    }
+
+    @PrePersist
+    @Override
+    public void prePersist() {
+        val = (val == null) ? 0 : val;
+    }
 
     @Override
     public String toString() {
