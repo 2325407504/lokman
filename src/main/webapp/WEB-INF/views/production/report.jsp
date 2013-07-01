@@ -35,6 +35,17 @@
     </button>
 </form:form>
 
+<p class="lead"><spring:message code="Machine Time" /></p>
+<spring:url var="machinetimeReport" value="/machinetime/report" />
+<form:form modelAttribute="machinetimeFilterByIntervalForm" action="${machinetimeReport}" method="post" class="form-inline">
+    <form:errors path="*" cssClass="alert alert-error" element="div" />
+    <form:input id="start3" path="startingTime" />
+    <form:input id="end3" path="endingTime" />
+    <button class="btn" type="submit">
+        <i class="icon-search"></i>
+    </button>
+</form:form>
+
 <script type="text/javascript">
     var start1 = $('#start1');
     var end1 = $('#end1');
@@ -129,6 +140,54 @@
         },
         onSelect: function(selectedDateTime) {
             start2.datetimepicker('option', 'maxDate', end2.datetimepicker('getDate'));
+        }
+    });
+
+    var start3 = $('#start3');
+    var end3 = $('#end3');
+
+    start3.datetimepicker({
+        showButtonPanel: false,
+        maxDate: new Date(),
+        showMinute: false,
+        hourGrid: 8,
+        stepHour: 8,
+        hourText: "Vardiya",
+        onClose: function(dateText, inst) {
+            if (end3.val() != '') {
+                var testStartDate = start3.datetimepicker('getDate');
+                var testEndDate = end3.datetimepicker('getDate');
+                if (testStartDate > testEndDate)
+                    end3.datetimepicker('setDate', testStartDate);
+            }
+            else {
+                end3.val(dateText);
+            }
+        },
+        onSelect: function(selectedDateTime) {
+            end3.datetimepicker('option', 'minDate', start3.datetimepicker('getDate'));
+        }
+    });
+    end3.datetimepicker({
+        showButtonPanel: false,
+        maxDate: new Date(),
+        showMinute: false,
+        hourGrid: 8,
+        stepHour: 8,
+        hourText: "Vardiya",
+        onClose: function(dateText, inst) {
+            if (start3.val() != '') {
+                var testStartDate = start3.datetimepicker('getDate');
+                var testEndDate = end3.datetimepicker('getDate');
+                if (testStartDate > testEndDate)
+                    start3.datetimepicker('setDate', testEndDate);
+            }
+            else {
+                start3.val(dateText);
+            }
+        },
+        onSelect: function(selectedDateTime) {
+            start3.datetimepicker('option', 'maxDate', end3.datetimepicker('getDate'));
         }
     });
 

@@ -83,6 +83,7 @@ public class ProductionServiceImpl implements ProductionService {
         Predicate[] predicates = new Predicate[predicateList.size()];
         predicateList.toArray(predicates);
         cq.where(predicates);
+        cq.orderBy(cb.asc(root.get(Production_.shiftdate)));
 
         TypedQuery<Production> typedQuery = em.createQuery(cq);
         List<Production> resultList = typedQuery.getResultList();

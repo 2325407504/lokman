@@ -111,11 +111,13 @@ public class FillManager {
             cellc5.setCellType(HSSFCell.CELL_TYPE_FORMULA);
             cellc5.setCellFormula("O" + (row.getRowNum() + 1) + "/G" + (row.getRowNum() + 1));
             cellc5.setCellStyle(percentageStyle);
+            String cellc5ColumnLetter = CellReference.convertNumToColString(cellc5.getColumnIndex());
 
             HSSFCell cellc6 = row.createCell(startColIndex + 4 + dyn + 1);
             cellc6.setCellType(HSSFCell.CELL_TYPE_FORMULA);
             cellc6.setCellFormula("Q" + (row.getRowNum() + 1) + "/G" + (row.getRowNum() + 1));
             cellc6.setCellStyle(percentageStyle);
+            String cellc6ColumnLetter = CellReference.convertNumToColString(cellc6.getColumnIndex());
 
             /**
              * ******** CONDITIONAL FORMATTING *********
@@ -141,10 +143,8 @@ public class FillManager {
             //layer.addConditionalFormatting(range, rules);
 
             /* Create a Cell Range Address */
-            //CellRangeAddress[] my_data_range1 = {CellRangeAddress.valueOf(CellReference.convertNumToColString(cellc5.getColumnIndex()) + startRowIndex + ":" + CellReference.convertNumToColString(cellc5.getColumnIndex()) + i)};
-            //CellRangeAddress[] my_data_range2 = {CellRangeAddress.valueOf(CellReference.convertNumToColString(cellc6.getColumnIndex()) + startRowIndex + ":" + CellReference.convertNumToColString(cellc6.getColumnIndex()) + i)};
-            CellRangeAddress[] range1 = {CellRangeAddress.valueOf("R1:R1000")};
-            CellRangeAddress[] range2 = {CellRangeAddress.valueOf("S1:S1000")};
+            CellRangeAddress[] range1 = {CellRangeAddress.valueOf(cellc5ColumnLetter + (startRowIndex + 2) + ":" + cellc5ColumnLetter + (datasource.size() + startRowIndex + 1))};
+            CellRangeAddress[] range2 = {CellRangeAddress.valueOf(cellc6ColumnLetter + (startRowIndex + 2) + ":" + cellc6ColumnLetter + (datasource.size() + startRowIndex + 1))};
             layer.addConditionalFormatting(range1, rule1);
             layer.addConditionalFormatting(range2, rule2);
 

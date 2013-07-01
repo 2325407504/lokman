@@ -1,6 +1,6 @@
-package com.aripd.project.lgk.report.compensation;
+package com.aripd.project.lgk.report.machinetime;
 
-import com.aripd.project.lgk.domain.Compensation;
+import com.aripd.project.lgk.domain.Machinetime;
 import java.util.List;
 import java.util.Locale;
 
@@ -60,10 +60,10 @@ public class FillManager {
             cell0.setCellStyle(bodyCellStyle);
 
             int dyn = 1;
-            List<Compensation> compensations = datasource.get(i - 2).getCompensations();
-            for (Compensation compensation : compensations) {
+            List<Machinetime> machinetimes = datasource.get(i - 2).getMachinetimes();
+            for (Machinetime machinetime : machinetimes) {
                 HSSFCell cellc1 = row.createCell(startColIndex + 0 + dyn);
-                cellc1.setCellValue(compensation.getVal());
+                cellc1.setCellValue(machinetime.getVal());
                 cellc1.setCellStyle(numericStyle);
 
                 dyn++;
@@ -77,52 +77,11 @@ public class FillManager {
 
                 HSSFCell cellc2 = row.createCell(startColIndex + 0 + dyn);
                 cellc2.setCellType(HSSFCell.CELL_TYPE_FORMULA);
-                cellc2.setCellFormula("(" + curVal + "-" + preVal + ")*2070");
+                cellc2.setCellFormula(curVal + "-" + preVal);
                 cellc2.setCellStyle(numericStyle);
 
                 dyn++;
             }
-
-            HSSFCell cellc5 = row.createCell(startColIndex + 0 + dyn + 0);
-            cellc5.setCellType(HSSFCell.CELL_TYPE_FORMULA);
-            cellc5.setCellFormula("K" + (row.getRowNum() + 1) + "/C" + (row.getRowNum() + 1));
-            cellc5.setCellStyle(percentageStyle);
-            String cellc5ColumnLetter = CellReference.convertNumToColString(cellc5.getColumnIndex());
-
-            HSSFCell cellc6 = row.createCell(startColIndex + 0 + dyn + 1);
-            cellc6.setCellType(HSSFCell.CELL_TYPE_FORMULA);
-            cellc6.setCellFormula("M" + (row.getRowNum() + 1) + "/C" + (row.getRowNum() + 1));
-            cellc6.setCellStyle(percentageStyle);
-            String cellc6ColumnLetter = CellReference.convertNumToColString(cellc6.getColumnIndex());
-
-            /**
-             * ******** CONDITIONAL FORMATTING *********
-             */
-            /* Access conditional formatting facet layer */
-            HSSFSheetConditionalFormatting layer = worksheet.getSheetConditionalFormatting();
-
-            HSSFConditionalFormattingRule rule1 = layer.createConditionalFormattingRule(ComparisonOperator.GE, ".2");
-            HSSFFontFormatting font_pattern1 = rule1.createFontFormatting();
-            font_pattern1.setFontColorIndex(IndexedColors.WHITE.getIndex());
-            HSSFPatternFormatting fill_pattern1 = rule1.createPatternFormatting();
-            fill_pattern1.setFillBackgroundColor(IndexedColors.RED.index);
-
-            HSSFConditionalFormattingRule rule2 = layer.createConditionalFormattingRule(ComparisonOperator.GE, ".15");
-            HSSFFontFormatting font_pattern2 = rule2.createFontFormatting();
-            font_pattern2.setFontColorIndex(IndexedColors.WHITE.getIndex());
-            HSSFPatternFormatting fill_pattern2 = rule2.createPatternFormatting();
-            fill_pattern2.setFillBackgroundColor(IndexedColors.RED.index);
-
-            /* OK, we have defined mutliple rules. Time to attach two rules to same range. We create an array of rules now */
-            //ConditionalFormattingRule[] rules = {rule1, rule2};
-            //CellRangeAddress[] range = {CellRangeAddress.valueOf("R1:S1000")};
-            //layer.addConditionalFormatting(range, rules);
-
-            /* Create a Cell Range Address */
-            CellRangeAddress[] range1 = {CellRangeAddress.valueOf(cellc5ColumnLetter + (startRowIndex + 2) + ":" + cellc5ColumnLetter + (datasource.size() + startRowIndex + 1))};
-            CellRangeAddress[] range2 = {CellRangeAddress.valueOf(cellc6ColumnLetter + (startRowIndex + 2) + ":" + cellc6ColumnLetter + (datasource.size() + startRowIndex + 1))};
-            layer.addConditionalFormatting(range1, rule1);
-            layer.addConditionalFormatting(range2, rule2);
 
         }
     }

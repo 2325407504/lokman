@@ -33,6 +33,7 @@ import com.aripd.project.lgk.domain.Compensation;
 import com.aripd.project.lgk.domain.Machinetime;
 import com.aripd.project.lgk.domain.Production;
 import com.aripd.project.lgk.model.CompensationFilterByIntervalForm;
+import com.aripd.project.lgk.model.MachinetimeFilterByIntervalForm;
 import com.aripd.project.lgk.model.ProductionFilterByIntervalForm;
 import com.aripd.project.lgk.service.CompensationService;
 import com.aripd.project.lgk.service.ElectricmeterService;
@@ -159,6 +160,7 @@ public class ProductionController {
     public String reportAction(Model model) {
         model.addAttribute("productionFilterByIntervalForm", new ProductionFilterByIntervalForm());
         model.addAttribute("compensationFilterByIntervalForm", new CompensationFilterByIntervalForm());
+        model.addAttribute("machinetimeFilterByIntervalForm", new MachinetimeFilterByIntervalForm());
         return "production/report";
     }
 
