@@ -19,7 +19,6 @@ import com.aripd.project.lgk.report.compensation.Writer;
 import com.aripd.project.lgk.repository.CompensationRepository;
 import com.aripd.project.lgk.service.ProductionService;
 import com.aripd.project.lgk.service.CompensationService;
-import com.aripd.project.lgk.service.ProductService;
 import java.util.ArrayList;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -42,8 +41,6 @@ public class CompensationServiceImpl implements CompensationService {
     private CompensationRepository repository;
     @Autowired
     private ProductionService productionService;
-    @Autowired
-    private ProductService productService;
 
     public Compensation findOne(Long id) {
         return repository.findOne(id);
@@ -113,11 +110,12 @@ public class CompensationServiceImpl implements CompensationService {
         int startColIndex = 0;
 
         // 4. Build layout
+        List<Production> datasource = productionService.findByInterval(startingTime, endingTime);
         // Build title, date, and column headers
-        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
+        Layouter.buildReport(worksheet, startRowIndex, startColIndex, datasource);
 
         // 5. Fill report
-        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByInterval(startingTime, endingTime));
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, datasource);
 
         // 6. Set the response properties
         String fileName = "CompensationReport.xls";

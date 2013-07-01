@@ -18,7 +18,7 @@
         <aripd:description id="production">
             <aripd:descriptionitem label="Account" field="productionAttribute.account.client.fullname"></aripd:descriptionitem>
             <aripd:descriptionitem label="Shift" field="productionAttribute.shiftdate"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Weight" field="productionAttribute.feed"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Feed" field="productionAttribute.feed"></aripd:descriptionitem>
             <aripd:descriptionitem label="Remark" field="productionAttribute.remark"></aripd:descriptionitem>
         </aripd:description>
     </div>

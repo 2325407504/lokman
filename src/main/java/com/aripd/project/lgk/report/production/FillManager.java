@@ -22,7 +22,6 @@ import org.apache.poi.hssf.usermodel.HSSFPatternFormatting;
 import org.apache.poi.hssf.usermodel.HSSFSheetConditionalFormatting;
 import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.ConditionalFormattingRule;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.util.CellRangeAddress;
 

@@ -1,6 +1,9 @@
 package com.aripd.project.lgk.report.compensation;
 
+import com.aripd.project.lgk.domain.Compensation;
+import com.aripd.project.lgk.domain.Production;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -21,17 +24,11 @@ public class Layouter {
      * <p>
      * This doesn't have any data yet. This is your template.
      */
-    public static void buildReport(HSSFSheet worksheet, int startRowIndex, int startColIndex) {
-        // Set column widths
-        worksheet.setColumnWidth(0, 5000);
-        worksheet.setColumnWidth(1, 5000);
-        worksheet.setColumnWidth(2, 5000);
-        worksheet.setColumnWidth(3, 5000);
-
+    public static void buildReport(HSSFSheet worksheet, int startRowIndex, int startColIndex, List<Production> datasource) {
         // Build the title and date headers
         buildTitle(worksheet, startRowIndex, startColIndex);
         // Build the column headers
-        buildHeaders(worksheet, startRowIndex, startColIndex);
+        buildHeaders(worksheet, startRowIndex, startColIndex, datasource);
     }
 
     /**
@@ -61,7 +58,7 @@ public class Layouter {
         cellTitle.setCellStyle(cellStyleTitle);
 
         // Create merged region for the report title
-        worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 3));
+        worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 14));
 
         // Create date header
         HSSFRow dateTitle = worksheet.createRow((short) startRowIndex + 1);
@@ -76,7 +73,7 @@ public class Layouter {
      * @param startRowIndex starting row offset
      * @param startColIndex starting column offset
      */
-    public static void buildHeaders(HSSFSheet worksheet, int startRowIndex, int startColIndex) {
+    public static void buildHeaders(HSSFSheet worksheet, int startRowIndex, int startColIndex, List<Production> datasource) {
         // Create font style for the headers
         Font font = worksheet.getWorkbook().createFont();
         font.setBoldweight(Font.BOLDWEIGHT_BOLD);
@@ -96,20 +93,32 @@ public class Layouter {
         rowHeader.setHeight((short) 500);
 
         HSSFCell cell0 = rowHeader.createCell(startColIndex + 0);
-        cell0.setCellValue("Id");
+        cell0.setCellValue("Shift");
         cell0.setCellStyle(headerCellStyle);
 
-        HSSFCell cell1 = rowHeader.createCell(startColIndex + 1);
-        cell1.setCellValue("Shift Date");
-        cell1.setCellStyle(headerCellStyle);
+        int dyn = 1;
+        List<Compensation> compensations = datasource.get(0).getCompensations();
+        for (Compensation compensation : compensations) {
+            HSSFCell cellc1 = rowHeader.createCell(startColIndex + 0 + dyn);
+            cellc1.setCellValue(compensation.getElectricmeter().getName());
+            cellc1.setCellStyle(headerCellStyle);
 
-        HSSFCell cell2 = rowHeader.createCell(startColIndex + 2);
-        cell2.setCellValue("Electric Meter");
-        cell2.setCellStyle(headerCellStyle);
+            dyn++;
 
-        HSSFCell cell3 = rowHeader.createCell(startColIndex + 3);
-        cell3.setCellValue("Value");
-        cell3.setCellStyle(headerCellStyle);
+            HSSFCell cellc2 = rowHeader.createCell(startColIndex + 0 + dyn);
+            cellc2.setCellValue(compensation.getElectricmeter().getName() + "\nkW·h");
+            cellc2.setCellStyle(headerCellStyle);
+
+            dyn++;
+        }
+
+        HSSFCell cell5 = rowHeader.createCell(startColIndex + 0 + dyn + 0);
+        cell5.setCellValue("580 İnd/Reak");
+        cell5.setCellStyle(headerCellStyle);
+
+        HSSFCell cell6 = rowHeader.createCell(startColIndex + 0 + dyn + 1);
+        cell6.setCellValue("880 Kap/Reak");
+        cell6.setCellStyle(headerCellStyle);
 
     }
 }
