@@ -54,7 +54,11 @@ public class CompensationServiceImpl implements CompensationService {
     }
 
     public Compensation findPrev(Long id) {
-        return findOne(id);
+        Compensation compensation = repository.findOne(id);
+        Production production = compensation.getProduction();
+        Electricmeter electricmeter = compensation.getElectricmeter();
+        DateTime prev = production.getShiftdate().minusHours(8);
+        return repository.findOneByProductionAndElectricmeter(production, electricmeter);
     }
 
     public List<Compensation> findAll() {
@@ -74,6 +78,7 @@ public class CompensationServiceImpl implements CompensationService {
         Predicate[] predicates = new Predicate[predicateList.size()];
         predicateList.toArray(predicates);
         cq.where(predicates);
+        cq.orderBy(cb.asc(production.get(Production_.shiftdate)));
 
         TypedQuery<Compensation> typedQuery = em.createQuery(cq);
         List<Compensation> resultList = typedQuery.getResultList();

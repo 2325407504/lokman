@@ -100,19 +100,19 @@ public class Layouter {
         rowHeader.setHeight((short) 500);
 
         HSSFCell cell0 = rowHeader.createCell(startColIndex + 0);
-        cell0.setCellValue("Shift Date");
+        cell0.setCellValue("Shift");
         cell0.setCellStyle(headerCellStyle);
 
         HSSFCell cell1 = rowHeader.createCell(startColIndex + 1);
-        cell1.setCellValue("Shift");
+        cell1.setCellValue("Account");
         cell1.setCellStyle(headerCellStyle);
 
         HSSFCell cell2 = rowHeader.createCell(startColIndex + 2);
-        cell2.setCellValue("Account");
+        cell2.setCellValue("Remark");
         cell2.setCellStyle(headerCellStyle);
 
         HSSFCell cell3 = rowHeader.createCell(startColIndex + 3);
-        cell3.setCellValue("Remark");
+        cell3.setCellValue("Feed");
         cell3.setCellStyle(headerCellStyle);
 
         HSSFCell cell4 = rowHeader.createCell(startColIndex + 4);
@@ -121,7 +121,6 @@ public class Layouter {
 
         int dyn = 1;
         List<Compensation> compensations = datasource.get(0).getCompensations();
-        HSSFCell cellc;
         for (Compensation compensation : compensations) {
             HSSFCell cellc1 = rowHeader.createCell(startColIndex + 4 + dyn);
             cellc1.setCellValue(compensation.getElectricmeter().getName());
@@ -130,7 +129,7 @@ public class Layouter {
             dyn++;
             
             HSSFCell cellc2 = rowHeader.createCell(startColIndex + 4 + dyn);
-            cellc2.setCellValue(compensation.getElectricmeter().getName() + "\nkWh");
+            cellc2.setCellValue(compensation.getElectricmeter().getName() + "\nkW·h");
             cellc2.setCellStyle(headerCellStyle);
 
             dyn++;

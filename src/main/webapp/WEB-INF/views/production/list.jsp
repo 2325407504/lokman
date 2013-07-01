@@ -13,7 +13,7 @@
     <jsp:param name="active" value="list" />
 </jsp:include>
 
-<aripd:datatables datasource="/production/get" id="productions" dataUrlShow="/production/show" dataUrlEdit="/production/edit">
+<aripd:datatables datasource="/production/get" id="productions" dataUrlShow="/production/show" dataUrlEdit="/production/edit" sortingColumn="2" sortingDirection="desc">
     <aripd:column label="Action" field="id"/>
     <aripd:column label="Account" field="account.username"/>
     <aripd:column label="Date" field="shiftdate"/>

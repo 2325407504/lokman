@@ -16,6 +16,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import com.aripd.project.lgk.domain.Production;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
+import org.apache.poi.hssf.util.CellReference;
 
 public class FillManager {
 
@@ -81,9 +82,16 @@ public class FillManager {
 
                 dyn++;
 
+                String preVal = "0";
+                String columnLetter = CellReference.convertNumToColString(cellc1.getColumnIndex());
+                String curVal = columnLetter + (row.getRowNum() + 1);
+                if (i > startRowIndex) {
+                    preVal = columnLetter + row.getRowNum();
+                }
+
                 HSSFCell cellc2 = row.createCell(startColIndex + 4 + dyn);
                 cellc2.setCellType(HSSFCell.CELL_TYPE_FORMULA);
-                cellc2.setCellFormula(compensation.getVal() + "*2070");
+                cellc2.setCellFormula("(" + curVal + "-" + preVal + ")*2070");
                 cellc2.setCellStyle(bodyCellStyle);
 
                 dyn++;
