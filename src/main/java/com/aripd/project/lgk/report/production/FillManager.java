@@ -10,13 +10,21 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import com.aripd.project.lgk.domain.Production;
+import org.apache.poi.hssf.record.CFRuleRecord.ComparisonOperator;
+import org.apache.poi.hssf.usermodel.HSSFConditionalFormattingRule;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
+import org.apache.poi.hssf.usermodel.HSSFFontFormatting;
+import org.apache.poi.hssf.usermodel.HSSFPatternFormatting;
+import org.apache.poi.hssf.usermodel.HSSFSheetConditionalFormatting;
 import org.apache.poi.hssf.util.CellReference;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.ConditionalFormattingRule;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.util.CellRangeAddress;
 
 public class FillManager {
 
@@ -41,6 +49,9 @@ public class FillManager {
 
         HSSFCellStyle numericStyle = worksheet.getWorkbook().createCellStyle();
         numericStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("#,##0.00"));
+
+        HSSFCellStyle percentageStyle = worksheet.getWorkbook().createCellStyle();
+        percentageStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("0.00%"));
 
         // Create body
         for (int i = startRowIndex; i + startRowIndex - 2 < datasource.size() + 2; i++) {
@@ -78,7 +89,7 @@ public class FillManager {
             for (Compensation compensation : compensations) {
                 HSSFCell cellc1 = row.createCell(startColIndex + 4 + dyn);
                 cellc1.setCellValue(compensation.getVal());
-                cellc1.setCellStyle(bodyCellStyle);
+                cellc1.setCellStyle(numericStyle);
 
                 dyn++;
 
@@ -92,10 +103,51 @@ public class FillManager {
                 HSSFCell cellc2 = row.createCell(startColIndex + 4 + dyn);
                 cellc2.setCellType(HSSFCell.CELL_TYPE_FORMULA);
                 cellc2.setCellFormula("(" + curVal + "-" + preVal + ")*2070");
-                cellc2.setCellStyle(bodyCellStyle);
+                cellc2.setCellStyle(numericStyle);
 
                 dyn++;
             }
+
+            HSSFCell cellc5 = row.createCell(startColIndex + 4 + dyn + 0);
+            cellc5.setCellType(HSSFCell.CELL_TYPE_FORMULA);
+            cellc5.setCellFormula("O" + (row.getRowNum() + 1) + "/G" + (row.getRowNum() + 1));
+            cellc5.setCellStyle(percentageStyle);
+
+            HSSFCell cellc6 = row.createCell(startColIndex + 4 + dyn + 1);
+            cellc6.setCellType(HSSFCell.CELL_TYPE_FORMULA);
+            cellc6.setCellFormula("Q" + (row.getRowNum() + 1) + "/G" + (row.getRowNum() + 1));
+            cellc6.setCellStyle(percentageStyle);
+
+            /**
+             * ******** CONDITIONAL FORMATTING *********
+             */
+            /* Access conditional formatting facet layer */
+            HSSFSheetConditionalFormatting layer = worksheet.getSheetConditionalFormatting();
+
+            HSSFConditionalFormattingRule rule1 = layer.createConditionalFormattingRule(ComparisonOperator.GE, ".2");
+            HSSFFontFormatting font_pattern1 = rule1.createFontFormatting();
+            font_pattern1.setFontColorIndex(IndexedColors.WHITE.getIndex());
+            HSSFPatternFormatting fill_pattern1 = rule1.createPatternFormatting();
+            fill_pattern1.setFillBackgroundColor(IndexedColors.RED.index);
+
+            HSSFConditionalFormattingRule rule2 = layer.createConditionalFormattingRule(ComparisonOperator.GE, ".15");
+            HSSFFontFormatting font_pattern2 = rule2.createFontFormatting();
+            font_pattern2.setFontColorIndex(IndexedColors.WHITE.getIndex());
+            HSSFPatternFormatting fill_pattern2 = rule2.createPatternFormatting();
+            fill_pattern2.setFillBackgroundColor(IndexedColors.RED.index);
+
+            /* OK, we have defined mutliple rules. Time to attach two rules to same range. We create an array of rules now */
+            //ConditionalFormattingRule[] rules = {rule1, rule2};
+            //CellRangeAddress[] range = {CellRangeAddress.valueOf("R1:S1000")};
+            //layer.addConditionalFormatting(range, rules);
+
+            /* Create a Cell Range Address */
+            //CellRangeAddress[] my_data_range1 = {CellRangeAddress.valueOf(CellReference.convertNumToColString(cellc5.getColumnIndex()) + startRowIndex + ":" + CellReference.convertNumToColString(cellc5.getColumnIndex()) + i)};
+            //CellRangeAddress[] my_data_range2 = {CellRangeAddress.valueOf(CellReference.convertNumToColString(cellc6.getColumnIndex()) + startRowIndex + ":" + CellReference.convertNumToColString(cellc6.getColumnIndex()) + i)};
+            CellRangeAddress[] range1 = {CellRangeAddress.valueOf("R1:R1000")};
+            CellRangeAddress[] range2 = {CellRangeAddress.valueOf("S1:S1000")};
+            layer.addConditionalFormatting(range1, rule1);
+            layer.addConditionalFormatting(range2, rule2);
 
         }
     }

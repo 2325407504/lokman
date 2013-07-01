@@ -135,5 +135,13 @@ public class Layouter {
             dyn++;
         }
 
+        HSSFCell cell5 = rowHeader.createCell(startColIndex + 4 + dyn + 0);
+        cell5.setCellValue("580 İnd/Reak");
+        cell5.setCellStyle(headerCellStyle);
+
+        HSSFCell cell6 = rowHeader.createCell(startColIndex + 4 + dyn + 1);
+        cell6.setCellValue("880 Kap/Reak");
+        cell6.setCellStyle(headerCellStyle);
+
     }
 }
