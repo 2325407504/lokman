@@ -72,9 +72,11 @@ public class AccountController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             @ModelAttribute("accountAttribute") @Valid Account formData,
-            BindingResult result) {
+            BindingResult result,
+            Model model) {
 
         if (result.hasErrors()) {
+            model.addAttribute("regions", regionService.findAll());
             return "/account/form";
         }
 
