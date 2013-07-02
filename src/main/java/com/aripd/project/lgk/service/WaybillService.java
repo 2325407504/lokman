@@ -5,9 +5,10 @@ import java.security.Principal;
 import javax.servlet.http.HttpServletResponse;
 
 import com.aripd.account.domain.Account;
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.project.lgk.domain.Forwarding;
+import com.aripd.common.dto.autocomplete.AutocompleteCriteria;
+import com.aripd.common.dto.autocomplete.AutocompleteResultSet;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Waybill;
 import java.util.List;
 import org.joda.time.DateTime;
@@ -28,9 +29,9 @@ public interface WaybillService {
 
     public void delete(Waybill waybill);
 
-    public ResultSet<Waybill> getRecords(PagingCriteria criteria);
+    public DatatablesResultSet<Waybill> getRecords(Long invoice_id, DatatablesCriteria criteria);
 
-    public ResultSet<Waybill> getRecords(Principal principal, PagingCriteria criteria);
+    public List<String> getRecords(AutocompleteCriteria criteria);
 
     public void importXLSX(String fileName);
 

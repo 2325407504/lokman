@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.aripd.account.domain.Account;
 import com.aripd.account.service.AccountService;
 import com.aripd.account.service.RoleService;
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.TableParam;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
-import com.aripd.common.utils.ControllerUtils;
+import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.service.RegionService;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN')")
@@ -39,9 +39,9 @@ public class AccountController {
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
-    WebResultSet<Account> getDataTables(@TableParam PagingCriteria criteria) {
-        ResultSet<Account> resultset = this.accountService.getRecords(criteria);
-        return ControllerUtils.getWebResultSet(criteria, resultset);
+    WebResultSet<Account> datatablesAction(@DatatablesParam DatatablesCriteria criteria) {
+        DatatablesResultSet<Account> resultset = this.accountService.getRecords(criteria);
+        return ControllerUtils.getDatatablesResultSet(criteria, resultset);
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)

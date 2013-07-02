@@ -6,8 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import com.aripd.account.domain.Account;
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Trip;
 import com.aripd.project.lgk.domain.Truck;
 
@@ -25,9 +25,9 @@ public interface TripService {
 
     public void delete(Trip trip);
 
-    public ResultSet<Trip> getRecords(PagingCriteria criteria);
+    public DatatablesResultSet<Trip> getRecords(DatatablesCriteria criteria);
 
-    public ResultSet<Trip> getRecords(Principal principal, PagingCriteria criteria);
+    public DatatablesResultSet<Trip> getRecords(Principal principal, DatatablesCriteria criteria);
 
     public void exportAll(HttpServletResponse response);
 

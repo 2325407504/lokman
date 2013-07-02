@@ -2,8 +2,8 @@ package com.aripd.project.lgk.service;
 
 import java.util.List;
 
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Region;
 import com.aripd.project.lgk.domain.Truck;
 
@@ -25,5 +25,5 @@ public interface TruckService {
 
     public void delete(Truck truck);
 
-    public ResultSet<Truck> getRecords(PagingCriteria criteria);
+    public DatatablesResultSet<Truck> getRecords(DatatablesCriteria criteria);
 }

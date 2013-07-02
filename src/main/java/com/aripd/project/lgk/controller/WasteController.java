@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.TableParam;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
-import com.aripd.common.utils.ControllerUtils;
+import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Waste;
 import com.aripd.project.lgk.service.WasteService;
 import com.aripd.project.lgk.service.WastegroupService;
@@ -36,9 +36,9 @@ public class WasteController {
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
-    WebResultSet<Waste> getDataTables(@TableParam PagingCriteria criteria) {
-        ResultSet<Waste> resultset = this.wasteService.getRecords(criteria);
-        return ControllerUtils.getWebResultSet(criteria, resultset);
+    WebResultSet<Waste> datatablesAction(@DatatablesParam DatatablesCriteria criteria) {
+        DatatablesResultSet<Waste> resultset = this.wasteService.getRecords(criteria);
+        return ControllerUtils.getDatatablesResultSet(criteria, resultset);
     }
 
     @RequestMapping(value = "/list")

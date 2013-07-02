@@ -28,9 +28,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.SortField;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.common.dto.datatables.DatatablesSortField;
 import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Forwarding_;
 import com.aripd.project.lgk.domain.Uatf;
@@ -103,25 +103,25 @@ public class UatfServiceImpl implements UatfService {
     }
 
     @Override
-    public ResultSet<Uatf> getRecords(Long forwarding_id, PagingCriteria criteria) {
+    public DatatablesResultSet<Uatf> getRecords(Long forwarding_id, DatatablesCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
         Integer pageNumber = criteria.getPageNumber();
         String search = criteria.getSearch();
-        List<SortField> sortFields = criteria.getSortFields();
+        List<DatatablesSortField> sortFields = criteria.getSortFields();
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Uatf> cq = cb.createQuery(Uatf.class);
-        Root<Uatf> uatf = cq.from(Uatf.class);
+        Root<Uatf> root = cq.from(Uatf.class);
 
         // Filtering and Searching
         List<Predicate> predicateList = new ArrayList<Predicate>();
 
-        Predicate filter1 = cb.equal(uatf.get(Uatf_.forwarding), forwardingService.findOne(forwarding_id));
+        Predicate filter1 = cb.equal(root.get(Uatf_.forwarding), forwardingService.findOne(forwarding_id));
         predicateList.add(filter1);
 
         if ((search != null) && (!(search.isEmpty()))) {
-            Predicate predicate = cb.like(uatf.get(Uatf_.code), "%" + search + "%");
+            Predicate predicate = cb.like(root.get(Uatf_.code), "%" + search + "%");
             predicateList.add(predicate);
         }
 
@@ -130,13 +130,13 @@ public class UatfServiceImpl implements UatfService {
         cq.where(predicates);
 
         // Sorting
-        for (SortField sortField : sortFields) {
+        for (DatatablesSortField sortField : sortFields) {
             String field = sortField.getField();
             String direction = sortField.getDirection().getDirection();
             if (direction.equalsIgnoreCase("asc")) {
-                cq.orderBy(cb.asc(uatf.get(field)));
+                cq.orderBy(cb.asc(root.get(field)));
             } else if (direction.equalsIgnoreCase("desc")) {
-                cq.orderBy(cb.desc(uatf.get(field)));
+                cq.orderBy(cb.desc(root.get(field)));
             }
         }
 
@@ -148,7 +148,7 @@ public class UatfServiceImpl implements UatfService {
         typedQuery = typedQuery.setMaxResults(displaySize);
         List<Uatf> resultList = typedQuery.getResultList();
 
-        return new ResultSet<Uatf>(resultList, totalRecords, displaySize);
+        return new DatatablesResultSet<Uatf>(resultList, totalRecords, displaySize);
     }
 
     public void importXLSX(String fileName) {

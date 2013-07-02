@@ -38,9 +38,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aripd.account.domain.Account;
 import com.aripd.account.domain.Account_;
 import com.aripd.account.service.AccountService;
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.SortField;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.common.dto.datatables.DatatablesSortField;
 import com.aripd.project.lgk.domain.Expense;
 import com.aripd.project.lgk.domain.Expense_;
 import com.aripd.project.lgk.report.expense.FillManager;
@@ -102,11 +102,11 @@ public class ExpenseServiceImpl implements ExpenseService {
         repository.delete(expense);
     }
 
-    public ResultSet<Expense> getRecords(PagingCriteria criteria) {
+    public DatatablesResultSet<Expense> getRecords(DatatablesCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
         Integer pageNumber = criteria.getPageNumber();
-        List<SortField> sortFields = criteria.getSortFields();
+        List<DatatablesSortField> sortFields = criteria.getSortFields();
         String search = criteria.getSearch();
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -130,7 +130,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         cq.where(predicates);
 
         // Sorting
-        for (SortField sortField : sortFields) {
+        for (DatatablesSortField sortField : sortFields) {
             String field = sortField.getField();
             String direction = sortField.getDirection().getDirection();
             if (direction.equalsIgnoreCase("asc")) {
@@ -148,15 +148,15 @@ public class ExpenseServiceImpl implements ExpenseService {
         typedQuery = typedQuery.setMaxResults(displaySize);
         List<Expense> resultList = typedQuery.getResultList();
 
-        return new ResultSet<Expense>(resultList, totalRecords, displaySize);
+        return new DatatablesResultSet<Expense>(resultList, totalRecords, displaySize);
     }
 
-    public ResultSet<Expense> getRecords(Principal principal,
-            PagingCriteria criteria) {
+    public DatatablesResultSet<Expense> getRecords(Principal principal,
+            DatatablesCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
         Integer pageNumber = criteria.getPageNumber();
-        List<SortField> sortFields = criteria.getSortFields();
+        List<DatatablesSortField> sortFields = criteria.getSortFields();
         String search = criteria.getSearch();
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -183,7 +183,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         cq.where(predicates);
 
         // Sorting
-        for (SortField sortField : sortFields) {
+        for (DatatablesSortField sortField : sortFields) {
             String field = sortField.getField();
             String direction = sortField.getDirection().getDirection();
             if (direction.equalsIgnoreCase("asc")) {
@@ -201,7 +201,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         typedQuery = typedQuery.setMaxResults(displaySize);
         List<Expense> resultList = typedQuery.getResultList();
 
-        return new ResultSet<Expense>(resultList, totalRecords, displaySize);
+        return new DatatablesResultSet<Expense>(resultList, totalRecords, displaySize);
     }
 
     public void importXLSX(String fileName) {

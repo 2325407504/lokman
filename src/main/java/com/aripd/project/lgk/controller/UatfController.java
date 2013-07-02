@@ -22,12 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aripd.account.service.AccountService;
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.TableParam;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.model.FileUploadBean;
-import com.aripd.common.utils.ControllerUtils;
+import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Uatf;
 import com.aripd.project.lgk.model.UatfFilterByIntervalForm;
@@ -63,8 +62,8 @@ public class UatfController {
 
     @RequestMapping(value = "/get/{forwarding_id}", method = RequestMethod.GET)
     public @ResponseBody
-    WebResultSet<Uatf> getDataTables(@PathVariable Long forwarding_id, @TableParam PagingCriteria criteria) {
-        return ControllerUtils.getWebResultSet(criteria, this.uatfService.getRecords(forwarding_id, criteria));
+    WebResultSet<Uatf> datatablesAction(@PathVariable Long forwarding_id, @DatatablesParam DatatablesCriteria criteria) {
+        return ControllerUtils.getDatatablesResultSet(criteria, this.uatfService.getRecords(forwarding_id, criteria));
     }
 
     @RequestMapping(value = "/save/{forwarding_id}", method = RequestMethod.POST)

@@ -24,9 +24,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.SortField;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.common.dto.datatables.DatatablesSortField;
 import com.aripd.project.lgk.domain.Production;
 import com.aripd.project.lgk.domain.Production_;
 import com.aripd.project.lgk.domain.Product;
@@ -107,12 +107,12 @@ public class BigbagServiceImpl implements BigbagService {
     }
 
     @Override
-    public ResultSet<Bigbag> getRecords(Long production_id, PagingCriteria criteria) {
+    public DatatablesResultSet<Bigbag> getRecords(Long production_id, DatatablesCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
         Integer pageNumber = criteria.getPageNumber();
         String search = criteria.getSearch();
-        List<SortField> sortFields = criteria.getSortFields();
+        List<DatatablesSortField> sortFields = criteria.getSortFields();
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Bigbag> cq = cb.createQuery(Bigbag.class);
@@ -134,7 +134,7 @@ public class BigbagServiceImpl implements BigbagService {
         cq.where(predicates);
 
         // Sorting
-        /*for (SortField sortField : sortFields) {
+        /*for (DatatablesSortField sortField : sortFields) {
          String field = sortField.getField();
          String direction = sortField.getDirection().getDirection();
          if (direction.equalsIgnoreCase("asc")) {
@@ -152,7 +152,7 @@ public class BigbagServiceImpl implements BigbagService {
         typedQuery = typedQuery.setMaxResults(displaySize);
         List<Bigbag> resultList = typedQuery.getResultList();
 
-        return new ResultSet<Bigbag>(resultList, totalRecords, displaySize);
+        return new DatatablesResultSet<Bigbag>(resultList, totalRecords, displaySize);
     }
 
     public void importXLSX(String fileName) {

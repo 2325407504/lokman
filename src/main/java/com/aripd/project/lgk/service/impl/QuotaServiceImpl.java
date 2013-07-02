@@ -15,9 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.SortField;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.common.dto.datatables.DatatablesSortField;
 import com.aripd.project.lgk.domain.Quota;
 import com.aripd.project.lgk.domain.Quota_;
 import com.aripd.project.lgk.repository.QuotaRepository;
@@ -60,11 +60,11 @@ public class QuotaServiceImpl implements QuotaService {
 		repository.delete(quota);
 	}
 
-	public ResultSet<Quota> getRecords(PagingCriteria criteria) {
+	public DatatablesResultSet<Quota> getRecords(DatatablesCriteria criteria) {
 		Integer displaySize = criteria.getDisplaySize();
 		Integer displayStart = criteria.getDisplayStart();
 		Integer pageNumber = criteria.getPageNumber();
-		List<SortField> sortFields = criteria.getSortFields();
+		List<DatatablesSortField> sortFields = criteria.getSortFields();
 		String search = criteria.getSearch();
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -86,7 +86,7 @@ public class QuotaServiceImpl implements QuotaService {
 		cq.where(predicates);
 
 		// Sorting
-		for (SortField sortField : sortFields) {
+		for (DatatablesSortField sortField : sortFields) {
 			String field = sortField.getField();
 			String direction = sortField.getDirection().getDirection();
 			if (direction.equalsIgnoreCase("asc"))
@@ -103,7 +103,7 @@ public class QuotaServiceImpl implements QuotaService {
 		typedQuery = typedQuery.setMaxResults(displaySize);
 		List<Quota> resultList = typedQuery.getResultList();
 
-		return new ResultSet<Quota>(resultList, totalRecords, displaySize);
+		return new DatatablesResultSet<Quota>(resultList, totalRecords, displaySize);
 	}
 
 }

@@ -2,8 +2,8 @@ package com.aripd.project.lgk.service;
 
 import java.util.List;
 
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Customer;
 
 public interface CustomerService {
@@ -20,5 +20,5 @@ public interface CustomerService {
 
     void delete(Customer customer);
 
-    ResultSet<Customer> getRecords(PagingCriteria criteria);
+    DatatablesResultSet<Customer> getRecords(DatatablesCriteria criteria);
 }

@@ -15,9 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.SortField;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.common.dto.datatables.DatatablesSortField;
 import com.aripd.project.lgk.domain.Waste;
 import com.aripd.project.lgk.domain.Waste_;
 import com.aripd.project.lgk.repository.WasteRepository;
@@ -59,11 +59,11 @@ public class WasteServiceImpl implements WasteService {
         repository.delete(waste);
     }
 
-    public ResultSet<Waste> getRecords(PagingCriteria criteria) {
+    public DatatablesResultSet<Waste> getRecords(DatatablesCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
         Integer pageNumber = criteria.getPageNumber();
-        List<SortField> sortFields = criteria.getSortFields();
+        List<DatatablesSortField> sortFields = criteria.getSortFields();
         String search = criteria.getSearch();
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -83,7 +83,7 @@ public class WasteServiceImpl implements WasteService {
         cq.where(predicates);
 
         // Sorting
-        for (SortField sortField : sortFields) {
+        for (DatatablesSortField sortField : sortFields) {
             String field = sortField.getField();
             String direction = sortField.getDirection().getDirection();
             if (direction.equalsIgnoreCase("asc")) {
@@ -101,6 +101,6 @@ public class WasteServiceImpl implements WasteService {
         typedQuery = typedQuery.setMaxResults(displaySize);
         List<Waste> resultList = typedQuery.getResultList();
 
-        return new ResultSet<Waste>(resultList, totalRecords, displaySize);
+        return new DatatablesResultSet<Waste>(resultList, totalRecords, displaySize);
     }
 }

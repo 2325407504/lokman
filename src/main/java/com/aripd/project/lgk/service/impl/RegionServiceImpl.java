@@ -15,9 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.SortField;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.common.dto.datatables.DatatablesSortField;
 import com.aripd.project.lgk.domain.Region;
 import com.aripd.project.lgk.domain.Region_;
 import com.aripd.project.lgk.repository.RegionRepository;
@@ -55,11 +55,11 @@ public class RegionServiceImpl implements RegionService {
         repository.delete(region);
     }
 
-    public ResultSet<Region> getRecords(PagingCriteria criteria) {
+    public DatatablesResultSet<Region> getRecords(DatatablesCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
         Integer pageNumber = criteria.getPageNumber();
-        List<SortField> sortFields = criteria.getSortFields();
+        List<DatatablesSortField> sortFields = criteria.getSortFields();
         String search = criteria.getSearch();
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -79,7 +79,7 @@ public class RegionServiceImpl implements RegionService {
         cq.where(predicates);
 
         // Sorting
-        for (SortField sortField : sortFields) {
+        for (DatatablesSortField sortField : sortFields) {
             String field = sortField.getField();
             String direction = sortField.getDirection().getDirection();
             if (direction.equalsIgnoreCase("asc")) {
@@ -97,6 +97,6 @@ public class RegionServiceImpl implements RegionService {
         typedQuery = typedQuery.setMaxResults(displaySize);
         List<Region> resultList = typedQuery.getResultList();
 
-        return new ResultSet<Region>(resultList, totalRecords, displaySize);
+        return new DatatablesResultSet<Region>(resultList, totalRecords, displaySize);
     }
 }

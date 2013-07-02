@@ -22,19 +22,21 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aripd.account.service.AccountService;
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.TableParam;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
+import com.aripd.common.dto.autocomplete.AutocompleteCriteria;
+import com.aripd.common.dto.autocomplete.AutocompleteParam;
 import com.aripd.common.model.FileUploadBean;
-import com.aripd.common.utils.ControllerUtils;
+import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Outgoing;
 import com.aripd.project.lgk.domain.Waybill;
 import com.aripd.project.lgk.model.WaybillFilterByIntervalForm;
 import com.aripd.project.lgk.model.OutgoingFilterByIntervalForm;
-import com.aripd.project.lgk.service.CustomerService;
 import com.aripd.project.lgk.service.ProductService;
 import com.aripd.project.lgk.service.WaybillService;
+import java.util.List;
 import javax.validation.Valid;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -48,18 +50,24 @@ public class WaybillController {
     private WaybillService waybillService;
     @Resource(name = "accountService")
     private AccountService accountService;
-    @Resource(name = "customerService")
-    private CustomerService customerService;
     @Resource(name = "productService")
     private ProductService productService;
     @Value("${path.directory.import}")
     String pathDirectoryImport;
 
-    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    @RequestMapping(value = "/get/{invoice_id}", method = RequestMethod.GET)
     public @ResponseBody
-    WebResultSet<Waybill> getDataTables(@TableParam PagingCriteria criteria) {
-        ResultSet<Waybill> resultset = this.waybillService.getRecords(criteria);
-        return ControllerUtils.getWebResultSet(criteria, resultset);
+    WebResultSet<Waybill> datatablesAction(@PathVariable Long invoice_id, @DatatablesParam DatatablesCriteria criteria) {
+        DatatablesResultSet<Waybill> resultset = this.waybillService.getRecords(invoice_id, criteria);
+        return ControllerUtils.getDatatablesResultSet(criteria, resultset);
+    }
+
+    @RequestMapping(value = "/autocomplete", method = RequestMethod.GET)
+    public @ResponseBody
+    List<String> autocompleteAction(@AutocompleteParam AutocompleteCriteria criteria) {
+        return this.waybillService.getRecords(criteria);
+        //AutocompleteResultSet<Waybill> resultset = this.waybillService.getRecords(criteria);
+        //return ControllerUtils.getAutocompleteResultSet(resultset);
     }
 
     @RequestMapping(value = "/list")
@@ -78,7 +86,6 @@ public class WaybillController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
         model.addAttribute("accounts", accountService.findAll());
-        model.addAttribute("customers", customerService.findAll());
         model.addAttribute("waybillAttribute", new Waybill());
         return "waybill/form";
     }
@@ -89,7 +96,6 @@ public class WaybillController {
             Model model) {
         model.addAttribute("outgoingAttribute", new Outgoing());
         model.addAttribute("accounts", accountService.findAll());
-        model.addAttribute("customers", customerService.findAll());
         model.addAttribute("products", productService.findAll());
         model.addAttribute("waybillAttribute", waybillService.findOne(id));
         return "waybill/form";
@@ -104,14 +110,13 @@ public class WaybillController {
 
         if (result.hasErrors()) {
             model.addAttribute("accounts", accountService.findAll());
-            model.addAttribute("customers", customerService.findAll());
             return "/waybill/form";
         }
 
-        formData.getInvoice().setAccount(formData.getAccount());
-        waybillService.save(formData);
+        //formData.getInvoice().setAccount(formData.getAccount());
+        Waybill waybill = waybillService.save(formData);
         redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
-        return "redirect:/waybill/list";
+        return "redirect:/waybill/edit/" + waybill.getId();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)

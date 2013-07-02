@@ -14,14 +14,19 @@ import org.joda.time.DateTime;
 import com.aripd.account.domain.Account;
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.common.utils.ARIPDJodaDateTimeSerializer;
-import javax.persistence.OneToOne;
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name = "invoice")
 public class Invoice extends BaseEntity {
 
+    @Column(nullable = false)
+    private boolean submitted = false;
     @ManyToOne
     @JoinColumn(nullable = false, insertable = true, updatable = true)
     private Account account;
@@ -35,12 +40,21 @@ public class Invoice extends BaseEntity {
     @Column(nullable = false)
     @NotNull
     private BigDecimal amount;
-    @OneToOne(mappedBy = "invoice")
-    private Waybill waybill;
+    @JsonIgnore
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.REMOVE)
+    private Set<Waybill> waybills;
 
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+    public boolean isSubmitted() {
+        return submitted;
+    }
+
+    public void setSubmitted(boolean submitted) {
+        this.submitted = submitted;
     }
 
     public Account getAccount() {
@@ -83,11 +97,11 @@ public class Invoice extends BaseEntity {
         this.amount = amount;
     }
 
-    public Waybill getWaybill() {
-        return waybill;
+    public Set<Waybill> getWaybills() {
+        return waybills;
     }
 
-    public void setWaybill(Waybill waybill) {
-        this.waybill = waybill;
+    public void setWaybills(Set<Waybill> waybills) {
+        this.waybills = waybills;
     }
 }

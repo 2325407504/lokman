@@ -41,6 +41,8 @@
 <c:if test="${requestScope['javax.servlet.forward.request_uri'] == forwarding_list}"><c:set var="forwarding_class" value="active" /></c:if>
 <spring:url value="/production/list" var="production_list" />
 <c:if test="${requestScope['javax.servlet.forward.request_uri'] == production_list}"><c:set var="production_class" value="active" /></c:if>
+<spring:url value="/invoice/list" var="invoice_list" />
+<c:if test="${requestScope['javax.servlet.forward.request_uri'] == invoice_list}"><c:set var="invoice_class" value="active" /></c:if>
 <spring:url value="/waybill/list" var="waybill_list" />
 <c:if test="${requestScope['javax.servlet.forward.request_uri'] == waybill_list}"><c:set var="waybill_class" value="active" /></c:if>
 <spring:url value="/weighbridge/list" var="weighbridge_list" />
@@ -107,6 +109,7 @@
                             <li class="${forwarding_class}"><a href="${forwarding_list}"><spring:message code="Forwardings" /></a></li>
                             <li class="nav-header"><spring:message code="Production" /></li>
                             <li class="${production_class}"><a href="${production_list}"><spring:message code="Production" /></a></li>
+                            <li class="${invoice_class}"><a href="${invoice_list}"><spring:message code="Invoices" /></a></li>
                             <li class="${waybill_class}"><a href="${waybill_list}"><spring:message code="Waybills" /></a></li>
                             <li class="nav-header"><spring:message code="Waste" /></li>
                             <li class="${weighbridge_class}"><a href="${weighbridge_list}"><spring:message code="Weighbridges" /></a></li>

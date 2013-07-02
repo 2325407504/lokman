@@ -28,8 +28,7 @@ public class FillManager {
      * @param startColIndex starting column offset
      * @param datasource the data source
      */
-    public static void fillReport(HSSFSheet worksheet, int startRowIndex,
-            int startColIndex, List<Waybill> datasource) {
+    public static void fillReport(HSSFSheet worksheet, int startRowIndex, int startColIndex, List<Waybill> datasource) {
         // Row offset
         startRowIndex += 2;
 
@@ -79,23 +78,23 @@ public class FillManager {
             }
             cell6.setCellValue(sb.toString());
             cell6.setCellStyle(bodyCellStyle);
-/*
-            HSSFCell cell7 = row.createCell(startColIndex + 7);
-            cell7.setCellValue(datasource.get(i - 2).getInvoiceCompany());
-            cell7.setCellStyle(bodyCellStyle);
+            /*
+             HSSFCell cell7 = row.createCell(startColIndex + 7);
+             cell7.setCellValue(datasource.get(i - 2).getInvoiceCompany());
+             cell7.setCellStyle(bodyCellStyle);
 
-            HSSFCell cell8 = row.createCell(startColIndex + 8);
-            cell8.setCellValue(datasource.get(i - 2).getInvoiceNo());
-            cell8.setCellStyle(bodyCellStyle);
+             HSSFCell cell8 = row.createCell(startColIndex + 8);
+             cell8.setCellValue(datasource.get(i - 2).getInvoiceNo());
+             cell8.setCellStyle(bodyCellStyle);
 
-            HSSFCell cell9 = row.createCell(startColIndex + 9);
-            cell9.setCellValue(formatter.print(datasource.get(i - 2).getInvoiceDate()));
-            cell9.setCellStyle(bodyCellStyle);
+             HSSFCell cell9 = row.createCell(startColIndex + 9);
+             cell9.setCellValue(formatter.print(datasource.get(i - 2).getInvoiceDate()));
+             cell9.setCellStyle(bodyCellStyle);
 
-            HSSFCell cell10 = row.createCell(startColIndex + 10);
-            cell10.setCellValue(datasource.get(i - 2).getInvoiceAmount().doubleValue());
-            cell10.setCellStyle(numericStyle);
-*/
+             HSSFCell cell10 = row.createCell(startColIndex + 10);
+             cell10.setCellValue(datasource.get(i - 2).getInvoiceAmount().doubleValue());
+             cell10.setCellStyle(numericStyle);
+             */
         }
     }
 }

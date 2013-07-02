@@ -2,8 +2,8 @@ package com.aripd.project.lgk.service;
 
 import java.util.List;
 
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Driver;
 import com.aripd.project.lgk.domain.Region;
 
@@ -23,5 +23,5 @@ public interface DriverService {
 
     void delete(Driver driver);
 
-    ResultSet<Driver> getRecords(PagingCriteria criteria);
+    DatatablesResultSet<Driver> getRecords(DatatablesCriteria criteria);
 }

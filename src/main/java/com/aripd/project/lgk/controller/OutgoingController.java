@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -22,13 +21,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aripd.account.service.AccountService;
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.TableParam;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.model.FileUploadBean;
-import com.aripd.common.utils.ControllerUtils;
+import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Waybill;
 import com.aripd.project.lgk.domain.Outgoing;
 import com.aripd.project.lgk.model.OutgoingFilterByIntervalForm;
@@ -57,15 +54,13 @@ public class OutgoingController {
     private SubcontractorService subcontractorService;
     @Resource(name = "driverService")
     private DriverService driverService;
-    @Resource(name = "accountService")
-    private AccountService accountService;
     @Value("${path.directory.import}")
     String pathDirectoryImport;
 
     @RequestMapping(value = "/get/{waybill_id}", method = RequestMethod.GET)
     public @ResponseBody
-    WebResultSet<Outgoing> getDataTables(@PathVariable Long waybill_id, @TableParam PagingCriteria criteria) {
-        return ControllerUtils.getWebResultSet(criteria, this.outgoingService.getRecords(waybill_id, criteria));
+    WebResultSet<Outgoing> datatablesAction(@PathVariable Long waybill_id, @DatatablesParam DatatablesCriteria criteria) {
+        return ControllerUtils.getDatatablesResultSet(criteria, this.outgoingService.getRecords(waybill_id, criteria));
     }
 
     @RequestMapping(value = "/save/{waybill_id}", method = RequestMethod.POST)

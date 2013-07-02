@@ -22,12 +22,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aripd.account.service.AccountService;
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.TableParam;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.model.FileUploadBean;
-import com.aripd.common.utils.ControllerUtils;
+import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Uatf;
 import com.aripd.project.lgk.model.ForwardingFilterByIntervalForm;
@@ -57,9 +57,9 @@ public class ForwardingController {
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
-    WebResultSet<Forwarding> getDataTables(@TableParam PagingCriteria criteria) {
-        ResultSet<Forwarding> resultset = this.forwardingService.getRecords(criteria);
-        return ControllerUtils.getWebResultSet(criteria, resultset);
+    WebResultSet<Forwarding> datatablesAction(@DatatablesParam DatatablesCriteria criteria) {
+        DatatablesResultSet<Forwarding> resultset = this.forwardingService.getRecords(criteria);
+        return ControllerUtils.getDatatablesResultSet(criteria, resultset);
     }
 
     @RequestMapping(value = "/list")

@@ -19,9 +19,9 @@ import com.aripd.account.domain.Role;
 import com.aripd.account.domain.Role_;
 import com.aripd.account.repository.RoleRepository;
 import com.aripd.account.service.RoleService;
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.SortField;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.common.dto.datatables.DatatablesSortField;
 
 @Service("roleService")
 @Transactional(readOnly = true)
@@ -52,12 +52,12 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public ResultSet<Role> getRecords(PagingCriteria criteria) {
+	public DatatablesResultSet<Role> getRecords(DatatablesCriteria criteria) {
 		Integer displaySize = criteria.getDisplaySize();
 		Integer displayStart = criteria.getDisplayStart();
 		Integer pageNumber = criteria.getPageNumber();
 		String search = criteria.getSearch();
-		List<SortField> sortFields = criteria.getSortFields();
+		List<DatatablesSortField> sortFields = criteria.getSortFields();
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Role> cq = cb.createQuery(Role.class);
@@ -79,7 +79,7 @@ public class RoleServiceImpl implements RoleService {
 		cq.where(predicates);
 
 		// Sorting
-		for (SortField sortField : sortFields) {
+		for (DatatablesSortField sortField : sortFields) {
 			String field = sortField.getField();
 			String direction = sortField.getDirection().getDirection();
 			if (direction.equalsIgnoreCase("asc"))
@@ -96,7 +96,7 @@ public class RoleServiceImpl implements RoleService {
 		typedQuery = typedQuery.setMaxResults(displaySize);
 		List<Role> resultList = typedQuery.getResultList();
 
-		return new ResultSet<Role>(resultList, totalRecords, displaySize);
+		return new DatatablesResultSet<Role>(resultList, totalRecords, displaySize);
 	}
 
 }

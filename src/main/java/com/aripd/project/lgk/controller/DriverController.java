@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.TableParam;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
-import com.aripd.common.utils.ControllerUtils;
+import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Driver;
 import com.aripd.project.lgk.service.DriverService;
 import com.aripd.project.lgk.service.RegionService;
@@ -37,9 +37,9 @@ public class DriverController {
 	
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	public @ResponseBody
-	WebResultSet<Driver> getDataTables(@TableParam PagingCriteria criteria) {
-		ResultSet<Driver> resultset = this.driverService.getRecords(criteria);
-		return ControllerUtils.getWebResultSet(criteria, resultset);
+	WebResultSet<Driver> datatablesAction(@DatatablesParam DatatablesCriteria criteria) {
+		DatatablesResultSet<Driver> resultset = this.driverService.getRecords(criteria);
+		return ControllerUtils.getDatatablesResultSet(criteria, resultset);
 	}
 
 	@RequestMapping(value="/list")

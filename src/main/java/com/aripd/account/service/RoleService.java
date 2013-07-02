@@ -3,8 +3,8 @@ package com.aripd.account.service;
 import java.util.List;
 
 import com.aripd.account.domain.Role;
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
 
 public interface RoleService {
 
@@ -16,6 +16,6 @@ public interface RoleService {
 
 	void delete(Long id);
 
-	ResultSet<Role> getRecords(PagingCriteria criteria);
+	DatatablesResultSet<Role> getRecords(DatatablesCriteria criteria);
 	
 }

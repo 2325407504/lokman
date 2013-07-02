@@ -19,11 +19,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aripd.account.domain.Account;
 import com.aripd.account.service.AccountService;
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.TableParam;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
-import com.aripd.common.utils.ControllerUtils;
+import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Expense;
 import com.aripd.project.lgk.service.ExpenseService;
 import com.aripd.project.lgk.service.ExpensetypeService;
@@ -42,11 +42,11 @@ public class UserExpenseController {
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
-    WebResultSet<Expense> getDataTables(
+    WebResultSet<Expense> datatablesAction(
             Principal principal,
-            @TableParam PagingCriteria criteria) {
-        ResultSet<Expense> resultset = this.expenseService.getRecords(principal, criteria);
-        return ControllerUtils.getWebResultSet(criteria, resultset);
+            @DatatablesParam DatatablesCriteria criteria) {
+        DatatablesResultSet<Expense> resultset = this.expenseService.getRecords(principal, criteria);
+        return ControllerUtils.getDatatablesResultSet(criteria, resultset);
     }
 
     @RequestMapping(value = "/list")

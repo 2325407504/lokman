@@ -31,7 +31,7 @@
             <form:hidden path="id" />
             <fieldset>
                 <div class="control-group">
-                    <form:label path="waybillNo"><spring:message code="Waybill No" /></form:label>
+                    <form:label path="waybillNo"><spring:message code="Document No" /></form:label>
                     <form:input type="text" path="waybillNo" />
                     <form:errors cssClass="text-error" path="waybillNo" />
                 </div>

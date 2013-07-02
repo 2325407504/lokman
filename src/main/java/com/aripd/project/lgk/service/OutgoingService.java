@@ -2,8 +2,8 @@ package com.aripd.project.lgk.service;
 
 import java.util.List;
 
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Outgoing;
 import javax.servlet.http.HttpServletResponse;
 import org.joda.time.DateTime;
@@ -24,7 +24,7 @@ public interface OutgoingService {
 
     public List<Outgoing> findByWaybillId(Long waybill_id);
 
-    public ResultSet<Outgoing> getRecords(Long waybill_id, PagingCriteria criteria);
+    public DatatablesResultSet<Outgoing> getRecords(Long waybill_id, DatatablesCriteria criteria);
 
     public void importXLSX(String fileName);
 

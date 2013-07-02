@@ -21,7 +21,7 @@
         </aripd:description>
     </div>
     <div class="span4">
-        <aripd:description id="waybill">
+        <aripd:description id="waybill" caption="Waybill">
             <aripd:descriptionitem label="Document No" field="waybillAttribute.documentNo"></aripd:descriptionitem>
             <aripd:descriptionitem label="Document Date" field="waybillAttribute.documentDate"></aripd:descriptionitem>
             <aripd:descriptionitem label="Company" field="waybillAttribute.company"></aripd:descriptionitem>
@@ -30,24 +30,26 @@
         </aripd:description>
     </div>
     <div class="span4">
-        <aripd:description id="waybill-invoice">
-            <aripd:descriptionitem label="Name" field="waybillAttribute.invoice.customer.name"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Postal Address" field="waybillAttribute.invoice.customer.address"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Phone Number" field="waybillAttribute.invoice.customer.phonenumber"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Tax No" field="waybillAttribute.invoice.customer.taxNo"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Tax Office" field="waybillAttribute.invoice.customer.taxOffice"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Document No" field="waybillAttribute.invoice.documentNo"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Document Date" field="waybillAttribute.invoice.documentDate"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Amount" field="waybillAttribute.invoice.amount"></aripd:descriptionitem>
-        </aripd:description>
+        <c:if test="${ !empty waybillAttribute.invoice }">
+            <aripd:description id="waybill-invoice" caption="Invoice">
+                <aripd:descriptionitem label="Name" field="waybillAttribute.invoice.customer.name"></aripd:descriptionitem>
+                <aripd:descriptionitem label="Postal Address" field="waybillAttribute.invoice.customer.address"></aripd:descriptionitem>
+                <aripd:descriptionitem label="Phone Number" field="waybillAttribute.invoice.customer.phonenumber"></aripd:descriptionitem>
+                <aripd:descriptionitem label="Tax No" field="waybillAttribute.invoice.customer.taxNo"></aripd:descriptionitem>
+                <aripd:descriptionitem label="Tax Office" field="waybillAttribute.invoice.customer.taxOffice"></aripd:descriptionitem>
+                <aripd:descriptionitem label="Document No" field="waybillAttribute.invoice.documentNo"></aripd:descriptionitem>
+                <aripd:descriptionitem label="Document Date" field="waybillAttribute.invoice.documentDate"></aripd:descriptionitem>
+                <aripd:descriptionitem label="Amount" field="waybillAttribute.invoice.amount"></aripd:descriptionitem>
+            </aripd:description>
+        </c:if>
     </div>
 </div>
 <div class="row-fluid">
     <div class="span12">
         <aripd:datatables datasource="/outgoing/get/${waybillAttribute.id}" id="outgoings">
             <aripd:column label="Product" field="product.name"/>
-            <aripd:column label="Remark" field="remark"/>
             <aripd:column label="Weight" field="weight"/>
+            <aripd:column label="Remark" field="remark"/>
         </aripd:datatables>
     </div>
 </div>

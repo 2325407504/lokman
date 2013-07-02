@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.TableParam;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
-import com.aripd.common.utils.ControllerUtils;
+import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Customer;
 import com.aripd.project.lgk.service.CustomerService;
 import com.aripd.project.lgk.service.RegionService;
@@ -41,9 +41,9 @@ public class CustomerController {
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
-    WebResultSet<Customer> getDataTables(@TableParam PagingCriteria criteria) {
-        ResultSet<Customer> resultset = this.customerService.getRecords(criteria);
-        return ControllerUtils.getWebResultSet(criteria, resultset);
+    WebResultSet<Customer> datatablesAction(@DatatablesParam DatatablesCriteria criteria) {
+        DatatablesResultSet<Customer> resultset = this.customerService.getRecords(criteria);
+        return ControllerUtils.getDatatablesResultSet(criteria, resultset);
     }
 
     @RequestMapping(value = "/list")

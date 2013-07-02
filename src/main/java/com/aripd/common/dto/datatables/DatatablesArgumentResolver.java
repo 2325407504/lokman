@@ -1,4 +1,4 @@
-package com.aripd.common.utils;
+package com.aripd.common.dto.datatables;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,11 +9,8 @@ import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebArgumentResolver;
 import org.springframework.web.context.request.NativeWebRequest;
 
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.SortField;
-import com.aripd.common.dto.TableParam;
 
-public class TableParamArgumentResolver implements WebArgumentResolver {
+public class DatatablesArgumentResolver implements WebArgumentResolver {
 
     private static final String S_ECHO = "sEcho";
     private static final String I_DISPLAY_START = "iDisplayStart";
@@ -25,9 +22,9 @@ public class TableParamArgumentResolver implements WebArgumentResolver {
     private static final String S_SEARCHES = "sSearch";
 
     public Object resolveArgument(MethodParameter param, NativeWebRequest request) throws Exception {
-        TableParam tableParamAnnotation = param.getParameterAnnotation(TableParam.class);
+        DatatablesParam annotation = param.getParameterAnnotation(DatatablesParam.class);
 
-        if (tableParamAnnotation != null) {
+        if (annotation != null) {
             HttpServletRequest httpRequest = (HttpServletRequest) request.getNativeRequest();
 
             String sEcho = httpRequest.getParameter(S_ECHO);
@@ -41,15 +38,15 @@ public class TableParamArgumentResolver implements WebArgumentResolver {
             Integer iDisplayLength = Integer.parseInt(sDisplayLength);
             Integer iSortingCols = Integer.parseInt(sSortingCols);
 
-            List<SortField> sortFields = new ArrayList<SortField>();
+            List<DatatablesSortField> sortFields = new ArrayList<DatatablesSortField>();
             for (int colCount = 0; colCount < iSortingCols; colCount++) {
                 String sSortCol = httpRequest.getParameter(I_SORT_COLS + colCount);
                 String sSortDir = httpRequest.getParameter(S_SORT_DIR + colCount);
                 String sColName = httpRequest.getParameter(S_DATA_PROP + sSortCol);
-                sortFields.add(new SortField(sColName, sSortDir));
+                sortFields.add(new DatatablesSortField(sColName, sSortDir));
             }
 
-            PagingCriteria pc = new PagingCriteria(sSearches, iDisplayStart, iDisplayLength, iEcho, sortFields);
+            DatatablesCriteria pc = new DatatablesCriteria(sSearches, iDisplayStart, iDisplayLength, iEcho, sortFields);
 
             return pc;
         }

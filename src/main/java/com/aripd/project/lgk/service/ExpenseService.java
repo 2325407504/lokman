@@ -5,8 +5,8 @@ import java.security.Principal;
 import javax.servlet.http.HttpServletResponse;
 
 import com.aripd.account.domain.Account;
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Expense;
 import java.util.List;
 import org.joda.time.DateTime;
@@ -25,9 +25,9 @@ public interface ExpenseService {
 
     public void delete(Expense expense);
 
-    public ResultSet<Expense> getRecords(PagingCriteria criteria);
+    public DatatablesResultSet<Expense> getRecords(DatatablesCriteria criteria);
 
-    public ResultSet<Expense> getRecords(Principal principal, PagingCriteria criteria);
+    public DatatablesResultSet<Expense> getRecords(Principal principal, DatatablesCriteria criteria);
 
     public void importXLSX(String fileName);
 

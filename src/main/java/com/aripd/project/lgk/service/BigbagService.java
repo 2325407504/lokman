@@ -2,8 +2,8 @@ package com.aripd.project.lgk.service;
 
 import java.util.List;
 
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Bigbag;
 import com.aripd.project.lgk.domain.Uatf;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +25,7 @@ public interface BigbagService {
 
     public List<Bigbag> findByProductionId(Long id);
 
-    public ResultSet<Bigbag> getRecords(Long production_id, PagingCriteria criteria);
+    public DatatablesResultSet<Bigbag> getRecords(Long production_id, DatatablesCriteria criteria);
 
     public void importXLSX(String fileName);
 

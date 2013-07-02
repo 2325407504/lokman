@@ -1,4 +1,4 @@
-package com.aripd.common.dto;
+package com.aripd.common.dto.autocomplete;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -9,6 +9,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface TableParam {
-
+public @interface AutocompleteParam {
 }

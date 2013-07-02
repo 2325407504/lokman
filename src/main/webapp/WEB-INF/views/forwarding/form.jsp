@@ -34,7 +34,7 @@
         <div class="span4">
             <fieldset>
                 <div class="control-group">
-                    <form:label path="waybillNo"><spring:message code="Waybill No" /></form:label>
+                    <form:label path="waybillNo"><spring:message code="Document No" /></form:label>
                     <form:input path="waybillNo" />
                     <form:errors cssClass="text-error" path="waybillNo" />
                 </div>
@@ -86,6 +86,7 @@
                     <form:select path="quota.id" multiple="false" items="${quotas}" itemLabel="name" itemValue="id"/>
                     <form:errors cssClass="text-error" path="quota" />
                 </div>
+            </fieldset>
         </div>
     </div>
     <div class="row-fluid">
@@ -96,7 +97,6 @@
                 </c:if>
                 <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
             </div>
-            </fieldset>
         </div>
     </div>
 </form:form>
@@ -110,15 +110,15 @@
     </form:form>
 </c:if>
 
-<div class="row-fluid">
-    <div class="span12">
-        <fmt:message key="Code" var="Code"/>
-        <fmt:message key="Company" var="Company"/>
-        <fmt:message key="County" var="County"/>
-        <fmt:message key="City" var="City"/>
-        <fmt:message key="Weight" var="Weight"/>
+<c:if test="${forwardingAttribute.id != null}">
+    <div class="row-fluid">
+        <div class="span12">
+            <fmt:message key="Code" var="Code"/>
+            <fmt:message key="Company" var="Company"/>
+            <fmt:message key="County" var="County"/>
+            <fmt:message key="City" var="City"/>
+            <fmt:message key="Weight" var="Weight"/>
 
-        <c:if test="${forwardingAttribute.id != null}">
             <spring:url var="uatfSave" value="/uatf/save/${forwardingAttribute.id}" />
             <form:form modelAttribute="uatfAttribute" action="${uatfSave}" method="post" class="form-inline">
                 <form:errors path="*" cssClass="alert alert-error" element="div" />
@@ -142,9 +142,9 @@
                 <aripd:column label="Weight" field="loadWeightInTonne"/>
                 <aripd:column label="Action" field="id"/>
             </aripd:datatables>
-        </c:if>
+        </div>
     </div>
-</div>
+</c:if>
 
 <script type="text/javascript">
     var startDateTextBox = $('#startingTime');

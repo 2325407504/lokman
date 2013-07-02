@@ -18,11 +18,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aripd.account.domain.Role;
 import com.aripd.account.service.RoleService;
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.TableParam;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
-import com.aripd.common.utils.ControllerUtils;
+import com.aripd.common.dto.ControllerUtils;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN')")
 @Controller
@@ -35,9 +35,9 @@ public class RoleController {
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
-    WebResultSet<Role> getDataTables(@TableParam PagingCriteria criteria) {
-        ResultSet<Role> resultset = this.roleService.getRecords(criteria);
-        return ControllerUtils.getWebResultSet(criteria, resultset);
+    WebResultSet<Role> datatablesAction(@DatatablesParam DatatablesCriteria criteria) {
+        DatatablesResultSet<Role> resultset = this.roleService.getRecords(criteria);
+        return ControllerUtils.getDatatablesResultSet(criteria, resultset);
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)

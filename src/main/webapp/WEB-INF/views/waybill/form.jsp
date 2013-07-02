@@ -36,7 +36,7 @@
                 <legend><spring:message code="Waybill" /></legend>
                 <div class="control-group">
                     <form:label path="documentDate"><spring:message code="Document Date" /></form:label>
-                    <form:input type="datetime" id="waybillDate" path="documentDate" />
+                    <form:input type="datetime" path="documentDate" />
                     <form:errors cssClass="text-error" path="documentDate" />
                 </div>
                 <div class="control-group">
@@ -63,27 +63,6 @@
         </div>
         <div class="span4">
             <fieldset>
-                <legend><spring:message code="Invoice" /></legend>
-                <div class="control-group">
-                    <form:label path="invoice.customer"><spring:message code="Customer" /></form:label>
-                    <form:select multiple="false" path="invoice.customer.id" items="${customers}" itemLabel="name" itemValue="id" />
-                    <form:errors cssClass="text-error" path="invoice.customer" />
-                </div>
-                <div class="control-group">
-                    <form:label path="invoice.documentDate"><spring:message code="Document Date" /></form:label>
-                    <form:input type="datetime" id="invoiceDate" path="invoice.documentDate" />
-                    <form:errors cssClass="text-error" path="invoice.documentDate" />
-                </div>
-                <div class="control-group">
-                    <form:label path="invoice.documentNo"><spring:message code="Document No" /></form:label>
-                    <form:input path="invoice.documentNo" />
-                    <form:errors cssClass="text-error" path="invoice.documentNo" />
-                </div>
-                <div class="control-group">
-                    <form:label path="invoice.amount"><spring:message code="Amount" /></form:label>
-                    <form:input path="invoice.amount" />
-                    <form:errors cssClass="text-error" path="invoice.amount" />
-                </div>
             </fieldset>
         </div>
     </div>
@@ -122,8 +101,8 @@
 
             <aripd:datatables datasource="/outgoing/get/${waybillAttribute.id}" id="outgoings" dataUrlDelete="/outgoing/delete" actionColumn="3" caption="Outgoings">
                 <aripd:column label="Product" field="product.name"/>
-                <aripd:column label="Remark" field="remark"/>
                 <aripd:column label="Weight" field="weight"/>
+                <aripd:column label="Remark" field="remark"/>
                 <aripd:column label="Action" field="id"/>
             </aripd:datatables>
         </div>
@@ -132,7 +111,7 @@
 
 <script>
     $(function() {
-        $("#waybillDate, #invoiceDate").datetimepicker({
+        $("[name=documentDate]").datetimepicker({
             maxDate: new Date()
         });
     });

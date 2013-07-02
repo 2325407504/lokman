@@ -16,7 +16,7 @@
 <aripd:datatables datasource="/forwarding/get" id="forwardings" dataUrlShow="/forwarding/show" dataUrlEdit="/forwarding/edit">
     <aripd:column label="Action" field="id"/>
     <aripd:column label="Account" field="account.username"/>
-    <aripd:column label="Waybill No" field="waybillNo"/>
+    <aripd:column label="Document No" field="waybillNo"/>
     <aripd:column label="Driver" field="driver"/>
     <aripd:column label="Subcontractor" field="subcontractor.name"/>
     <aripd:column label="Quota" field="quota.name"/>

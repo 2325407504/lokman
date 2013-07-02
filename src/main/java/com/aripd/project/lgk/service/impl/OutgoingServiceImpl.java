@@ -28,9 +28,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.SortField;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.common.dto.datatables.DatatablesSortField;
 import com.aripd.project.lgk.domain.Waybill_;
 import com.aripd.project.lgk.domain.Waybill;
 import com.aripd.project.lgk.domain.Outgoing;
@@ -106,12 +106,12 @@ public class OutgoingServiceImpl implements OutgoingService {
     }
 
     @Override
-    public ResultSet<Outgoing> getRecords(Long waybill_id, PagingCriteria criteria) {
+    public DatatablesResultSet<Outgoing> getRecords(Long waybill_id, DatatablesCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
         Integer pageNumber = criteria.getPageNumber();
         String search = criteria.getSearch();
-        List<SortField> sortFields = criteria.getSortFields();
+        List<DatatablesSortField> sortFields = criteria.getSortFields();
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Outgoing> cq = cb.createQuery(Outgoing.class);
@@ -134,7 +134,7 @@ public class OutgoingServiceImpl implements OutgoingService {
 
         // Sorting
         /*
-         for (SortField sortField : sortFields) {
+         for (DatatablesSortField sortField : sortFields) {
          String field = sortField.getField();
          String direction = sortField.getDirection().getDirection();
          if (direction.equalsIgnoreCase("asc")) {
@@ -153,7 +153,7 @@ public class OutgoingServiceImpl implements OutgoingService {
         typedQuery = typedQuery.setMaxResults(displaySize);
         List<Outgoing> resultList = typedQuery.getResultList();
 
-        return new ResultSet<Outgoing>(resultList, totalRecords, displaySize);
+        return new DatatablesResultSet<Outgoing>(resultList, totalRecords, displaySize);
     }
 
     public void importXLSX(String fileName) {

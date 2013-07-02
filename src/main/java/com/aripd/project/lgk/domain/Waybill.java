@@ -18,7 +18,6 @@ import org.joda.time.DateTime;
 import com.aripd.account.domain.Account;
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.common.utils.ARIPDJodaDateTimeSerializer;
-import javax.persistence.OneToOne;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
@@ -31,8 +30,8 @@ public class Waybill extends BaseEntity {
     @JoinColumn(nullable = false, insertable = true, updatable = true)
     private Account account;
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "invoice_id", referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "invoice_id")
     private Invoice invoice;
     @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
     @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")

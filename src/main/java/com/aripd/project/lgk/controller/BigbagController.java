@@ -22,11 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aripd.account.service.AccountService;
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.TableParam;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.model.FileUploadBean;
-import com.aripd.common.utils.ControllerUtils;
+import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Production;
 import com.aripd.project.lgk.domain.Bigbag;
 import com.aripd.project.lgk.model.BigbagFilterByIntervalForm;
@@ -62,8 +62,8 @@ public class BigbagController {
 
     @RequestMapping(value = "/get/{production_id}", method = RequestMethod.GET)
     public @ResponseBody
-    WebResultSet<Bigbag> getDataTables(@PathVariable Long production_id, @TableParam PagingCriteria criteria) {
-        return ControllerUtils.getWebResultSet(criteria, this.bigbagService.getRecords(production_id, criteria));
+    WebResultSet<Bigbag> datatablesAction(@PathVariable Long production_id, @DatatablesParam DatatablesCriteria criteria) {
+        return ControllerUtils.getDatatablesResultSet(criteria, this.bigbagService.getRecords(production_id, criteria));
     }
 
     @RequestMapping(value = "/save/{production_id}", method = RequestMethod.POST)

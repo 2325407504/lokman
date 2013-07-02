@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Uatf;
 import org.joda.time.DateTime;
 
@@ -25,7 +25,7 @@ public interface UatfService {
 
     public List<Uatf> findByForwardingId(Long forwarding_id);
 
-    public ResultSet<Uatf> getRecords(Long forwarding_id, PagingCriteria criteria);
+    public DatatablesResultSet<Uatf> getRecords(Long forwarding_id, DatatablesCriteria criteria);
 
     public void importXLSX(String fileName);
 

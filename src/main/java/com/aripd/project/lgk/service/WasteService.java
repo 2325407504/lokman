@@ -2,8 +2,8 @@ package com.aripd.project.lgk.service;
 
 import java.util.List;
 
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Waste;
 
 public interface WasteService {
@@ -20,5 +20,5 @@ public interface WasteService {
 
     void delete(Waste waste);
 
-    ResultSet<Waste> getRecords(PagingCriteria criteria);
+    DatatablesResultSet<Waste> getRecords(DatatablesCriteria criteria);
 }

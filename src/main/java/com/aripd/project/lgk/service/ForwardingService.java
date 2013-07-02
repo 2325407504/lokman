@@ -5,8 +5,8 @@ import java.security.Principal;
 import javax.servlet.http.HttpServletResponse;
 
 import com.aripd.account.domain.Account;
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Forwarding;
 import java.util.List;
 import org.joda.time.DateTime;
@@ -27,9 +27,9 @@ public interface ForwardingService {
 
     public void delete(Forwarding forwarding);
 
-    public ResultSet<Forwarding> getRecords(PagingCriteria criteria);
+    public DatatablesResultSet<Forwarding> getRecords(DatatablesCriteria criteria);
 
-    public ResultSet<Forwarding> getRecords(Principal principal, PagingCriteria criteria);
+    public DatatablesResultSet<Forwarding> getRecords(Principal principal, DatatablesCriteria criteria);
 
     public void importXLSX(String fileName);
 

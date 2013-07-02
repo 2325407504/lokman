@@ -3,8 +3,8 @@ package com.aripd.account.service;
 import java.util.List;
 
 import com.aripd.account.domain.Account;
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
 
 public interface AccountService {
 
@@ -18,6 +18,6 @@ public interface AccountService {
 
 	void delete(Long id);
 
-	ResultSet<Account> getRecords(PagingCriteria criteria);
+	DatatablesResultSet<Account> getRecords(DatatablesCriteria criteria);
 
 }

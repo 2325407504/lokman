@@ -38,9 +38,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.aripd.account.domain.Account;
 import com.aripd.account.service.AccountService;
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.SortField;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.common.dto.datatables.DatatablesSortField;
 import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Forwarding_;
 import com.aripd.project.lgk.domain.Forwarding;
@@ -117,11 +117,11 @@ public class ForwardingServiceImpl implements ForwardingService {
         repository.delete(forwarding);
     }
 
-    public ResultSet<Forwarding> getRecords(PagingCriteria criteria) {
+    public DatatablesResultSet<Forwarding> getRecords(DatatablesCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
         Integer pageNumber = criteria.getPageNumber();
-        List<SortField> sortFields = criteria.getSortFields();
+        List<DatatablesSortField> sortFields = criteria.getSortFields();
         String search = criteria.getSearch();
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -141,7 +141,7 @@ public class ForwardingServiceImpl implements ForwardingService {
         cq.where(predicates);
 
         // Sorting
-        for (SortField sortField : sortFields) {
+        for (DatatablesSortField sortField : sortFields) {
             String field = sortField.getField();
             String direction = sortField.getDirection().getDirection();
             if (direction.equalsIgnoreCase("asc")) {
@@ -159,14 +159,14 @@ public class ForwardingServiceImpl implements ForwardingService {
         typedQuery = typedQuery.setMaxResults(displaySize);
         List<Forwarding> resultList = typedQuery.getResultList();
 
-        return new ResultSet<Forwarding>(resultList, totalRecords, displaySize);
+        return new DatatablesResultSet<Forwarding>(resultList, totalRecords, displaySize);
     }
 
-    public ResultSet<Forwarding> getRecords(Principal principal, PagingCriteria criteria) {
+    public DatatablesResultSet<Forwarding> getRecords(Principal principal, DatatablesCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
         Integer pageNumber = criteria.getPageNumber();
-        List<SortField> sortFields = criteria.getSortFields();
+        List<DatatablesSortField> sortFields = criteria.getSortFields();
         String search = criteria.getSearch();
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -192,7 +192,7 @@ public class ForwardingServiceImpl implements ForwardingService {
         cq.where(predicates);
 
         // Sorting
-        for (SortField sortField : sortFields) {
+        for (DatatablesSortField sortField : sortFields) {
             String field = sortField.getField();
             String direction = sortField.getDirection().getDirection();
             if (direction.equalsIgnoreCase("asc")) {
@@ -210,7 +210,7 @@ public class ForwardingServiceImpl implements ForwardingService {
         typedQuery = typedQuery.setMaxResults(displaySize);
         List<Forwarding> resultList = typedQuery.getResultList();
 
-        return new ResultSet<Forwarding>(resultList, totalRecords, displaySize);
+        return new DatatablesResultSet<Forwarding>(resultList, totalRecords, displaySize);
     }
 
     public void importXLSX(String fileName) {

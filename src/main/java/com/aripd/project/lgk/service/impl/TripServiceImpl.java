@@ -38,9 +38,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aripd.account.domain.Account;
 import com.aripd.account.domain.Account_;
 import com.aripd.account.service.AccountService;
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.SortField;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.common.dto.datatables.DatatablesSortField;
 import com.aripd.project.lgk.domain.Trip;
 import com.aripd.project.lgk.domain.Trip_;
 import com.aripd.project.lgk.domain.Truck;
@@ -94,12 +94,12 @@ public class TripServiceImpl implements TripService {
         repository.delete(trip);
     }
 
-    public ResultSet<Trip> getRecords(PagingCriteria criteria) {
+    public DatatablesResultSet<Trip> getRecords(DatatablesCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
         Integer pageNumber = criteria.getPageNumber();
         String search = criteria.getSearch();
-        List<SortField> sortFields = criteria.getSortFields();
+        List<DatatablesSortField> sortFields = criteria.getSortFields();
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Trip> cq = cb.createQuery(Trip.class);
@@ -123,7 +123,7 @@ public class TripServiceImpl implements TripService {
         cq.where(predicates);
 
         // Sorting
-        for (SortField sortField : sortFields) {
+        for (DatatablesSortField sortField : sortFields) {
             String field = sortField.getField();
             String direction = sortField.getDirection().getDirection();
             if (direction.equalsIgnoreCase("asc")) {
@@ -141,15 +141,15 @@ public class TripServiceImpl implements TripService {
         typedQuery = typedQuery.setMaxResults(displaySize);
         List<Trip> resultList = typedQuery.getResultList();
 
-        return new ResultSet<Trip>(resultList, totalRecords, displaySize);
+        return new DatatablesResultSet<Trip>(resultList, totalRecords, displaySize);
     }
 
-    public ResultSet<Trip> getRecords(Principal principal, PagingCriteria criteria) {
+    public DatatablesResultSet<Trip> getRecords(Principal principal, DatatablesCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
         Integer pageNumber = criteria.getPageNumber();
         String search = criteria.getSearch();
-        List<SortField> sortFields = criteria.getSortFields();
+        List<DatatablesSortField> sortFields = criteria.getSortFields();
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Trip> cq = cb.createQuery(Trip.class);
@@ -175,7 +175,7 @@ public class TripServiceImpl implements TripService {
         cq.where(predicates);
 
         // Sorting
-        for (SortField sortField : sortFields) {
+        for (DatatablesSortField sortField : sortFields) {
             String field = sortField.getField();
             String direction = sortField.getDirection().getDirection();
             if (direction.equalsIgnoreCase("asc")) {
@@ -193,7 +193,7 @@ public class TripServiceImpl implements TripService {
         typedQuery = typedQuery.setMaxResults(displaySize);
         List<Trip> resultList = typedQuery.getResultList();
 
-        return new ResultSet<Trip>(resultList, totalRecords, displaySize);
+        return new DatatablesResultSet<Trip>(resultList, totalRecords, displaySize);
     }
 
     /**

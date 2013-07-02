@@ -15,9 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.SortField;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.common.dto.datatables.DatatablesSortField;
 import com.aripd.project.lgk.domain.Productgroup;
 import com.aripd.project.lgk.domain.Productgroup_;
 import com.aripd.project.lgk.repository.ProductgroupRepository;
@@ -55,11 +55,11 @@ public class ProductgroupServiceImpl implements ProductgroupService {
         repository.delete(productgroup);
     }
 
-    public ResultSet<Productgroup> getRecords(PagingCriteria criteria) {
+    public DatatablesResultSet<Productgroup> getRecords(DatatablesCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
         Integer pageNumber = criteria.getPageNumber();
-        List<SortField> sortFields = criteria.getSortFields();
+        List<DatatablesSortField> sortFields = criteria.getSortFields();
         String search = criteria.getSearch();
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -79,7 +79,7 @@ public class ProductgroupServiceImpl implements ProductgroupService {
         cq.where(predicates);
 
         // Sorting
-        for (SortField sortField : sortFields) {
+        for (DatatablesSortField sortField : sortFields) {
             String field = sortField.getField();
             String direction = sortField.getDirection().getDirection();
             if (direction.equalsIgnoreCase("asc")) {
@@ -97,6 +97,6 @@ public class ProductgroupServiceImpl implements ProductgroupService {
         typedQuery = typedQuery.setMaxResults(displaySize);
         List<Productgroup> resultList = typedQuery.getResultList();
 
-        return new ResultSet<Productgroup>(resultList, totalRecords, displaySize);
+        return new DatatablesResultSet<Productgroup>(resultList, totalRecords, displaySize);
     }
 }

@@ -22,9 +22,9 @@ import com.aripd.account.domain.Client;
 import com.aripd.account.domain.Client_;
 import com.aripd.account.repository.AccountRepository;
 import com.aripd.account.service.AccountService;
-import com.aripd.common.dto.PagingCriteria;
-import com.aripd.common.dto.ResultSet;
-import com.aripd.common.dto.SortField;
+import com.aripd.common.dto.datatables.DatatablesCriteria;
+import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.common.dto.datatables.DatatablesSortField;
 
 @Service("accountService")
 @Transactional(readOnly = true)
@@ -58,12 +58,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public ResultSet<Account> getRecords(PagingCriteria criteria) {
+    public DatatablesResultSet<Account> getRecords(DatatablesCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
         Integer pageNumber = criteria.getPageNumber();
         String search = criteria.getSearch();
-        List<SortField> sortFields = criteria.getSortFields();
+        List<DatatablesSortField> sortFields = criteria.getSortFields();
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Account> cq = cb.createQuery(Account.class);
@@ -86,7 +86,7 @@ public class AccountServiceImpl implements AccountService {
         cq.where(predicates);
 
         // Sorting
-        for (SortField sortField : sortFields) {
+        for (DatatablesSortField sortField : sortFields) {
             String field = sortField.getField();
             String direction = sortField.getDirection().getDirection();
             if (direction.equalsIgnoreCase("asc")) {
@@ -104,6 +104,6 @@ public class AccountServiceImpl implements AccountService {
         typedQuery = typedQuery.setMaxResults(displaySize);
         List<Account> resultList = typedQuery.getResultList();
 
-        return new ResultSet<Account>(resultList, totalRecords, displaySize);
+        return new DatatablesResultSet<Account>(resultList, totalRecords, displaySize);
     }
 }
