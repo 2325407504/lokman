@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.aripd.account.domain.Account;
 import com.aripd.account.service.AccountService;
 import com.aripd.account.service.RoleService;
-import com.aripd.account.validator.AccountValidator;
 import com.aripd.common.dto.PagingCriteria;
 import com.aripd.common.dto.ResultSet;
 import com.aripd.common.dto.TableParam;
@@ -37,8 +36,6 @@ public class AccountController {
     private RoleService roleService;
     @Resource(name = "regionService")
     private RegionService regionService;
-    @Resource(name = "accountValidator")
-    private AccountValidator accountValidator;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody

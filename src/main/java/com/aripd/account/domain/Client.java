@@ -6,14 +6,17 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.aripd.common.entity.BaseEntity;
+import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "client")
 public class Client extends BaseEntity {
 
+    @NotNull
     @Column(nullable = true, unique = false)
     private String firstName;
+    @NotNull
     @Column(nullable = true, unique = false)
     private String lastName;
     @Column(nullable = true, unique = false)

@@ -17,15 +17,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.aripd.account.domain.Account;
 import com.aripd.account.service.AccountService;
-import com.aripd.account.validator.AccountValidator;
 
 @PreAuthorize("isFullyAuthenticated()")
 @Controller
 @RequestMapping("/profile")
 public class ProfileController {
 
-    @Autowired
-    private AccountValidator accountValidator;
     @Resource(name = "accountService")
     private AccountService accountService;
 
@@ -53,7 +50,6 @@ public class ProfileController {
             @ModelAttribute("profileAttribute") @Valid Account formData,
             BindingResult result) {
 
-        //accountValidator.validate(formData, result);
         if (result.hasErrors()) {
             return "/profile/form";
         }

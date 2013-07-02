@@ -12,8 +12,14 @@
 
 <aripd:description id="customer">
     <aripd:descriptionitem label="Tax No" field="customerAttribute.taxNo"></aripd:descriptionitem>
-    <aripd:descriptionitem label="Fullname" field="customerAttribute.name"></aripd:descriptionitem>
+    <aripd:descriptionitem label="Tax Office" field="customerAttribute.taxOffice"></aripd:descriptionitem>
+    <aripd:descriptionitem label="Company" field="customerAttribute.name"></aripd:descriptionitem>
+    <aripd:descriptionitem label="Postal Address" field="customerAttribute.address"></aripd:descriptionitem>
     <aripd:descriptionitem label="Phone Number" field="customerAttribute.phonenumber"></aripd:descriptionitem>
+    <aripd:descriptionitem label="Username" field="customerAttribute.authorized.username"></aripd:descriptionitem>
+    <aripd:descriptionitem label="E-mail Address" field="customerAttribute.authorized.email"></aripd:descriptionitem>
+    <aripd:descriptionitem label="Fullname" field="customerAttribute.authorized.client.fullname"></aripd:descriptionitem>
+    <aripd:descriptionitem label="Phone Number" field="customerAttribute.authorized.client.phonenumber"></aripd:descriptionitem>
 </aripd:description>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

@@ -18,16 +18,22 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.project.lgk.domain.Region;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "account")
 public class Account extends BaseEntity {
 
     @JsonIgnore
+    @NotBlank
     @Column(nullable = false, unique = false)
     private String password;
+    @NotBlank
     @Column(unique = true)
     private String username;
+    @NotBlank
+    @Email
     @Column(nullable = false, unique = true)
     private String email;
     @JsonIgnore

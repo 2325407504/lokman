@@ -8,7 +8,9 @@ import javax.persistence.Table;
 import com.aripd.common.entity.BaseEntity;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -17,14 +19,17 @@ public class Customer extends BaseEntity {
 
     private boolean active;
     private boolean container;
+    @NotBlank
     @Column(unique = true)
     private String taxNo;
+    @NotBlank
     private String taxOffice;
     @NotEmpty
     private String name;
     private String address;
     private String phonenumber;
     @OneToOne(cascade = CascadeType.ALL)
+    @NotNull
     private Account authorized;
 
     @Override

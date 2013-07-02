@@ -108,6 +108,7 @@
                             <li class="nav-header"><spring:message code="Production" /></li>
                             <li class="${production_class}"><a href="${production_list}"><spring:message code="Production" /></a></li>
                             <li class="${waybill_class}"><a href="${waybill_list}"><spring:message code="Waybills" /></a></li>
+                            <li class="nav-header"><spring:message code="Waste" /></li>
                             <li class="${weighbridge_class}"><a href="${weighbridge_list}"><spring:message code="Weighbridges" /></a></li>
                         </ul>
                     </div>
