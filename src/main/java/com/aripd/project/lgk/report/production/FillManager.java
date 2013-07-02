@@ -1,10 +1,10 @@
 package com.aripd.project.lgk.report.production;
 
 import com.aripd.project.lgk.domain.Bigbag;
-import com.aripd.project.lgk.domain.Compensation;
+import com.aripd.project.lgk.domain.Product;
+import com.aripd.project.lgk.domain.Productgroup;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -14,16 +14,11 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import com.aripd.project.lgk.domain.Production;
-import org.apache.poi.hssf.record.CFRuleRecord.ComparisonOperator;
-import org.apache.poi.hssf.usermodel.HSSFConditionalFormattingRule;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+import java.util.Iterator;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
-import org.apache.poi.hssf.usermodel.HSSFFontFormatting;
-import org.apache.poi.hssf.usermodel.HSSFPatternFormatting;
-import org.apache.poi.hssf.usermodel.HSSFSheetConditionalFormatting;
-import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.util.CellRangeAddress;
 
 public class FillManager {
 
@@ -49,9 +44,6 @@ public class FillManager {
         HSSFCellStyle numericStyle = worksheet.getWorkbook().createCellStyle();
         numericStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("#,##0.00"));
 
-        HSSFCellStyle percentageStyle = worksheet.getWorkbook().createCellStyle();
-        percentageStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("0.00%"));
-
         // Create body
         for (int i = startRowIndex; i + startRowIndex - 2 < datasource.size() + 2; i++) {
             // Create a new row
@@ -74,79 +66,28 @@ public class FillManager {
             cell3.setCellStyle(bodyCellStyle);
 
             HSSFCell cell4 = row.createCell(startColIndex + 4);
-            StringBuilder sb = new StringBuilder();
-            Set<Bigbag> bigbags = datasource.get(i - 2).getBigbags();
-            for (Bigbag bigbag : bigbags) {
-                sb.append(bigbag.getWeight());
-                sb.append("\n");
+            StringBuilder sb4 = new StringBuilder();
+
+            Iterator<Bigbag> iterator = datasource.get(i - 2).getBigbags().iterator();
+            while (iterator.hasNext()) {
+                Bigbag bigbag = iterator.next();
+                sb4.append(bigbag.getProduct().getName());
+                sb4.append(": ");
+                sb4.append(bigbag.getWeight());
+                if (iterator.hasNext()) {
+                    sb4.append("\n");
+                }
             }
-            cell4.setCellValue(sb.toString());
+            cell4.setCellValue(sb4.toString());
             cell4.setCellStyle(bodyCellStyle);
 
-            int dyn = 1;
-            List<Compensation> compensations = datasource.get(i - 2).getCompensations();
-            for (Compensation compensation : compensations) {
-                HSSFCell cellc1 = row.createCell(startColIndex + 4 + dyn);
-                cellc1.setCellValue(compensation.getVal());
-                cellc1.setCellStyle(numericStyle);
-
-                dyn++;
-
-                String preVal = "0";
-                String columnLetter = CellReference.convertNumToColString(cellc1.getColumnIndex());
-                String curVal = columnLetter + (row.getRowNum() + 1);
-                if (i > startRowIndex) {
-                    preVal = columnLetter + row.getRowNum();
-                }
-
-                HSSFCell cellc2 = row.createCell(startColIndex + 4 + dyn);
-                cellc2.setCellType(HSSFCell.CELL_TYPE_FORMULA);
-                cellc2.setCellFormula("(" + curVal + "-" + preVal + ")*2070");
-                cellc2.setCellStyle(numericStyle);
-
-                dyn++;
+            HSSFCell cell5 = row.createCell(startColIndex + 5);
+            Multimap<Productgroup, Product> multimap = ArrayListMultimap.create();
+            for (Bigbag bigbag : datasource.get(i - 2).getBigbags()) {
+                multimap.put(bigbag.getProduct().getProductgroup(), bigbag.getProduct());
             }
-
-            HSSFCell cellc5 = row.createCell(startColIndex + 4 + dyn + 0);
-            cellc5.setCellType(HSSFCell.CELL_TYPE_FORMULA);
-            cellc5.setCellFormula("O" + (row.getRowNum() + 1) + "/G" + (row.getRowNum() + 1));
-            cellc5.setCellStyle(percentageStyle);
-            String cellc5ColumnLetter = CellReference.convertNumToColString(cellc5.getColumnIndex());
-
-            HSSFCell cellc6 = row.createCell(startColIndex + 4 + dyn + 1);
-            cellc6.setCellType(HSSFCell.CELL_TYPE_FORMULA);
-            cellc6.setCellFormula("Q" + (row.getRowNum() + 1) + "/G" + (row.getRowNum() + 1));
-            cellc6.setCellStyle(percentageStyle);
-            String cellc6ColumnLetter = CellReference.convertNumToColString(cellc6.getColumnIndex());
-
-            /**
-             * ******** CONDITIONAL FORMATTING *********
-             */
-            /* Access conditional formatting facet layer */
-            HSSFSheetConditionalFormatting layer = worksheet.getSheetConditionalFormatting();
-
-            HSSFConditionalFormattingRule rule1 = layer.createConditionalFormattingRule(ComparisonOperator.GE, ".2");
-            HSSFFontFormatting font_pattern1 = rule1.createFontFormatting();
-            font_pattern1.setFontColorIndex(IndexedColors.WHITE.getIndex());
-            HSSFPatternFormatting fill_pattern1 = rule1.createPatternFormatting();
-            fill_pattern1.setFillBackgroundColor(IndexedColors.RED.index);
-
-            HSSFConditionalFormattingRule rule2 = layer.createConditionalFormattingRule(ComparisonOperator.GE, ".15");
-            HSSFFontFormatting font_pattern2 = rule2.createFontFormatting();
-            font_pattern2.setFontColorIndex(IndexedColors.WHITE.getIndex());
-            HSSFPatternFormatting fill_pattern2 = rule2.createPatternFormatting();
-            fill_pattern2.setFillBackgroundColor(IndexedColors.RED.index);
-
-            /* OK, we have defined mutliple rules. Time to attach two rules to same range. We create an array of rules now */
-            //ConditionalFormattingRule[] rules = {rule1, rule2};
-            //CellRangeAddress[] range = {CellRangeAddress.valueOf("R1:S1000")};
-            //layer.addConditionalFormatting(range, rules);
-
-            /* Create a Cell Range Address */
-            CellRangeAddress[] range1 = {CellRangeAddress.valueOf(cellc5ColumnLetter + (startRowIndex + 2) + ":" + cellc5ColumnLetter + (datasource.size() + startRowIndex + 1))};
-            CellRangeAddress[] range2 = {CellRangeAddress.valueOf(cellc6ColumnLetter + (startRowIndex + 2) + ":" + cellc6ColumnLetter + (datasource.size() + startRowIndex + 1))};
-            layer.addConditionalFormatting(range1, rule1);
-            layer.addConditionalFormatting(range2, rule2);
+            cell5.setCellValue(multimap.size());
+            cell5.setCellStyle(bodyCellStyle);
 
         }
     }

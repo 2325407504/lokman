@@ -12,16 +12,9 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import com.aripd.project.lgk.domain.Production;
-import org.apache.poi.hssf.record.CFRuleRecord.ComparisonOperator;
-import org.apache.poi.hssf.usermodel.HSSFConditionalFormattingRule;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
-import org.apache.poi.hssf.usermodel.HSSFFontFormatting;
-import org.apache.poi.hssf.usermodel.HSSFPatternFormatting;
-import org.apache.poi.hssf.usermodel.HSSFSheetConditionalFormatting;
 import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.util.CellRangeAddress;
 
 public class FillManager {
 
@@ -46,9 +39,6 @@ public class FillManager {
 
         HSSFCellStyle numericStyle = worksheet.getWorkbook().createCellStyle();
         numericStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("#,##0.00"));
-
-        HSSFCellStyle percentageStyle = worksheet.getWorkbook().createCellStyle();
-        percentageStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("0.00%"));
 
         // Create body
         for (int i = startRowIndex; i + startRowIndex - 2 < datasource.size() + 2; i++) {

@@ -25,6 +25,8 @@ public class Layouter {
      * This doesn't have any data yet. This is your template.
      */
     public static void buildReport(HSSFSheet worksheet, int startRowIndex, int startColIndex, List<Production> datasource) {
+        // Set column widths
+        worksheet.setColumnWidth(0, 5000);
         // Build the title and date headers
         buildTitle(worksheet, startRowIndex, startColIndex);
         // Build the column headers
@@ -58,7 +60,7 @@ public class Layouter {
         cellTitle.setCellStyle(cellStyleTitle);
 
         // Create merged region for the report title
-        worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 14));
+        worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 16));
 
         // Create date header
         HSSFRow dateTitle = worksheet.createRow((short) startRowIndex + 1);

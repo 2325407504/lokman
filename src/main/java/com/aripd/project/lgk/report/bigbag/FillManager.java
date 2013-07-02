@@ -1,5 +1,6 @@
 package com.aripd.project.lgk.report.bigbag;
 
+import com.aripd.project.lgk.domain.Bigbag;
 import java.util.List;
 import java.util.Locale;
 
@@ -7,12 +8,11 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import com.aripd.project.lgk.domain.Bigbag;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
+import org.apache.poi.ss.usermodel.CellStyle;
 
 public class FillManager {
 
@@ -26,8 +26,7 @@ public class FillManager {
      * @param startColIndex starting column offset
      * @param datasource the data source
      */
-    public static void fillReport(HSSFSheet worksheet, int startRowIndex,
-            int startColIndex, List<Bigbag> datasource) {
+    public static void fillReport(HSSFSheet worksheet, int startRowIndex, int startColIndex, List<Bigbag> datasource) {
         // Row offset
         startRowIndex += 2;
 
@@ -48,18 +47,13 @@ public class FillManager {
             cell0.setCellValue(formatter.print(datasource.get(i - 2).getProduction().getShiftdate()));
             cell0.setCellStyle(bodyCellStyle);
 
-
             HSSFCell cell1 = row.createCell(startColIndex + 1);
-            cell1.setCellValue(datasource.get(i - 2).getProduction().getAccount().getUsername());
+            cell1.setCellValue(datasource.get(i - 2).getProduct().getName());
             cell1.setCellStyle(bodyCellStyle);
 
             HSSFCell cell2 = row.createCell(startColIndex + 2);
-            cell2.setCellValue(datasource.get(i - 2).getProduction().getFeed());
-            cell2.setCellStyle(bodyCellStyle);
-
-            HSSFCell cell3 = row.createCell(startColIndex + 3);
-            cell3.setCellValue(datasource.get(i - 2).getProduction().getRemark());
-            cell3.setCellStyle(bodyCellStyle);
+            cell2.setCellValue(datasource.get(i - 2).getWeight());
+            cell2.setCellStyle(numericStyle);
 
         }
     }

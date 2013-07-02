@@ -21,8 +21,7 @@ public class Layouter {
      * <p>
      * This doesn't have any data yet. This is your template.
      */
-    public static void buildReport(HSSFSheet worksheet, int startRowIndex,
-            int startColIndex) {
+    public static void buildReport(HSSFSheet worksheet, int startRowIndex, int startColIndex) {
         // Set column widths
         worksheet.setColumnWidth(0, 5000);
         worksheet.setColumnWidth(1, 5000);

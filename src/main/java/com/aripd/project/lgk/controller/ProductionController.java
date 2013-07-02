@@ -32,6 +32,7 @@ import com.aripd.project.lgk.domain.Bigbag;
 import com.aripd.project.lgk.domain.Compensation;
 import com.aripd.project.lgk.domain.Machinetime;
 import com.aripd.project.lgk.domain.Production;
+import com.aripd.project.lgk.model.BigbagFilterByIntervalForm;
 import com.aripd.project.lgk.model.CompensationFilterByIntervalForm;
 import com.aripd.project.lgk.model.MachinetimeFilterByIntervalForm;
 import com.aripd.project.lgk.model.ProductionFilterByIntervalForm;
@@ -159,6 +160,7 @@ public class ProductionController {
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public String reportAction(Model model) {
         model.addAttribute("productionFilterByIntervalForm", new ProductionFilterByIntervalForm());
+        model.addAttribute("bigbagFilterByIntervalForm", new BigbagFilterByIntervalForm());
         model.addAttribute("compensationFilterByIntervalForm", new CompensationFilterByIntervalForm());
         model.addAttribute("machinetimeFilterByIntervalForm", new MachinetimeFilterByIntervalForm());
         return "production/report";

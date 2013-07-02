@@ -24,6 +24,17 @@
     </button>
 </form:form>
 
+<p class="lead"><spring:message code="Bigbag" /></p>
+<spring:url var="bigbagReport" value="/bigbag/report" />
+<form:form modelAttribute="bigbagFilterByIntervalForm" action="${bigbagReport}" method="post" class="form-inline">
+    <form:errors path="*" cssClass="alert alert-error" element="div" />
+    <form:input id="start4" path="startingTime" />
+    <form:input id="end4" path="endingTime" />
+    <button class="btn" type="submit">
+        <i class="icon-search"></i>
+    </button>
+</form:form>
+
 <p class="lead"><spring:message code="Compensation" /></p>
 <spring:url var="compensationReport" value="/compensation/report" />
 <form:form modelAttribute="compensationFilterByIntervalForm" action="${compensationReport}" method="post" class="form-inline">
@@ -188,6 +199,54 @@
         },
         onSelect: function(selectedDateTime) {
             start3.datetimepicker('option', 'maxDate', end3.datetimepicker('getDate'));
+        }
+    });
+
+    var start4 = $('#start4');
+    var end4 = $('#end4');
+
+    start4.datetimepicker({
+        showButtonPanel: false,
+        maxDate: new Date(),
+        showMinute: false,
+        hourGrid: 8,
+        stepHour: 8,
+        hourText: "Vardiya",
+        onClose: function(dateText, inst) {
+            if (end4.val() != '') {
+                var testStartDate = start4.datetimepicker('getDate');
+                var testEndDate = end4.datetimepicker('getDate');
+                if (testStartDate > testEndDate)
+                    end4.datetimepicker('setDate', testStartDate);
+            }
+            else {
+                end4.val(dateText);
+            }
+        },
+        onSelect: function(selectedDateTime) {
+            end4.datetimepicker('option', 'minDate', start4.datetimepicker('getDate'));
+        }
+    });
+    end4.datetimepicker({
+        showButtonPanel: false,
+        maxDate: new Date(),
+        showMinute: false,
+        hourGrid: 8,
+        stepHour: 8,
+        hourText: "Vardiya",
+        onClose: function(dateText, inst) {
+            if (start4.val() != '') {
+                var testStartDate = start4.datetimepicker('getDate');
+                var testEndDate = end4.datetimepicker('getDate');
+                if (testStartDate > testEndDate)
+                    start4.datetimepicker('setDate', testEndDate);
+            }
+            else {
+                start4.val(dateText);
+            }
+        },
+        onSelect: function(selectedDateTime) {
+            start4.datetimepicker('option', 'maxDate', end4.datetimepicker('getDate'));
         }
     });
 

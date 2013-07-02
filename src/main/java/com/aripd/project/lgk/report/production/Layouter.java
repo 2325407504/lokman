@@ -1,6 +1,5 @@
 package com.aripd.project.lgk.report.production;
 
-import com.aripd.project.lgk.domain.Compensation;
 import com.aripd.project.lgk.domain.Production;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +30,7 @@ public class Layouter {
         worksheet.setColumnWidth(2, 5000);
         worksheet.setColumnWidth(3, 5000);
         worksheet.setColumnWidth(4, 5000);
+        worksheet.setColumnWidth(5, 5000);
 
         // Build the title and date headers
         buildTitle(worksheet, startRowIndex, startColIndex);
@@ -65,7 +65,7 @@ public class Layouter {
         cellTitle.setCellStyle(cellStyleTitle);
 
         // Create merged region for the report title
-        worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 4));
+        worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 5));
 
         // Create date header
         HSSFRow dateTitle = worksheet.createRow((short) startRowIndex + 1);
@@ -119,29 +119,9 @@ public class Layouter {
         cell4.setCellValue("Bigbag");
         cell4.setCellStyle(headerCellStyle);
 
-        int dyn = 1;
-        List<Compensation> compensations = datasource.get(0).getCompensations();
-        for (Compensation compensation : compensations) {
-            HSSFCell cellc1 = rowHeader.createCell(startColIndex + 4 + dyn);
-            cellc1.setCellValue(compensation.getElectricmeter().getName());
-            cellc1.setCellStyle(headerCellStyle);
-
-            dyn++;
-            
-            HSSFCell cellc2 = rowHeader.createCell(startColIndex + 4 + dyn);
-            cellc2.setCellValue(compensation.getElectricmeter().getName() + "\nkW·h");
-            cellc2.setCellStyle(headerCellStyle);
-
-            dyn++;
-        }
-
-        HSSFCell cell5 = rowHeader.createCell(startColIndex + 4 + dyn + 0);
-        cell5.setCellValue("580 İnd/Reak");
+        HSSFCell cell5 = rowHeader.createCell(startColIndex + 5);
+        cell5.setCellValue("Bigbag Numbers");
         cell5.setCellStyle(headerCellStyle);
-
-        HSSFCell cell6 = rowHeader.createCell(startColIndex + 4 + dyn + 1);
-        cell6.setCellValue("880 Kap/Reak");
-        cell6.setCellStyle(headerCellStyle);
 
     }
 }
