@@ -25,6 +25,7 @@ import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.service.RegionService;
+import java.util.List;
 import java.util.Set;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.web.bind.WebDataBinder;
@@ -45,7 +46,7 @@ public class AccountController {
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) throws Exception {
-        binder.registerCustomEditor(Set.class, "roles", new CustomCollectionEditor(Set.class) {
+        binder.registerCustomEditor(List.class, "roles", new CustomCollectionEditor(List.class) {
             @Override
             protected Object convertElement(Object element) {
                 if (element instanceof Role) {

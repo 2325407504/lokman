@@ -13,8 +13,10 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.project.lgk.domain.Region;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Transient;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -49,7 +51,7 @@ public class Account extends BaseEntity {
             @JoinColumn(name = "role_id"))
     @ManyToMany(cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Role> roles = new HashSet<Role>(0);
+    private List<Role> roles;
     @ManyToOne(cascade = CascadeType.ALL)
     private Client client;
     @ManyToOne
@@ -101,11 +103,11 @@ public class Account extends BaseEntity {
         return sb.toString();
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 
