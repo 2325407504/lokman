@@ -59,7 +59,7 @@
 <div class="well">
 
     <div class="accordion" id="accordion2">
-        <sec:authorize access="hasAnyRole('ROLE_SUPERADMIN')">
+        <sec:authorize access="hasAnyRole({'ROLE_SUPERADMIN'})">
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a class="accordion-toggle nav-header" data-toggle="collapse" data-parent="#accordion2" href="#collapse1">
@@ -78,7 +78,7 @@
                 </div>
             </div>
         </sec:authorize>
-        <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+        <sec:authorize access="hasAnyRole({'ROLE_ADMIN'})">
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a class="accordion-toggle nav-header" data-toggle="collapse" data-parent="#accordion2" href="#collapse2">
@@ -118,7 +118,7 @@
                 </div>
             </div>
         </sec:authorize>
-        <sec:authorize access="hasAnyRole('ROLE_USER')">
+        <sec:authorize access="hasAnyRole({'ROLE_USER'})">
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a class="accordion-toggle nav-header" data-toggle="collapse" data-parent="#accordion2" href="#collapse3">
