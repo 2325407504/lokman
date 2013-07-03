@@ -11,11 +11,12 @@
 </jsp:include>
 
 <aripd:datatables datasource="/account/get" id="accounts" dataUrlShow="/account/show" dataUrlEdit="/account/edit">
-	<aripd:datatablescolumn label="Action" field="id"/>
-	<aripd:datatablescolumn label="Region" field="region.name"/>
-	<aripd:datatablescolumn label="Username" field="username"/>
-	<aripd:datatablescolumn label="Fullname" field="client.fullname"/>
-	<aripd:datatablescolumn label="E-mail Address" field="email"/>
+    <aripd:datatablescolumn label="Action" field="id"/>
+    <aripd:datatablescolumn label="Region" field="region.name"/>
+    <aripd:datatablescolumn label="Username" field="username"/>
+    <aripd:datatablescolumn label="Fullname" field="client.fullname"/>
+    <aripd:datatablescolumn label="E-mail Address" field="email"/>
+    <aripd:datatablescolumn label="Roles" field="rolesAsString"/>
 </aripd:datatables>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

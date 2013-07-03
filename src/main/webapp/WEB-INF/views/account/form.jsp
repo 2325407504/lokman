@@ -31,7 +31,7 @@
                 </div>
                 <div class="control-group">
                     <form:label path="roles"><spring:message code="Roles" /></form:label>
-                    <form:select multiple="true" path="roles" items="${roles}" itemLabel="name" itemValue="id" />
+                    <form:select multiple="true" size="6" path="roles" items="${roles}" itemLabel="name" itemValue="id" />
                     <form:errors cssClass="text-error" path="roles" />
                 </div>
             </fieldset>

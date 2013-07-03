@@ -1,6 +1,5 @@
 package com.aripd.account.domain;
 
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +14,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.project.lgk.domain.Region;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
+import javax.persistence.Transient;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -41,10 +42,11 @@ public class Account extends BaseEntity {
     private boolean active = false;
     @JsonIgnore
     @JoinTable(
-            name = "account_role", 
-            joinColumns = @JoinColumn(name = "account_id"), 
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-            )
+            name = "account_role",
+            joinColumns =
+            @JoinColumn(name = "account_id"),
+            inverseJoinColumns =
+            @JoinColumn(name = "role_id"))
     @ManyToMany(cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Role> roles = new HashSet<Role>(0);
@@ -84,6 +86,19 @@ public class Account extends BaseEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Transient
+    public String getRolesAsString() {
+        StringBuilder sb = new StringBuilder();
+        for (Iterator<Role> it = roles.iterator(); it.hasNext();) {
+            Role role = it.next();
+            sb.append(role.getName());
+            if (it.hasNext()) {
+                sb.append(",");
+            }
+        }
+        return sb.toString();
     }
 
     public Set<Role> getRoles() {
