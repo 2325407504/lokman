@@ -23,7 +23,7 @@ import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Wastegroup;
 import com.aripd.project.lgk.service.WastegroupService;
 
-@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN','ROLE_ATY'})")
 @Controller
 @RequestMapping("/wastegroup")
 public class WastegroupController {

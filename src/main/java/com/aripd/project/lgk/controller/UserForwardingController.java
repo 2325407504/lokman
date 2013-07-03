@@ -30,7 +30,7 @@ import com.aripd.project.lgk.service.QuotaService;
 import com.aripd.project.lgk.service.SubcontractorService;
 import javax.validation.Valid;
 
-@PreAuthorize("hasRole('ROLE_USER')")
+@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_USER','ROLE_OTL'})")
 @Controller
 @RequestMapping("/userforwarding")
 public class UserForwardingController {

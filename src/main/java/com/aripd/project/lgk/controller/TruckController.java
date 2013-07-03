@@ -24,7 +24,7 @@ import com.aripd.project.lgk.domain.Truck;
 import com.aripd.project.lgk.service.RegionService;
 import com.aripd.project.lgk.service.TruckService;
 
-@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN','ROLE_OTL'})")
 @Controller
 @RequestMapping("/truck")
 public class TruckController {

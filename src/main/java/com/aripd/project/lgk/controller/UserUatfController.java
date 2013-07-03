@@ -24,7 +24,7 @@ import com.aripd.project.lgk.service.ForwardingService;
 import com.aripd.project.lgk.service.UatfService;
 import javax.validation.Valid;
 
-@PreAuthorize("hasRole('ROLE_USER')")
+@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_USER','ROLE_OTL'})")
 @Controller
 @RequestMapping("/useruatf")
 public class UserUatfController {

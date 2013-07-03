@@ -30,7 +30,7 @@ import com.aripd.project.lgk.service.TripService;
 import com.aripd.project.lgk.service.TruckService;
 import com.aripd.project.lgk.validator.TripValidator;
 
-@PreAuthorize("hasRole('ROLE_USER')")
+@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_USER','ROLE_OTL'})")
 @Controller
 @RequestMapping("/usertrip")
 public class UserTripController {

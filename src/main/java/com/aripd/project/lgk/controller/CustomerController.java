@@ -27,7 +27,7 @@ import com.aripd.project.lgk.service.CustomerService;
 import com.aripd.project.lgk.service.RegionService;
 import org.apache.commons.codec.digest.DigestUtils;
 
-@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN'})")
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {

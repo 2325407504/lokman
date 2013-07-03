@@ -39,7 +39,7 @@ import java.security.Principal;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN','ROLE_ATY'})")
 @Controller
 @RequestMapping("/weighbridge")
 public class WeighbridgeController {

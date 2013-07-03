@@ -24,7 +24,7 @@ import com.aripd.project.lgk.domain.Driver;
 import com.aripd.project.lgk.service.DriverService;
 import com.aripd.project.lgk.service.RegionService;
 
-@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN','ROLE_OTL'})")
 @Controller
 @RequestMapping("/driver")
 public class DriverController {

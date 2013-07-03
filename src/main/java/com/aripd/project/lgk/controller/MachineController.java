@@ -25,7 +25,7 @@ import com.aripd.project.lgk.service.MachineService;
 import com.aripd.project.lgk.service.MachinetimeService;
 import com.aripd.project.lgk.service.ProductionService;
 
-@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN','ROLE_URE'})")
 @Controller
 @RequestMapping("/machine")
 public class MachineController {
