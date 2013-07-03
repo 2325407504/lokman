@@ -82,7 +82,7 @@
             <div class="row">
                 <sec:authorize access="isAuthenticated()">
                     <div class="span3">
-                        <jsp:include page="/WEB-INF/views/sidebar.jsp" >
+                        <jsp:include page="/WEB-INF/views/sidebar.jsp">
                             <jsp:param name="uri" value="${requestScope['javax.servlet.forward.request_uri']}" />
                         </jsp:include>
                     </div>
