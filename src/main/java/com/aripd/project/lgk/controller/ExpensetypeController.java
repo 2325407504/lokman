@@ -23,7 +23,7 @@ import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Expensetype;
 import com.aripd.project.lgk.service.ExpensetypeService;
 
-@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN'})")
+@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_ADMIN')")
 @Controller
 @RequestMapping("/expensetype")
 public class ExpensetypeController {

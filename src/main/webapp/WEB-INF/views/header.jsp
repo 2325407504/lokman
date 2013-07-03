@@ -27,9 +27,6 @@
     </head>
     <body>
 
-        <spring:url value="/" var="homeUrl" />
-        <spring:url value="/login" var="loginUrl" />
-        <spring:url value="/logout" var="logoutUrl" />
         <spring:url value="/profile/show" var="profile_show" />
         <c:if test="${requestScope['javax.servlet.forward.request_uri'] == profile_show}"><c:set var="profile_class" value="active" /></c:if>
 
@@ -48,6 +45,7 @@
                             <sec:authorize access="isAuthenticated()">
                                 <li class="${profile_class}"><a href="${profile_show}"><spring:message code="Profile" /></a></li>
                                 <li>
+                                    <spring:url value="/logout" var="logoutUrl" />
                                     <a href="${logoutUrl}"><spring:message code="Logout" /> (<%= request.getUserPrincipal().getName()%>)</a>
                                 </li>
                             </sec:authorize>

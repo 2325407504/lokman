@@ -36,7 +36,7 @@ import com.aripd.project.lgk.service.ExpensetypeService;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN'})")
+@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_ADMIN')")
 @Controller
 @RequestMapping("/expense")
 public class ExpenseController {

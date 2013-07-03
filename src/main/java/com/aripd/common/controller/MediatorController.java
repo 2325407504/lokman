@@ -7,10 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class MediatorController {
 
-	@RequestMapping
-	public String getHomePage() {
-		//return "index";
-		return "redirect:/profile/show";
-	}
-	
+    @RequestMapping
+    public String getHomePage() {
+        //return "index";
+        return "redirect:/profile/show";
+    }
 }

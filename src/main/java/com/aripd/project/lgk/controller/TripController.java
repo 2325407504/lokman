@@ -30,7 +30,6 @@ import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Trip;
-import com.aripd.project.lgk.domain.Truck;
 import com.aripd.project.lgk.model.TripFilterByIntervalAndTruckForm;
 import com.aripd.project.lgk.service.DriverService;
 import com.aripd.project.lgk.service.TripService;
@@ -40,7 +39,7 @@ import javax.validation.Valid;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN','ROLE_OTL'})")
+@PreAuthorize("hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_ADMIN') and hasRole('ROLE_OTL'))")
 @Controller
 @RequestMapping("/trip")
 public class TripController {

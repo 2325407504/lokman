@@ -41,7 +41,7 @@ import javax.validation.Valid;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN','ROLE_URE'})")
+@PreAuthorize("hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_ADMIN') and hasRole('ROLE_URE'))")
 @Controller
 @RequestMapping("/waybill")
 public class WaybillController {

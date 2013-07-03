@@ -24,7 +24,7 @@ import com.aripd.project.lgk.domain.Subcontractor;
 import com.aripd.project.lgk.service.RegionService;
 import com.aripd.project.lgk.service.SubcontractorService;
 
-@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN','ROLE_OTL'})")
+@PreAuthorize("hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_ADMIN') and hasRole('ROLE_OTL'))")
 @Controller
 @RequestMapping("/subcontractor")
 public class SubcontractorController {

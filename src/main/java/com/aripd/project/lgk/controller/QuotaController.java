@@ -23,7 +23,7 @@ import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Quota;
 import com.aripd.project.lgk.service.QuotaService;
 
-@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN','ROLE_OTL'})")
+@PreAuthorize("hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_ADMIN') and hasRole('ROLE_OTL'))")
 @Controller
 @RequestMapping("/quota")
 public class QuotaController {

@@ -24,7 +24,7 @@ import com.aripd.project.lgk.domain.Waste;
 import com.aripd.project.lgk.service.WasteService;
 import com.aripd.project.lgk.service.WastegroupService;
 
-@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN','ROLE_ATY'})")
+@PreAuthorize("hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_ADMIN') and hasRole('ROLE_ATY'))")
 @Controller
 @RequestMapping("/waste")
 public class WasteController {
