@@ -42,11 +42,16 @@
                     <form:label path="client.firstName"><spring:message code="FirstName" /></form:label>
                     <form:input path="client.firstName" />
                     <form:errors cssClass="text-error" path="client.firstName" />
-                </div>       
+                </div>
                 <div class="control-group">
                     <form:label path="client.lastName"><spring:message code="LastName" /></form:label>
                     <form:input path="client.lastName" />
                     <form:errors cssClass="text-error" path="client.lastName" />
+                </div>
+                <div class="control-group">
+                    <form:label path="client.phonenumber"><spring:message code="Phone Number" /></form:label>
+                    <form:input path="client.phonenumber" />
+                    <form:errors cssClass="text-error" path="client.phonenumber" />
                 </div>
             </fieldset>
         </div>

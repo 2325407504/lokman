@@ -16,6 +16,7 @@
     <aripd:datatablescolumn label="Username" field="username"/>
     <aripd:datatablescolumn label="Fullname" field="client.fullname"/>
     <aripd:datatablescolumn label="E-mail Address" field="email"/>
+    <aripd:datatablescolumn label="Phone Number" field="client.phonenumber"/>
     <aripd:datatablescolumn label="Roles" field="rolesAsString"/>
 </aripd:datatables>
 
