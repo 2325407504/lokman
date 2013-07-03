@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.aripd.account.domain.Account;
+import com.aripd.account.domain.Role;
 import com.aripd.account.service.AccountService;
 import com.aripd.account.service.RoleService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
@@ -24,6 +25,11 @@ import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.service.RegionService;
+import java.util.Set;
+import org.springframework.beans.propertyeditors.CustomCollectionEditor;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN')")
 @Controller
@@ -36,6 +42,22 @@ public class AccountController {
     private RoleService roleService;
     @Resource(name = "regionService")
     private RegionService regionService;
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) throws Exception {
+        binder.registerCustomEditor(Set.class, "roles", new CustomCollectionEditor(Set.class) {
+            @Override
+            protected Object convertElement(Object element) {
+                if (element instanceof Role) {
+                    return element;
+                }
+                if (element instanceof String) {
+                    return roleService.findOne(Long.valueOf(element.toString()));
+                }
+                return null;
+            }
+        });
+    }
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -58,6 +80,7 @@ public class AccountController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
         model.addAttribute("regions", regionService.findAll());
+        model.addAttribute("roles", roleService.findAll());
         model.addAttribute("accountAttribute", new Account());
         return "account/form";
     }
@@ -65,18 +88,21 @@ public class AccountController {
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
         model.addAttribute("regions", regionService.findAll());
+        model.addAttribute("roles", roleService.findAll());
         model.addAttribute("accountAttribute", accountService.findOne(id));
         return "account/form";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
+            final RedirectAttributes redirectAttributes,
             @ModelAttribute("accountAttribute") @Valid Account formData,
             BindingResult result,
             Model model) {
 
         if (result.hasErrors()) {
             model.addAttribute("regions", regionService.findAll());
+            model.addAttribute("roles", roleService.findAll());
             return "/account/form";
         }
 
@@ -92,6 +118,7 @@ public class AccountController {
         }
 
         accountService.save(formData);
+        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
         return "redirect:/account/list";
     }
 

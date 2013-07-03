@@ -1,12 +1,9 @@
 package com.aripd.account.domain;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -17,7 +14,11 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.project.lgk.domain.Region;
+import java.util.HashSet;
+import java.util.Set;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -26,7 +27,6 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Account extends BaseEntity {
 
     @JsonIgnore
-    @NotBlank
     @Column(nullable = false, unique = false)
     private String password;
     @NotBlank
@@ -40,11 +40,14 @@ public class Account extends BaseEntity {
     @Column(nullable = true, unique = false)
     private boolean active = false;
     @JsonIgnore
-    @JoinTable(name = "account_role", joinColumns =
-            @JoinColumn(name = "account_id"), inverseJoinColumns =
-            @JoinColumn(name = "role_id"))
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Role> roles;
+    @JoinTable(
+            name = "account_role", 
+            joinColumns = @JoinColumn(name = "account_id"), 
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+            )
+    @ManyToMany(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<Role> roles = new HashSet<Role>(0);
     @ManyToOne(cascade = CascadeType.ALL)
     private Client client;
     @ManyToOne
@@ -54,9 +57,9 @@ public class Account extends BaseEntity {
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
-    
+
     public Account() {
-        roles = new ArrayList<Role>();
+        //roles = new ArrayList<Role>();
     }
 
     public String getPassword() {
@@ -83,11 +86,11 @@ public class Account extends BaseEntity {
         this.email = email;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 

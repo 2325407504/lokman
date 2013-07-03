@@ -5,8 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.aripd.common.entity.BaseEntity;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "role")
@@ -17,6 +22,9 @@ public class Role extends BaseEntity {
     private String code;
     @NotNull
     private String name;
+    @ManyToMany(mappedBy = "roles")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<Account> accounts = new HashSet<Account>(0);
 
     @Override
     public String toString() {
@@ -49,5 +57,13 @@ public class Role extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(Set<Account> accounts) {
+        this.accounts = accounts;
     }
 }

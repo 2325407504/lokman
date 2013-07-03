@@ -8,16 +8,15 @@ import com.aripd.common.dto.datatables.DatatablesResultSet;
 
 public interface AccountService {
 
-	List<Account> findAll();
+    public List<Account> findAll();
 
-	Account findOne(Long id);
+    public Account findOne(Long id);
 
-	Account findOneByUsername(String username);
+    public Account findOneByUsername(String username);
 
-	Account save(Account account);
+    public Account save(Account account);
 
-	void delete(Long id);
+    public void delete(Long id);
 
-	DatatablesResultSet<Account> getRecords(DatatablesCriteria criteria);
-
+    public DatatablesResultSet<Account> getRecords(DatatablesCriteria criteria);
 }
