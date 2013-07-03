@@ -13,12 +13,57 @@
     <jsp:param name="active" value="report" />
 </jsp:include>
 
-<p class="lead">Plakaya göre</p>
-<c:forEach var="truck" items="${trucks}">
-    <spring:url var="tripReport" value="/trip/report/truck/{id}/xls">
-        <spring:param name="id" value="${truck.id}" />
-    </spring:url>
-    <a class="label" href="${tripReport}">${truck.plate}</a>
-</c:forEach>
+<p class="lead"><spring:message code="Trip" /></p>
+<spring:url var="tripReport" value="/trip/report" />
+<form:form modelAttribute="tripFilterByIntervalAndTruckForm" action="${tripReport}" method="post" class="form-inline">
+    <form:errors path="*" cssClass="alert alert-error" element="div" />
+    <form:input id="start1" path="startingTime" />
+    <form:input id="end1" path="endingTime" />
+    <form:select multiple="false" path="truck.id" items="${trucks}" itemLabel="plate" itemValue="id" />
+    <button class="btn" type="submit">
+        <i class="icon-search"></i>
+    </button>
+</form:form>
+
+<script type="text/javascript">
+    var start1 = $('#start1');
+    var end1 = $('#end1');
+
+    start1.datetimepicker({
+        maxDate: new Date(),
+        onClose: function(dateText, inst) {
+            if (end1.val() != '') {
+                var testStartDate = start1.datetimepicker('getDate');
+                var testEndDate = end1.datetimepicker('getDate');
+                if (testStartDate > testEndDate)
+                    end1.datetimepicker('setDate', testStartDate);
+            }
+            else {
+                end1.val(dateText);
+            }
+        },
+        onSelect: function(selectedDateTime) {
+            end1.datetimepicker('option', 'minDate', start1.datetimepicker('getDate'));
+        }
+    });
+    end1.datetimepicker({
+        maxDate: new Date(),
+        onClose: function(dateText, inst) {
+            if (start1.val() != '') {
+                var testStartDate = start1.datetimepicker('getDate');
+                var testEndDate = end1.datetimepicker('getDate');
+                if (testStartDate > testEndDate)
+                    start1.datetimepicker('setDate', testEndDate);
+            }
+            else {
+                start1.val(dateText);
+            }
+        },
+        onSelect: function(selectedDateTime) {
+            start1.datetimepicker('option', 'maxDate', end1.datetimepicker('getDate'));
+        }
+    });
+
+</script>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

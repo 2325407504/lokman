@@ -10,6 +10,7 @@ import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Trip;
 import com.aripd.project.lgk.domain.Truck;
+import org.joda.time.DateTime;
 
 public interface TripService {
 
@@ -18,6 +19,8 @@ public interface TripService {
     public Trip findOneByAccountAndId(Account account, Long id);
 
     public List<Trip> findAll();
+
+    public List<Trip> findByIntervalAndTruck(DateTime startingTime, DateTime endingTime, Truck truck);
 
     public Trip save(Trip trip);
 
@@ -29,11 +32,7 @@ public interface TripService {
 
     public DatatablesResultSet<Trip> getRecords(Principal principal, DatatablesCriteria criteria);
 
-    public void exportAll(HttpServletResponse response);
-
-    public void exportByTruck(HttpServletResponse response, Truck truck);
-
-    public void exportByTruck(HttpServletResponse response, Principal principal, Truck truck);
-
     public void importXLSX(String fileName);
+
+    public void exportByIntervalAndTruck(HttpServletResponse response, DateTime startingTime, DateTime endingTime, Truck truck);
 }

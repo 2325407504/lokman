@@ -58,9 +58,9 @@
                     <spring:message code="Starting Km" var="startingKm" />
                     <spring:message code="Ending Km" var="endingKm" />
                     <form:label path="startingKm">${startingKm} - ${endingKm}</form:label>
-                    <form:input path="startingKm" cssClass="input-medium" placeholder="${startingKm}" />
+                    <form:input type="number" path="startingKm" cssClass="input-medium" placeholder="${startingKm}" />
                     <form:errors cssClass="text-error" path="startingKm" />
-                    <form:input path="endingKm" cssClass="input-medium" placeholder="${endingKm}" />
+                    <form:input type="number" path="endingKm" cssClass="input-medium" placeholder="${endingKm}" />
                     <form:errors cssClass="text-error" path="endingKm" />
                 </div>
                 <div class="control-group">
@@ -114,7 +114,11 @@
                 type: "GET",
                 url: "truck/get/" + truck_id + "/kilometer",
                 success: function(response) {
-                    $(e).find('#startingKm').val(response);
+                    $(e).find('[name=startingKm]').val(response);
+                    $(e).find('[name=startingKm]').attr('min', response);
+                    $(e).find('[name=startingKm]').attr('max', response);
+                    $(e).find('[name=endingKm]').val(response);
+                    $(e).find('[name=endingKm]').attr('min', response);
                 },
                 error: function(e) {
                     console.log(e);
@@ -129,6 +133,7 @@
     var endDateTextBox = $('#endingTime');
 
     startDateTextBox.datetimepicker({
+        maxDate: new Date(),
         onClose: function(dateText, inst) {
             if (endDateTextBox.val() != '') {
                 var testStartDate = startDateTextBox.datetimepicker('getDate');
@@ -145,6 +150,7 @@
         }
     });
     endDateTextBox.datetimepicker({
+        maxDate: new Date(),
         onClose: function(dateText, inst) {
             if (startDateTextBox.val() != '') {
                 var testStartDate = startDateTextBox.datetimepicker('getDate');

@@ -19,6 +19,7 @@
     <aripd:descriptionitem label="Username" field="profileAttribute.username"></aripd:descriptionitem>
     <aripd:descriptionitem label="Fullname" field="profileAttribute.client.fullname"></aripd:descriptionitem>
     <aripd:descriptionitem label="E-mail Address" field="profileAttribute.email"></aripd:descriptionitem>
+    <aripd:descriptionitem label="Roles" field="profileAttribute.rolesAsString"></aripd:descriptionitem>
 </aripd:description>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

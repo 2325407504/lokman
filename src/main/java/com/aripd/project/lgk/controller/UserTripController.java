@@ -25,12 +25,10 @@ import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Trip;
-import com.aripd.project.lgk.domain.Truck;
 import com.aripd.project.lgk.service.DriverService;
 import com.aripd.project.lgk.service.TripService;
 import com.aripd.project.lgk.service.TruckService;
 import com.aripd.project.lgk.validator.TripValidator;
-import javax.servlet.http.HttpServletResponse;
 
 @PreAuthorize("hasRole('ROLE_USER')")
 @Controller
@@ -186,16 +184,5 @@ public class UserTripController {
         Account account = accountService.findOneByUsername(principal.getName());
         model.addAttribute("trucks", truckService.findByRegion(account.getRegion()));
         return "user/trip/report";
-    }
-
-    @RequestMapping(value = "/report/truck/{id}/xls", method = RequestMethod.GET)
-    public void exportByTruck(
-            HttpServletResponse response,
-            Principal principal,
-            @PathVariable Long id,
-            Model model) {
-
-        Truck truck = truckService.findOne(id);
-        tripService.exportByTruck(response, principal, truck);
     }
 }

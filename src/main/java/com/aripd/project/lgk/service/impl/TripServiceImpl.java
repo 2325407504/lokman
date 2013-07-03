@@ -29,8 +29,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +42,7 @@ import com.aripd.common.dto.datatables.DatatablesSortField;
 import com.aripd.project.lgk.domain.Trip;
 import com.aripd.project.lgk.domain.Trip_;
 import com.aripd.project.lgk.domain.Truck;
+import com.aripd.project.lgk.domain.Truck_;
 import com.aripd.project.lgk.report.trip.FillManager;
 import com.aripd.project.lgk.report.trip.Layouter;
 import com.aripd.project.lgk.report.trip.Writer;
@@ -77,6 +76,29 @@ public class TripServiceImpl implements TripService {
 
     public List<Trip> findAll() {
         return repository.findAll();
+    }
+
+    public List<Trip> findByIntervalAndTruck(DateTime startingTime, DateTime endingTime, Truck truck) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Trip> cq = cb.createQuery(Trip.class);
+        Root<Trip> root = cq.from(Trip.class);
+        Join<Trip, Truck> join = root.join(Trip_.truck);
+
+        List<Predicate> predicateList = new ArrayList<Predicate>();
+        Predicate predicate1 = cb.between(root.get(Trip_.startingTime), startingTime, endingTime);
+        Predicate predicate2 = cb.equal(join.get(Truck_.plate), truck.getPlate());
+        Predicate predicate = cb.and(predicate1, predicate2);
+        predicateList.add(predicate);
+
+        Predicate[] predicates = new Predicate[predicateList.size()];
+        predicateList.toArray(predicates);
+        cq.where(predicates);
+        cq.orderBy(cb.asc(root.get(Trip_.startingTime)));
+
+        TypedQuery<Trip> typedQuery = em.createQuery(cq);
+        List<Trip> resultList = typedQuery.getResultList();
+
+        return resultList;
     }
 
     @Transactional
@@ -196,105 +218,6 @@ public class TripServiceImpl implements TripService {
         return new DatatablesResultSet<Trip>(resultList, totalRecords, displaySize);
     }
 
-    /**
-     * Processes Apache POI-based reports Exports for Excel format. It does the
-     * following steps:
-     *
-     * <pre>
-     * 1. Create new workbook
-     * 2. Create new worksheet
-     * 3. Define starting indices for rows and columns
-     * 4. Build layout
-     * 5. Fill report
-     * 6. Set the HttpServletResponse properties
-     * 7. Write to the output stream
-     * </pre>
-     */
-    public void exportAll(HttpServletResponse response) {
-        // 1. Create new workbook
-        HSSFWorkbook workbook = new HSSFWorkbook();
-
-        // 2. Create new worksheet
-        HSSFSheet worksheet = workbook.createSheet("Trip Report");
-
-        // 3. Define starting indices for rows and columns
-        int startRowIndex = 0;
-        int startColIndex = 0;
-
-        // 4. Build layout
-        // Build title, date, and column headers
-        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
-
-        // 5. Fill report
-        FillManager.fillReport(worksheet, startRowIndex, startColIndex, repository.findAll());
-
-        // 6. Set the response properties
-        String fileName = "TripReport.xls";
-        response.setHeader("Content-Disposition", "inline; filename=" + fileName);
-        // Make sure to set the correct content type
-        response.setContentType("application/vnd.ms-excel");
-
-        // 7. Write to the output stream
-        Writer.write(response, worksheet);
-    }
-
-    public void exportByTruck(HttpServletResponse response, Truck truck) {
-        // 1. Create new workbook
-        HSSFWorkbook workbook = new HSSFWorkbook();
-
-        // 2. Create new worksheet
-        HSSFSheet worksheet = workbook.createSheet("Trip Report for " + truck.getPlate());
-
-        // 3. Define starting indices for rows and columns
-        int startRowIndex = 0;
-        int startColIndex = 0;
-
-        // 4. Build layout
-        // Build title, date, and column headers
-        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
-
-        // 5. Fill report
-        FillManager.fillReport(worksheet, startRowIndex, startColIndex, repository.findByTruck(truck));
-
-        // 6. Set the response properties
-        String fileName = "TripReport.xls";
-        response.setHeader("Content-Disposition", "inline; filename=" + fileName);
-        // Make sure to set the correct content type
-        response.setContentType("application/vnd.ms-excel");
-
-        // 7. Write to the output stream
-        Writer.write(response, worksheet);
-    }
-
-    public void exportByTruck(HttpServletResponse response, Principal principal, Truck truck) {
-        // 1. Create new workbook
-        HSSFWorkbook workbook = new HSSFWorkbook();
-
-        // 2. Create new worksheet
-        HSSFSheet worksheet = workbook.createSheet("Trip Report for " + truck.getPlate());
-
-        // 3. Define starting indices for rows and columns
-        int startRowIndex = 0;
-        int startColIndex = 0;
-
-        // 4. Build layout
-        // Build title, date, and column headers
-        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
-
-        // 5. Fill report
-        Account account = accountService.findOneByUsername(principal.getName());
-        FillManager.fillReport(worksheet, startRowIndex, startColIndex, repository.findByAccountAndTruck(account, truck));
-
-        // 6. Set the response properties
-        String fileName = "TripReport.xls";
-        response.setHeader("Content-Disposition", "inline; filename=" + fileName);
-        // Make sure to set the correct content type
-        response.setContentType("application/vnd.ms-excel");
-
-        // 7. Write to the output stream
-        Writer.write(response, worksheet);
-    }
-
     public void importXLSX(String fileName) {
         InputStream iStream = null;
         try {
@@ -353,5 +276,33 @@ public class TripServiceImpl implements TripService {
         }
 
         repository.save(trips);
+    }
+
+    public void exportByIntervalAndTruck(HttpServletResponse response, DateTime startingTime, DateTime endingTime, Truck truck) {
+        // 1. Create new workbook
+        HSSFWorkbook workbook = new HSSFWorkbook();
+
+        // 2. Create new worksheet
+        HSSFSheet worksheet = workbook.createSheet("Trip Report for " + truck.getPlate());
+
+        // 3. Define starting indices for rows and columns
+        int startRowIndex = 0;
+        int startColIndex = 0;
+
+        // 4. Build layout
+        // Build title, date, and column headers
+        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
+
+        // 5. Fill report
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByIntervalAndTruck(startingTime, endingTime, truck));
+
+        // 6. Set the response properties
+        String fileName = "TripReport.xls";
+        response.setHeader("Content-Disposition", "inline; filename=" + fileName);
+        // Make sure to set the correct content type
+        response.setContentType("application/vnd.ms-excel");
+
+        // 7. Write to the output stream
+        Writer.write(response, worksheet);
     }
 }

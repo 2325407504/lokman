@@ -30,6 +30,7 @@
     var endDateTextBox = $('#endingTime');
 
     startDateTextBox.datetimepicker({
+        maxDate: new Date(),
         onClose: function(dateText, inst) {
             if (endDateTextBox.val() != '') {
                 var testStartDate = startDateTextBox.datetimepicker('getDate');
@@ -46,6 +47,7 @@
         }
     });
     endDateTextBox.datetimepicker({
+        maxDate: new Date(),
         onClose: function(dateText, inst) {
             if (startDateTextBox.val() != '') {
                 var testStartDate = startDateTextBox.datetimepicker('getDate');

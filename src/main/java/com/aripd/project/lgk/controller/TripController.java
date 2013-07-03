@@ -31,12 +31,16 @@ import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Trip;
 import com.aripd.project.lgk.domain.Truck;
+import com.aripd.project.lgk.model.TripFilterByIntervalAndTruckForm;
 import com.aripd.project.lgk.service.DriverService;
 import com.aripd.project.lgk.service.TripService;
 import com.aripd.project.lgk.service.TruckService;
 import com.aripd.project.lgk.validator.TripValidator;
+import javax.validation.Valid;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
-@PreAuthorize("hasAnyRole('ROLE_SUPERADMIN', 'ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN','ROLE_OTL'})")
 @Controller
 @RequestMapping("/trip")
 public class TripController {
@@ -187,30 +191,31 @@ public class TripController {
         return "trip/chart";
     }
 
-    @RequestMapping(value = "/report")
+    @RequestMapping(value = "/report", method = RequestMethod.GET)
     public String reportAction(Model model) {
+        model.addAttribute("tripFilterByIntervalAndTruckForm", new TripFilterByIntervalAndTruckForm());
         model.addAttribute("trucks", truckService.findAll());
         return "trip/report";
     }
 
-    /**
-     * Exports the report as an Excel format.
-     * <p>
-     * Make sure this method doesn't return any model. Otherwise, you'll get an
-     * "IllegalStateException: getOutputStream() has already been called for
-     * this response"
-     */
-    @RequestMapping(value = "/export/xls", method = RequestMethod.GET)
-    public void exportAll(HttpServletResponse response, Model model) {
-        tripService.exportAll(response);
-    }
-
-    @RequestMapping(value = "/report/truck/{id}/xls", method = RequestMethod.GET)
-    public void exportByTruck(
+    @RequestMapping(value = "/report", method = RequestMethod.POST)
+    public String reportAction(
+            final RedirectAttributes redirectAttributes,
+            @ModelAttribute("tripFilterByIntervalAndTruckForm") @Valid TripFilterByIntervalAndTruckForm formData,
+            BindingResult result,
+            @RequestParam("startingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime startingTime,
+            @RequestParam("endingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime endingTime,
+            @RequestParam("truck.id") Long truck_id,
             HttpServletResponse response,
-            @PathVariable Long id,
             Model model) {
-        Truck truck = truckService.findOne(id);
-        tripService.exportByTruck(response, truck);
+
+        if (result.hasErrors()) {
+            return "/trip/report";
+        }
+
+        tripService.exportByIntervalAndTruck(response, startingTime, endingTime, truckService.findOne(truck_id));
+
+        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
+        return "redirect:/trip/report";
     }
 }

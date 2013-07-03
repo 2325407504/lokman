@@ -29,6 +29,7 @@
     var end1 = $('#end1');
 
     start1.datetimepicker({
+        maxDate: new Date(),
         onClose: function(dateText, inst) {
             if (end1.val() != '') {
                 var testStartDate = start1.datetimepicker('getDate');
@@ -45,6 +46,7 @@
         }
     });
     end1.datetimepicker({
+        maxDate: new Date(),
         onClose: function(dateText, inst) {
             if (start1.val() != '') {
                 var testStartDate = start1.datetimepicker('getDate');

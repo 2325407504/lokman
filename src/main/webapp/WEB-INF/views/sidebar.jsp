@@ -60,7 +60,7 @@
     <div class="well">
 
         <div class="accordion" id="accordion2">
-        <sec:authorize access="hasAnyRole({'ROLE_SUPERADMIN'})">
+        <sec:authorize access="hasRole('ROLE_SUPERADMIN')">
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a class="accordion-toggle nav-header" data-toggle="collapse" data-parent="#accordion2" href="#collapse1">
@@ -79,7 +79,7 @@
                 </div>
             </div>
         </sec:authorize>
-        <sec:authorize access="hasAnyRole({'ROLE_SUPERADMIN','ROLE_ADMIN'})">
+        <sec:authorize access="hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN'})">
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a class="accordion-toggle nav-header" data-toggle="collapse" data-parent="#accordion2" href="#collapse2">
@@ -92,37 +92,37 @@
                             <li class="nav-header"><spring:message code="Settings" /></li>
                             <li class="${customer_class}"><a href="${customer_list}"><spring:message code="Customers" /></a></li>
                             <li class="${expensetype_class}"><a href="${expensetype_list}"><spring:message code="Expensetypes" /></a></li>
-                                <sec:authorize access="hasAnyRole({'ROLE_OTL'})">
+                                <sec:authorize access="hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN','ROLE_OTL'})">
                                 <li class="${region_class}"><a href="${region_list}"><spring:message code="Regions" /></a></li>
                                 <li class="${truck_class}"><a href="${truck_list}"><spring:message code="Trucks" /></a></li>
                                 <li class="${driver_class}"><a href="${driver_list}"><spring:message code="Drivers" /></a></li>
                                 <li class="${subcontractor_class}"><a href="${subcontractor_list}"><spring:message code="Subcontractors" /></a></li>
                                 <li class="${quota_class}"><a href="${quota_list}"><spring:message code="Quotas" /></a></li>
                                 </sec:authorize>
-                                <sec:authorize access="hasAnyRole({'ROLE_URE'})">
+                                <sec:authorize access="hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN','ROLE_URE'})">
                                 <li class="${productgroup_class}"><a href="${productgroup_list}"><spring:message code="Product Groups" /></a></li>
                                 <li class="${product_class}"><a href="${product_list}"><spring:message code="Products" /></a></li>
                                 <li class="${electricmeter_class}"><a href="${electricmeter_list}"><spring:message code="Electricmeters" /></a></li>
                                 <li class="${machine_class}"><a href="${machine_list}"><spring:message code="Machines" /></a></li>
                                 </sec:authorize>
-                                <sec:authorize access="hasAnyRole({'ROLE_ATY'})">
+                                <sec:authorize access="hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN','ROLE_ATY'})">
                                 <li class="${wastegroup_class}"><a href="${wastegroup_list}"><spring:message code="Waste Groups" /></a></li>
                                 <li class="${waste_class}"><a href="${waste_list}"><spring:message code="Wastes" /></a></li>
                                 </sec:authorize>
                             <li class="nav-header"><spring:message code="Personnel" /></li>
                             <li class="${expense_class}"><a href="${expense_list}"><spring:message code="Expenses" /></a></li>
-                                <sec:authorize access="hasAnyRole({'ROLE_OTL'})">
+                                <sec:authorize access="hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN','ROLE_OTL'})">
                                 <li class="nav-header"><spring:message code="Logistics" /></li>
                                 <li class="${trip_class}"><a href="${trip_list}"><spring:message code="Trips" /></a></li>
                                 <li class="${forwarding_class}"><a href="${forwarding_list}"><spring:message code="Forwardings" /></a></li>
                                 </sec:authorize>
-                                <sec:authorize access="hasAnyRole({'ROLE_URE'})">
+                                <sec:authorize access="hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN','ROLE_URE'})">
                                 <li class="nav-header"><spring:message code="Production" /></li>
                                 <li class="${production_class}"><a href="${production_list}"><spring:message code="Production" /></a></li>
                                 <li class="${invoice_class}"><a href="${invoice_list}"><spring:message code="Invoices" /></a></li>
                                 <li class="${waybill_class}"><a href="${waybill_list}"><spring:message code="Waybills" /></a></li>
                                 </sec:authorize>
-                                <sec:authorize access="hasAnyRole({'ROLE_ATY'})">
+                                <sec:authorize access="hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_ADMIN','ROLE_ATY'})">
                                 <li class="nav-header"><spring:message code="Waste" /></li>
                                 <li class="${weighbridge_class}"><a href="${weighbridge_list}"><spring:message code="Weighbridges" /></a></li>
                                 </sec:authorize>
@@ -131,7 +131,7 @@
                 </div>
             </div>
         </sec:authorize>
-        <sec:authorize access="hasAnyRole({'ROLE_USER'})">
+        <sec:authorize access="hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_USER'})">
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a class="accordion-toggle nav-header" data-toggle="collapse" data-parent="#accordion2" href="#collapse3">
@@ -143,16 +143,16 @@
                         <ul class="nav nav-list">
                             <li class="nav-header"><spring:message code="Personnel" /></li>
                             <li class="${user_expense_class}"><a href="${user_expense_list}"><spring:message code="Expenses" /></a></li>
-                                <sec:authorize access="hasAnyRole({'ROLE_OTL'})">
+                                <sec:authorize access="hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_USER','ROLE_OTL'})">
                                 <li class="nav-header"><spring:message code="Logistics" /></li>
                                 <li class="${user_trip_class}"><a href="${user_trip_list}"><spring:message code="Trips" /></a></li>
                                 <li class="${user_forwarding_class}"><a href="${user_forwarding_list}"><spring:message code="Forwardings" /></a></li>
                                 </sec:authorize>
-                                <sec:authorize access="hasAnyRole({'ROLE_URE'})">
-                                <li class="nav-header"><spring:message code="URE" text="URE" /></li>
+                                <sec:authorize access="hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_USER','ROLE_URE'})">
+                                <li class="nav-header"><spring:message code="Production" /></li>
                                 </sec:authorize>
-                                <sec:authorize access="hasAnyRole({'ROLE_ATY'})">
-                                <li class="nav-header"><spring:message code="ATY" text="ATY" /></li>
+                                <sec:authorize access="hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_USER','ROLE_ATY'})">
+                                <li class="nav-header"><spring:message code="Waste" /></li>
                                 </sec:authorize>
                         </ul>
                     </div>
