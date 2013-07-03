@@ -14,19 +14,19 @@
 </jsp:include>
 
 <aripd:datatables datasource="/weighbridge/get" id="weighbridges" dataUrlShow="/weighbridge/show" dataUrlEdit="/weighbridge/edit">
-    <aripd:column label="Action" field="id"/>
-    <aripd:column label="Account" field="account.client.fullname"/>
-    <aripd:column label="Clerk" field="clerk"/>
-    <aripd:column label="Plate" field="plate"/>
-    <aripd:column label="Driver" field="driver"/>
-    <aripd:column label="Location From" field="locationFrom"/>
-    <aripd:column label="Location To" field="locationTo"/>
-    <aripd:column label="Check-in" field="checkin"/>
-    <aripd:column label="Check-out" field="checkout"/>
-    <aripd:column label="Good Type" field="goodtype"/>
-    <aripd:column label="Customer" field="customer"/>
-    <aripd:column label="First Weighing" field="firstWeighing"/>
-    <aripd:column label="Last Weighing" field="lastWeighing"/>
+    <aripd:datatablescolumn label="Action" field="id"/>
+    <aripd:datatablescolumn label="Account" field="account.client.fullname"/>
+    <aripd:datatablescolumn label="Clerk" field="clerk"/>
+    <aripd:datatablescolumn label="Plate" field="plate"/>
+    <aripd:datatablescolumn label="Driver" field="driver"/>
+    <aripd:datatablescolumn label="Location From" field="locationFrom"/>
+    <aripd:datatablescolumn label="Location To" field="locationTo"/>
+    <aripd:datatablescolumn label="Check-in" field="checkin"/>
+    <aripd:datatablescolumn label="Check-out" field="checkout"/>
+    <aripd:datatablescolumn label="Good Type" field="goodtype"/>
+    <aripd:datatablescolumn label="Customer" field="customer"/>
+    <aripd:datatablescolumn label="First Weighing" field="firstWeighing"/>
+    <aripd:datatablescolumn label="Last Weighing" field="lastWeighing"/>
 </aripd:datatables>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

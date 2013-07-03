@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -34,23 +33,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aripd.account.domain.Account;
-import com.aripd.account.service.AccountService;
 import com.aripd.common.dto.autocomplete.AutocompleteCriteria;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesSortField;
-import com.aripd.project.lgk.domain.Uatf_;
 import com.aripd.project.lgk.domain.Waybill;
 import com.aripd.project.lgk.domain.Waybill_;
 import com.aripd.project.lgk.report.waybill.FillManager;
 import com.aripd.project.lgk.report.waybill.Layouter;
 import com.aripd.project.lgk.report.waybill.Writer;
 import com.aripd.project.lgk.repository.WaybillRepository;
-import com.aripd.project.lgk.repository.UatfRepository;
 import com.aripd.project.lgk.service.InvoiceService;
 import com.aripd.project.lgk.service.WaybillService;
-import com.aripd.project.lgk.service.QuotaService;
-import com.aripd.project.lgk.service.SubcontractorService;
 
 @Service("waybillService")
 @Transactional(readOnly = true)
@@ -60,8 +54,6 @@ public class WaybillServiceImpl implements WaybillService {
     private EntityManager em;
     @Autowired
     private WaybillRepository repository;
-    @Autowired
-    private UatfRepository uatfRepository;
     @Resource(name = "invoiceService")
     private InvoiceService invoiceService;
 
@@ -111,6 +103,51 @@ public class WaybillServiceImpl implements WaybillService {
         repository.delete(waybill);
     }
 
+    public DatatablesResultSet<Waybill> getRecords(DatatablesCriteria criteria) {
+        Integer displaySize = criteria.getDisplaySize();
+        Integer displayStart = criteria.getDisplayStart();
+        Integer pageNumber = criteria.getPageNumber();
+        String search = criteria.getSearch();
+        List<DatatablesSortField> sortFields = criteria.getSortFields();
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Waybill> cq = cb.createQuery(Waybill.class);
+        Root<Waybill> root = cq.from(Waybill.class);
+
+        // Filtering and Searching
+        List<Predicate> predicateList = new ArrayList<Predicate>();
+
+        if ((search != null) && (!(search.isEmpty()))) {
+            Predicate predicate = cb.like(root.get(Waybill_.documentNo), "%" + search + "%");
+            predicateList.add(predicate);
+        }
+
+        Predicate[] predicates = new Predicate[predicateList.size()];
+        predicateList.toArray(predicates);
+        cq.where(predicates);
+
+        // Sorting
+        for (DatatablesSortField sortField : sortFields) {
+            String field = sortField.getField();
+            String direction = sortField.getDirection().getDirection();
+            if (direction.equalsIgnoreCase("asc")) {
+                cq.orderBy(cb.asc(root.get(field)));
+            } else if (direction.equalsIgnoreCase("desc")) {
+                cq.orderBy(cb.desc(root.get(field)));
+            }
+        }
+
+        Long totalRecords = (long) em.createQuery(cq).getResultList().size();
+
+        // Pagination
+        TypedQuery<Waybill> typedQuery = em.createQuery(cq);
+        typedQuery = typedQuery.setFirstResult(displayStart);
+        typedQuery = typedQuery.setMaxResults(displaySize);
+        List<Waybill> resultList = typedQuery.getResultList();
+
+        return new DatatablesResultSet<Waybill>(resultList, totalRecords, displaySize);
+    }
+
     public DatatablesResultSet<Waybill> getRecords(Long invoice_id, DatatablesCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
@@ -127,7 +164,7 @@ public class WaybillServiceImpl implements WaybillService {
 
         Predicate filter1 = cb.equal(root.get(Waybill_.invoice), invoiceService.findOne(invoice_id));
         predicateList.add(filter1);
-        
+
         if ((search != null) && (!(search.isEmpty()))) {
             Predicate predicate = cb.like(root.get(Waybill_.documentNo), "%" + search + "%");
             predicateList.add(predicate);
@@ -271,13 +308,11 @@ public class WaybillServiceImpl implements WaybillService {
 
         // 6. Set the response properties
         String fileName = "WaybillReport.xls";
-        response.setHeader("Content-Disposition", "inline; filename="
-                + fileName);
+        response.setHeader("Content-Disposition", "inline; filename=" + fileName);
         // Make sure to set the correct content type
         response.setContentType("application/vnd.ms-excel");
 
         // 7. Write to the output stream
         Writer.write(response, worksheet);
-
     }
 }

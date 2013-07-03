@@ -49,8 +49,8 @@
 <div class="row-fluid">
     <div class="span12">
         <aripd:datatables datasource="/bigbag/get/${productionAttribute.id}" id="bigbags" caption="Production Amounts">
-            <aripd:column label="Product" field="product.name"/>
-            <aripd:column label="Weight" field="weight"/>
+            <aripd:datatablescolumn label="Product" field="product.name"/>
+            <aripd:datatablescolumn label="Weight" field="weight"/>
         </aripd:datatables>
     </div>
 </div>

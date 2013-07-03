@@ -55,6 +55,14 @@ public class FillManager {
             cell2.setCellValue(datasource.get(i - 2).getDocumentNo());
             cell2.setCellStyle(bodyCellStyle);
 
+            HSSFCell cell3 = row.createCell(startColIndex + 3);
+            cell3.setCellValue(datasource.get(i - 2).getCustomer().getName());
+            cell3.setCellStyle(bodyCellStyle);
+
+            HSSFCell cell4 = row.createCell(startColIndex + 4);
+            cell4.setCellValue(datasource.get(i - 2).getAmount().doubleValue());
+            cell4.setCellStyle(bodyCellStyle);
+
         }
     }
 }

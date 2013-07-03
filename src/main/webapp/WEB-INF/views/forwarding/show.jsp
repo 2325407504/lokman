@@ -33,11 +33,11 @@
 <div class="row-fluid">
     <div class="span12">
         <aripd:datatables datasource="/uatf/get/${forwardingAttribute.id}" id="uatfs" caption="Uatf">
-            <aripd:column label="Code" field="code"/>
-            <aripd:column label="Company" field="company"/>
-            <aripd:column label="County" field="county"/>
-            <aripd:column label="City" field="city"/>
-            <aripd:column label="Weight" field="loadWeightInTonne"/>
+            <aripd:datatablescolumn label="Code" field="code"/>
+            <aripd:datatablescolumn label="Company" field="company"/>
+            <aripd:datatablescolumn label="County" field="county"/>
+            <aripd:datatablescolumn label="City" field="city"/>
+            <aripd:datatablescolumn label="Weight" field="loadWeightInTonne"/>
         </aripd:datatables>
     </div>
 </div>

@@ -11,10 +11,10 @@
 </jsp:include>
 
 <aripd:datatables datasource="/subcontractor/get" id="subcontractors" dataUrlShow="/subcontractor/show" dataUrlEdit="/subcontractor/edit">
-	<aripd:column label="Action" field="id"/>
-	<aripd:column label="Region" field="region.name"/>
-	<aripd:column label="Code" field="code"/>
-	<aripd:column label="Subcontractor" field="name"/>
+	<aripd:datatablescolumn label="Action" field="id"/>
+	<aripd:datatablescolumn label="Region" field="region.name"/>
+	<aripd:datatablescolumn label="Code" field="code"/>
+	<aripd:datatablescolumn label="Subcontractor" field="name"/>
 </aripd:datatables>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

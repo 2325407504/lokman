@@ -27,67 +27,66 @@ import com.aripd.project.lgk.service.QuotaService;
 @Controller
 @RequestMapping("/quota")
 public class QuotaController {
-	
-	@Resource(name="quotaService")
-	private QuotaService quotaService;
-	
-	@RequestMapping(value = "/get", method = RequestMethod.GET)
-	public @ResponseBody
-	WebResultSet<Quota> datatablesAction(@DatatablesParam DatatablesCriteria criteria) {
-		DatatablesResultSet<Quota> resultset = this.quotaService.getRecords(criteria);
-		return ControllerUtils.getDatatablesResultSet(criteria, resultset);
-	}
 
-	@RequestMapping(value="/list")
-	public String listAction(Model model) {
-		return "quota/list";
-	}
+    @Resource(name = "quotaService")
+    private QuotaService quotaService;
 
-	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
-	public String showAction(
-			@PathVariable Long id,
-			Model model) {
-		model.addAttribute("quotaAttribute", quotaService.findOne(id));
-		return "quota/show";
-	}
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    public @ResponseBody
+    WebResultSet<Quota> datatablesAction(@DatatablesParam DatatablesCriteria criteria) {
+        DatatablesResultSet<Quota> resultset = this.quotaService.getRecords(criteria);
+        return ControllerUtils.getDatatablesResultSet(criteria, resultset);
+    }
 
-	@RequestMapping(value = "/new", method = RequestMethod.GET)
+    @RequestMapping(value = "/list")
+    public String listAction(Model model) {
+        return "quota/list";
+    }
+
+    @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+    public String showAction(
+            @PathVariable Long id,
+            Model model) {
+        model.addAttribute("quotaAttribute", quotaService.findOne(id));
+        return "quota/show";
+    }
+
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-    	model.addAttribute("quotaAttribute", new Quota());
-    	return "quota/form";
-	}
+        model.addAttribute("quotaAttribute", new Quota());
+        return "quota/form";
+    }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(
-    		@PathVariable Long id, 
-    		Model model) {
-    	model.addAttribute("quotaAttribute", quotaService.findOne(id));
-    	return "quota/form";
-	}
+            @PathVariable Long id,
+            Model model) {
+        model.addAttribute("quotaAttribute", quotaService.findOne(id));
+        return "quota/form";
+    }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
-			final RedirectAttributes redirectAttributes,
-    		@ModelAttribute("quotaAttribute") @Valid Quota quota, 
-			BindingResult result, 
-			Model model) {
-    	
-		if (result.hasErrors()) {
-			return "/quota/form";
-		}
-		
-		quotaService.save(quota);
-		redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
-		return "redirect:/quota/list";
-	}
+            final RedirectAttributes redirectAttributes,
+            @ModelAttribute("quotaAttribute") @Valid Quota quota,
+            BindingResult result,
+            Model model) {
 
-	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-	public String delete(
-			final RedirectAttributes redirectAttributes,
-			@RequestParam(value = "id", required = true) Long id) {
-		quotaService.delete(id);
-		redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
-		return "redirect:/quota/list";
-	}
+        if (result.hasErrors()) {
+            return "/quota/form";
+        }
 
+        quotaService.save(quota);
+        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+        return "redirect:/quota/list";
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public String delete(
+            final RedirectAttributes redirectAttributes,
+            @RequestParam(value = "id", required = true) Long id) {
+        quotaService.delete(id);
+        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+        return "redirect:/quota/list";
+    }
 }

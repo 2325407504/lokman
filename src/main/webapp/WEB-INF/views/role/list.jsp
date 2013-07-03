@@ -11,9 +11,9 @@
 </jsp:include>
 
 <aripd:datatables datasource="/role/get" id="roles" dataUrlShow="/role/show" dataUrlEdit="/role/edit">
-    <aripd:column label="Action" field="id"/>
-    <aripd:column label="Code" field="code"/>
-    <aripd:column label="Name" field="name"/>
+    <aripd:datatablescolumn label="Action" field="id"/>
+    <aripd:datatablescolumn label="Code" field="code"/>
+    <aripd:datatablescolumn label="Name" field="name"/>
 </aripd:datatables>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

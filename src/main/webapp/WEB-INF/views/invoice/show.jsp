@@ -27,12 +27,13 @@
 </div>
 <div class="row-fluid">
     <div class="span12">
-        <aripd:datatables datasource="/waybill/get/${invoiceAttribute.id}" id="waybills">
-            <aripd:column label="Document No" field="documentNo"/>
-            <aripd:column label="Document Date" field="documentDate"/>
-            <aripd:column label="Company" field="company"/>
-            <aripd:column label="Driver" field="driver"/>
-            <aripd:column label="Plate" field="plate"/>
+        <aripd:datatables datasource="/invoice/waybill/get/${invoiceAttribute.id}" id="waybills" dataUrlShow="/waybill/show">
+            <aripd:datatablescolumn label="Action" field="id"/>
+            <aripd:datatablescolumn label="Document No" field="documentNo"/>
+            <aripd:datatablescolumn label="Document Date" field="documentDate"/>
+            <aripd:datatablescolumn label="Company" field="company"/>
+            <aripd:datatablescolumn label="Driver" field="driver"/>
+            <aripd:datatablescolumn label="Plate" field="plate"/>
         </aripd:datatables>
     </div>
 </div>

@@ -45,11 +45,11 @@
     </div>
     <div class="span8">
         <aripd:datatables datasource="/user/uatf/get/${forwardingAttribute.id}" id="uatfs">
-            <aripd:column label="Code" field="code"/>
-            <aripd:column label="Company" field="company"/>
-            <aripd:column label="County" field="county"/>
-            <aripd:column label="City" field="city"/>
-            <aripd:column label="Weight" field="loadWeightInTonne"/>
+            <aripd:datatablescolumn label="Code" field="code"/>
+            <aripd:datatablescolumn label="Company" field="company"/>
+            <aripd:datatablescolumn label="County" field="county"/>
+            <aripd:datatablescolumn label="City" field="city"/>
+            <aripd:datatablescolumn label="Weight" field="loadWeightInTonne"/>
         </aripd:datatables>
     </div>
 </div>

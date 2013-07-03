@@ -118,12 +118,12 @@
             <hr>
 
             <aripd:datatables datasource="/user/uatf/get/${forwardingAttribute.id}" id="uatfs" dataUrlDelete="/user/uatf/delete" actionColumn="5">
-                <aripd:column label="Code" field="code"/>
-                <aripd:column label="Company" field="company"/>
-                <aripd:column label="County" field="county"/>
-                <aripd:column label="City" field="city"/>
-                <aripd:column label="Weight" field="loadWeightInTonne"/>
-                <aripd:column label="Action" field="id"/>
+                <aripd:datatablescolumn label="Code" field="code"/>
+                <aripd:datatablescolumn label="Company" field="company"/>
+                <aripd:datatablescolumn label="County" field="county"/>
+                <aripd:datatablescolumn label="City" field="city"/>
+                <aripd:datatablescolumn label="Weight" field="loadWeightInTonne"/>
+                <aripd:datatablescolumn label="Action" field="id"/>
             </aripd:datatables>
         </c:if>
     </div>

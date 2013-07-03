@@ -11,11 +11,11 @@
 </jsp:include>
 
 <aripd:datatables datasource="/driver/get" id="drivers" dataUrlShow="/driver/show" dataUrlEdit="/driver/edit">
-    <aripd:column label="Action" field="id"/>
-    <aripd:column label="Region" field="region.name"/>
-    <aripd:column label="Code" field="code"/>
-    <aripd:column label="Fullname" field="name"/>
-    <aripd:column label="Phone Number" field="phonenumber"/>
+    <aripd:datatablescolumn label="Action" field="id"/>
+    <aripd:datatablescolumn label="Region" field="region.name"/>
+    <aripd:datatablescolumn label="Code" field="code"/>
+    <aripd:datatablescolumn label="Fullname" field="name"/>
+    <aripd:datatablescolumn label="Phone Number" field="phonenumber"/>
 </aripd:datatables>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

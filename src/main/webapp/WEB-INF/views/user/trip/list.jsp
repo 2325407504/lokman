@@ -25,18 +25,18 @@
 </ul>
 
 <aripd:datatables datasource="/user/trip/get" id="trips" dataUrlShow="/user/trip/show" dataUrlEdit="/user/trip/edit">
-    <aripd:column label="Action" field="id"/>
-    <aripd:column label="Account" field="account.username"/>
-    <aripd:column label="Truck" field="truck.plate"/>
-    <aripd:column label="Driver" field="driver.name"/>
-    <aripd:column label="Starting Point" field="startingPoint"/>
-    <aripd:column label="Starting Time" field="startingTime"/>
-    <aripd:column label="Starting Km" field="startingKm"/>
-    <aripd:column label="Ending Point" field="endingPoint"/>
-    <aripd:column label="Ending Time" field="endingTime"/>
-    <aripd:column label="Ending Km" field="endingKm"/>
-    <aripd:column label="Weight" field="loadWeightInTonne"/>
-    <aripd:column label="Remark" field="remark"/>
+    <aripd:datatablescolumn label="Action" field="id"/>
+    <aripd:datatablescolumn label="Account" field="account.username"/>
+    <aripd:datatablescolumn label="Truck" field="truck.plate"/>
+    <aripd:datatablescolumn label="Driver" field="driver.name"/>
+    <aripd:datatablescolumn label="Starting Point" field="startingPoint"/>
+    <aripd:datatablescolumn label="Starting Time" field="startingTime"/>
+    <aripd:datatablescolumn label="Starting Km" field="startingKm"/>
+    <aripd:datatablescolumn label="Ending Point" field="endingPoint"/>
+    <aripd:datatablescolumn label="Ending Time" field="endingTime"/>
+    <aripd:datatablescolumn label="Ending Km" field="endingKm"/>
+    <aripd:datatablescolumn label="Weight" field="loadWeightInTonne"/>
+    <aripd:datatablescolumn label="Remark" field="remark"/>
 </aripd:datatables>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

@@ -43,16 +43,14 @@ public class Layouter {
      * @param startRowIndex starting row offset
      * @param startColIndex starting column offset
      */
-    public static void buildTitle(HSSFSheet worksheet, int startRowIndex,
-            int startColIndex) {
+    public static void buildTitle(HSSFSheet worksheet, int startRowIndex, int startColIndex) {
         // Create font style for the report title
         Font fontTitle = worksheet.getWorkbook().createFont();
         fontTitle.setBoldweight(Font.BOLDWEIGHT_BOLD);
         fontTitle.setFontHeight((short) 280);
 
         // Create cell style for the report title
-        HSSFCellStyle cellStyleTitle = worksheet.getWorkbook()
-                .createCellStyle();
+        HSSFCellStyle cellStyleTitle = worksheet.getWorkbook().createCellStyle();
         cellStyleTitle.setAlignment(CellStyle.ALIGN_CENTER);
         cellStyleTitle.setWrapText(true);
         cellStyleTitle.setFont(fontTitle);
@@ -80,15 +78,13 @@ public class Layouter {
      * @param startRowIndex starting row offset
      * @param startColIndex starting column offset
      */
-    public static void buildHeaders(HSSFSheet worksheet, int startRowIndex,
-            int startColIndex) {
+    public static void buildHeaders(HSSFSheet worksheet, int startRowIndex, int startColIndex) {
         // Create font style for the headers
         Font font = worksheet.getWorkbook().createFont();
         font.setBoldweight(Font.BOLDWEIGHT_BOLD);
 
         // Create cell style for the headers
-        HSSFCellStyle headerCellStyle = worksheet.getWorkbook()
-                .createCellStyle();
+        HSSFCellStyle headerCellStyle = worksheet.getWorkbook().createCellStyle();
         headerCellStyle.setFillBackgroundColor(HSSFColor.GREY_25_PERCENT.index);
         headerCellStyle.setFillPattern(CellStyle.FINE_DOTS);
         headerCellStyle.setAlignment(CellStyle.ALIGN_CENTER);

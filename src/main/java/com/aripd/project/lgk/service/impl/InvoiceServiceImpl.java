@@ -46,8 +46,6 @@ import com.aripd.project.lgk.report.invoice.Writer;
 import com.aripd.project.lgk.repository.InvoiceRepository;
 import com.aripd.project.lgk.repository.UatfRepository;
 import com.aripd.project.lgk.service.InvoiceService;
-import com.aripd.project.lgk.service.QuotaService;
-import com.aripd.project.lgk.service.SubcontractorService;
 
 @Service("invoiceService")
 @Transactional(readOnly = true)
@@ -61,10 +59,6 @@ public class InvoiceServiceImpl implements InvoiceService {
     private UatfRepository uatfRepository;
     @Resource(name = "accountService")
     private AccountService accountService;
-    @Resource(name = "subcontractorService")
-    private SubcontractorService subcontractorService;
-    @Resource(name = "quotaService")
-    private QuotaService quotaService;
 
     public Invoice findOne(Long id) {
         return repository.findOne(id);
@@ -92,7 +86,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         return resultList;
     }
-    
+
     @Transactional
     public Invoice save(Invoice invoice) {
         return repository.save(invoice);
@@ -283,14 +277,11 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         // 6. Set the response properties
         String fileName = "InvoiceReport.xls";
-        response.setHeader("Content-Disposition", "inline; filename="
-                + fileName);
+        response.setHeader("Content-Disposition", "inline; filename=" + fileName);
         // Make sure to set the correct content type
         response.setContentType("application/vnd.ms-excel");
 
         // 7. Write to the output stream
         Writer.write(response, worksheet);
-
     }
-
 }

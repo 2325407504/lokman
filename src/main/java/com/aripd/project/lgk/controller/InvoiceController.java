@@ -29,11 +29,9 @@ import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Invoice;
-import com.aripd.project.lgk.domain.Trip;
 import com.aripd.project.lgk.domain.Waybill;
 import com.aripd.project.lgk.model.InvoiceFilterByIntervalForm;
 import com.aripd.project.lgk.model.WaybillFilterByDocumentNoForm;
-import com.aripd.project.lgk.model.WaybillFilterByIntervalForm;
 import com.aripd.project.lgk.service.CustomerService;
 import com.aripd.project.lgk.service.InvoiceService;
 import com.aripd.project.lgk.service.WaybillService;
@@ -64,6 +62,13 @@ public class InvoiceController {
         return ControllerUtils.getDatatablesResultSet(criteria, resultset);
     }
 
+    @RequestMapping(value = "/waybill/get/{invoice_id}", method = RequestMethod.GET)
+    public @ResponseBody
+    WebResultSet<Waybill> datatablesWaybillAction(@PathVariable Long invoice_id, @DatatablesParam DatatablesCriteria criteria) {
+        DatatablesResultSet<Waybill> resultset = this.waybillService.getRecords(invoice_id, criteria);
+        return ControllerUtils.getDatatablesResultSet(criteria, resultset);
+    }
+    
     @RequestMapping(value = "/list")
     public String listAction(Model model) {
         return "invoice/list";
@@ -115,8 +120,8 @@ public class InvoiceController {
         return "redirect:/invoice/list";
     }
 
-    @RequestMapping(value = "/waybill/{id}", method = RequestMethod.POST)
-    public String waybillAction(
+    @RequestMapping(value = "/waybill/add/{id}", method = RequestMethod.POST)
+    public String waybillAddAction(
             @PathVariable Long id,
             final RedirectAttributes redirectAttributes,
             @RequestParam(value = "documentNo", required = true) String documentNo) {
@@ -132,6 +137,24 @@ public class InvoiceController {
         waybillService.save(waybill);
         redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
         return "redirect:/invoice/edit/" + id;
+    }
+
+    @RequestMapping(value = "/waybill/remove/{id}", method = RequestMethod.POST)
+    public String waybillRemoveAction(
+            @PathVariable Long id,
+            final RedirectAttributes redirectAttributes) {
+        Waybill waybill = waybillService.findOne(id);
+
+        if (waybill instanceof Waybill == false) {
+            redirectAttributes.addFlashAttribute("message", "Kayıt bulunamadı");
+            return "redirect:/invoice/list";
+        }
+
+        Long invoice_id = waybill.getInvoice().getId();
+        waybill.setInvoice(null);
+        waybillService.save(waybill);
+        redirectAttributes.addFlashAttribute("message", "Başarı ile çıkarıldı");
+        return "redirect:/invoice/edit/" + invoice_id;
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
@@ -154,7 +177,6 @@ public class InvoiceController {
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public String reportAction(Model model) {
         model.addAttribute("invoiceFilterByIntervalForm", new InvoiceFilterByIntervalForm());
-        model.addAttribute("waybillFilterByIntervalForm", new WaybillFilterByIntervalForm());
         return "invoice/report";
     }
 

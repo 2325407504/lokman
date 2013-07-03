@@ -14,13 +14,13 @@
 </jsp:include>
 
 <aripd:datatables datasource="/waybill/get" id="waybills" dataUrlShow="/waybill/show" dataUrlEdit="/waybill/edit">
-    <aripd:column label="Action" field="id"/>
-    <aripd:column label="Account" field="account.username"/>
-    <aripd:column label="Document No" field="documentNo"/>
-    <aripd:column label="Document Date" field="documentDate"/>
-    <aripd:column label="Company" field="company"/>
-    <aripd:column label="Driver" field="driver"/>
-    <aripd:column label="Plate" field="plate"/>
+    <aripd:datatablescolumn label="Action" field="id"/>
+    <aripd:datatablescolumn label="Account" field="account.username"/>
+    <aripd:datatablescolumn label="Document No" field="documentNo"/>
+    <aripd:datatablescolumn label="Document Date" field="documentDate"/>
+    <aripd:datatablescolumn label="Company" field="company"/>
+    <aripd:datatablescolumn label="Driver" field="driver"/>
+    <aripd:datatablescolumn label="Plate" field="plate"/>
 </aripd:datatables>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

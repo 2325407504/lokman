@@ -11,8 +11,8 @@
 </jsp:include>
 
 <aripd:datatables datasource="/wastegroup/get" id="wastegroups" dataUrlShow="/wastegroup/show" dataUrlEdit="/wastegroup/edit">
-    <aripd:column label="Action" field="id"/>
-    <aripd:column label="Name" field="name"/>
+    <aripd:datatablescolumn label="Action" field="id"/>
+    <aripd:datatablescolumn label="Name" field="name"/>
 </aripd:datatables>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

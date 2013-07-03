@@ -47,9 +47,9 @@
 <div class="row-fluid">
     <div class="span12">
         <aripd:datatables datasource="/outgoing/get/${waybillAttribute.id}" id="outgoings">
-            <aripd:column label="Product" field="product.name"/>
-            <aripd:column label="Weight" field="weight"/>
-            <aripd:column label="Remark" field="remark"/>
+            <aripd:datatablescolumn label="Product" field="product.name"/>
+            <aripd:datatablescolumn label="Weight" field="weight"/>
+            <aripd:datatablescolumn label="Remark" field="remark"/>
         </aripd:datatables>
     </div>
 </div>

@@ -1,8 +1,10 @@
 <%@ tag language="java" %>
 <%@ attribute name="field" required="true" %>
 <%@ attribute name="label" required="true" rtexprvalue="true" %>
+<%@ attribute name="sortable" required="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<c:if test="${sortable == null}"><c:set var="sortable" value="false" /></c:if>
 <c:choose>
     <c:when test="${org_languagetool_tags_table_outputmode == 'TABLE'}">
         <th>
@@ -16,6 +18,6 @@
             </c:when>
             <c:otherwise>,</c:otherwise>
         </c:choose>
-        {"mDataProp":"${field}"}
+        {"mDataProp": "${field}", "bSortable": ${sortable}}
     </c:when>
 </c:choose>

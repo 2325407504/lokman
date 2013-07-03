@@ -139,9 +139,9 @@
             <hr>
 
             <aripd:datatables datasource="/bigbag/get/${productionAttribute.id}" id="bigbags" caption="Production Amounts" dataUrlDelete="/bigbag/delete" actionColumn="2">
-                <aripd:column label="Product" field="product.name"/>
-                <aripd:column label="Weight" field="weight"/>
-                <aripd:column label="Action" field="id"/>
+                <aripd:datatablescolumn label="Product" field="product.name"/>
+                <aripd:datatablescolumn label="Weight" field="weight"/>
+                <aripd:datatablescolumn label="Action" field="id"/>
             </aripd:datatables>
         </c:if>
     </div>

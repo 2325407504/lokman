@@ -100,10 +100,10 @@
             <hr>
 
             <aripd:datatables datasource="/outgoing/get/${waybillAttribute.id}" id="outgoings" dataUrlDelete="/outgoing/delete" actionColumn="3" caption="Outgoings">
-                <aripd:column label="Product" field="product.name"/>
-                <aripd:column label="Weight" field="weight"/>
-                <aripd:column label="Remark" field="remark"/>
-                <aripd:column label="Action" field="id"/>
+                <aripd:datatablescolumn label="Product" field="product.name"/>
+                <aripd:datatablescolumn label="Weight" field="weight"/>
+                <aripd:datatablescolumn label="Remark" field="remark"/>
+                <aripd:datatablescolumn label="Action" field="id"/>
             </aripd:datatables>
         </div>
     </div>

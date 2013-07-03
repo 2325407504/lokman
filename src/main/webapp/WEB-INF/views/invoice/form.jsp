@@ -86,7 +86,7 @@
         <div class="span12">
             <fmt:message key="Document No" var="documentNo" />
 
-            <spring:url var="waybillSave" value="/invoice/waybill/${invoiceAttribute.id}" />
+            <spring:url var="waybillSave" value="/invoice/waybill/add/${invoiceAttribute.id}" />
             <form:form modelAttribute="waybillFilterByDocumentNoForm" action="${waybillSave}" method="post" class="form-inline">
                 <form:errors path="*" cssClass="alert alert-error" element="div" />
                 <form:input id="autocomplete" path="documentNo" placeholder="${documentNo}" />
@@ -97,13 +97,13 @@
 
             <hr>
 
-            <aripd:datatables datasource="/waybill/get/${invoiceAttribute.id}" id="waybills" dataUrlDelete="/waybill/delete" actionColumn="5" caption="Waybills">
-                <aripd:column label="Document No" field="documentNo"/>
-                <aripd:column label="Document Date" field="documentDate"/>
-                <aripd:column label="Company" field="company"/>
-                <aripd:column label="Driver" field="driver"/>
-                <aripd:column label="Plate" field="plate"/>
-                <aripd:column label="Action" field="id"/>
+            <aripd:datatables datasource="/invoice/waybill/get/${invoiceAttribute.id}" id="waybills" dataUrlDelete="/invoice/waybill/remove" actionColumn="5" caption="Waybills">
+                <aripd:datatablescolumn label="Document No" field="documentNo"/>
+                <aripd:datatablescolumn label="Document Date" field="documentDate"/>
+                <aripd:datatablescolumn label="Company" field="company"/>
+                <aripd:datatablescolumn label="Driver" field="driver"/>
+                <aripd:datatablescolumn label="Plate" field="plate"/>
+                <aripd:datatablescolumn label="Action" field="id"/>
             </aripd:datatables>
         </div>
     </div>

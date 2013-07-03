@@ -11,10 +11,10 @@
 </jsp:include>
 
 <aripd:datatables datasource="/product/get" id="products" dataUrlShow="/product/show" dataUrlEdit="/product/edit">
-    <aripd:column label="Action" field="id"/>
-    <aripd:column label="Product Group" field="productgroup.name"/>
-    <aripd:column label="Code" field="code"/>
-    <aripd:column label="Name" field="name"/>
+    <aripd:datatablescolumn label="Action" field="id"/>
+    <aripd:datatablescolumn label="Product Group" field="productgroup.name"/>
+    <aripd:datatablescolumn label="Code" field="code"/>
+    <aripd:datatablescolumn label="Name" field="name"/>
 </aripd:datatables>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

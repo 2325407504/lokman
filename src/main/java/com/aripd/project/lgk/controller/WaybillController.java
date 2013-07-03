@@ -55,10 +55,10 @@ public class WaybillController {
     @Value("${path.directory.import}")
     String pathDirectoryImport;
 
-    @RequestMapping(value = "/get/{invoice_id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
-    WebResultSet<Waybill> datatablesAction(@PathVariable Long invoice_id, @DatatablesParam DatatablesCriteria criteria) {
-        DatatablesResultSet<Waybill> resultset = this.waybillService.getRecords(invoice_id, criteria);
+    WebResultSet<Waybill> datatablesAction(@DatatablesParam DatatablesCriteria criteria) {
+        DatatablesResultSet<Waybill> resultset = this.waybillService.getRecords(criteria);
         return ControllerUtils.getDatatablesResultSet(criteria, resultset);
     }
 

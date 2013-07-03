@@ -11,8 +11,8 @@
 </jsp:include>
 
 <aripd:datatables datasource="/electricmeter/get" id="electricmeters" dataUrlShow="/electricmeter/show" dataUrlEdit="/electricmeter/edit">
-    <aripd:column label="Action" field="id"/>
-    <aripd:column label="Name" field="name"/>
+    <aripd:datatablescolumn label="Action" field="id"/>
+    <aripd:datatablescolumn label="Name" field="name"/>
 </aripd:datatables>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

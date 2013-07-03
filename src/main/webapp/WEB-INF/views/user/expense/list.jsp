@@ -15,12 +15,12 @@
     </ul>
 
 <aripd:datatables datasource="/user/expense/get" id="expenses" dataUrlShow="/user/expense/show" dataUrlEdit="/user/expense/edit">
-    <aripd:column label="Action" field="id"/>
-    <aripd:column label="Expensetype" field="expensetype.name"/>
-    <aripd:column label="Date" field="documentDate"/>
-    <aripd:column label="Company" field="company"/>
-    <aripd:column label="Description" field="description"/>
-    <aripd:column label="Amount" field="amount"/>
+    <aripd:datatablescolumn label="Action" field="id"/>
+    <aripd:datatablescolumn label="Expensetype" field="expensetype.name"/>
+    <aripd:datatablescolumn label="Date" field="documentDate"/>
+    <aripd:datatablescolumn label="Company" field="company"/>
+    <aripd:datatablescolumn label="Description" field="description"/>
+    <aripd:datatablescolumn label="Amount" field="amount"/>
 </aripd:datatables>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

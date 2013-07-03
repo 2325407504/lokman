@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aripd.account.service.AccountService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
@@ -30,10 +29,8 @@ import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Uatf;
 import com.aripd.project.lgk.model.UatfFilterByIntervalForm;
-import com.aripd.project.lgk.service.DriverService;
 import com.aripd.project.lgk.service.ForwardingService;
 import com.aripd.project.lgk.service.QuotaService;
-import com.aripd.project.lgk.service.SubcontractorService;
 import com.aripd.project.lgk.service.UatfService;
 import javax.validation.Valid;
 import org.joda.time.DateTime;
@@ -51,12 +48,6 @@ public class UatfController {
     private UatfService uatfService;
     @Resource(name = "quotaService")
     private QuotaService quotaService;
-    @Resource(name = "subcontractorService")
-    private SubcontractorService subcontractorService;
-    @Resource(name = "driverService")
-    private DriverService driverService;
-    @Resource(name = "accountService")
-    private AccountService accountService;
     @Value("${path.directory.import}")
     String pathDirectoryImport;
 

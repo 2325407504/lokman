@@ -1,7 +1,5 @@
 package com.aripd.project.lgk.report.invoice;
 
-import com.aripd.project.lgk.report.invoice.*;
-import com.aripd.project.lgk.report.invoice.*;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 

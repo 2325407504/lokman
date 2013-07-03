@@ -14,11 +14,11 @@
 </jsp:include>
 
 <aripd:datatables datasource="/production/get" id="productions" dataUrlShow="/production/show" dataUrlEdit="/production/edit" sortingColumn="2" sortingDirection="desc">
-    <aripd:column label="Action" field="id"/>
-    <aripd:column label="Account" field="account.username"/>
-    <aripd:column label="Date" field="shiftdate"/>
-    <aripd:column label="Feed" field="feed"/>
-    <aripd:column label="Remark" field="remark"/>
+    <aripd:datatablescolumn label="Action" field="id"/>
+    <aripd:datatablescolumn label="Account" field="account.username"/>
+    <aripd:datatablescolumn label="Date" field="shiftdate"/>
+    <aripd:datatablescolumn label="Feed" field="feed"/>
+    <aripd:datatablescolumn label="Remark" field="remark"/>
 </aripd:datatables>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

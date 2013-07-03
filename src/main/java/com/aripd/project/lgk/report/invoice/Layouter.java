@@ -1,7 +1,5 @@
 package com.aripd.project.lgk.report.invoice;
 
-import com.aripd.project.lgk.report.invoice.*;
-import com.aripd.project.lgk.report.invoice.*;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
@@ -30,13 +28,6 @@ public class Layouter {
         worksheet.setColumnWidth(2, 5000);
         worksheet.setColumnWidth(3, 5000);
         worksheet.setColumnWidth(4, 5000);
-        worksheet.setColumnWidth(5, 5000);
-        worksheet.setColumnWidth(6, 5000);
-        worksheet.setColumnWidth(7, 5000);
-        worksheet.setColumnWidth(8, 5000);
-        worksheet.setColumnWidth(9, 5000);
-        worksheet.setColumnWidth(10, 5000);
-        worksheet.setColumnWidth(11, 5000);
 
         // Build the title and date headers
         buildTitle(worksheet, startRowIndex, startColIndex);
@@ -51,8 +42,7 @@ public class Layouter {
      * @param startRowIndex starting row offset
      * @param startColIndex starting column offset
      */
-    public static void buildTitle(HSSFSheet worksheet, int startRowIndex,
-            int startColIndex) {
+    public static void buildTitle(HSSFSheet worksheet, int startRowIndex, int startColIndex) {
         // Create font style for the report title
         Font fontTitle = worksheet.getWorkbook().createFont();
         fontTitle.setBoldweight(Font.BOLDWEIGHT_BOLD);
@@ -73,7 +63,7 @@ public class Layouter {
         cellTitle.setCellStyle(cellStyleTitle);
 
         // Create merged region for the report title
-        worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 11));
+        worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 4));
 
         // Create date header
         HSSFRow dateTitle = worksheet.createRow((short) startRowIndex + 1);
@@ -88,15 +78,13 @@ public class Layouter {
      * @param startRowIndex starting row offset
      * @param startColIndex starting column offset
      */
-    public static void buildHeaders(HSSFSheet worksheet, int startRowIndex,
-            int startColIndex) {
+    public static void buildHeaders(HSSFSheet worksheet, int startRowIndex, int startColIndex) {
         // Create font style for the headers
         Font font = worksheet.getWorkbook().createFont();
         font.setBoldweight(Font.BOLDWEIGHT_BOLD);
 
         // Create cell style for the headers
-        HSSFCellStyle headerCellStyle = worksheet.getWorkbook()
-                .createCellStyle();
+        HSSFCellStyle headerCellStyle = worksheet.getWorkbook().createCellStyle();
         headerCellStyle.setFillBackgroundColor(HSSFColor.GREY_25_PERCENT.index);
         headerCellStyle.setFillPattern(CellStyle.FINE_DOTS);
         headerCellStyle.setAlignment(CellStyle.ALIGN_CENTER);
@@ -110,52 +98,24 @@ public class Layouter {
         rowHeader.setHeight((short) 500);
 
         HSSFCell cell0 = rowHeader.createCell(startColIndex + 0);
-        cell0.setCellValue("Invoice No");
+        cell0.setCellValue("Account");
         cell0.setCellStyle(headerCellStyle);
 
         HSSFCell cell1 = rowHeader.createCell(startColIndex + 1);
-        cell1.setCellValue("User");
+        cell1.setCellValue("Invoice Date");
         cell1.setCellStyle(headerCellStyle);
 
         HSSFCell cell2 = rowHeader.createCell(startColIndex + 2);
-        cell2.setCellValue("Driver");
+        cell2.setCellValue("Invoice No");
         cell2.setCellStyle(headerCellStyle);
 
         HSSFCell cell3 = rowHeader.createCell(startColIndex + 3);
-        cell3.setCellValue("Plate");
+        cell3.setCellValue("Company");
         cell3.setCellStyle(headerCellStyle);
 
         HSSFCell cell4 = rowHeader.createCell(startColIndex + 4);
-        cell4.setCellValue("Starting Time");
+        cell4.setCellValue("Amount");
         cell4.setCellStyle(headerCellStyle);
-
-        HSSFCell cell5 = rowHeader.createCell(startColIndex + 5);
-        cell5.setCellValue("Ending Time");
-        cell5.setCellStyle(headerCellStyle);
-
-        HSSFCell cell6 = rowHeader.createCell(startColIndex + 6);
-        cell6.setCellValue("Ending Point");
-        cell6.setCellStyle(headerCellStyle);
-
-        HSSFCell cell7 = rowHeader.createCell(startColIndex + 7);
-        cell7.setCellValue("Weight");
-        cell7.setCellStyle(headerCellStyle);
-
-        HSSFCell cell8 = rowHeader.createCell(startColIndex + 8);
-        cell8.setCellValue("Shipping Cost");
-        cell8.setCellStyle(headerCellStyle);
-
-        HSSFCell cell9 = rowHeader.createCell(startColIndex + 9);
-        cell9.setCellValue("Subcontractor");
-        cell9.setCellStyle(headerCellStyle);
-
-        HSSFCell cell10 = rowHeader.createCell(startColIndex + 10);
-        cell10.setCellValue("Quota");
-        cell10.setCellStyle(headerCellStyle);
-
-        HSSFCell cell11 = rowHeader.createCell(startColIndex + 11);
-        cell11.setCellValue("Outgoing");
-        cell11.setCellStyle(headerCellStyle);
 
     }
 }

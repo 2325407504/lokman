@@ -1,12 +1,10 @@
 package com.aripd.project.lgk.service;
 
-import java.security.Principal;
 
 import javax.servlet.http.HttpServletResponse;
 
 import com.aripd.account.domain.Account;
 import com.aripd.common.dto.autocomplete.AutocompleteCriteria;
-import com.aripd.common.dto.autocomplete.AutocompleteResultSet;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Waybill;
@@ -28,6 +26,8 @@ public interface WaybillService {
     public void delete(Long id);
 
     public void delete(Waybill waybill);
+
+    public DatatablesResultSet<Waybill> getRecords(DatatablesCriteria criteria);
 
     public DatatablesResultSet<Waybill> getRecords(Long invoice_id, DatatablesCriteria criteria);
 
