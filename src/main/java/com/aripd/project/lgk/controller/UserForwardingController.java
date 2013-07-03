@@ -32,7 +32,7 @@ import javax.validation.Valid;
 
 @PreAuthorize("hasRole('ROLE_USER')")
 @Controller
-@RequestMapping("/user/forwarding")
+@RequestMapping("/userforwarding")
 public class UserForwardingController {
 
     @Resource(name = "forwardingService")
@@ -55,7 +55,7 @@ public class UserForwardingController {
 
     @RequestMapping(value = "/list")
     public String listAction(Model model) {
-        return "/user/forwarding/list";
+        return "/userforwarding/list";
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
@@ -70,11 +70,11 @@ public class UserForwardingController {
 
         if (forwarding instanceof Forwarding == false) {
             redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
-            return "redirect:/user/forwarding/list";
+            return "redirect:/userforwarding/list";
         }
 
-        model.addAttribute("forwardingAttribute", forwarding);
-        return "/user/forwarding/show";
+        model.addAttribute("userforwardingAttribute", forwarding);
+        return "/userforwarding/show";
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
@@ -85,8 +85,8 @@ public class UserForwardingController {
 
         model.addAttribute("quotas", quotaService.findAll());
         model.addAttribute("subcontractors", subcontractorService.findByRegion(account.getRegion()));
-        model.addAttribute("forwardingAttribute", new Forwarding());
-        return "/user/forwarding/form";
+        model.addAttribute("userforwardingAttribute", new Forwarding());
+        return "/userforwarding/form";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
@@ -99,23 +99,23 @@ public class UserForwardingController {
         Forwarding forwarding = forwardingService.findOne(id);
         if (forwarding.isSubmitted()) {
             redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
-            return "redirect:/user/forwarding/list";
+            return "redirect:/userforwarding/show/" + forwarding.getId();
         }
 
         Account account = accountService.findOneByUsername(principal.getName());
 
-        model.addAttribute("uatfAttribute", new Uatf());
+        model.addAttribute("useruatfAttribute", new Uatf());
         model.addAttribute("quotas", quotaService.findAll());
         model.addAttribute("subcontractors", subcontractorService.findByRegion(account.getRegion()));
-        model.addAttribute("forwardingAttribute", forwarding);
-        return "/user/forwarding/form";
+        model.addAttribute("userforwardingAttribute", forwarding);
+        return "/userforwarding/form";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
             Principal principal,
-            @ModelAttribute("forwardingAttribute") @Valid Forwarding formData,
+            @ModelAttribute("userforwardingAttribute") @Valid Forwarding formData,
             BindingResult result,
             Model model) {
 
@@ -124,7 +124,7 @@ public class UserForwardingController {
 
             model.addAttribute("quotas", quotaService.findAll());
             model.addAttribute("subcontractors", subcontractorService.findByRegion(account.getRegion()));
-            return "/user/forwarding/form";
+            return "/userforwarding/form";
         }
 
         Account account = accountService.findOneByUsername(principal.getName());
@@ -132,7 +132,7 @@ public class UserForwardingController {
 
         forwardingService.save(formData);
         redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
-        return "redirect:/user/forwarding/list";
+        return "redirect:/userforwarding/list";
     }
 
     @RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)
@@ -147,12 +147,12 @@ public class UserForwardingController {
 
         if (forwarding instanceof Forwarding == false) {
             redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
-            return "redirect:/user/forwarding/list";
+            return "redirect:/userforwarding/list";
         }
 
         forwarding.setSubmitted(true);
         forwardingService.save(forwarding);
-        return "redirect:/user/forwarding/show/" + id;
+        return "redirect:/userforwarding/show/" + id;
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
@@ -166,13 +166,14 @@ public class UserForwardingController {
 
         if (forwarding instanceof Forwarding == false) {
             redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
+            return "redirect:/userforwarding/list";
         } else if (forwarding.isSubmitted()) {
             redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+            return "redirect:/userforwarding/show/" + forwarding.getId();
         } else {
             redirectAttributes.addFlashAttribute("message", "Kaydınız başarı ile silindi");
             forwardingService.delete(forwarding);
+            return "redirect:/userforwarding/list";
         }
-
-        return "redirect:/user/forwarding/list";
     }
 }

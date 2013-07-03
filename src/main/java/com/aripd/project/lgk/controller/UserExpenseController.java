@@ -30,7 +30,7 @@ import com.aripd.project.lgk.service.ExpensetypeService;
 
 @PreAuthorize("hasRole('ROLE_USER')")
 @Controller
-@RequestMapping("/user/expense")
+@RequestMapping("/userexpense")
 public class UserExpenseController {
 
     @Resource(name = "expenseService")
@@ -51,7 +51,7 @@ public class UserExpenseController {
 
     @RequestMapping(value = "/list")
     public String listAction(Model model) {
-        return "/user/expense/list";
+        return "/userexpense/list";
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
@@ -66,18 +66,18 @@ public class UserExpenseController {
 
         if (expense instanceof Expense == false) {
             redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
-            return "redirect:/user/expense/list";
+            return "redirect:/userexpense/list";
         }
 
-        model.addAttribute("expenseAttribute", expense);
-        return "/user/expense/show";
+        model.addAttribute("userexpenseAttribute", expense);
+        return "/userexpense/show";
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
         model.addAttribute("expensetypes", expensetypeService.findAll());
-        model.addAttribute("expenseAttribute", new Expense());
-        return "/user/expense/form";
+        model.addAttribute("userexpenseAttribute", new Expense());
+        return "/userexpense/form";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
@@ -89,23 +89,23 @@ public class UserExpenseController {
         Expense expense = expenseService.findOne(id);
         if (expense.isSubmitted()) {
             redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
-            return "redirect:/user/expense/list";
+            return "redirect:/userexpense/show/" + expense.getId();
         }
 
         model.addAttribute("expensetypes", expensetypeService.findAll());
-        model.addAttribute("expenseAttribute", expense);
-        return "/user/expense/form";
+        model.addAttribute("userexpenseAttribute", expense);
+        return "/userexpense/form";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
             Principal principal,
-            @ModelAttribute("expenseAttribute") @Valid Expense formData,
+            @ModelAttribute("userexpenseAttribute") @Valid Expense formData,
             BindingResult result) {
 
         if (result.hasErrors()) {
-            return "/user/expense/form";
+            return "/userexpense/form";
         }
 
         Account account = accountService.findOneByUsername(principal.getName());
@@ -113,7 +113,7 @@ public class UserExpenseController {
 
         expenseService.save(formData);
         redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
-        return "redirect:/user/expense/list";
+        return "redirect:/userexpense/list";
     }
 
     @RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)
@@ -128,12 +128,12 @@ public class UserExpenseController {
 
         if (expense instanceof Expense == false) {
             redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
-            return "redirect:/user/expense/list";
+            return "redirect:/userexpense/list";
         }
 
         expense.setSubmitted(true);
         expenseService.save(expense);
-        return "redirect:/user/expense/show/" + id;
+        return "redirect:/userexpense/show/" + id;
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
@@ -147,13 +147,14 @@ public class UserExpenseController {
 
         if (expense instanceof Expense == false) {
             redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
+            return "redirect:/userexpense/list";
         } else if (expense.isSubmitted()) {
             redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+            return "redirect:/userexpense/show/" + expense.getId();
         } else {
             redirectAttributes.addFlashAttribute("message", "Kaydınız başarı ile silindi");
             expenseService.delete(expense);
+            return "redirect:/userexpense/list";
         }
-
-        return "redirect:/user/expense/list";
     }
 }

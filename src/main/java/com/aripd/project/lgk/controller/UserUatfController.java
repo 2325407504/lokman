@@ -26,7 +26,7 @@ import javax.validation.Valid;
 
 @PreAuthorize("hasRole('ROLE_USER')")
 @Controller
-@RequestMapping("/user/uatf")
+@RequestMapping("/useruatf")
 public class UserUatfController {
 
     @Resource(name = "forwardingService")
@@ -44,25 +44,25 @@ public class UserUatfController {
     public String saveAction(
             final RedirectAttributes redirectAttributes,
             @PathVariable Long forwarding_id,
-            @ModelAttribute("uatfAttribute") @Valid Uatf formData,
+            @ModelAttribute("useruatfAttribute") @Valid Uatf formData,
             BindingResult result,
             Model model) {
 
         Forwarding forwarding = forwardingService.findOne(forwarding_id);
         if (forwarding.isSubmitted()) {
             redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
-            return "redirect:/user/forwarding/list";
+            return "redirect:/userforwarding/show/" + forwarding.getId();
         }
 
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("message", "Bütün alanları doldurmalısınız");
-            return "redirect:/user/forwarding/edit/" + forwarding_id;
+            return "redirect:/userforwarding/edit/" + forwarding_id;
         }
 
         formData.setForwarding(forwarding);
 
         uatfService.save(formData);
-        return "redirect:/user/forwarding/edit/" + forwarding_id;
+        return "redirect:/userforwarding/edit/" + forwarding_id;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
@@ -74,10 +74,10 @@ public class UserUatfController {
 
         if (uatf.getForwarding().isSubmitted()) {
             redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
-            return "redirect:/user/forwarding/list";
+            return "redirect:/userforwarding/show/" + uatf.getForwarding().getId();
         }
 
         uatfService.delete(uatf);
-        return "redirect:/user/forwarding/edit/" + uatf.getForwarding().getId();
+        return "redirect:/userforwarding/edit/" + uatf.getForwarding().getId();
     }
 }

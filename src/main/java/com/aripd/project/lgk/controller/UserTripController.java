@@ -32,7 +32,7 @@ import com.aripd.project.lgk.validator.TripValidator;
 
 @PreAuthorize("hasRole('ROLE_USER')")
 @Controller
-@RequestMapping("/user/trip")
+@RequestMapping("/usertrip")
 public class UserTripController {
 
     @Autowired
@@ -57,7 +57,7 @@ public class UserTripController {
 
     @RequestMapping(value = "/list")
     public String listAction(Model model) {
-        return "/user/trip/list";
+        return "/usertrip/list";
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
@@ -72,11 +72,11 @@ public class UserTripController {
 
         if (trip instanceof Trip == false) {
             redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
-            return "redirect:/user/trip/list";
+            return "redirect:/usertrip/list";
         }
 
-        model.addAttribute("tripAttribute", trip);
-        return "/user/trip/show";
+        model.addAttribute("usertripAttribute", trip);
+        return "/usertrip/show";
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
@@ -88,8 +88,8 @@ public class UserTripController {
 
         model.addAttribute("trucks", truckService.findByRegion(account.getRegion()));
         model.addAttribute("drivers", driverService.findByRegion(account.getRegion()));
-        model.addAttribute("tripAttribute", new Trip());
-        return "/user/trip/form";
+        model.addAttribute("usertripAttribute", new Trip());
+        return "/usertrip/form";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
@@ -102,22 +102,22 @@ public class UserTripController {
         Trip trip = tripService.findOne(id);
         if (trip.isSubmitted()) {
             redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
-            return "redirect:/user/trip/list";
+            return "redirect:/usertrip/show/" + trip.getId();
         }
 
         Account account = accountService.findOneByUsername(principal.getName());
 
         model.addAttribute("trucks", truckService.findByRegion(account.getRegion()));
         model.addAttribute("drivers", driverService.findAll());
-        model.addAttribute("tripAttribute", trip);
-        return "/user/trip/form";
+        model.addAttribute("usertripAttribute", trip);
+        return "/usertrip/form";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
             Principal principal,
-            @ModelAttribute("tripAttribute")/* @Valid */ Trip formData,
+            @ModelAttribute("usertripAttribute")/* @Valid */ Trip formData,
             BindingResult result,
             Model model) {
 
@@ -126,7 +126,7 @@ public class UserTripController {
             Account account = accountService.findOneByUsername(principal.getName());
             model.addAttribute("trucks", truckService.findByRegion(account.getRegion()));
             model.addAttribute("drivers", driverService.findAll());
-            return "/user/trip/form";
+            return "/usertrip/form";
         }
 
         Account account = accountService.findOneByUsername(principal.getName());
@@ -134,7 +134,7 @@ public class UserTripController {
 
         tripService.save(formData);
         redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
-        return "redirect:/user/trip/list";
+        return "redirect:/usertrip/list";
     }
 
     @RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)
@@ -148,12 +148,12 @@ public class UserTripController {
 
         if (trip instanceof Trip == false) {
             redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
-            return "redirect:/user/trip/list";
+            return "redirect:/usertrip/list";
         }
 
         trip.setSubmitted(true);
         tripService.save(trip);
-        return "redirect:/user/trip/show/" + id;
+        return "redirect:/usertrip/show/" + id;
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
@@ -167,14 +167,15 @@ public class UserTripController {
 
         if (trip instanceof Trip == false) {
             redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
+            return "redirect:/usertrip/list";
         } else if (trip.isSubmitted()) {
             redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+            return "redirect:/usertrip/show/" + trip.getId();
         } else {
             redirectAttributes.addFlashAttribute("message", "Kaydınız başarı ile silindi");
             tripService.delete(trip);
+            return "redirect:/usertrip/list";
         }
-
-        return "redirect:/user/trip/list";
     }
 
     @RequestMapping(value = "/report")
@@ -183,6 +184,6 @@ public class UserTripController {
             Model model) {
         Account account = accountService.findOneByUsername(principal.getName());
         model.addAttribute("trucks", truckService.findByRegion(account.getRegion()));
-        return "user/trip/report";
+        return "usertrip/report";
     }
 }

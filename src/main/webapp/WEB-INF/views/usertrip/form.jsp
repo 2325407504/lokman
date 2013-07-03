@@ -4,29 +4,17 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url var="homeUrl" value="/" />
-<spring:url var="tripList" value="/user/trip/list" />
-<spring:url var="tripShow" value="/user/trip/show/${tripAttribute.id}" />
-<spring:url var="tripEdit" value="/user/trip/edit/${tripAttribute.id}" />
-<spring:url var="tripNew" value="/user/trip/new" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${tripList}"><spring:message code="Trips" /></a></li>
-        <c:choose>
-            <c:when test="${ !empty tripAttribute.id }">
-            <li class="active"><a href="${tripEdit}"><spring:message code="Entry No" />: ${tripAttribute.id}</a></li>
-            </c:when>
-            <c:otherwise>
-            <li class="active"><a href="${tripNew}"><spring:message code="New Entry" /></a></li>
-            </c:otherwise>
-        </c:choose>
-</ul>
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Trips" />
+    <jsp:param name="property" value="usertrip" />
+    <jsp:param name="submit" value="true" />
+    <jsp:param name="active" value="form" />
+</jsp:include>
 
 <div class="row-fluid">
     <div class="span12">
-        <spring:url var="save" value="/user/trip/save" />
-        <form:form modelAttribute="tripAttribute" action="${save}" method="post">
+        <spring:url var="save" value="/usertrip/save" />
+        <form:form modelAttribute="usertripAttribute" action="${save}" method="post">
             <form:errors path="*" cssClass="alert alert-error" element="div" />
             <form:hidden path="id" />
             <fieldset>
@@ -81,8 +69,8 @@
                     <form:errors cssClass="text-error" path="remark" />
                 </div>
                 <div class="form-actions">
-                    <c:if test="${ !empty tripAttribute.id }">
-                        <a class="btn btn-danger" href="javascript:$('#form-${tripAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete" /></a>
+                    <c:if test="${ !empty usertripAttribute.id }">
+                        <a class="btn btn-danger" href="javascript:$('#form-${usertripAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete" /></a>
                     </c:if>
                     <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
                 </div>
@@ -91,9 +79,9 @@
     </div>
 </div>
 
-<c:if test="${ !empty tripAttribute.id }">
-    <spring:url var="deleteUrl" value="/user/trip/delete?id=${tripAttribute.id}" />
-    <form:form id="form-${tripAttribute.id}" modelAttribute="tripAttribute" action="${deleteUrl}" method="delete">
+<c:if test="${ !empty usertripAttribute.id }">
+    <spring:url var="deleteUrl" value="/usertrip/delete?id=${usertripAttribute.id}" />
+    <form:form id="form-${usertripAttribute.id}" modelAttribute="usertripAttribute" action="${deleteUrl}" method="delete">
         <form:hidden path="id" />
     </form:form>
 </c:if>

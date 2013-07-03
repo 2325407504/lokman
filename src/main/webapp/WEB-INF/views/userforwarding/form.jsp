@@ -4,29 +4,17 @@
     <jsp:param name="title" value="" />
 </jsp:include>
 
-<spring:url var="homeUrl" value="/" />
-<spring:url var="forwardingList" value="/user/forwarding/list" />
-<spring:url var="forwardingShow" value="/user/forwarding/show/${forwardingAttribute.id}" />
-<spring:url var="forwardingEdit" value="/user/forwarding/edit/${forwardingAttribute.id}" />
-<spring:url var="forwardingNew" value="/user/forwarding/new" />
-
-<ul class="nav nav-tabs">
-    <li class=""><a href="${homeUrl}"><i class="icon-home"></i></a></li>
-    <li class=""><a href="${forwardingList}"><spring:message code="Forwardings" /></a></li>
-        <c:choose>
-            <c:when test="${ !empty forwardingAttribute.id }">
-            <li class="active"><a href="${forwardingEdit}"><spring:message code="Entry No" />: ${forwardingAttribute.id}</a></li>
-            </c:when>
-            <c:otherwise>
-            <li class="active"><a href="${forwardingNew}"><spring:message code="New Entry" /></a></li>
-            </c:otherwise>
-        </c:choose>
-</ul>
+<jsp:include page="/WEB-INF/views/subnav.jsp" >
+    <jsp:param name="title" value="Forwardings" />
+    <jsp:param name="property" value="userforwarding" />
+    <jsp:param name="submit" value="true" />
+    <jsp:param name="active" value="form" />
+</jsp:include>
 
 <div class="row-fluid">
     <div class="span4">
-        <spring:url var="save" value="/user/forwarding/save" />
-        <form:form modelAttribute="forwardingAttribute" action="${save}" method="post">
+        <spring:url var="save" value="/userforwarding/save" />
+        <form:form modelAttribute="userforwardingAttribute" action="${save}" method="post">
             <form:errors path="*" cssClass="alert alert-error" element="div" />
             <form:hidden path="id" />
             <fieldset>
@@ -81,17 +69,17 @@
                     <form:errors cssClass="text-error" path="quota" />
                 </div>
                 <div class="form-actions">
-                    <c:if test="${ !empty forwardingAttribute.id }">
-                        <a class="btn btn-danger" href="javascript:$('#form-${forwardingAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete" /></a>
+                    <c:if test="${ !empty userforwardingAttribute.id }">
+                        <a class="btn btn-danger" href="javascript:$('#form-${userforwardingAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete" /></a>
                     </c:if>
                     <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
                 </div>
             </fieldset>
         </form:form>
 
-        <c:if test="${ !empty forwardingAttribute.id }">
-            <spring:url var="deleteUrl" value="/user/forwarding/delete?id=${forwardingAttribute.id}" />
-            <form:form id="form-${forwardingAttribute.id}" modelAttribute="forwardingAttribute" action="${deleteUrl}" method="delete">
+        <c:if test="${ !empty userforwardingAttribute.id }">
+            <spring:url var="deleteUrl" value="/userforwarding/delete?id=${userforwardingAttribute.id}" />
+            <form:form id="form-${userforwardingAttribute.id}" modelAttribute="userforwardingAttribute" action="${deleteUrl}" method="delete">
                 <form:hidden path="id" />
             </form:form>
         </c:if>
@@ -103,9 +91,9 @@
         <fmt:message key="City" var="City"/>
         <fmt:message key="Weight" var="Weight"/>
 
-        <c:if test="${forwardingAttribute.id != null}">
-            <spring:url var="uatfSave" value="/user/uatf/save/${forwardingAttribute.id}" />
-            <form:form modelAttribute="uatfAttribute" action="${uatfSave}" method="post" class="form-inline">
+        <c:if test="${userforwardingAttribute.id != null}">
+            <spring:url var="uatfSave" value="/useruatf/save/${userforwardingAttribute.id}" />
+            <form:form modelAttribute="useruatfAttribute" action="${uatfSave}" method="post" class="form-inline">
                 <form:errors path="*" cssClass="alert alert-error" element="div" />
                 <form:input path="code" cssClass="input-small" placeholder="${Code}" />
                 <form:input path="company" cssClass="input-small" placeholder="${Company}" />
@@ -117,7 +105,7 @@
 
             <hr>
 
-            <aripd:datatables datasource="/user/uatf/get/${forwardingAttribute.id}" id="uatfs" dataUrlDelete="/user/uatf/delete" actionColumn="5">
+            <aripd:datatables datasource="/useruatf/get/${userforwardingAttribute.id}" id="uatfs" dataUrlDelete="/useruatf/delete" actionColumn="5">
                 <aripd:datatablescolumn label="Code" field="code"/>
                 <aripd:datatablescolumn label="Company" field="company"/>
                 <aripd:datatablescolumn label="County" field="county"/>

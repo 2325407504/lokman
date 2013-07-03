@@ -49,12 +49,12 @@
 <spring:url value="/weighbridge/list" var="weighbridge_list" />
 <c:if test="${uri == weighbridge_list}"><c:set var="weighbridge_class" value="active" /></c:if>
 
-<spring:url value="/user/expense/list" var="user_expense_list" />
-<c:if test="${uri == user_expense_list}"><c:set var="user_expense_class" value="active" /></c:if>
-<spring:url value="/user/trip/list" var="user_trip_list" />
-<c:if test="${uri == user_trip_list}"><c:set var="user_trip_class" value="active" /></c:if>
-<spring:url value="/user/forwarding/list" var="user_forwarding_list" />
-<c:if test="${uri == user_forwarding_list}"><c:set var="user_forwarding_class" value="active" /></c:if>
+<spring:url value="/userexpense/list" var="userexpense_list" />
+<c:if test="${uri == userexpense_list}"><c:set var="userexpense_class" value="active" /></c:if>
+<spring:url value="/usertrip/list" var="usertrip_list" />
+<c:if test="${uri == usertrip_list}"><c:set var="usertrip_class" value="active" /></c:if>
+<spring:url value="/userforwarding/list" var="userforwarding_list" />
+<c:if test="${uri == userforwarding_list}"><c:set var="userforwarding_class" value="active" /></c:if>
 
 
     <div class="well">
@@ -142,11 +142,11 @@
                     <div class="accordion-inner">
                         <ul class="nav nav-list">
                             <li class="nav-header"><spring:message code="Personnel" /></li>
-                            <li class="${user_expense_class}"><a href="${user_expense_list}"><spring:message code="Expenses" /></a></li>
+                            <li class="${userexpense_class}"><a href="${userexpense_list}"><spring:message code="Expenses" /></a></li>
                                 <sec:authorize access="hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_USER','ROLE_OTL'})">
                                 <li class="nav-header"><spring:message code="Logistics" /></li>
-                                <li class="${user_trip_class}"><a href="${user_trip_list}"><spring:message code="Trips" /></a></li>
-                                <li class="${user_forwarding_class}"><a href="${user_forwarding_list}"><spring:message code="Forwardings" /></a></li>
+                                <li class="${usertrip_class}"><a href="${usertrip_list}"><spring:message code="Trips" /></a></li>
+                                <li class="${userforwarding_class}"><a href="${userforwarding_list}"><spring:message code="Forwardings" /></a></li>
                                 </sec:authorize>
                                 <sec:authorize access="hasRole('ROLE_SUPERADMIN') or hasAnyRole({'ROLE_USER','ROLE_URE'})">
                                 <li class="nav-header"><spring:message code="Production" /></li>
