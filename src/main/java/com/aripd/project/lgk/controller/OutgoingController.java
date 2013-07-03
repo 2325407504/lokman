@@ -29,10 +29,7 @@ import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Waybill;
 import com.aripd.project.lgk.domain.Outgoing;
 import com.aripd.project.lgk.model.OutgoingFilterByIntervalForm;
-import com.aripd.project.lgk.service.DriverService;
 import com.aripd.project.lgk.service.WaybillService;
-import com.aripd.project.lgk.service.QuotaService;
-import com.aripd.project.lgk.service.SubcontractorService;
 import com.aripd.project.lgk.service.OutgoingService;
 import javax.validation.Valid;
 import org.joda.time.DateTime;
@@ -48,12 +45,6 @@ public class OutgoingController {
     private WaybillService waybillService;
     @Resource(name = "outgoingService")
     private OutgoingService outgoingService;
-    @Resource(name = "quotaService")
-    private QuotaService quotaService;
-    @Resource(name = "subcontractorService")
-    private SubcontractorService subcontractorService;
-    @Resource(name = "driverService")
-    private DriverService driverService;
     @Value("${path.directory.import}")
     String pathDirectoryImport;
 
@@ -161,12 +152,12 @@ public class OutgoingController {
             Model model) {
 
         if (result.hasErrors()) {
-            return "/forwarding/report";
+            return "/waybill/report";
         }
 
         outgoingService.exportByInterval(response, startingTime, endingTime);
 
         redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
-        return "redirect:/forwarding/report";
+        return "redirect:/waybill/report";
     }
 }

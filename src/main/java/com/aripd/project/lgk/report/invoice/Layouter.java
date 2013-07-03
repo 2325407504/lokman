@@ -102,11 +102,11 @@ public class Layouter {
         cell0.setCellStyle(headerCellStyle);
 
         HSSFCell cell1 = rowHeader.createCell(startColIndex + 1);
-        cell1.setCellValue("Invoice Date");
+        cell1.setCellValue("Document Date");
         cell1.setCellStyle(headerCellStyle);
 
         HSSFCell cell2 = rowHeader.createCell(startColIndex + 2);
-        cell2.setCellValue("Invoice No");
+        cell2.setCellValue("Document No");
         cell2.setCellStyle(headerCellStyle);
 
         HSSFCell cell3 = rowHeader.createCell(startColIndex + 3);

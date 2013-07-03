@@ -1,6 +1,5 @@
 package com.aripd.project.lgk.report.outgoing;
 
-import com.aripd.project.lgk.report.outgoing.*;
 import java.util.List;
 import java.util.Locale;
 
@@ -27,8 +26,7 @@ public class FillManager {
      * @param startColIndex starting column offset
      * @param datasource the data source
      */
-    public static void fillReport(HSSFSheet worksheet, int startRowIndex,
-            int startColIndex, List<Outgoing> datasource) {
+    public static void fillReport(HSSFSheet worksheet, int startRowIndex,int startColIndex, List<Outgoing> datasource) {
         // Row offset
         startRowIndex += 2;
 
@@ -46,15 +44,15 @@ public class FillManager {
             HSSFRow row = worksheet.createRow((short) i + 1);
 
             HSSFCell cell0 = row.createCell(startColIndex + 0);
-            cell0.setCellValue(datasource.get(i - 2).getWaybill().getDocumentNo());
+            cell0.setCellValue(datasource.get(i - 2).getWaybill().getAccount().getUsername());
             cell0.setCellStyle(bodyCellStyle);
 
             HSSFCell cell1 = row.createCell(startColIndex + 1);
-            cell1.setCellValue(datasource.get(i - 2).getWaybill().getAccount().getUsername());
+            cell1.setCellValue(formatter.print(datasource.get(i - 2).getWaybill().getDocumentDate()));
             cell1.setCellStyle(bodyCellStyle);
 
             HSSFCell cell2 = row.createCell(startColIndex + 2);
-            cell2.setCellValue(formatter.print(datasource.get(i - 2).getWaybill().getDocumentDate()));
+            cell2.setCellValue(datasource.get(i - 2).getWaybill().getDocumentNo());
             cell2.setCellStyle(bodyCellStyle);
 
             HSSFCell cell3 = row.createCell(startColIndex + 3);
@@ -68,6 +66,34 @@ public class FillManager {
             HSSFCell cell5 = row.createCell(startColIndex + 5);
             cell5.setCellValue(datasource.get(i - 2).getWaybill().getPlate());
             cell5.setCellStyle(bodyCellStyle);
+
+            HSSFCell cell6 = row.createCell(startColIndex + 6);
+            cell6.setCellValue(datasource.get(i - 2).getProduct().getName());
+            cell6.setCellStyle(bodyCellStyle);
+
+            HSSFCell cell7 = row.createCell(startColIndex + 7);
+            cell7.setCellValue(datasource.get(i - 2).getWeight());
+            cell7.setCellStyle(bodyCellStyle);
+
+            HSSFCell cell8 = row.createCell(startColIndex + 8);
+            cell8.setCellValue(datasource.get(i - 2).getRemark());
+            cell8.setCellStyle(bodyCellStyle);
+
+            HSSFCell cell9 = row.createCell(startColIndex + 9);
+            cell9.setCellValue(formatter.print(datasource.get(i - 2).getWaybill().getInvoice().getDocumentDate()));
+            cell9.setCellStyle(bodyCellStyle);
+
+            HSSFCell cell10 = row.createCell(startColIndex + 10);
+            cell10.setCellValue(datasource.get(i - 2).getWaybill().getInvoice().getDocumentNo());
+            cell10.setCellStyle(bodyCellStyle);
+
+            HSSFCell cell11 = row.createCell(startColIndex + 11);
+            cell11.setCellValue(datasource.get(i - 2).getWaybill().getInvoice().getCustomer().getName());
+            cell11.setCellStyle(bodyCellStyle);
+
+            HSSFCell cell12 = row.createCell(startColIndex + 12);
+            cell12.setCellValue(datasource.get(i - 2).getWaybill().getInvoice().getAmount().doubleValue());
+            cell12.setCellStyle(numericStyle);
 
         }
     }

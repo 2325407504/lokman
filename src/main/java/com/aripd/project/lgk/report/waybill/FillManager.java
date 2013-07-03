@@ -1,9 +1,7 @@
 package com.aripd.project.lgk.report.waybill;
 
-import com.aripd.project.lgk.domain.Outgoing;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -70,31 +68,21 @@ public class FillManager {
             cell5.setCellStyle(bodyCellStyle);
 
             HSSFCell cell6 = row.createCell(startColIndex + 6);
-            StringBuilder sb = new StringBuilder();
-            Set<Outgoing> outgoings = datasource.get(i - 2).getOutgoings();
-            for (Outgoing outgoing : outgoings) {
-                sb.append(outgoing.getProduct().getName() + ',' + outgoing.getRemark() + ',' + outgoing.getWeight());
-                sb.append("\n");
-            }
-            cell6.setCellValue(sb.toString());
+            cell6.setCellValue(formatter.print(datasource.get(i - 2).getInvoice().getDocumentDate()));
             cell6.setCellStyle(bodyCellStyle);
-            /*
-             HSSFCell cell7 = row.createCell(startColIndex + 7);
-             cell7.setCellValue(datasource.get(i - 2).getInvoiceCompany());
-             cell7.setCellStyle(bodyCellStyle);
 
-             HSSFCell cell8 = row.createCell(startColIndex + 8);
-             cell8.setCellValue(datasource.get(i - 2).getInvoiceNo());
-             cell8.setCellStyle(bodyCellStyle);
+            HSSFCell cell7 = row.createCell(startColIndex + 7);
+            cell7.setCellValue(datasource.get(i - 2).getInvoice().getDocumentNo());
+            cell7.setCellStyle(bodyCellStyle);
 
-             HSSFCell cell9 = row.createCell(startColIndex + 9);
-             cell9.setCellValue(formatter.print(datasource.get(i - 2).getInvoiceDate()));
-             cell9.setCellStyle(bodyCellStyle);
+            HSSFCell cell8 = row.createCell(startColIndex + 8);
+            cell8.setCellValue(datasource.get(i - 2).getInvoice().getCustomer().getName());
+            cell8.setCellStyle(bodyCellStyle);
 
-             HSSFCell cell10 = row.createCell(startColIndex + 10);
-             cell10.setCellValue(datasource.get(i - 2).getInvoiceAmount().doubleValue());
-             cell10.setCellStyle(numericStyle);
-             */
+            HSSFCell cell9 = row.createCell(startColIndex + 9);
+            cell9.setCellValue(datasource.get(i - 2).getInvoice().getAmount().doubleValue());
+            cell9.setCellStyle(numericStyle);
+
         }
     }
 }
