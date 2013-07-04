@@ -7,7 +7,7 @@
 <div class="alert alert-error text-center">
     <spring:url value="/" var="homeUrl" />
     <h1><spring:message code="Login Failure" /></h1>
-    <p><a href="${homeUrl}"><spring:message code="Login" /></a></p>
+    <p><a class="btn" href="${homeUrl}"><spring:message code="Login" /></a></p>
 </div>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />
