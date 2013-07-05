@@ -50,12 +50,12 @@ public class UserUatfController {
 
         Forwarding forwarding = forwardingService.findOne(forwarding_id);
         if (forwarding.isSubmitted()) {
-            redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.editable");
             return "redirect:/userforwarding/show/" + forwarding.getId();
         }
 
         if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("message", "Bütün alanları doldurmalısınız");
+            redirectAttributes.addFlashAttribute("message", "message.required.all");
             return "redirect:/userforwarding/edit/" + forwarding_id;
         }
 
@@ -73,7 +73,7 @@ public class UserUatfController {
         Uatf uatf = uatfService.findOne(id);
 
         if (uatf.getForwarding().isSubmitted()) {
-            redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.editable");
             return "redirect:/userforwarding/show/" + uatf.getForwarding().getId();
         }
 

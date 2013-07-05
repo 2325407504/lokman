@@ -65,7 +65,7 @@ public class UserExpenseController {
         Expense expense = expenseService.findOneByAccountAndId(account, id);
 
         if (expense instanceof Expense == false) {
-            redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.access");
             return "redirect:/userexpense/list";
         }
 
@@ -88,7 +88,7 @@ public class UserExpenseController {
 
         Expense expense = expenseService.findOne(id);
         if (expense.isSubmitted()) {
-            redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.editable");
             return "redirect:/userexpense/show/" + expense.getId();
         }
 
@@ -127,7 +127,7 @@ public class UserExpenseController {
         Expense expense = expenseService.findOneByAccountAndId(account, id);
 
         if (expense instanceof Expense == false) {
-            redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.access");
             return "redirect:/userexpense/list";
         }
 
@@ -146,10 +146,10 @@ public class UserExpenseController {
         Expense expense = expenseService.findOneByAccountAndId(account, id);
 
         if (expense instanceof Expense == false) {
-            redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.access");
             return "redirect:/userexpense/list";
         } else if (expense.isSubmitted()) {
-            redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.editable");
             return "redirect:/userexpense/show/" + expense.getId();
         } else {
             redirectAttributes.addFlashAttribute("message", "message.completed.delete");

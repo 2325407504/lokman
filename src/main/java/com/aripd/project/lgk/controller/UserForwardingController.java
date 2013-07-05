@@ -69,7 +69,7 @@ public class UserForwardingController {
         Forwarding forwarding = forwardingService.findOneByAccountAndId(account, id);
 
         if (forwarding instanceof Forwarding == false) {
-            redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.access");
             return "redirect:/userforwarding/list";
         }
 
@@ -98,7 +98,7 @@ public class UserForwardingController {
 
         Forwarding forwarding = forwardingService.findOne(id);
         if (forwarding.isSubmitted()) {
-            redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.editable");
             return "redirect:/userforwarding/show/" + forwarding.getId();
         }
 
@@ -146,7 +146,7 @@ public class UserForwardingController {
         Forwarding forwarding = forwardingService.findOneByAccountAndId(account, id);
 
         if (forwarding instanceof Forwarding == false) {
-            redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.access");
             return "redirect:/userforwarding/list";
         }
 
@@ -165,10 +165,10 @@ public class UserForwardingController {
         Forwarding forwarding = forwardingService.findOneByAccountAndId(account, id);
 
         if (forwarding instanceof Forwarding == false) {
-            redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.access");
             return "redirect:/userforwarding/list";
         } else if (forwarding.isSubmitted()) {
-            redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.editable");
             return "redirect:/userforwarding/show/" + forwarding.getId();
         } else {
             redirectAttributes.addFlashAttribute("message", "message.completed.delete");

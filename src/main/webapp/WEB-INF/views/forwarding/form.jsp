@@ -21,7 +21,7 @@
         <div class="span4">
             <fieldset>
                 <div class="control-group">
-                    <form:checkbox path="submitted" /> <spring:message code="Submitted by user" />
+                    <form:checkbox path="submitted" /> <spring:message code="message.record.submitted" />
                     <form:errors cssClass="text-error" path="submitted" />
                 </div>
                 <div class="control-group">

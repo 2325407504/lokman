@@ -71,7 +71,7 @@ public class UserTripController {
         Trip trip = tripService.findOneByAccountAndId(account, id);
 
         if (trip instanceof Trip == false) {
-            redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.access");
             return "redirect:/usertrip/list";
         }
 
@@ -101,7 +101,7 @@ public class UserTripController {
 
         Trip trip = tripService.findOne(id);
         if (trip.isSubmitted()) {
-            redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.editable");
             return "redirect:/usertrip/show/" + trip.getId();
         }
 
@@ -147,7 +147,7 @@ public class UserTripController {
         Trip trip = tripService.findOneByAccountAndId(account, id);
 
         if (trip instanceof Trip == false) {
-            redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.access");
             return "redirect:/usertrip/list";
         }
 
@@ -166,10 +166,10 @@ public class UserTripController {
         Trip trip = tripService.findOneByAccountAndId(account, id);
 
         if (trip instanceof Trip == false) {
-            redirectAttributes.addFlashAttribute("message", "Bu kayda erişiminiz yetkiniz yok");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.access");
             return "redirect:/usertrip/list";
         } else if (trip.isSubmitted()) {
-            redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.editable");
             return "redirect:/usertrip/show/" + trip.getId();
         } else {
             redirectAttributes.addFlashAttribute("message", "message.completed.delete");

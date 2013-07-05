@@ -59,12 +59,12 @@ public class OutgoingController {
 
         Waybill waybill = waybillService.findOne(waybill_id);
         if (waybill.isSubmitted() && request.isUserInRole("ROLE_USER")) {
-            redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.editable");
             return "redirect:/waybill/list";
         }
 
         if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("message", "Bütün alanları doldurmalısınız");
+            redirectAttributes.addFlashAttribute("message", "message.required.all");
             return "redirect:/waybill/edit/" + waybill_id;
         }
 
@@ -83,7 +83,7 @@ public class OutgoingController {
         Outgoing outgoing = outgoingService.findOne(id);
 
         if (outgoing.getWaybill().isSubmitted() && request.isUserInRole("ROLE_USER")) {
-            redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.editable");
             return "redirect:/waybill/list";
         }
 

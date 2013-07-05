@@ -122,7 +122,7 @@ public class InvoiceController {
         Waybill waybill = waybillService.findOneByDocumentNo(documentNo);
 
         if (waybill instanceof Waybill == false) {
-            redirectAttributes.addFlashAttribute("message", "Kayıt bulunamadı");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.found");
             return "redirect:/invoice/edit/" + id;
         }
 
@@ -140,7 +140,7 @@ public class InvoiceController {
         Waybill waybill = waybillService.findOne(id);
 
         if (waybill instanceof Waybill == false) {
-            redirectAttributes.addFlashAttribute("message", "Kayıt bulunamadı");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.found");
             return "redirect:/invoice/list";
         }
 

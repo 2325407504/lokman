@@ -59,12 +59,12 @@ public class BigbagController {
 
         Production production = productionService.findOne(production_id);
         if (production.isSubmitted() && request.isUserInRole("ROLE_USER")) {
-            redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.editable");
             return "redirect:/production/list";
         }
 
         if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("message", "Bütün alanları doldurmalısınız");
+            redirectAttributes.addFlashAttribute("message", "message.required.all");
             return "redirect:/production/edit/" + production_id;
         }
 
@@ -83,7 +83,7 @@ public class BigbagController {
         Bigbag bigbag = bigbagService.findOne(id);
 
         if (bigbag.getProduction().isSubmitted() && request.isUserInRole("ROLE_USER")) {
-            redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
+            redirectAttributes.addFlashAttribute("message", "message.record.not.editable");
             return "redirect:/production/list";
         }
 
