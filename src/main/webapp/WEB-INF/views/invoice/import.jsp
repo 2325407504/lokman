@@ -14,8 +14,8 @@
 </jsp:include>
 
 <div class="bs-docs-example" data-content="<spring:message code="Invoice" />">
-    <spring:url var="import" value="/invoice/import" />
-    <form:form modelAttribute="invoiceAttribute" action="${import}" method="post" enctype="multipart/form-data">
+    <spring:url var="invoiceImport" value="/invoice/import" />
+    <form:form modelAttribute="invoiceImportAttribute" action="${invoiceImport}" method="post" enctype="multipart/form-data">
         <form:errors path="*" cssClass="alert alert-error" element="div" />
         <form:input path="file" type="file"/>
         <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload" /></button>
@@ -76,55 +76,6 @@
                     <td>98,7</td>
                     <td>UID2</td>
                     <td>UID2</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class="bs-docs-example" data-content="<spring:message code="Waybill" />">
-    <spring:url var="waybillImport" value="/waybill/import" />
-    <form:form modelAttribute="waybillAttribute" action="${waybillImport}" method="post" enctype="multipart/form-data">
-        <form:errors path="*" cssClass="alert alert-error" element="div" />
-        <form:input path="file" type="file"/>
-        <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload" /></button>
-    </form:form>
-    <div class="bs-docs-example" data-content="<spring:message code="Example" />">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th><spring:message code="Invoice" /></th>
-                    <th><spring:message code="Waybill" /></th>
-                    <th><spring:message code="Company" /></th>
-                    <th><spring:message code="County" /></th>
-                    <th><spring:message code="City" /></th>
-                    <th><spring:message code="Weight" /></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>invoiceno1</td>
-                    <td>waybill11</td>
-                    <td>company11</td>
-                    <td>county11</td>
-                    <td>city11</td>
-                    <td>7</td>
-                </tr>
-                <tr>
-                    <td>invoiceno1</td>
-                    <td>waybill12</td>
-                    <td>company12</td>
-                    <td>county12</td>
-                    <td>city12</td>
-                    <td>11</td>
-                </tr>
-                <tr>
-                    <td>invoiceno2</td>
-                    <td>waybill21</td>
-                    <td>company21</td>
-                    <td>county21</td>
-                    <td>city21</td>
-                    <td>12</td>
                 </tr>
             </tbody>
         </table>

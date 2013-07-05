@@ -138,14 +138,14 @@ public class ExpenseController {
 
     @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
-        model.addAttribute("expenseAttribute", new FileUploadBean());
+        model.addAttribute("expenseImportAttribute", new FileUploadBean());
         return "expense/import";
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importData(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("expenseAttribute") @Validated FileUploadBean formData,
+            @ModelAttribute("expenseImportAttribute") @Validated FileUploadBean formData,
             BindingResult result) {
 
         if (result.hasErrors()) {

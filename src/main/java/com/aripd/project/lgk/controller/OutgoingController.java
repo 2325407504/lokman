@@ -94,7 +94,7 @@ public class OutgoingController {
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importData(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("outgoingAttribute") @Validated FileUploadBean formData,
+            @ModelAttribute("outgoingImportAttribute") @Validated FileUploadBean formData,
             BindingResult result) {
 
         if (result.hasErrors()) {

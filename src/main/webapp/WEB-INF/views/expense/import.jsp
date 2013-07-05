@@ -14,8 +14,8 @@
 </jsp:include>
 
 <div class="bs-docs-example" data-content="<spring:message code="Expense" />">
-    <spring:url var="import" value="/expense/import" />
-    <form:form modelAttribute="expenseAttribute" action="${import}" method="post" enctype="multipart/form-data">
+    <spring:url var="expenseImport" value="/expense/import" />
+    <form:form modelAttribute="expenseImportAttribute" action="${expenseImport}" method="post" enctype="multipart/form-data">
         <form:errors path="*" cssClass="alert alert-error" element="div" />
         <form:input path="file" type="file"/>
         <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload" /></button>

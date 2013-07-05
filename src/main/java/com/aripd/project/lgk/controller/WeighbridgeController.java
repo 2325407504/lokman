@@ -150,7 +150,7 @@ public class WeighbridgeController {
 
     @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
-        model.addAttribute("weighbridgeAttribute", new FileUploadBean());
+        model.addAttribute("weighbridgeImportAttribute", new FileUploadBean());
         return "weighbridge/import";
     }
 
@@ -158,7 +158,7 @@ public class WeighbridgeController {
     public String importData(
             Principal principal,
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("weighbridgeAttribute") @Validated FileUploadBean formData,
+            @ModelAttribute("weighbridgeImportAttribute") @Validated FileUploadBean formData,
             BindingResult result) {
 
         if (result.hasErrors()) {

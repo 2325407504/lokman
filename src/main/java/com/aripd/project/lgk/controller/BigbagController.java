@@ -91,21 +91,6 @@ public class BigbagController {
         return "redirect:/production/edit/" + bigbag.getProduction().getId();
     }
 
-    @RequestMapping(value = "/import", method = RequestMethod.POST)
-    public String importData(
-            final RedirectAttributes redirectAttributes,
-            @ModelAttribute("bigbagAttribute") @Validated FileUploadBean formData,
-            BindingResult result) {
-
-        if (result.hasErrors()) {
-            return "/production/import";
-        }
-
-        bigbagService.importData(formData.getFile());
-        redirectAttributes.addFlashAttribute("message", "message.completed.import");
-        return "redirect:/production/list";
-    }
-
     @RequestMapping(value = "/report", method = RequestMethod.POST)
     public String reportAction(
             final RedirectAttributes redirectAttributes,

@@ -14,9 +14,9 @@
 </jsp:include>
 
 <div class="bs-docs-example" data-content="<spring:message code="Waybill" />">
-    <spring:url var="import" value="/waybill/import" />
-    <form:form modelAttribute="fileUploadBean" action="${import}" method="post" enctype="multipart/form-data">
-        <form:errors cssClass="text-error" path="file" />
+    <spring:url var="waybillImport" value="/waybill/import" />
+    <form:form modelAttribute="waybillImportAttribute" action="${waybillImport}" method="post" enctype="multipart/form-data">
+        <form:errors path="*" cssClass="alert alert-error" element="div" />
         <form:input path="file" type="file"/>
         <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload" /></button>
     </form:form>
@@ -76,55 +76,6 @@
                     <td>98,7</td>
                     <td>UID2</td>
                     <td>UID2</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class="bs-docs-example" data-content="<spring:message code="Outgoing" />">
-    <spring:url var="outgoingImport" value="/outgoing/import" />
-    <form:form modelAttribute="outgoingAttribute" action="${outgoingImport}" method="post" enctype="multipart/form-data">
-        <form:errors path="*" cssClass="alert alert-error" element="div" />
-        <form:input path="file" type="file"/>
-        <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload" /></button>
-    </form:form>
-    <div class="bs-docs-example" data-content="<spring:message code="Example" />">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th><spring:message code="Waybill" /></th>
-                    <th><spring:message code="Outgoing" /></th>
-                    <th><spring:message code="Company" /></th>
-                    <th><spring:message code="County" /></th>
-                    <th><spring:message code="City" /></th>
-                    <th><spring:message code="Weight" /></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>waybillno1</td>
-                    <td>outgoing11</td>
-                    <td>company11</td>
-                    <td>county11</td>
-                    <td>city11</td>
-                    <td>7</td>
-                </tr>
-                <tr>
-                    <td>waybillno1</td>
-                    <td>outgoing12</td>
-                    <td>company12</td>
-                    <td>county12</td>
-                    <td>city12</td>
-                    <td>11</td>
-                </tr>
-                <tr>
-                    <td>waybillno2</td>
-                    <td>outgoing21</td>
-                    <td>company21</td>
-                    <td>county21</td>
-                    <td>city21</td>
-                    <td>12</td>
                 </tr>
             </tbody>
         </table>

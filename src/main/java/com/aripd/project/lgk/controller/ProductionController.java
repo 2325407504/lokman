@@ -180,15 +180,14 @@ public class ProductionController {
 
     @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
-        model.addAttribute("productionAttribute", new FileUploadBean());
-        model.addAttribute("bigbagAttribute", new FileUploadBean());
+        model.addAttribute("productionImportAttribute", new FileUploadBean());
         return "production/import";
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importData(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("productionAttribute") @Validated FileUploadBean formData,
+            @ModelAttribute("productionImportAttribute") @Validated FileUploadBean formData,
             BindingResult result) {
 
         if (result.hasErrors()) {

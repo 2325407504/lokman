@@ -131,14 +131,14 @@ public class TripController {
 
     @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
-        model.addAttribute("tripAttribute", new FileUploadBean());
+        model.addAttribute("tripImportAttribute", new FileUploadBean());
         return "trip/import";
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importData(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("tripAttribute") @Validated FileUploadBean formData,
+            @ModelAttribute("tripImportAttribute") @Validated FileUploadBean formData,
             BindingResult result) {
 
         if (result.hasErrors()) {

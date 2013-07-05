@@ -194,15 +194,14 @@ public class InvoiceController {
 
     @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
-        model.addAttribute("invoiceAttribute", new FileUploadBean());
-        model.addAttribute("waybillAttribute", new FileUploadBean());
+        model.addAttribute("invoiceImportAttribute", new FileUploadBean());
         return "invoice/import";
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importData(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("invoiceAttribute") @Validated FileUploadBean formData,
+            @ModelAttribute("invoiceImportAttribute") @Validated FileUploadBean formData,
             BindingResult result) {
 
         if (result.hasErrors()) {

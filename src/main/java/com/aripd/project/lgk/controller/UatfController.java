@@ -91,21 +91,6 @@ public class UatfController {
         return "redirect:/forwarding/edit/" + uatf.getForwarding().getId();
     }
 
-    @RequestMapping(value = "/import", method = RequestMethod.POST)
-    public String importData(
-            final RedirectAttributes redirectAttributes,
-            @ModelAttribute("uatfAttribute") @Validated FileUploadBean formData,
-            BindingResult result) {
-
-        if (result.hasErrors()) {
-            return "redirect:/forwarding/import";
-        }
-
-        uatfService.importData(formData.getFile());
-        redirectAttributes.addFlashAttribute("message", "message.completed.import");
-        return "redirect:/forwarding/list";
-    }
-
     @RequestMapping(value = "/report", method = RequestMethod.POST)
     public String reportAction(
             final RedirectAttributes redirectAttributes,

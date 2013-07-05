@@ -14,8 +14,8 @@
 </jsp:include>
 
 <div class="bs-docs-example" data-content="<spring:message code="Weighbridge" />">
-    <spring:url var="import" value="/weighbridge/import" />
-    <form:form modelAttribute="weighbridgeAttribute" action="${import}" method="post" enctype="multipart/form-data">
+    <spring:url var="weighbridgeImport" value="/weighbridge/import" />
+    <form:form modelAttribute="weighbridgeImportAttribute" action="${weighbridgeImport}" method="post" enctype="multipart/form-data">
         <form:errors path="*" cssClass="alert alert-error" element="div" />
         <form:input path="file" type="file"/>
         <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload" /></button>

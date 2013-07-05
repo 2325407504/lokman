@@ -153,15 +153,14 @@ public class ForwardingController {
 
     @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
-        model.addAttribute("forwardingAttribute", new FileUploadBean());
-        model.addAttribute("uatfAttribute", new FileUploadBean());
+        model.addAttribute("forwardingImportAttribute", new FileUploadBean());
         return "forwarding/import";
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importData(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("forwardingAttribute") @Validated FileUploadBean formData,
+            @ModelAttribute("forwardingImportAttribute") @Validated FileUploadBean formData,
             BindingResult result) {
 
         if (result.hasErrors()) {

@@ -14,8 +14,8 @@
 </jsp:include>
 
 <div class="bs-docs-example" data-content="<spring:message code="Production" />">
-    <spring:url var="import" value="/production/import" />
-    <form:form modelAttribute="productionAttribute" action="${import}" method="post" enctype="multipart/form-data">
+    <spring:url var="productionImport" value="/production/import" />
+    <form:form modelAttribute="productionImportAttribute" action="${productionImport}" method="post" enctype="multipart/form-data">
         <form:errors path="*" cssClass="alert alert-error" element="div" />
         <form:input path="file" type="file"/>
         <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload" /></button>
@@ -76,55 +76,6 @@
                     <td>98,7</td>
                     <td>UID2</td>
                     <td>UID2</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class="bs-docs-example" data-content="<spring:message code="Bigbag" />">
-    <spring:url var="bigbagImport" value="/bigbag/import" />
-    <form:form modelAttribute="bigbagAttribute" action="${bigbagImport}" method="post" enctype="multipart/form-data">
-        <form:errors path="*" cssClass="alert alert-error" element="div" />
-        <form:input path="file" type="file"/>
-        <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload" /></button>
-    </form:form>
-    <div class="bs-docs-example" data-content="<spring:message code="Example" />">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th><spring:message code="Waybill" /></th>
-                    <th><spring:message code="Uatf" /></th>
-                    <th><spring:message code="Company" /></th>
-                    <th><spring:message code="County" /></th>
-                    <th><spring:message code="City" /></th>
-                    <th><spring:message code="Weight" /></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>waybillno1</td>
-                    <td>bigbag11</td>
-                    <td>company11</td>
-                    <td>county11</td>
-                    <td>city11</td>
-                    <td>7</td>
-                </tr>
-                <tr>
-                    <td>waybillno1</td>
-                    <td>bigbag12</td>
-                    <td>company12</td>
-                    <td>county12</td>
-                    <td>city12</td>
-                    <td>11</td>
-                </tr>
-                <tr>
-                    <td>waybillno2</td>
-                    <td>bigbag21</td>
-                    <td>company21</td>
-                    <td>county21</td>
-                    <td>city21</td>
-                    <td>12</td>
                 </tr>
             </tbody>
         </table>
