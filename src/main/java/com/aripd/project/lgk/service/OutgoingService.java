@@ -7,6 +7,7 @@ import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Outgoing;
 import javax.servlet.http.HttpServletResponse;
 import org.joda.time.DateTime;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface OutgoingService {
 
@@ -26,7 +27,7 @@ public interface OutgoingService {
 
     public DatatablesResultSet<Outgoing> getRecords(Long waybill_id, DatatablesCriteria criteria);
 
-    public void importXLSX(String fileName);
+    public void importXLS(MultipartFile file);
 
     public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

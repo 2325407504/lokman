@@ -10,6 +10,7 @@ import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Forwarding;
 import java.util.List;
 import org.joda.time.DateTime;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ForwardingService {
 
@@ -31,7 +32,7 @@ public interface ForwardingService {
 
     public DatatablesResultSet<Forwarding> getRecords(Principal principal, DatatablesCriteria criteria);
 
-    public void importXLSX(String fileName);
+    public void importXLS(MultipartFile file);
 
     public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

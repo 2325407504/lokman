@@ -46,6 +46,7 @@ import com.aripd.project.lgk.report.invoice.Writer;
 import com.aripd.project.lgk.repository.InvoiceRepository;
 import com.aripd.project.lgk.repository.UatfRepository;
 import com.aripd.project.lgk.service.InvoiceService;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service("invoiceService")
 @Transactional(readOnly = true)
@@ -198,17 +199,10 @@ public class InvoiceServiceImpl implements InvoiceService {
         return new DatatablesResultSet<Invoice>(resultList, totalRecords, displaySize);
     }
 
-    public void importXLSX(String fileName) {
-        InputStream iStream = null;
-        try {
-            iStream = new FileInputStream(fileName);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
+    public void importXLS(MultipartFile file) {
         Workbook workbook = null;
         try {
-            workbook = WorkbookFactory.create(iStream);
+            workbook = WorkbookFactory.create(file.getInputStream());
         } catch (InvalidFormatException e) {
             e.printStackTrace();
         } catch (IOException e) {

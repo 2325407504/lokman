@@ -10,6 +10,7 @@ import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Production;
 import java.util.List;
 import org.joda.time.DateTime;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ProductionService {
 
@@ -31,7 +32,7 @@ public interface ProductionService {
 
     public DatatablesResultSet<Production> getRecords(Principal principal, DatatablesCriteria criteria);
 
-    public void importXLSX(String fileName);
+    public void importXLS(MultipartFile file);
 
     public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

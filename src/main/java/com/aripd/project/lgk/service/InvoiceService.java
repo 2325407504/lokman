@@ -9,6 +9,7 @@ import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Invoice;
 import java.util.List;
 import org.joda.time.DateTime;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface InvoiceService {
 
@@ -28,7 +29,7 @@ public interface InvoiceService {
 
     public DatatablesResultSet<Invoice> getRecords(Principal principal, DatatablesCriteria criteria);
 
-    public void importXLSX(String fileName);
+    public void importXLS(MultipartFile file);
 
     public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

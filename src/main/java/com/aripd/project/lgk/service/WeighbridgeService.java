@@ -8,6 +8,7 @@ import com.aripd.project.lgk.domain.Weighbridge;
 import java.security.Principal;
 import java.util.List;
 import org.joda.time.DateTime;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface WeighbridgeService {
 
@@ -23,7 +24,7 @@ public interface WeighbridgeService {
 
     public DatatablesResultSet<Weighbridge> getRecords(DatatablesCriteria criteria);
 
-    public void importXLSX(String fileName, Principal principal);
+    public void importXLS(MultipartFile file, Principal principal);
 
     public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

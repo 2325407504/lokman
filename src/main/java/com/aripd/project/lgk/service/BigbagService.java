@@ -5,9 +5,9 @@ import java.util.List;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Bigbag;
-import com.aripd.project.lgk.domain.Uatf;
 import javax.servlet.http.HttpServletResponse;
 import org.joda.time.DateTime;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface BigbagService {
 
@@ -27,7 +27,7 @@ public interface BigbagService {
 
     public DatatablesResultSet<Bigbag> getRecords(Long production_id, DatatablesCriteria criteria);
 
-    public void importXLSX(String fileName);
+    public void importXLS(MultipartFile file);
 
     public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

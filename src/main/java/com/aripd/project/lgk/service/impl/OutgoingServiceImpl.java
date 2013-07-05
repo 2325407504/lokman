@@ -44,6 +44,7 @@ import com.aripd.project.lgk.service.OutgoingService;
 import com.aripd.project.lgk.service.ProductService;
 import javax.persistence.criteria.Join;
 import org.joda.time.DateTime;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service("outgoingService")
 @Transactional(readOnly = true)
@@ -156,17 +157,10 @@ public class OutgoingServiceImpl implements OutgoingService {
         return new DatatablesResultSet<Outgoing>(resultList, totalRecords, displaySize);
     }
 
-    public void importXLSX(String fileName) {
-        InputStream iStream = null;
-        try {
-            iStream = new FileInputStream(fileName);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
+    public void importXLS(MultipartFile file) {
         Workbook workbook = null;
         try {
-            workbook = WorkbookFactory.create(iStream);
+            workbook = WorkbookFactory.create(file.getInputStream());
         } catch (InvalidFormatException e) {
             e.printStackTrace();
         } catch (IOException e) {

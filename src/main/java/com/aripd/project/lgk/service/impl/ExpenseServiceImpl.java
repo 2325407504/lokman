@@ -1,9 +1,6 @@
 package com.aripd.project.lgk.service.impl;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.security.Principal;
@@ -207,15 +204,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         return new DatatablesResultSet<Expense>(resultList, totalRecords, displaySize);
     }
 
-    public void importXLSX(MultipartFile file) {
-        /*
-        InputStream iStream = null;
-        try {
-            iStream = new FileInputStream(fileName);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-*/
+    public void importXLS(MultipartFile file) {
         Workbook workbook = null;
         try {
             workbook = WorkbookFactory.create(file.getInputStream());

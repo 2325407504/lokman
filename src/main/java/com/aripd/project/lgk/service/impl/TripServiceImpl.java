@@ -50,6 +50,7 @@ import com.aripd.project.lgk.repository.TripRepository;
 import com.aripd.project.lgk.service.DriverService;
 import com.aripd.project.lgk.service.TripService;
 import com.aripd.project.lgk.service.TruckService;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service("tripService")
 @Transactional(readOnly = true)
@@ -218,17 +219,10 @@ public class TripServiceImpl implements TripService {
         return new DatatablesResultSet<Trip>(resultList, totalRecords, displaySize);
     }
 
-    public void importXLSX(String fileName) {
-        InputStream iStream = null;
-        try {
-            iStream = new FileInputStream(fileName);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
+    public void importXLS(MultipartFile file) {
         Workbook workbook = null;
         try {
-            workbook = WorkbookFactory.create(iStream);
+            workbook = WorkbookFactory.create(file.getInputStream());
         } catch (InvalidFormatException e) {
             e.printStackTrace();
         } catch (IOException e) {

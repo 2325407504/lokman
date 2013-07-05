@@ -53,6 +53,7 @@ import com.aripd.project.lgk.repository.UatfRepository;
 import com.aripd.project.lgk.service.ForwardingService;
 import com.aripd.project.lgk.service.QuotaService;
 import com.aripd.project.lgk.service.SubcontractorService;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service("forwardingService")
 @Transactional(readOnly = true)
@@ -213,17 +214,10 @@ public class ForwardingServiceImpl implements ForwardingService {
         return new DatatablesResultSet<Forwarding>(resultList, totalRecords, displaySize);
     }
 
-    public void importXLSX(String fileName) {
-        InputStream iStream = null;
-        try {
-            iStream = new FileInputStream(fileName);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
+    public void importXLS(MultipartFile file) {
         Workbook workbook = null;
         try {
-            workbook = WorkbookFactory.create(iStream);
+            workbook = WorkbookFactory.create(file.getInputStream());
         } catch (InvalidFormatException e) {
             e.printStackTrace();
         } catch (IOException e) {

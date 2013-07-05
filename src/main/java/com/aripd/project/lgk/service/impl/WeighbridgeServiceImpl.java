@@ -45,6 +45,7 @@ import java.security.Principal;
 import javax.annotation.Resource;
 import org.apache.poi.ss.usermodel.Cell;
 import org.joda.time.format.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service("weighbridgeService")
 @Transactional(readOnly = true)
@@ -142,17 +143,10 @@ public class WeighbridgeServiceImpl implements WeighbridgeService {
         return new DatatablesResultSet<Weighbridge>(resultList, totalRecords, displaySize);
     }
 
-    public void importXLSX(String fileName, Principal principal) {
-        InputStream iStream = null;
-        try {
-            iStream = new FileInputStream(fileName);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
+    public void importXLS(MultipartFile file, Principal principal) {
         Workbook workbook = null;
         try {
-            workbook = WorkbookFactory.create(iStream);
+            workbook = WorkbookFactory.create(file.getInputStream());
         } catch (InvalidFormatException e) {
             e.printStackTrace();
         } catch (IOException e) {

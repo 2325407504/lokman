@@ -38,6 +38,7 @@ import com.aripd.project.lgk.service.WaybillService;
 import javax.validation.Valid;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.annotation.Validated;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_ADMIN') and hasRole('ROLE_URE'))")
 @Controller
@@ -207,43 +208,14 @@ public class InvoiceController {
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importXLS(
             final RedirectAttributes redirectAttributes,
-            FileUploadBean fileUploadBean,
+            @ModelAttribute("fileUploadBean") @Validated FileUploadBean formData,
             BindingResult result) {
 
         if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("message", "Hata oluştu");
             return "redirect:/invoice/import";
         }
 
-        String fileName = null;
-        try {
-            MultipartFile file = fileUploadBean.getFile();
-            InputStream inputStream = null;
-            OutputStream outputStream = null;
-            if (file.getSize() > 0) {
-                inputStream = file.getInputStream();
-                if (file.getSize() > 1000000) {
-                    redirectAttributes.addFlashAttribute("message", "Dosya boyutu büyük");
-                    return "redirect:/invoice/import";
-                }
-
-                fileName = pathDirectoryImport + file.getOriginalFilename();
-
-                outputStream = new FileOutputStream(fileName);
-
-                int readBytes = 0;
-                byte[] buffer = new byte[10000];
-                while ((readBytes = inputStream.read(buffer, 0, 10000)) != -1) {
-                    outputStream.write(buffer, 0, readBytes);
-                }
-                outputStream.close();
-                inputStream.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        invoiceService.importXLSX(fileName);
+        invoiceService.importXLS(formData.getFile());
         redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/invoice/list";
     }

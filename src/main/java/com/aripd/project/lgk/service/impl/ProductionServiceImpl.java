@@ -45,6 +45,7 @@ import com.aripd.project.lgk.report.production.Writer;
 import com.aripd.project.lgk.repository.ProductionRepository;
 import com.aripd.project.lgk.repository.BigbagRepository;
 import com.aripd.project.lgk.service.ProductionService;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service("productionService")
 @Transactional(readOnly = true)
@@ -202,17 +203,10 @@ public class ProductionServiceImpl implements ProductionService {
         return new DatatablesResultSet<Production>(resultList, totalRecords, displaySize);
     }
 
-    public void importXLSX(String fileName) {
-        InputStream iStream = null;
-        try {
-            iStream = new FileInputStream(fileName);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
+    public void importXLS(MultipartFile file) {
         Workbook workbook = null;
         try {
-            workbook = WorkbookFactory.create(iStream);
+            workbook = WorkbookFactory.create(file.getInputStream());
         } catch (InvalidFormatException e) {
             e.printStackTrace();
         } catch (IOException e) {

@@ -30,7 +30,7 @@ public interface ExpenseService {
 
     public DatatablesResultSet<Expense> getRecords(Principal principal, DatatablesCriteria criteria);
 
-    public void importXLSX(MultipartFile file);
+    public void importXLS(MultipartFile file);
 
     public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

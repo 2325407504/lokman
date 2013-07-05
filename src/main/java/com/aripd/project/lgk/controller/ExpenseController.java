@@ -1,8 +1,5 @@
 package com.aripd.project.lgk.controller;
 
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aripd.account.service.AccountService;
@@ -33,7 +29,6 @@ import com.aripd.project.lgk.domain.Expense;
 import com.aripd.project.lgk.model.ExpenseFilterByIntervalForm;
 import com.aripd.project.lgk.service.ExpenseService;
 import com.aripd.project.lgk.service.ExpensetypeService;
-import java.io.File;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
@@ -162,37 +157,7 @@ public class ExpenseController {
             return "/expense/import";
         }
 
-        expenseService.importXLSX(formData.getFile());
-/*
-        String fileName = null;
-        try {
-            MultipartFile file = formData.getFile();
-            //InputStream inputStream = null;
-            //OutputStream outputStream = null;
-            //inputStream = file.getInputStream();
-            if (file.getSize() > maxUploadSize) {
-                redirectAttributes.addFlashAttribute("message", "İzin verilen en büyük dosya boyutu: " + maxUploadSize);
-                return "redirect:/expense/import";
-            }
-            
-            fileName = pathDirectoryImport + file.getOriginalFilename();
-            file.transferTo(new File(fileName));
-
-
-            outputStream = new FileOutputStream(fileName);
-
-            int readBytes = 0;
-            byte[] buffer = new byte[10000];
-            while ((readBytes = inputStream.read(buffer, 0, 10000)) != -1) {
-                outputStream.write(buffer, 0, readBytes);
-            }
-            outputStream.close();
-            inputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        expenseService.importXLSX(fileName);*/
+        expenseService.importXLS(formData.getFile());
         redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/expense/list";
     }

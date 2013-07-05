@@ -45,6 +45,7 @@ import com.aripd.project.lgk.report.waybill.Writer;
 import com.aripd.project.lgk.repository.WaybillRepository;
 import com.aripd.project.lgk.service.InvoiceService;
 import com.aripd.project.lgk.service.WaybillService;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service("waybillService")
 @Transactional(readOnly = true)
@@ -229,17 +230,10 @@ public class WaybillServiceImpl implements WaybillService {
         return result;
     }
 
-    public void importXLSX(String fileName) {
-        InputStream iStream = null;
-        try {
-            iStream = new FileInputStream(fileName);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
+    public void importXLS(MultipartFile file) {
         Workbook workbook = null;
         try {
-            workbook = WorkbookFactory.create(iStream);
+            workbook = WorkbookFactory.create(file.getInputStream());
         } catch (InvalidFormatException e) {
             e.printStackTrace();
         } catch (IOException e) {

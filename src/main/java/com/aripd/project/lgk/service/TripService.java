@@ -11,6 +11,7 @@ import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Trip;
 import com.aripd.project.lgk.domain.Truck;
 import org.joda.time.DateTime;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface TripService {
 
@@ -32,7 +33,7 @@ public interface TripService {
 
     public DatatablesResultSet<Trip> getRecords(Principal principal, DatatablesCriteria criteria);
 
-    public void importXLSX(String fileName);
+    public void importXLS(MultipartFile file);
 
     public void exportByIntervalAndTruck(HttpServletResponse response, DateTime startingTime, DateTime endingTime, Truck truck);
 }

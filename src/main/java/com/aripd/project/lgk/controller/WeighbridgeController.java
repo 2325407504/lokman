@@ -174,33 +174,7 @@ public class WeighbridgeController {
             return "/weighbridge/import";
         }
 
-        String fileName = null;
-        try {
-            MultipartFile file = formData.getFile();
-            InputStream inputStream = null;
-            OutputStream outputStream = null;
-            inputStream = file.getInputStream();
-            if (file.getSize() > maxUploadSize) {
-                redirectAttributes.addFlashAttribute("message", "İzin verilen en büyük dosya boyutu: " + maxUploadSize);
-                return "redirect:/weighbridge/import";
-            }
-
-            fileName = pathDirectoryImport + file.getOriginalFilename();
-
-            outputStream = new FileOutputStream(fileName);
-
-            int readBytes = 0;
-            byte[] buffer = new byte[10000];
-            while ((readBytes = inputStream.read(buffer, 0, 10000)) != -1) {
-                outputStream.write(buffer, 0, readBytes);
-            }
-            outputStream.close();
-            inputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        weighbridgeService.importXLSX(fileName, principal);
+        weighbridgeService.importXLS(formData.getFile(), principal);
         redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/weighbridge/list";
     }
