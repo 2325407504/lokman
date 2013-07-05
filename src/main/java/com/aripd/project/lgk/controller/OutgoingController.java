@@ -97,7 +97,7 @@ public class OutgoingController {
         return "redirect:/waybill/edit/" + outgoing.getWaybill().getId();
     }
 
-    @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
+    @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importXLS(
             final RedirectAttributes redirectAttributes,
             FileUploadBean fileUploadBean,
@@ -137,7 +137,7 @@ public class OutgoingController {
         }
 
         outgoingService.importXLSX(fileName);
-        redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
+        redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/waybill/list";
     }
 
@@ -156,8 +156,6 @@ public class OutgoingController {
         }
 
         outgoingService.exportByInterval(response, startingTime, endingTime);
-
-        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
         return "redirect:/waybill/report";
     }
 }

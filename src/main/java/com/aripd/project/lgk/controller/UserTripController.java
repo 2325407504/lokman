@@ -133,7 +133,7 @@ public class UserTripController {
         formData.setAccount(account);
 
         tripService.save(formData);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/usertrip/list";
     }
 
@@ -172,7 +172,7 @@ public class UserTripController {
             redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
             return "redirect:/usertrip/show/" + trip.getId();
         } else {
-            redirectAttributes.addFlashAttribute("message", "Kaydınız başarı ile silindi");
+            redirectAttributes.addFlashAttribute("message", "message.completed.delete");
             tripService.delete(trip);
             return "redirect:/usertrip/list";
         }

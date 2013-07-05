@@ -84,7 +84,7 @@ public class DriverController {
 		}
 		
 		driverService.save(driver);
-		redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+		redirectAttributes.addFlashAttribute("message", "message.completed.save");
 		return "redirect:/driver/list";
 	}
 
@@ -93,7 +93,7 @@ public class DriverController {
 			final RedirectAttributes redirectAttributes,
 			@RequestParam(value = "id", required = true) Long id) {
 		driverService.delete(id);
-		redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+		redirectAttributes.addFlashAttribute("message", "message.completed.delete");
 		return "redirect:/driver/list";
 	}
 

@@ -77,7 +77,7 @@ public class ExpensetypeController {
         }
 
         expensetypeService.save(expensetype);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/expensetype/list";
     }
 
@@ -86,7 +86,7 @@ public class ExpensetypeController {
             final RedirectAttributes redirectAttributes,
             @RequestParam(value = "id", required = true) Long id) {
         expensetypeService.delete(id);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.delete");
         return "redirect:/expensetype/list";
     }
 }

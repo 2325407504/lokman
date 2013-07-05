@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.aripd.account.domain.Account;
 import com.aripd.account.service.AccountService;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @PreAuthorize("isFullyAuthenticated()")
 @Controller
@@ -45,6 +46,7 @@ public class ProfileController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
+            final RedirectAttributes redirectAttributes,
             Principal principal,
             @ModelAttribute("profileAttribute") @Valid Account formData,
             BindingResult result) {
@@ -66,6 +68,7 @@ public class ProfileController {
         }
 
         accountService.save(account);
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/profile/show";
     }
 }

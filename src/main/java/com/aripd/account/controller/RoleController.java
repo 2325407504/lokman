@@ -67,8 +67,9 @@ public class RoleController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAction(final RedirectAttributes redirectAttributes,
-            @ModelAttribute("roleAttribute") @Valid Role role,
+    public String saveAction(
+            final RedirectAttributes redirectAttributes,
+            @ModelAttribute("roleAttribute") @Valid Role formData,
             BindingResult result) {
         if (result.hasErrors()) {
             logger.error(result);
@@ -76,9 +77,9 @@ public class RoleController {
         }
 
         logger.debug("Received request to save existing record");
-        roleService.save(role);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
-        return "redirect:/role/list";
+        Role role = roleService.save(formData);
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
+        return "redirect:/role/show/" + role.getId();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
@@ -86,8 +87,7 @@ public class RoleController {
             @RequestParam(value = "id", required = true) Long id) {
         logger.debug("Received request to delete existing record");
         roleService.delete(id);
-        redirectAttributes.addFlashAttribute("message",
-                "Silme işlemi başarı ile tamamlandı");
+        redirectAttributes.addFlashAttribute("message", "message.completed.delete");
         return "redirect:/role/list";
     }
 }

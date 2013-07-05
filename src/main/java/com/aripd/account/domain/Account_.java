@@ -5,7 +5,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 import com.aripd.common.entity.BaseEntity_;
 import com.aripd.project.lgk.domain.Region;
-import javax.persistence.metamodel.SetAttribute;
+import javax.persistence.metamodel.ListAttribute;
 
 /**
  * A meta model class used to create type safe queries.
@@ -21,5 +21,5 @@ public class Account_ extends BaseEntity_ {
     public static volatile SingularAttribute<Account, Boolean> active;
     public static volatile SingularAttribute<Account, Client> client;
     public static volatile SingularAttribute<Account, Region> region;
-    public static volatile SetAttribute<Account, Role> roles;
+    public static volatile ListAttribute<Account, Role> roles;
 }

@@ -85,18 +85,21 @@ public class ExpenseController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveAction(final RedirectAttributes redirectAttributes,
+    public String saveAction(
+            final RedirectAttributes redirectAttributes,
             @ModelAttribute("expenseAttribute") @Valid Expense formData,
-            BindingResult result, Model model) {
+            BindingResult result,
+            Model model) {
 
         if (result.hasErrors()) {
             model.addAttribute("accounts", accountService.findAll());
+            model.addAttribute("expensetypes", expensetypeService.findAll());
             return "/expense/form";
         }
 
-        expenseService.save(formData);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
-        return "redirect:/expense/list";
+        Expense expense = expenseService.save(formData);
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
+        return "redirect:/expense/show/" + expense.getId();
     }
 
     @RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)
@@ -111,7 +114,7 @@ public class ExpenseController {
     public String delete(final RedirectAttributes redirectAttributes,
             @RequestParam(value = "id", required = true) Long id) {
         expenseService.delete(id);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.delete");
         return "redirect:/expense/list";
     }
 
@@ -136,26 +139,23 @@ public class ExpenseController {
         }
 
         expenseService.exportByInterval(response, startingTime, endingTime);
-
-        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
         return "redirect:/expense/report";
     }
 
-    @RequestMapping(value = "/import/xls", method = RequestMethod.GET)
+    @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
         model.addAttribute(new FileUploadBean());
         return "expense/import";
     }
 
-    @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
+    @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importXLS(
             final RedirectAttributes redirectAttributes,
-            FileUploadBean fileUploadBean,
+            @Valid FileUploadBean fileUploadBean,
             BindingResult result) {
 
         if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("message", "Hata oluştu");
-            return "redirect:/expense/import";
+            return "/expense/import";
         }
 
         String fileName = null;
@@ -187,7 +187,7 @@ public class ExpenseController {
         }
 
         expenseService.importXLSX(fileName);
-        redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
+        redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/expense/list";
     }
 }

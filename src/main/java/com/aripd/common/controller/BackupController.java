@@ -31,7 +31,7 @@ public class BackupController {
             final RedirectAttributes redirectAttributes,
             Model model) {
         backupService.backup();
-        redirectAttributes.addFlashAttribute("message", "Başarı ile yedek alındı.");
+        redirectAttributes.addFlashAttribute("message", "message.completed.backup");
         return "redirect:/backup/list";
     }
 
@@ -41,7 +41,7 @@ public class BackupController {
             @PathVariable(value = "file") String file,
             Model model) {
         backupService.delete(file);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi.");
+        redirectAttributes.addFlashAttribute("message", "message.completed.delete");
         return "redirect:/backup/list";
     }
 
@@ -51,7 +51,7 @@ public class BackupController {
             @PathVariable String file,
             Model model) {
         backupService.restore(file);
-        redirectAttributes.addFlashAttribute("message", "Sisteme veriler geri yüklendi.");
+        redirectAttributes.addFlashAttribute("message", "message.completed.restore");
         return "redirect:/backup/list";
     }
 }

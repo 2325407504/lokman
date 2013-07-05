@@ -48,6 +48,7 @@ import com.aripd.project.lgk.report.expense.Layouter;
 import com.aripd.project.lgk.report.expense.Writer;
 import com.aripd.project.lgk.repository.ExpenseRepository;
 import com.aripd.project.lgk.service.ExpenseService;
+import com.aripd.project.lgk.service.ExpensetypeService;
 
 @Service("expenseService")
 @Transactional(readOnly = true)
@@ -59,6 +60,8 @@ public class ExpenseServiceImpl implements ExpenseService {
     private ExpenseRepository repository;
     @Resource(name = "accountService")
     private AccountService accountService;
+    @Resource(name = "expensetypeService")
+    private ExpensetypeService expensetypeService;
 
     public Expense findOne(Long id) {
         return repository.findOne(id);
@@ -151,8 +154,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         return new DatatablesResultSet<Expense>(resultList, totalRecords, displaySize);
     }
 
-    public DatatablesResultSet<Expense> getRecords(Principal principal,
-            DatatablesCriteria criteria) {
+    public DatatablesResultSet<Expense> getRecords(Principal principal, DatatablesCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
         Integer pageNumber = criteria.getPageNumber();
@@ -233,14 +235,16 @@ public class ExpenseServiceImpl implements ExpenseService {
             Row row = worksheet.getRow(i);
 
             String username = row.getCell(0).getStringCellValue();
-            Date documentDate = row.getCell(1).getDateCellValue();
-            String company = row.getCell(2).getStringCellValue();
-            String description = row.getCell(3).getStringCellValue();
-            BigDecimal amount = new BigDecimal(row.getCell(4).getNumericCellValue(), MathContext.DECIMAL64);
+            String expensetype_code = row.getCell(1).getStringCellValue();
+            Date documentDate = row.getCell(2).getDateCellValue();
+            String company = row.getCell(3).getStringCellValue();
+            String description = row.getCell(4).getStringCellValue();
+            BigDecimal amount = new BigDecimal(row.getCell(5).getNumericCellValue(), MathContext.DECIMAL64);
 
             expense = new Expense();
             expense.setSubmitted(true);
             expense.setAccount(accountService.findOneByUsername(username));
+            expense.setExpensetype(expensetypeService.findOneByCode(expensetype_code));
             expense.setDocumentDate(new DateTime(documentDate));
             expense.setCompany(company);
             expense.setDescription(description);
@@ -281,5 +285,4 @@ public class ExpenseServiceImpl implements ExpenseService {
         Writer.write(response, worksheet);
 
     }
-
 }

@@ -112,7 +112,7 @@ public class UserExpenseController {
         formData.setAccount(account);
 
         expenseService.save(formData);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/userexpense/list";
     }
 
@@ -152,7 +152,7 @@ public class UserExpenseController {
             redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
             return "redirect:/userexpense/show/" + expense.getId();
         } else {
-            redirectAttributes.addFlashAttribute("message", "Kaydınız başarı ile silindi");
+            redirectAttributes.addFlashAttribute("message", "message.completed.delete");
             expenseService.delete(expense);
             return "redirect:/userexpense/list";
         }

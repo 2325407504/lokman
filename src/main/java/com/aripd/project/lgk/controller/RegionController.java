@@ -77,7 +77,7 @@ public class RegionController {
         }
 
         regionService.save(region);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/region/list";
     }
 
@@ -86,7 +86,7 @@ public class RegionController {
             final RedirectAttributes redirectAttributes,
             @RequestParam(value = "id", required = true) Long id) {
         regionService.delete(id);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.delete");
         return "redirect:/region/list";
     }
 }

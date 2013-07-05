@@ -12,6 +12,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import com.aripd.project.lgk.domain.Expense;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 
 public class FillManager {
 
@@ -34,6 +35,9 @@ public class FillManager {
         bodyCellStyle.setAlignment(CellStyle.ALIGN_CENTER);
         bodyCellStyle.setWrapText(true);
 
+        HSSFCellStyle numericStyle = worksheet.getWorkbook().createCellStyle();
+        numericStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("#,##0.00"));
+
         // Create body
         for (int i = startRowIndex; i + startRowIndex - 2 < datasource.size() + 2; i++) {
             // Create a new row
@@ -44,12 +48,11 @@ public class FillManager {
             cell0.setCellStyle(bodyCellStyle);
 
             HSSFCell cell1 = row.createCell(startColIndex + 1);
-            cell1.setCellValue(datasource.get(i - 2).getAccount().getClient().getFullname());
+            cell1.setCellValue(datasource.get(i - 2).getExpensetype().getCode());
             cell1.setCellStyle(bodyCellStyle);
 
             HSSFCell cell2 = row.createCell(startColIndex + 2);
-            cell2.setCellValue(formatter.print(datasource.get(i - 2).getDocumentDate()));
-            cell2.setCellStyle(bodyCellStyle);
+            cell2.setCellValue(datasource.get(i - 2).getDocumentDate().toDate());
 
             HSSFCell cell3 = row.createCell(startColIndex + 3);
             cell3.setCellValue(datasource.get(i - 2).getCompany());
@@ -60,8 +63,9 @@ public class FillManager {
             cell4.setCellStyle(bodyCellStyle);
 
             HSSFCell cell5 = row.createCell(startColIndex + 5);
+            cell5.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
             cell5.setCellValue(datasource.get(i - 2).getAmount().doubleValue());
-            cell5.setCellStyle(bodyCellStyle);
+            cell5.setCellStyle(numericStyle);
 
         }
     }

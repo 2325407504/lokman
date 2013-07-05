@@ -100,7 +100,7 @@ public class UatfController {
         return "redirect:/forwarding/edit/" + uatf.getForwarding().getId();
     }
 
-    @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
+    @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importXLS(
             final RedirectAttributes redirectAttributes,
             FileUploadBean fileUploadBean,
@@ -140,7 +140,7 @@ public class UatfController {
         }
 
         uatfService.importXLSX(fileName);
-        redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
+        redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/forwarding/list";
     }
 
@@ -159,8 +159,6 @@ public class UatfController {
         }
 
         uatfService.exportByInterval(response, startingTime, endingTime);
-
-        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
         return "redirect:/forwarding/report";
     }
 }

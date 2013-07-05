@@ -77,7 +77,7 @@ public class ProductgroupController {
         }
 
         productgroupService.save(productgroup);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/productgroup/list";
     }
 
@@ -86,7 +86,7 @@ public class ProductgroupController {
             final RedirectAttributes redirectAttributes,
             @RequestParam(value = "id", required = true) Long id) {
         productgroupService.delete(id);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.delete");
         return "redirect:/productgroup/list";
     }
 }

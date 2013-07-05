@@ -77,7 +77,7 @@ public class ElectricmeterController {
         }
 
         electricmeterService.save(electricmeter);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/electricmeter/list";
     }
 
@@ -86,7 +86,7 @@ public class ElectricmeterController {
             final RedirectAttributes redirectAttributes,
             @RequestParam(value = "id", required = true) Long id) {
         electricmeterService.delete(id);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.delete");
         return "redirect:/electricmeter/list";
     }
 }

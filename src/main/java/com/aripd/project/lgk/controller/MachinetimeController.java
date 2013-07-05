@@ -41,8 +41,6 @@ public class MachinetimeController {
         }
 
         machinetimeService.exportByInterval(response, startingTime, endingTime);
-
-        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
         return "redirect:/production/report";
     }
 }

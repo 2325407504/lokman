@@ -82,7 +82,7 @@ public class SubcontractorController {
 		}
 		
 		subcontractorService.save(subcontractor);
-		redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+		redirectAttributes.addFlashAttribute("message", "message.completed.save");
 		return "redirect:/subcontractor/list";
 	}
 
@@ -91,7 +91,7 @@ public class SubcontractorController {
 			final RedirectAttributes redirectAttributes,
 			@RequestParam(value = "id", required = true) Long id) {
 		subcontractorService.delete(id);
-		redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+		redirectAttributes.addFlashAttribute("message", "message.completed.delete");
 		return "redirect:/subcontractor/list";
 	}
 	

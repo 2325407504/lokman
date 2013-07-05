@@ -77,7 +77,7 @@ public class WastegroupController {
         }
 
         wastegroupService.save(wastegroup);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/wastegroup/list";
     }
 
@@ -86,7 +86,7 @@ public class WastegroupController {
             final RedirectAttributes redirectAttributes,
             @RequestParam(value = "id", required = true) Long id) {
         wastegroupService.delete(id);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.delete");
         return "redirect:/wastegroup/list";
     }
 }

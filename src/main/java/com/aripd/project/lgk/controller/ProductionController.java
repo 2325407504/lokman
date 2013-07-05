@@ -136,7 +136,7 @@ public class ProductionController {
             compensationService.save(compensation);
         }
 
-        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/production/list";
     }
 
@@ -153,7 +153,7 @@ public class ProductionController {
             final RedirectAttributes redirectAttributes,
             @RequestParam(value = "id", required = true) Long id) {
         productionService.delete(id);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.delete");
         return "redirect:/production/list";
     }
 
@@ -181,18 +181,16 @@ public class ProductionController {
         }
 
         productionService.exportByInterval(response, startingTime, endingTime);
-
-        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
         return "redirect:/production/report";
     }
 
-    @RequestMapping(value = "/import/xls", method = RequestMethod.GET)
+    @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
         model.addAttribute(new FileUploadBean());
         return "production/import";
     }
 
-    @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
+    @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importXLS(
             final RedirectAttributes redirectAttributes,
             FileUploadBean fileUploadBean,
@@ -232,7 +230,7 @@ public class ProductionController {
         }
 
         productionService.importXLSX(fileName);
-        redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
+        redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/production/list";
     }
 }

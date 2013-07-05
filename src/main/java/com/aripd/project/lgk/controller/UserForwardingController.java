@@ -131,7 +131,7 @@ public class UserForwardingController {
         formData.setAccount(account);
 
         forwardingService.save(formData);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/userforwarding/list";
     }
 
@@ -171,7 +171,7 @@ public class UserForwardingController {
             redirectAttributes.addFlashAttribute("message", "Bu kaydı artık düzenleyemezsiniz");
             return "redirect:/userforwarding/show/" + forwarding.getId();
         } else {
-            redirectAttributes.addFlashAttribute("message", "Kaydınız başarı ile silindi");
+            redirectAttributes.addFlashAttribute("message", "message.completed.delete");
             forwardingService.delete(forwarding);
             return "redirect:/userforwarding/list";
         }

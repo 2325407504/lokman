@@ -116,7 +116,7 @@ public class InvoiceController {
 
         formData.setAccount(formData.getAccount());
         invoiceService.save(formData);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/invoice/list";
     }
 
@@ -135,7 +135,7 @@ public class InvoiceController {
         Invoice invoice = invoiceService.findOne(id);
         waybill.setInvoice(invoice);
         waybillService.save(waybill);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/invoice/edit/" + id;
     }
 
@@ -153,7 +153,7 @@ public class InvoiceController {
         Long invoice_id = waybill.getInvoice().getId();
         waybill.setInvoice(null);
         waybillService.save(waybill);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile çıkarıldı");
+        redirectAttributes.addFlashAttribute("message", "message.completed.remove");
         return "redirect:/invoice/edit/" + invoice_id;
     }
 
@@ -162,7 +162,7 @@ public class InvoiceController {
             final RedirectAttributes redirectAttributes,
             @RequestParam(value = "id", required = true) Long id) {
         invoiceService.delete(id);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.delete");
         return "redirect:/invoice/list";
     }
 
@@ -195,18 +195,16 @@ public class InvoiceController {
         }
 
         invoiceService.exportByInterval(response, startingTime, endingTime);
-
-        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
         return "redirect:/invoice/report";
     }
 
-    @RequestMapping(value = "/import/xls", method = RequestMethod.GET)
+    @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
         model.addAttribute(new FileUploadBean());
         return "invoice/import";
     }
 
-    @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
+    @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importXLS(
             final RedirectAttributes redirectAttributes,
             FileUploadBean fileUploadBean,
@@ -246,7 +244,7 @@ public class InvoiceController {
         }
 
         invoiceService.importXLSX(fileName);
-        redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
+        redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/invoice/list";
     }
 }

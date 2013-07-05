@@ -14,8 +14,9 @@
 </jsp:include>
 
 <div class="bs-docs-example" data-content="<spring:message code="XLSX" />">
-    <form:form modelAttribute="fileUploadBean" action="${expenseImportXLSX}" method="post" enctype="multipart/form-data">
-        <form:errors cssClass="text-error" path="file" />
+    <spring:url var="import" value="/expense/import" />
+    <form:form modelAttribute="fileUploadBean" action="${import}" method="post" enctype="multipart/form-data">
+        <form:errors path="*" cssClass="alert alert-error" element="div" />
         <form:input path="file" type="file"/>
         <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload" /></button>
     </form:form>
@@ -24,6 +25,7 @@
             <thead>
                 <tr>
                     <th><spring:message code="Account" /></th>
+                    <th><spring:message code="Expensetype" /></th>
                     <th><spring:message code="Date" /></th>
                     <th><spring:message code="Company" /></th>
                     <th><spring:message code="Description" /></th>
@@ -33,6 +35,7 @@
             <tbody>
                 <tr>
                     <td>user1</td>
+                    <td>code1</td>
                     <td>11.02.2013 21:03</td>
                     <td>company1</td>
                     <td>description1</td>
@@ -40,6 +43,7 @@
                 </tr>
                 <tr>
                     <td>user2</td>
+                    <td>code2</td>
                     <td>01.03.2013 12:13</td>
                     <td>company2</td>
                     <td>description2</td>

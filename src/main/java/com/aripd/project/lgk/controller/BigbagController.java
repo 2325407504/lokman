@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aripd.account.service.AccountService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
@@ -30,10 +29,7 @@ import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Production;
 import com.aripd.project.lgk.domain.Bigbag;
 import com.aripd.project.lgk.model.BigbagFilterByIntervalForm;
-import com.aripd.project.lgk.service.DriverService;
 import com.aripd.project.lgk.service.ProductionService;
-import com.aripd.project.lgk.service.QuotaService;
-import com.aripd.project.lgk.service.SubcontractorService;
 import com.aripd.project.lgk.service.BigbagService;
 import javax.validation.Valid;
 import org.joda.time.DateTime;
@@ -49,14 +45,6 @@ public class BigbagController {
     private ProductionService productionService;
     @Resource(name = "bigbagService")
     private BigbagService bigbagService;
-    @Resource(name = "quotaService")
-    private QuotaService quotaService;
-    @Resource(name = "subcontractorService")
-    private SubcontractorService subcontractorService;
-    @Resource(name = "driverService")
-    private DriverService driverService;
-    @Resource(name = "accountService")
-    private AccountService accountService;
     @Value("${path.directory.import}")
     String pathDirectoryImport;
 
@@ -109,7 +97,7 @@ public class BigbagController {
         return "redirect:/production/edit/" + bigbag.getProduction().getId();
     }
 
-    @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
+    @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importXLS(
             final RedirectAttributes redirectAttributes,
             FileUploadBean fileUploadBean,
@@ -149,7 +137,7 @@ public class BigbagController {
         }
 
         bigbagService.importXLSX(fileName);
-        redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
+        redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/production/list";
     }
 
@@ -168,8 +156,6 @@ public class BigbagController {
         }
 
         bigbagService.exportByInterval(response, startingTime, endingTime);
-
-        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
         return "redirect:/production/report";
     }
 }

@@ -43,6 +43,13 @@ public class AccountController {
     @Resource(name = "regionService")
     private RegionService regionService;
 
+    /**
+     * TODO
+     * Bunun yerine başka ne yapabiliriz?
+     * 
+     * @param binder
+     * @throws Exception 
+     */
     @InitBinder
     protected void initBinder(WebDataBinder binder) throws Exception {
         binder.registerCustomEditor(List.class, "roles", new CustomCollectionEditor(List.class) {
@@ -117,9 +124,9 @@ public class AccountController {
             formData.setPassword(DigestUtils.md5Hex(formData.getPassword()));
         }
 
-        accountService.save(formData);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
-        return "redirect:/account/list";
+        Account a = accountService.save(formData);
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
+        return "redirect:/account/show/" + a.getId();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)

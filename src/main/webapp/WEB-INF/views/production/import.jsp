@@ -14,7 +14,7 @@
 </jsp:include>
 
 <div class="bs-docs-example" data-content="<spring:message code="XLSX" /> - <spring:message code="Waybill" />">
-    <spring:url var="productionImportXLSX" value="/production/import/xls" />
+    <spring:url var="productionImportXLSX" value="/production/import" />
     <form:form modelAttribute="fileUploadBean" action="${productionImportXLSX}" method="post" enctype="multipart/form-data">
         <form:errors cssClass="text-error" path="file" />
         <form:input path="file" type="file"/>
@@ -83,7 +83,7 @@
 </div>
 
 <div class="bs-docs-example" data-content="<spring:message code="XLSX" /> - <spring:message code="Uatf" />">
-    <spring:url var="bigbagImportXLSX" value="/bigbag/import/xls" />
+    <spring:url var="bigbagImportXLSX" value="/bigbag/import" />
     <form:form modelAttribute="fileUploadBean" action="${bigbagImportXLSX}" method="post" enctype="multipart/form-data">
         <form:errors cssClass="text-error" path="file" />
         <form:input path="file" type="file"/>

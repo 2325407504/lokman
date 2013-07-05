@@ -11,6 +11,7 @@
 </jsp:include>
 
 <aripd:description id="expensetype">
+    <aripd:descriptionitem label="Code" field="expensetypeAttribute.code"></aripd:descriptionitem>
     <aripd:descriptionitem label="Name" field="expensetypeAttribute.name"></aripd:descriptionitem>
 </aripd:description>
 

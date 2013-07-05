@@ -110,9 +110,9 @@ public class ForwardingController {
             return "/forwarding/form";
         }
 
-        forwardingService.save(formData);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
-        return "redirect:/forwarding/list";
+        Forwarding forwarding = forwardingService.save(formData);
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
+        return "redirect:/forwarding/show" + forwarding.getId();
     }
 
     @RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)
@@ -128,7 +128,7 @@ public class ForwardingController {
             final RedirectAttributes redirectAttributes,
             @RequestParam(value = "id", required = true) Long id) {
         forwardingService.delete(id);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.delete");
         return "redirect:/forwarding/list";
     }
 
@@ -154,18 +154,16 @@ public class ForwardingController {
         }
 
         forwardingService.exportByInterval(response, startingTime, endingTime);
-
-        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
         return "redirect:/forwarding/report";
     }
 
-    @RequestMapping(value = "/import/xls", method = RequestMethod.GET)
+    @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
         model.addAttribute(new FileUploadBean());
         return "forwarding/import";
     }
 
-    @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
+    @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importXLS(
             final RedirectAttributes redirectAttributes,
             FileUploadBean fileUploadBean,
@@ -205,7 +203,7 @@ public class ForwardingController {
         }
 
         forwardingService.importXLSX(fileName);
-        redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
+        redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/forwarding/list";
     }
 }

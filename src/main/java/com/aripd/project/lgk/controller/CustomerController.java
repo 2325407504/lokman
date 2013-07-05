@@ -99,7 +99,7 @@ public class CustomerController {
         }
         
         customerService.save(formData);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/customer/list";
     }
 
@@ -108,7 +108,7 @@ public class CustomerController {
             final RedirectAttributes redirectAttributes,
             @RequestParam(value = "id", required = true) Long id) {
         customerService.delete(id);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.delete");
         return "redirect:/customer/list";
     }
 }

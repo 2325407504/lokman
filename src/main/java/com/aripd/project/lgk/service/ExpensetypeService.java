@@ -8,15 +8,17 @@ import com.aripd.project.lgk.domain.Expensetype;
 
 public interface ExpensetypeService {
 
-    Expensetype findOne(Long id);
+    public Expensetype findOne(Long id);
 
-    List<Expensetype> findAll();
+    public Expensetype findOneByCode(String expensetype_code);
 
-    Expensetype save(Expensetype expensetype);
+    public List<Expensetype> findAll();
 
-    void delete(Long id);
+    public Expensetype save(Expensetype expensetype);
 
-    void delete(Expensetype expensetype);
+    public void delete(Long id);
 
-    DatatablesResultSet<Expensetype> getRecords(DatatablesCriteria criteria);
+    public void delete(Expensetype expensetype);
+
+    public DatatablesResultSet<Expensetype> getRecords(DatatablesCriteria criteria);
 }

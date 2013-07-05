@@ -82,7 +82,7 @@ public class WasteController {
         }
 
         wasteService.save(waste);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/waste/list";
     }
 
@@ -91,7 +91,7 @@ public class WasteController {
             final RedirectAttributes redirectAttributes,
             @RequestParam(value = "id", required = true) Long id) {
         wasteService.delete(id);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.delete");
         return "redirect:/waste/list";
     }
 }

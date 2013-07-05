@@ -32,7 +32,7 @@
     </li>
     <c:if test="${param.import}">
         <c:if test="${param.active == 'import'}"><c:set var="import_class" value="active" /></c:if>
-        <spring:url var="import" value="/{property}/import/xls">
+        <spring:url var="import" value="/{property}/import">
             <spring:param name="property" value="${param.property}" />
         </spring:url>
         <li class="${import_class}">

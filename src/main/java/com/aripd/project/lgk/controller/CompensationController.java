@@ -41,8 +41,6 @@ public class CompensationController {
         }
 
         compensationService.exportByInterval(response, startingTime, endingTime);
-
-        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
         return "redirect:/production/report";
     }
 }

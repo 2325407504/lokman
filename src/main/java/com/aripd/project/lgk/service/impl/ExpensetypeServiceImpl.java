@@ -36,6 +36,9 @@ public class ExpensetypeServiceImpl implements ExpensetypeService {
         return repository.findOne(id);
     }
 
+    public Expensetype findOneByCode(String code) {
+        return repository.findOneByCode(code);
+    }
     public List<Expensetype> findAll() {
         return repository.findAll();
     }

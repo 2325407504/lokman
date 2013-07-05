@@ -16,6 +16,11 @@
     <form:hidden path="id" />
     <fieldset>
         <div class="control-group">
+            <form:label path="code"><spring:message code="Code" /></form:label>
+            <form:input path="code" />
+            <form:errors cssClass="text-error" path="code" />
+        </div>
+        <div class="control-group">
             <form:label path="name"><spring:message code="Name" /></form:label>
             <form:input path="name" />
             <form:errors cssClass="text-error" path="name" />

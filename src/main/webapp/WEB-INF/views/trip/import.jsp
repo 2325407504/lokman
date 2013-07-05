@@ -14,7 +14,7 @@
 </jsp:include>
 
 <div class="bs-docs-example" data-content="<spring:message code="XLSX" />">
-    <spring:url var="tripImportXLSX" value="/trip/import/xls" />
+    <spring:url var="tripImportXLSX" value="/trip/import" />
     <form:form modelAttribute="fileUploadBean" action="${tripImportXLSX}" method="post" enctype="multipart/form-data">
         <form:errors cssClass="text-error" path="file" />
         <form:input path="file" type="file"/>

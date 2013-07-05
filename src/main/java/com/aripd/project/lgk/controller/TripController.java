@@ -113,9 +113,9 @@ public class TripController {
             return "/trip/form";
         }
 
-        tripService.save(formData);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
-        return "redirect:/trip/list";
+        Trip trip = tripService.save(formData);
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
+        return "redirect:/trip/show/" + trip.getId();
     }
 
     @RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)
@@ -131,17 +131,17 @@ public class TripController {
             final RedirectAttributes redirectAttributes,
             @RequestParam(value = "id", required = true) Long id) {
         tripService.delete(id);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.delete");
         return "redirect:/trip/list";
     }
 
-    @RequestMapping(value = "/import/xls", method = RequestMethod.GET)
+    @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
         model.addAttribute(new FileUploadBean());
         return "trip/import";
     }
 
-    @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
+    @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importXLS(
             final RedirectAttributes redirectAttributes,
             FileUploadBean fileUploadBean,
@@ -181,7 +181,7 @@ public class TripController {
         }
 
         tripService.importXLSX(fileName);
-        redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
+        redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/trip/list";
     }
 
@@ -213,8 +213,6 @@ public class TripController {
         }
 
         tripService.exportByIntervalAndTruck(response, startingTime, endingTime, truckService.findOne(truck_id));
-
-        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
         return "redirect:/trip/report";
     }
 }

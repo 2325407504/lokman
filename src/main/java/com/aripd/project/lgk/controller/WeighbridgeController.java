@@ -29,6 +29,7 @@ import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.dto.ControllerUtils;
+import com.aripd.project.lgk.domain.Expense;
 import com.aripd.project.lgk.domain.Extrication;
 import com.aripd.project.lgk.domain.Weighbridge;
 import com.aripd.project.lgk.model.WeighbridgeFilterByIntervalForm;
@@ -38,6 +39,7 @@ import com.aripd.project.lgk.service.WeighbridgeService;
 import java.security.Principal;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.annotation.Validated;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_ADMIN') and hasRole('ROLE_ATY'))")
 @Controller
@@ -54,6 +56,8 @@ public class WeighbridgeController {
     private ExtricationService extricationService;
     @Value("${path.directory.import}")
     String pathDirectoryImport;
+    @Value("${multipartResolver.maxUploadSize}")
+    Long maxUploadSize;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -108,9 +112,9 @@ public class WeighbridgeController {
             extrication.setWeighbridge(weighbridge);
             extricationService.save(extrication);
         }
-        
+
         weighbridgeService.save(formData);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/weighbridge/list";
     }
 
@@ -118,7 +122,7 @@ public class WeighbridgeController {
     public String delete(final RedirectAttributes redirectAttributes,
             @RequestParam(value = "id", required = true) Long id) {
         weighbridgeService.delete(id);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.delete");
         return "redirect:/weighbridge/list";
     }
 
@@ -151,59 +155,54 @@ public class WeighbridgeController {
         }
 
         weighbridgeService.exportByInterval(response, startingTime, endingTime);
-
-        redirectAttributes.addFlashAttribute("message", "Başarı ile tamamlandı");
         return "redirect:/weighbridge/report";
     }
 
-    @RequestMapping(value = "/import/xls", method = RequestMethod.GET)
+    @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
-        model.addAttribute(new FileUploadBean());
+        model.addAttribute("fileUploadBean", new FileUploadBean());
         return "weighbridge/import";
     }
 
-    @RequestMapping(value = "/import/xls", method = RequestMethod.POST)
+    @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importXLS(
             Principal principal,
             final RedirectAttributes redirectAttributes,
-            FileUploadBean fileUploadBean,
+            @ModelAttribute("fileUploadBean") @Validated FileUploadBean formData,
             BindingResult result) {
 
         if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("message", "Hata oluştu");
-            return "redirect:/weighbridge/import";
+            return "/weighbridge/import";
         }
 
         String fileName = null;
         try {
-            MultipartFile file = fileUploadBean.getFile();
+            MultipartFile file = formData.getFile();
             InputStream inputStream = null;
             OutputStream outputStream = null;
-            if (file.getSize() > 0) {
-                inputStream = file.getInputStream();
-                if (file.getSize() > 1000000) {
-                    redirectAttributes.addFlashAttribute("message", "Dosya boyutu büyük");
-                    return "redirect:/weighbridge/import";
-                }
-
-                fileName = pathDirectoryImport + file.getOriginalFilename();
-
-                outputStream = new FileOutputStream(fileName);
-
-                int readBytes = 0;
-                byte[] buffer = new byte[10000];
-                while ((readBytes = inputStream.read(buffer, 0, 10000)) != -1) {
-                    outputStream.write(buffer, 0, readBytes);
-                }
-                outputStream.close();
-                inputStream.close();
+            inputStream = file.getInputStream();
+            if (file.getSize() > maxUploadSize) {
+                redirectAttributes.addFlashAttribute("message", "İzin verilen en fazla dosya boyutu: " + maxUploadSize);
+                return "redirect:/weighbridge/import";
             }
+
+            fileName = pathDirectoryImport + file.getOriginalFilename();
+
+            outputStream = new FileOutputStream(fileName);
+
+            int readBytes = 0;
+            byte[] buffer = new byte[10000];
+            while ((readBytes = inputStream.read(buffer, 0, 10000)) != -1) {
+                outputStream.write(buffer, 0, readBytes);
+            }
+            outputStream.close();
+            inputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         weighbridgeService.importXLSX(fileName, principal);
-        redirectAttributes.addFlashAttribute("message", "İçe aktarım başarı ile tamamlandı");
+        redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/weighbridge/list";
     }
 }

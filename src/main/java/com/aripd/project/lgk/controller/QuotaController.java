@@ -77,7 +77,7 @@ public class QuotaController {
         }
 
         quotaService.save(quota);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile kaydedildi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/quota/list";
     }
 
@@ -86,7 +86,7 @@ public class QuotaController {
             final RedirectAttributes redirectAttributes,
             @RequestParam(value = "id", required = true) Long id) {
         quotaService.delete(id);
-        redirectAttributes.addFlashAttribute("message", "Başarı ile silindi");
+        redirectAttributes.addFlashAttribute("message", "message.completed.delete");
         return "redirect:/quota/list";
     }
 }

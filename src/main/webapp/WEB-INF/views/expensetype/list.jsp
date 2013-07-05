@@ -12,6 +12,7 @@
 
 <aripd:datatables datasource="/expensetype/get" id="expensetypes" dataUrlShow="/expensetype/show" dataUrlEdit="/expensetype/edit">
     <aripd:datatablescolumn label="Action" field="id"/>
+    <aripd:datatablescolumn label="Code" field="code"/>
     <aripd:datatablescolumn label="Name" field="name"/>
 </aripd:datatables>
 
