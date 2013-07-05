@@ -10,6 +10,7 @@ import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Expense;
 import java.util.List;
 import org.joda.time.DateTime;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ExpenseService {
 
@@ -29,7 +30,7 @@ public interface ExpenseService {
 
     public DatatablesResultSet<Expense> getRecords(Principal principal, DatatablesCriteria criteria);
 
-    public void importXLSX(String fileName);
+    public void importXLSX(MultipartFile file);
 
     public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

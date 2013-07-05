@@ -49,6 +49,7 @@ import com.aripd.project.lgk.report.expense.Writer;
 import com.aripd.project.lgk.repository.ExpenseRepository;
 import com.aripd.project.lgk.service.ExpenseService;
 import com.aripd.project.lgk.service.ExpensetypeService;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service("expenseService")
 @Transactional(readOnly = true)
@@ -206,17 +207,18 @@ public class ExpenseServiceImpl implements ExpenseService {
         return new DatatablesResultSet<Expense>(resultList, totalRecords, displaySize);
     }
 
-    public void importXLSX(String fileName) {
+    public void importXLSX(MultipartFile file) {
+        /*
         InputStream iStream = null;
         try {
             iStream = new FileInputStream(fileName);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
+*/
         Workbook workbook = null;
         try {
-            workbook = WorkbookFactory.create(iStream);
+            workbook = WorkbookFactory.create(file.getInputStream());
         } catch (InvalidFormatException e) {
             e.printStackTrace();
         } catch (IOException e) {

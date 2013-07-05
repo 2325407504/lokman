@@ -33,8 +33,10 @@ import com.aripd.project.lgk.domain.Expense;
 import com.aripd.project.lgk.model.ExpenseFilterByIntervalForm;
 import com.aripd.project.lgk.service.ExpenseService;
 import com.aripd.project.lgk.service.ExpensetypeService;
+import java.io.File;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.annotation.Validated;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_ADMIN')")
 @Controller
@@ -49,6 +51,8 @@ public class ExpenseController {
     private ExpensetypeService expensetypeService;
     @Value("${path.directory.import}")
     String pathDirectoryImport;
+    @Value("${multipartResolver.maxUploadSize}")
+    Long maxUploadSize;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -144,49 +148,51 @@ public class ExpenseController {
 
     @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
-        model.addAttribute(new FileUploadBean());
+        model.addAttribute("fileUploadBean", new FileUploadBean());
         return "expense/import";
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importXLS(
             final RedirectAttributes redirectAttributes,
-            @Valid FileUploadBean fileUploadBean,
+            @ModelAttribute("fileUploadBean") @Validated FileUploadBean formData,
             BindingResult result) {
 
         if (result.hasErrors()) {
             return "/expense/import";
         }
 
+        expenseService.importXLSX(formData.getFile());
+/*
         String fileName = null;
         try {
-            MultipartFile file = fileUploadBean.getFile();
-            InputStream inputStream = null;
-            OutputStream outputStream = null;
-            if (file.getSize() > 0) {
-                inputStream = file.getInputStream();
-                if (file.getSize() > 1000000) {
-                    redirectAttributes.addFlashAttribute("message", "Dosya boyutu büyük");
-                    return "redirect:/expense/import";
-                }
-
-                fileName = pathDirectoryImport + file.getOriginalFilename();
-
-                outputStream = new FileOutputStream(fileName);
-
-                int readBytes = 0;
-                byte[] buffer = new byte[10000];
-                while ((readBytes = inputStream.read(buffer, 0, 10000)) != -1) {
-                    outputStream.write(buffer, 0, readBytes);
-                }
-                outputStream.close();
-                inputStream.close();
+            MultipartFile file = formData.getFile();
+            //InputStream inputStream = null;
+            //OutputStream outputStream = null;
+            //inputStream = file.getInputStream();
+            if (file.getSize() > maxUploadSize) {
+                redirectAttributes.addFlashAttribute("message", "İzin verilen en büyük dosya boyutu: " + maxUploadSize);
+                return "redirect:/expense/import";
             }
+            
+            fileName = pathDirectoryImport + file.getOriginalFilename();
+            file.transferTo(new File(fileName));
+
+
+            outputStream = new FileOutputStream(fileName);
+
+            int readBytes = 0;
+            byte[] buffer = new byte[10000];
+            while ((readBytes = inputStream.read(buffer, 0, 10000)) != -1) {
+                outputStream.write(buffer, 0, readBytes);
+            }
+            outputStream.close();
+            inputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        expenseService.importXLSX(fileName);
+        expenseService.importXLSX(fileName);*/
         redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/expense/list";
     }

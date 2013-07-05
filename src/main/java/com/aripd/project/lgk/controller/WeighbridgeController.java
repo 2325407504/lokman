@@ -29,7 +29,6 @@ import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.dto.ControllerUtils;
-import com.aripd.project.lgk.domain.Expense;
 import com.aripd.project.lgk.domain.Extrication;
 import com.aripd.project.lgk.domain.Weighbridge;
 import com.aripd.project.lgk.model.WeighbridgeFilterByIntervalForm;
@@ -182,7 +181,7 @@ public class WeighbridgeController {
             OutputStream outputStream = null;
             inputStream = file.getInputStream();
             if (file.getSize() > maxUploadSize) {
-                redirectAttributes.addFlashAttribute("message", "İzin verilen en fazla dosya boyutu: " + maxUploadSize);
+                redirectAttributes.addFlashAttribute("message", "İzin verilen en büyük dosya boyutu: " + maxUploadSize);
                 return "redirect:/weighbridge/import";
             }
 

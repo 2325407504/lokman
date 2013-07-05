@@ -45,6 +45,16 @@
                                 <a href="#" data-toggle="popover" data-placement="bottom" data-content="Teknik: bilgi@aripd.com" title="" data-original-title="<spring:message code="Help" />"><spring:message code="Help" /></a>
                             </li>
                             <sec:authorize access="isAuthenticated()">
+                                <sec:authorize access="hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_ADMIN')">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <spring:message code="Admin" text="Admin" /><b class="caret"></b>
+                                        </a>
+                                        <jsp:include page="/WEB-INF/views/adminmenu.jsp">
+                                            <jsp:param name="uri" value="${requestScope['javax.servlet.forward.request_uri']}" />
+                                        </jsp:include>
+                                    </li>
+                                </sec:authorize>
                                 <spring:url value="/profile/show" var="profile_show" />
                                 <c:if test="${requestScope['javax.servlet.forward.request_uri'] == profile_show}"><c:set var="profile_class" value="active" /></c:if>
                                 <li class="${profile_class}">
@@ -69,7 +79,7 @@
             <div class="row">
                 <sec:authorize access="isAuthenticated()">
                     <div class="span3">
-                        <jsp:include page="/WEB-INF/views/sidebar.jsp">
+                        <jsp:include page="/WEB-INF/views/usermenu.jsp">
                             <jsp:param name="uri" value="${requestScope['javax.servlet.forward.request_uri']}" />
                         </jsp:include>
                     </div>
