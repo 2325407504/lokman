@@ -150,22 +150,22 @@ public class WeighbridgeController {
 
     @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
-        model.addAttribute("fileUploadBean", new FileUploadBean());
+        model.addAttribute("weighbridgeAttribute", new FileUploadBean());
         return "weighbridge/import";
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
-    public String importXLS(
+    public String importData(
             Principal principal,
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("fileUploadBean") @Validated FileUploadBean formData,
+            @ModelAttribute("weighbridgeAttribute") @Validated FileUploadBean formData,
             BindingResult result) {
 
         if (result.hasErrors()) {
             return "/weighbridge/import";
         }
 
-        weighbridgeService.importXLS(formData.getFile(), principal);
+        weighbridgeService.importData(formData.getFile(), principal);
         redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/weighbridge/list";
     }

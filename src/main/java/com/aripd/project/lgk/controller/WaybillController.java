@@ -157,21 +157,22 @@ public class WaybillController {
 
     @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
-        model.addAttribute(new FileUploadBean());
+        model.addAttribute("waybillAttribute", new FileUploadBean());
+        model.addAttribute("outgoingAttribute", new FileUploadBean());
         return "waybill/import";
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
-    public String importXLS(
+    public String importData(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("fileUploadBean") @Validated FileUploadBean formData,
+            @ModelAttribute("waybillAttribute") @Validated FileUploadBean formData,
             BindingResult result) {
 
         if (result.hasErrors()) {
-            return "redirect:/waybill/import";
+            return "/waybill/import";
         }
 
-        waybillService.importXLS(formData.getFile());
+        waybillService.importData(formData.getFile());
         redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/waybill/list";
     }

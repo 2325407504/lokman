@@ -32,7 +32,7 @@ public interface ForwardingService {
 
     public DatatablesResultSet<Forwarding> getRecords(Principal principal, DatatablesCriteria criteria);
 
-    public void importXLS(MultipartFile file);
+    public void importData(MultipartFile file);
 
     public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

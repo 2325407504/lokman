@@ -13,10 +13,10 @@
     <jsp:param name="active" value="import" />
 </jsp:include>
 
-<div class="bs-docs-example" data-content="<spring:message code="XLSX" />">
-    <spring:url var="tripImportXLSX" value="/trip/import" />
-    <form:form modelAttribute="fileUploadBean" action="${tripImportXLSX}" method="post" enctype="multipart/form-data">
-        <form:errors cssClass="text-error" path="file" />
+<div class="bs-docs-example" data-content="<spring:message code="Trip" />">
+    <spring:url var="import" value="/trip/import" />
+    <form:form modelAttribute="tripAttribute" action="${import}" method="post" enctype="multipart/form-data">
+        <form:errors path="*" cssClass="alert alert-error" element="div" />
         <form:input path="file" type="file"/>
         <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload" /></button>
     </form:form>

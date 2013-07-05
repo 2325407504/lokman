@@ -32,7 +32,7 @@ public interface ProductionService {
 
     public DatatablesResultSet<Production> getRecords(Principal principal, DatatablesCriteria criteria);
 
-    public void importXLS(MultipartFile file);
+    public void importData(MultipartFile file);
 
     public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

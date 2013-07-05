@@ -138,21 +138,21 @@ public class ExpenseController {
 
     @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
-        model.addAttribute("fileUploadBean", new FileUploadBean());
+        model.addAttribute("expenseAttribute", new FileUploadBean());
         return "expense/import";
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
-    public String importXLS(
+    public String importData(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("fileUploadBean") @Validated FileUploadBean formData,
+            @ModelAttribute("expenseAttribute") @Validated FileUploadBean formData,
             BindingResult result) {
 
         if (result.hasErrors()) {
             return "/expense/import";
         }
 
-        expenseService.importXLS(formData.getFile());
+        expenseService.importData(formData.getFile());
         redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/expense/list";
     }

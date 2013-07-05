@@ -28,7 +28,7 @@ public interface UatfService {
 
     public DatatablesResultSet<Uatf> getRecords(Long forwarding_id, DatatablesCriteria criteria);
 
-    public void importXLS(MultipartFile file);
+    public void importData(MultipartFile file);
 
     public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

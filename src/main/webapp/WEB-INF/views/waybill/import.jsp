@@ -13,9 +13,9 @@
     <jsp:param name="active" value="import" />
 </jsp:include>
 
-<div class="bs-docs-example" data-content="<spring:message code="XLSX" /> - <spring:message code="Waybill" />">
-    <spring:url var="waybillImportXLSX" value="/waybill/import" />
-    <form:form modelAttribute="fileUploadBean" action="${waybillImportXLSX}" method="post" enctype="multipart/form-data">
+<div class="bs-docs-example" data-content="<spring:message code="Waybill" />">
+    <spring:url var="import" value="/waybill/import" />
+    <form:form modelAttribute="fileUploadBean" action="${import}" method="post" enctype="multipart/form-data">
         <form:errors cssClass="text-error" path="file" />
         <form:input path="file" type="file"/>
         <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload" /></button>
@@ -82,10 +82,10 @@
     </div>
 </div>
 
-<div class="bs-docs-example" data-content="<spring:message code="XLSX" /> - <spring:message code="Outgoing" />">
-    <spring:url var="outgoingImportXLSX" value="/outgoing/import" />
-    <form:form modelAttribute="fileUploadBean" action="${outgoingImportXLSX}" method="post" enctype="multipart/form-data">
-        <form:errors cssClass="text-error" path="file" />
+<div class="bs-docs-example" data-content="<spring:message code="Outgoing" />">
+    <spring:url var="outgoingImport" value="/outgoing/import" />
+    <form:form modelAttribute="outgoingAttribute" action="${outgoingImport}" method="post" enctype="multipart/form-data">
+        <form:errors path="*" cssClass="alert alert-error" element="div" />
         <form:input path="file" type="file"/>
         <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload" /></button>
     </form:form>

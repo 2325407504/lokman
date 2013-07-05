@@ -153,21 +153,22 @@ public class ForwardingController {
 
     @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
-        model.addAttribute(new FileUploadBean());
+        model.addAttribute("forwardingAttribute", new FileUploadBean());
+        model.addAttribute("uatfAttribute", new FileUploadBean());
         return "forwarding/import";
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
-    public String importXLS(
+    public String importData(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("fileUploadBean") @Validated FileUploadBean formData,
+            @ModelAttribute("forwardingAttribute") @Validated FileUploadBean formData,
             BindingResult result) {
 
         if (result.hasErrors()) {
-            return "redirect:/forwarding/import";
+            return "/forwarding/import";
         }
 
-        forwardingService.importXLS(formData.getFile());
+        forwardingService.importData(formData.getFile());
         redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/forwarding/list";
     }

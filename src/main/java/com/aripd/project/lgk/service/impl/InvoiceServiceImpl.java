@@ -199,7 +199,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         return new DatatablesResultSet<Invoice>(resultList, totalRecords, displaySize);
     }
 
-    public void importXLS(MultipartFile file) {
+    public void importData(MultipartFile file) {
         Workbook workbook = null;
         try {
             workbook = WorkbookFactory.create(file.getInputStream());

@@ -92,16 +92,16 @@ public class UatfController {
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
-    public String importXLS(
+    public String importData(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("fileUploadBean") @Validated FileUploadBean formData,
+            @ModelAttribute("uatfAttribute") @Validated FileUploadBean formData,
             BindingResult result) {
 
         if (result.hasErrors()) {
             return "redirect:/forwarding/import";
         }
 
-        uatfService.importXLS(formData.getFile());
+        uatfService.importData(formData.getFile());
         redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/forwarding/list";
     }

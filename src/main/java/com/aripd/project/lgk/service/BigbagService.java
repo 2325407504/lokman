@@ -27,7 +27,7 @@ public interface BigbagService {
 
     public DatatablesResultSet<Bigbag> getRecords(Long production_id, DatatablesCriteria criteria);
 
-    public void importXLS(MultipartFile file);
+    public void importData(MultipartFile file);
 
     public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

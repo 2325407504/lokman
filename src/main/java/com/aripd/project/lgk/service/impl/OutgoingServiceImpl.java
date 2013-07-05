@@ -157,7 +157,7 @@ public class OutgoingServiceImpl implements OutgoingService {
         return new DatatablesResultSet<Outgoing>(resultList, totalRecords, displaySize);
     }
 
-    public void importXLS(MultipartFile file) {
+    public void importData(MultipartFile file) {
         Workbook workbook = null;
         try {
             workbook = WorkbookFactory.create(file.getInputStream());

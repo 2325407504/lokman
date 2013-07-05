@@ -143,7 +143,7 @@ public class WeighbridgeServiceImpl implements WeighbridgeService {
         return new DatatablesResultSet<Weighbridge>(resultList, totalRecords, displaySize);
     }
 
-    public void importXLS(MultipartFile file, Principal principal) {
+    public void importData(MultipartFile file, Principal principal) {
         Workbook workbook = null;
         try {
             workbook = WorkbookFactory.create(file.getInputStream());

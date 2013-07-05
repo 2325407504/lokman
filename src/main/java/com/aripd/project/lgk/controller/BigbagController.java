@@ -92,16 +92,16 @@ public class BigbagController {
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
-    public String importXLS(
+    public String importData(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("fileUploadBean") @Validated FileUploadBean formData,
+            @ModelAttribute("bigbagAttribute") @Validated FileUploadBean formData,
             BindingResult result) {
 
         if (result.hasErrors()) {
-            return "redirect:/production/import";
+            return "/production/import";
         }
 
-        bigbagService.importXLS(formData.getFile());
+        bigbagService.importData(formData.getFile());
         redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/production/list";
     }

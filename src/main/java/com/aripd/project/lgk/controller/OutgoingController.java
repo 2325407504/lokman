@@ -92,16 +92,16 @@ public class OutgoingController {
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
-    public String importXLS(
+    public String importData(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("fileUploadBean") @Validated FileUploadBean formData,
+            @ModelAttribute("outgoingAttribute") @Validated FileUploadBean formData,
             BindingResult result) {
 
         if (result.hasErrors()) {
-            return "redirect:/waybill/import";
+            return "/waybill/import";
         }
 
-        outgoingService.importXLS(formData.getFile());
+        outgoingService.importData(formData.getFile());
         redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/waybill/list";
     }

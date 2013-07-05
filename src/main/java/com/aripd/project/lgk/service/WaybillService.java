@@ -34,7 +34,7 @@ public interface WaybillService {
 
     public List<String> getRecords(AutocompleteCriteria criteria);
 
-    public void importXLS(MultipartFile file);
+    public void importData(MultipartFile file);
 
     public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

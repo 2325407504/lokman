@@ -33,7 +33,7 @@ public interface TripService {
 
     public DatatablesResultSet<Trip> getRecords(Principal principal, DatatablesCriteria criteria);
 
-    public void importXLS(MultipartFile file);
+    public void importData(MultipartFile file);
 
     public void exportByIntervalAndTruck(HttpServletResponse response, DateTime startingTime, DateTime endingTime, Truck truck);
 }

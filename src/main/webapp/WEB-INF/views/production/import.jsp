@@ -13,10 +13,10 @@
     <jsp:param name="active" value="import" />
 </jsp:include>
 
-<div class="bs-docs-example" data-content="<spring:message code="XLSX" /> - <spring:message code="Waybill" />">
-    <spring:url var="productionImportXLSX" value="/production/import" />
-    <form:form modelAttribute="fileUploadBean" action="${productionImportXLSX}" method="post" enctype="multipart/form-data">
-        <form:errors cssClass="text-error" path="file" />
+<div class="bs-docs-example" data-content="<spring:message code="Production" />">
+    <spring:url var="import" value="/production/import" />
+    <form:form modelAttribute="productionAttribute" action="${import}" method="post" enctype="multipart/form-data">
+        <form:errors path="*" cssClass="alert alert-error" element="div" />
         <form:input path="file" type="file"/>
         <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload" /></button>
     </form:form>
@@ -82,10 +82,10 @@
     </div>
 </div>
 
-<div class="bs-docs-example" data-content="<spring:message code="XLSX" /> - <spring:message code="Uatf" />">
-    <spring:url var="bigbagImportXLSX" value="/bigbag/import" />
-    <form:form modelAttribute="fileUploadBean" action="${bigbagImportXLSX}" method="post" enctype="multipart/form-data">
-        <form:errors cssClass="text-error" path="file" />
+<div class="bs-docs-example" data-content="<spring:message code="Bigbag" />">
+    <spring:url var="bigbagImport" value="/bigbag/import" />
+    <form:form modelAttribute="bigbagAttribute" action="${bigbagImport}" method="post" enctype="multipart/form-data">
+        <form:errors path="*" cssClass="alert alert-error" element="div" />
         <form:input path="file" type="file"/>
         <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload" /></button>
     </form:form>

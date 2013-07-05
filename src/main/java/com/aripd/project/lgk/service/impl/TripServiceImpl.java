@@ -216,7 +216,7 @@ public class TripServiceImpl implements TripService {
         return new DatatablesResultSet<Trip>(resultList, totalRecords, displaySize);
     }
 
-    public void importXLS(MultipartFile file) {
+    public void importData(MultipartFile file) {
         Workbook workbook = null;
         try {
             workbook = WorkbookFactory.create(file.getInputStream());

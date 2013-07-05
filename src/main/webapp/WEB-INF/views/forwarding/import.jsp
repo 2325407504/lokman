@@ -13,9 +13,10 @@
     <jsp:param name="active" value="import" />
 </jsp:include>
 
-<div class="bs-docs-example" data-content="<spring:message code="XLSX" /> - <spring:message code="Waybill" />">
-    <form:form modelAttribute="fileUploadBean" action="${forwardingImportXLSX}" method="post" enctype="multipart/form-data">
-        <form:errors cssClass="text-error" path="file" />
+<div class="bs-docs-example" data-content="<spring:message code="Waybill" />">
+    <spring:url var="import" value="/forwarding/import" />
+    <form:form modelAttribute="forwardingAttribute" action="${import}" method="post" enctype="multipart/form-data">
+        <form:errors path="*" cssClass="alert alert-error" element="div" />
         <form:input path="file" type="file"/>
         <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload" /></button>
     </form:form>
@@ -81,9 +82,10 @@
     </div>
 </div>
 
-<div class="bs-docs-example" data-content="<spring:message code="XLSX" /> - <spring:message code="Uatf" />">
-    <form:form modelAttribute="fileUploadBean" action="${uatfImportXLSX}" method="post" enctype="multipart/form-data">
-        <form:errors cssClass="text-error" path="file" />
+<div class="bs-docs-example" data-content="<spring:message code="Uatf" />">
+    <spring:url var="uatfImport" value="/uatf/import" />
+    <form:form modelAttribute="uatfAttribute" action="${uatfImport}" method="post" enctype="multipart/form-data">
+        <form:errors path="*" cssClass="alert alert-error" element="div" />
         <form:input path="file" type="file"/>
         <button class="pull-right btn btn-mini btn-primary" type="submit"><spring:message code="Upload" /></button>
     </form:form>

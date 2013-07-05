@@ -24,7 +24,7 @@ public interface WeighbridgeService {
 
     public DatatablesResultSet<Weighbridge> getRecords(DatatablesCriteria criteria);
 
-    public void importXLS(MultipartFile file, Principal principal);
+    public void importData(MultipartFile file, Principal principal);
 
     public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

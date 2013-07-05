@@ -152,7 +152,7 @@ public class UatfServiceImpl implements UatfService {
         return new DatatablesResultSet<Uatf>(resultList, totalRecords, displaySize);
     }
 
-    public void importXLS(MultipartFile file) {
+    public void importData(MultipartFile file) {
         Workbook workbook = null;
         try {
             workbook = WorkbookFactory.create(file.getInputStream());
