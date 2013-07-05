@@ -5,7 +5,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,10 +43,6 @@ public class ExpenseController {
     private AccountService accountService;
     @Resource(name = "expensetypeService")
     private ExpensetypeService expensetypeService;
-    @Value("${path.directory.import}")
-    String pathDirectoryImport;
-    @Value("${multipartResolver.maxUploadSize}")
-    Long maxUploadSize;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody

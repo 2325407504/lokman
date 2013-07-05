@@ -1,14 +1,10 @@
 package com.aripd.project.lgk.controller;
 
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aripd.account.service.AccountService;
@@ -53,10 +48,6 @@ public class WeighbridgeController {
     private WasteService wasteService;
     @Resource(name = "extricationService")
     private ExtricationService extricationService;
-    @Value("${path.directory.import}")
-    String pathDirectoryImport;
-    @Value("${multipartResolver.maxUploadSize}")
-    Long maxUploadSize;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody

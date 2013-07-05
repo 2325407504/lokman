@@ -1,9 +1,6 @@
 package com.aripd.project.lgk.service.impl;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,7 +40,6 @@ import com.aripd.project.lgk.report.production.FillManager;
 import com.aripd.project.lgk.report.production.Layouter;
 import com.aripd.project.lgk.report.production.Writer;
 import com.aripd.project.lgk.repository.ProductionRepository;
-import com.aripd.project.lgk.repository.BigbagRepository;
 import com.aripd.project.lgk.service.ProductionService;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -55,8 +51,6 @@ public class ProductionServiceImpl implements ProductionService {
     private EntityManager em;
     @Autowired
     private ProductionRepository repository;
-    @Autowired
-    private BigbagRepository bigbagRepository;
     @Resource(name = "accountService")
     private AccountService accountService;
 
