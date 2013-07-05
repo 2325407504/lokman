@@ -59,14 +59,17 @@
 
     <div class="dropdown-menu pull-right">
         <table class="table">
-            <tbody>
-                <tr>
-                    <td>
-                        <ul class="unstyled">
+            <caption><spring:message code="Admin" /></caption>
+        <tbody>
+            <tr>
+                <td>
+                    <ul class="unstyled">
+                        <sec:authorize access="hasRole('ROLE_SUPERADMIN')">
                             <li class="nav-header"><spring:message code="User Management" /></li>
-                        <li class="${role_class}"><a href="${role_list}"><spring:message code="Roles" /></a></li>
-                        <li class="${account_class}"><a href="${account_list}"><spring:message code="Accounts" /></a></li>
-                        <li class="${backup_class}"><a href="${backup_list}"><spring:message code="Backup" /></a></li>
+                            <li class="${role_class}"><a href="${role_list}"><spring:message code="Roles" /></a></li>
+                            <li class="${account_class}"><a href="${account_list}"><spring:message code="Accounts" /></a></li>
+                            <li class="${backup_class}"><a href="${backup_list}"><spring:message code="Backup" /></a></li>
+                            </sec:authorize>
                     </ul>
                 </td>
                 <td>

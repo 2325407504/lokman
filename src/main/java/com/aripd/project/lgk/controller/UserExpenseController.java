@@ -28,7 +28,7 @@ import com.aripd.project.lgk.domain.Expense;
 import com.aripd.project.lgk.service.ExpenseService;
 import com.aripd.project.lgk.service.ExpensetypeService;
 
-@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_USER')")
+@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 @Controller
 @RequestMapping("/userexpense")
 public class UserExpenseController {

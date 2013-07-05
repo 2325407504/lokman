@@ -12,7 +12,7 @@
 
     <div class="well">
 
-    <sec:authorize access="hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_USER')">
+    <sec:authorize access="hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')">
         <ul class="nav nav-list">
             <li class="nav-header"><spring:message code="Personnel" /></li>
             <li class="${userexpense_class}"><a href="${userexpense_list}"><spring:message code="Expenses" /></a></li>
