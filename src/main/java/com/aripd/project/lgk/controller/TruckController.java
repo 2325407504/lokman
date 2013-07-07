@@ -83,7 +83,7 @@ public class TruckController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("truckAttribute") @Valid Truck truck,
+            @ModelAttribute("truckAttribute") @Valid Truck formData,
             BindingResult result,
             Model model) {
 
@@ -92,9 +92,9 @@ public class TruckController {
             return "/truck/form";
         }
 
-        truckService.save(truck);
+        Truck truck = truckService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/truck/list";
+        return "redirect:/truck/show/" + truck.getId();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)

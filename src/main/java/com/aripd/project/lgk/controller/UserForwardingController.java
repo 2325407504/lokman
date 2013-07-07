@@ -130,9 +130,9 @@ public class UserForwardingController {
         Account account = accountService.findOneByUsername(principal.getName());
         formData.setAccount(account);
 
-        forwardingService.save(formData);
+        Forwarding forwarding = forwardingService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/userforwarding/list";
+        return "redirect:/userforwarding/show/" + forwarding.getId();
     }
 
     @RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)

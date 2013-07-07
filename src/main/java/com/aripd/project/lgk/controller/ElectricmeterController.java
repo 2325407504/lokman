@@ -68,7 +68,7 @@ public class ElectricmeterController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("electricmeterAttribute") @Valid Electricmeter electricmeter,
+            @ModelAttribute("electricmeterAttribute") @Valid Electricmeter formData,
             BindingResult result,
             Model model) {
 
@@ -76,9 +76,9 @@ public class ElectricmeterController {
             return "/electricmeter/form";
         }
 
-        electricmeterService.save(electricmeter);
+        Electricmeter electricmeter = electricmeterService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/electricmeter/list";
+        return "redirect:/electricmeter/show/" + electricmeter.getId();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)

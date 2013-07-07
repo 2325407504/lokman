@@ -97,10 +97,10 @@ public class CustomerController {
         } else {
             formData.getAuthorized().setPassword(DigestUtils.md5Hex(formData.getAuthorized().getPassword()));
         }
-        
-        customerService.save(formData);
+
+        Customer customer = customerService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/customer/list";
+        return "redirect:/customer/show/" + customer.getId();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)

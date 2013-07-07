@@ -1,6 +1,5 @@
 package com.aripd.project.lgk.controller;
 
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
@@ -62,7 +61,7 @@ public class InvoiceController {
         DatatablesResultSet<Waybill> resultset = this.waybillService.getRecords(invoice_id, criteria);
         return ControllerUtils.getDatatablesResultSet(criteria, resultset);
     }
-    
+
     @RequestMapping(value = "/list")
     public String listAction(Model model) {
         return "invoice/list";
@@ -109,9 +108,9 @@ public class InvoiceController {
         }
 
         formData.setAccount(formData.getAccount());
-        invoiceService.save(formData);
+        Invoice invoice = invoiceService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/invoice/list";
+        return "redirect:/invoice/show/" + invoice.getId();
     }
 
     @RequestMapping(value = "/waybill/add/{id}", method = RequestMethod.POST)

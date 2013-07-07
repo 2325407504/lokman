@@ -11,16 +11,20 @@
     <jsp:param name="active" value="form" />
 </jsp:include>
 
-<div class="row-fluid">
-    <div class="span4">
-        <spring:url var="save" value="/userforwarding/save" />
-        <form:form modelAttribute="userforwardingAttribute" action="${save}" method="post">
-            <form:errors path="*" cssClass="alert alert-error" element="div" />
-            <form:hidden path="id" />
+<spring:url var="save" value="/userforwarding/save" />
+<form:form modelAttribute="userforwardingAttribute" action="${save}" method="post">
+    <form:errors path="*" cssClass="alert alert-error" element="div" />
+    <form:hidden path="id" />
+    <div class="row-fluid">
+        <div class="span4">
+            <fieldset>
+            </fieldset>
+        </div>
+        <div class="span4">
             <fieldset>
                 <div class="control-group">
                     <form:label path="waybillNo"><spring:message code="Document No" /></form:label>
-                    <form:input type="text" path="waybillNo" />
+                    <form:input path="waybillNo" />
                     <form:errors cssClass="text-error" path="waybillNo" />
                 </div>
                 <div class="control-group">
@@ -34,13 +38,12 @@
                     <form:errors cssClass="text-error" path="plate" />
                 </div>
                 <div class="control-group">
-                    <form:label path="startingTime"><spring:message code="Starting Time" /></form:label>
-                    <form:input type="text" path="startingTime" />
+                    <spring:message code="Starting Time" var="startingTime" />
+                    <spring:message code="Ending Time" var="endingTime" />
+                    <form:label path="startingTime">${startingTime} - ${endingTime}</form:label>
+                    <form:input type="datetime" path="startingTime" cssClass="input-medium" placeholder="${startingTime}" />
                     <form:errors cssClass="text-error" path="startingTime" />
-                </div>
-                <div class="control-group">
-                    <form:label path="endingTime"><spring:message code="Ending Time" /></form:label>
-                    <form:input type="text" path="endingTime" />
+                    <form:input type="datetime" path="endingTime" cssClass="input-medium" placeholder="${endingTime}" />
                     <form:errors cssClass="text-error" path="endingTime" />
                 </div>
                 <div class="control-group">
@@ -48,6 +51,10 @@
                     <form:input path="endingPoint" />
                     <form:errors cssClass="text-error" path="endingPoint" />
                 </div>
+            </fieldset>
+        </div>
+        <div class="span4">
+            <fieldset>
                 <div class="control-group">
                     <form:label path="loadWeightInTonne"><spring:message code="Weight" /></form:label>
                     <form:input path="loadWeightInTonne" />
@@ -68,30 +75,39 @@
                     <form:select path="quota.id" multiple="false" items="${quotas}" itemLabel="name" itemValue="id"/>
                     <form:errors cssClass="text-error" path="quota" />
                 </div>
-                <div class="form-actions">
-                    <c:if test="${ !empty userforwardingAttribute.id }">
-                        <a class="btn btn-danger" href="javascript:$('#form-${userforwardingAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete" /></a>
-                    </c:if>
-                    <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
-                </div>
             </fieldset>
-        </form:form>
-
-        <c:if test="${ !empty userforwardingAttribute.id }">
-            <spring:url var="deleteUrl" value="/userforwarding/delete?id=${userforwardingAttribute.id}" />
-            <form:form id="form-${userforwardingAttribute.id}" modelAttribute="userforwardingAttribute" action="${deleteUrl}" method="delete">
-                <form:hidden path="id" />
-            </form:form>
-        </c:if>
+        </div>
     </div>
-    <div class="span8">
-        <fmt:message key="Code" var="Code"/>
-        <fmt:message key="Company" var="Company"/>
-        <fmt:message key="County" var="County"/>
-        <fmt:message key="City" var="City"/>
-        <fmt:message key="Weight" var="Weight"/>
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="form-actions">
+                <c:if test="${ !empty userforwardingAttribute.id }">
+                    <a class="btn btn-danger" href="javascript:$('#form-${userforwardingAttribute.id}').submit();"><i class="icon-trash icon-white"></i> <spring:message code="Delete" /></a>
+                </c:if>
+                <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
+            </div>
+        </div>
+    </div>
+</form:form>
 
-        <c:if test="${userforwardingAttribute.id != null}">
+<c:if test="${ !empty userforwardingAttribute.id }">
+    <spring:url var="delete" value="/userforwarding/delete">
+        <spring:param name="id" value="${userforwardingAttribute.id}" />
+    </spring:url>
+    <form:form id="form-${userforwardingAttribute.id}" modelAttribute="userforwardingAttribute" action="${delete}" method="delete">
+        <form:hidden path="id" />
+    </form:form>
+</c:if>
+
+<c:if test="${userforwardingAttribute.id != null}">
+    <div class="row-fluid">
+        <div class="span12">
+            <fmt:message key="Code" var="Code"/>
+            <fmt:message key="Company" var="Company"/>
+            <fmt:message key="County" var="County"/>
+            <fmt:message key="City" var="City"/>
+            <fmt:message key="Weight" var="Weight"/>
+
             <spring:url var="uatfSave" value="/useruatf/save/${userforwardingAttribute.id}" />
             <form:form modelAttribute="useruatfAttribute" action="${uatfSave}" method="post" class="form-inline">
                 <form:errors path="*" cssClass="alert alert-error" element="div" />
@@ -100,8 +116,10 @@
                 <form:input path="county" cssClass="input-small" placeholder="${County}" />
                 <form:input path="city" cssClass="input-small" placeholder="${City}" />
                 <form:input path="loadWeightInTonne" cssClass="input-mini" placeholder="${Weight}" />
-                <button class="btn" type="submit"><i class="icon-ok"></i></button>
-                </form:form>
+                <button class="btn" type="submit">
+                    <i class="icon-ok"></i>
+                </button>
+            </form:form>
 
             <hr>
 
@@ -113,12 +131,11 @@
                 <aripd:datatablescolumn label="Weight" field="loadWeightInTonne"/>
                 <aripd:datatablescolumn label="Action" field="id"/>
             </aripd:datatables>
-        </c:if>
+        </div>
     </div>
-</div>
+</c:if>
 
 <script type="text/javascript">
-<!--
     var startDateTextBox = $('#startingTime');
     var endDateTextBox = $('#endingTime');
 
@@ -156,7 +173,6 @@
             startDateTextBox.datetimepicker('option', 'maxDate', endDateTextBox.datetimepicker('getDate'));
         }
     });
-//-->
 </script>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

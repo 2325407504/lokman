@@ -28,71 +28,69 @@ import com.aripd.project.lgk.service.SubcontractorService;
 @Controller
 @RequestMapping("/subcontractor")
 public class SubcontractorController {
-	
-	@Resource(name="subcontractorService")
-	private SubcontractorService subcontractorService;
-	
-	@Resource(name="regionService")
-	private RegionService regionService;
 
-	@RequestMapping(value = "/get", method = RequestMethod.GET)
-	public @ResponseBody
-	WebResultSet<Subcontractor> datatablesAction(@DatatablesParam DatatablesCriteria criteria) {
-		DatatablesResultSet<Subcontractor> resultset = this.subcontractorService.getRecords(criteria);
-		return ControllerUtils.getDatatablesResultSet(criteria, resultset);
-	}
+    @Resource(name = "subcontractorService")
+    private SubcontractorService subcontractorService;
+    @Resource(name = "regionService")
+    private RegionService regionService;
 
-	@RequestMapping(value="/list")
-	public String listAction(Model model) {
-		return "subcontractor/list";
-	}
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    public @ResponseBody
+    WebResultSet<Subcontractor> datatablesAction(@DatatablesParam DatatablesCriteria criteria) {
+        DatatablesResultSet<Subcontractor> resultset = this.subcontractorService.getRecords(criteria);
+        return ControllerUtils.getDatatablesResultSet(criteria, resultset);
+    }
 
-	@RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
-	public String showAction(
-			@PathVariable Long id,
-			Model model) {
-		model.addAttribute("subcontractorAttribute", subcontractorService.findOne(id));
-		return "subcontractor/show";
-	}
-	
+    @RequestMapping(value = "/list")
+    public String listAction(Model model) {
+        return "subcontractor/list";
+    }
+
+    @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
+    public String showAction(
+            @PathVariable Long id,
+            Model model) {
+        model.addAttribute("subcontractorAttribute", subcontractorService.findOne(id));
+        return "subcontractor/show";
+    }
+
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-		model.addAttribute("regions", regionService.findAll());
-    	model.addAttribute("subcontractorAttribute", new Subcontractor());
-    	return "subcontractor/form";
-	}
+        model.addAttribute("regions", regionService.findAll());
+        model.addAttribute("subcontractorAttribute", new Subcontractor());
+        return "subcontractor/form";
+    }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
-		model.addAttribute("regions", regionService.findAll());
-    	model.addAttribute("subcontractorAttribute", subcontractorService.findOne(id));
-    	return "subcontractor/form";
-	}
+        model.addAttribute("regions", regionService.findAll());
+        model.addAttribute("subcontractorAttribute", subcontractorService.findOne(id));
+        return "subcontractor/form";
+    }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
-			final RedirectAttributes redirectAttributes,
-    		@ModelAttribute("subcontractorAttribute") @Valid Subcontractor subcontractor, 
-    		BindingResult result,
-    		Model model) {
-    	
-		if (result.hasErrors()) {
-			model.addAttribute("regions", regionService.findAll());
-			return "/subcontractor/form";
-		}
-		
-		subcontractorService.save(subcontractor);
-		redirectAttributes.addFlashAttribute("message", "message.completed.save");
-		return "redirect:/subcontractor/list";
-	}
+            final RedirectAttributes redirectAttributes,
+            @ModelAttribute("subcontractorAttribute") @Valid Subcontractor formData,
+            BindingResult result,
+            Model model) {
 
-	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-	public String delete(
-			final RedirectAttributes redirectAttributes,
-			@RequestParam(value = "id", required = true) Long id) {
-		subcontractorService.delete(id);
-		redirectAttributes.addFlashAttribute("message", "message.completed.delete");
-		return "redirect:/subcontractor/list";
-	}
-	
+        if (result.hasErrors()) {
+            model.addAttribute("regions", regionService.findAll());
+            return "/subcontractor/form";
+        }
+
+        Subcontractor subcontractor = subcontractorService.save(formData);
+        redirectAttributes.addFlashAttribute("message", "message.completed.save");
+        return "redirect:/subcontractor/show/" + subcontractor.getId();
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public String delete(
+            final RedirectAttributes redirectAttributes,
+            @RequestParam(value = "id", required = true) Long id) {
+        subcontractorService.delete(id);
+        redirectAttributes.addFlashAttribute("message", "message.completed.delete");
+        return "redirect:/subcontractor/list";
+    }
 }

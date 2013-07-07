@@ -1,6 +1,5 @@
 package com.aripd.project.lgk.controller;
 
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
@@ -103,14 +102,16 @@ public class WaybillController {
             Model model) {
 
         if (result.hasErrors()) {
+            model.addAttribute("outgoingAttribute", new Outgoing());
             model.addAttribute("accounts", accountService.findAll());
+            model.addAttribute("products", productService.findAll());
             return "/waybill/form";
         }
 
         //formData.getInvoice().setAccount(formData.getAccount());
         Waybill waybill = waybillService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/waybill/edit/" + waybill.getId();
+        return "redirect:/waybill/show/" + waybill.getId();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)

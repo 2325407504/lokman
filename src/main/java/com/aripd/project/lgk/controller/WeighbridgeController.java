@@ -1,6 +1,5 @@
 package com.aripd.project.lgk.controller;
 
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -105,7 +104,7 @@ public class WeighbridgeController {
 
         weighbridgeService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/weighbridge/list";
+        return "redirect:/weighbridge/show/" + weighbridge.getId();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)

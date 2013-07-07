@@ -111,9 +111,9 @@ public class UserExpenseController {
         Account account = accountService.findOneByUsername(principal.getName());
         formData.setAccount(account);
 
-        expenseService.save(formData);
+        Expense expense = expenseService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/userexpense/list";
+        return "redirect:/userexpense/show/" + expense.getId();
     }
 
     @RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)

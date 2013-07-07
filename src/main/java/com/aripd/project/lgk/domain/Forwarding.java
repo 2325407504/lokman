@@ -21,6 +21,7 @@ import com.aripd.common.entity.BaseEntity;
 import com.aripd.common.utils.ARIPDJodaDateTimeSerializer;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "forwarding")
@@ -32,17 +33,23 @@ public class Forwarding extends BaseEntity {
     @JoinColumn(nullable = false, insertable = true, updatable = true)
     private Account account;
     @Column(unique = true)
+    @NotEmpty
     private String waybillNo;
+    @NotEmpty
     private String driver;
+    @NotEmpty
     private String plate;
+    @NotNull
     @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
     @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
     @Column(columnDefinition = "TIMESTAMP")
     private DateTime startingTime;
+    @NotNull
     @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
     @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
     @Column(columnDefinition = "TIMESTAMP")
     private DateTime endingTime;
+    @NotEmpty
     private String endingPoint;
     @Column(nullable = false)
     @NotNull
@@ -50,8 +57,10 @@ public class Forwarding extends BaseEntity {
     @Column(nullable = false)
     @NotNull
     private BigDecimal shippingCost;
+    @NotNull
     @ManyToOne
     private Subcontractor subcontractor;
+    @NotNull
     @ManyToOne
     private Quota quota;
     @JsonIgnore

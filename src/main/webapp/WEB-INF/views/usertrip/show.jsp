@@ -7,6 +7,7 @@
 <jsp:include page="/WEB-INF/views/subnav.jsp" >
     <jsp:param name="title" value="Trips" />
     <jsp:param name="property" value="usertrip" />
+    <jsp:param name="report" value="true" />
     <jsp:param name="submit" value="true" />
     <jsp:param name="active" value="show" />
 </jsp:include>

@@ -73,7 +73,7 @@ public class ProductController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("productAttribute") @Valid Product product,
+            @ModelAttribute("productAttribute") @Valid Product formData,
             BindingResult result,
             Model model) {
 
@@ -81,9 +81,9 @@ public class ProductController {
             return "/product/form";
         }
 
-        productService.save(product);
+        Product product = productService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/product/list";
+        return "redirect:/product/show/" + product.getId();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)

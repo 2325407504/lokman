@@ -68,7 +68,7 @@ public class WastegroupController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("wastegroupAttribute") @Valid Wastegroup wastegroup,
+            @ModelAttribute("wastegroupAttribute") @Valid Wastegroup formData,
             BindingResult result,
             Model model) {
 
@@ -76,9 +76,9 @@ public class WastegroupController {
             return "/wastegroup/form";
         }
 
-        wastegroupService.save(wastegroup);
+        Wastegroup wastegroup = wastegroupService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/wastegroup/list";
+        return "redirect:/wastegroup/show/" + wastegroup.getId();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)

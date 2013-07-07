@@ -99,6 +99,31 @@ public class TripServiceImpl implements TripService {
         return resultList;
     }
 
+    public List<Trip> findByIntervalAndTruckAndPrincipal(DateTime startingTime, DateTime endingTime, Truck truck, Principal principal) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Trip> cq = cb.createQuery(Trip.class);
+        Root<Trip> root = cq.from(Trip.class);
+        Join<Trip, Truck> t = root.join(Trip_.truck);
+        Join<Trip, Account> a = root.join(Trip_.account);
+
+        List<Predicate> predicateList = new ArrayList<Predicate>();
+        Predicate predicate1 = cb.between(root.get(Trip_.startingTime), startingTime, endingTime);
+        Predicate predicate2 = cb.equal(t.get(Truck_.plate), truck.getPlate());
+        Predicate predicate3 = cb.equal(a.get(Account_.username), principal.getName());
+        Predicate predicate = cb.and(predicate1, predicate2, predicate3);
+        predicateList.add(predicate);
+
+        Predicate[] predicates = new Predicate[predicateList.size()];
+        predicateList.toArray(predicates);
+        cq.where(predicates);
+        cq.orderBy(cb.asc(root.get(Trip_.startingTime)));
+
+        TypedQuery<Trip> typedQuery = em.createQuery(cq);
+        List<Trip> resultList = typedQuery.getResultList();
+
+        return resultList;
+    }
+
     @Transactional
     public Trip save(Trip trip) {
         return repository.save(trip);
@@ -271,6 +296,7 @@ public class TripServiceImpl implements TripService {
 
     public void exportByIntervalAndTruck(HttpServletResponse response, DateTime startingTime, DateTime endingTime, Truck truck) {
         // 1. Create new workbook
+        // 1. Create new workbook
         HSSFWorkbook workbook = new HSSFWorkbook();
 
         // 2. Create new worksheet
@@ -296,4 +322,34 @@ public class TripServiceImpl implements TripService {
         // 7. Write to the output stream
         Writer.write(response, worksheet);
     }
+
+    public void exportByIntervalAndTruckAndPrincipal(HttpServletResponse response, DateTime startingTime, DateTime endingTime, Truck truck, Principal principal) {
+        // 1. Create new workbook
+        // 1. Create new workbook
+        HSSFWorkbook workbook = new HSSFWorkbook();
+
+        // 2. Create new worksheet
+        HSSFSheet worksheet = workbook.createSheet("Trip Report for " + truck.getPlate());
+
+        // 3. Define starting indices for rows and columns
+        int startRowIndex = 0;
+        int startColIndex = 0;
+
+        // 4. Build layout
+        // Build title, date, and column headers
+        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
+
+        // 5. Fill report
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByIntervalAndTruckAndPrincipal(startingTime, endingTime, truck, principal));
+
+        // 6. Set the response properties
+        String fileName = "TripReport.xls";
+        response.setHeader("Content-Disposition", "inline; filename=" + fileName);
+        // Make sure to set the correct content type
+        response.setContentType("application/vnd.ms-excel");
+
+        // 7. Write to the output stream
+        Writer.write(response, worksheet);
+    }
+
 }

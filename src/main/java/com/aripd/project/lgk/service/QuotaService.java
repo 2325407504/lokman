@@ -8,18 +8,17 @@ import com.aripd.project.lgk.domain.Quota;
 
 public interface QuotaService {
 
-	Quota findOne(Long id);
-	
-	Quota findOneByCode(String code);
+    public Quota findOne(Long id);
 
-	List<Quota> findAll();
-	
-	Quota save(Quota quota);
-	
-	void delete(Long id);
-	
-	void delete(Quota quota);
+    public Quota findOneByCode(String code);
 
-	DatatablesResultSet<Quota> getRecords(DatatablesCriteria criteria);
+    public List<Quota> findAll();
 
+    public Quota save(Quota quota);
+
+    public void delete(Long id);
+
+    public void delete(Quota quota);
+
+    public DatatablesResultSet<Quota> getRecords(DatatablesCriteria criteria);
 }

@@ -68,7 +68,7 @@ public class ExpensetypeController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("expensetypeAttribute") @Valid Expensetype expensetype,
+            @ModelAttribute("expensetypeAttribute") @Valid Expensetype formData,
             BindingResult result,
             Model model) {
 
@@ -76,9 +76,9 @@ public class ExpensetypeController {
             return "/expensetype/form";
         }
 
-        expensetypeService.save(expensetype);
+        Expensetype expensetype = expensetypeService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/expensetype/list";
+        return "redirect:/expensetype/show/" + expensetype.getId();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)

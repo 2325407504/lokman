@@ -1,6 +1,5 @@
 package com.aripd.project.lgk.controller;
 
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
@@ -98,6 +97,7 @@ public class ForwardingController {
             Model model) {
 
         if (result.hasErrors()) {
+            model.addAttribute("uatfAttribute", new Uatf());
             model.addAttribute("accounts", accountService.findAll());
             model.addAttribute("quotas", quotaService.findAll());
             model.addAttribute("subcontractors", subcontractorService.findAll());

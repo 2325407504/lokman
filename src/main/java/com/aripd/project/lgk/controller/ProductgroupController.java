@@ -68,7 +68,7 @@ public class ProductgroupController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("productgroupAttribute") @Valid Productgroup productgroup,
+            @ModelAttribute("productgroupAttribute") @Valid Productgroup formData,
             BindingResult result,
             Model model) {
 
@@ -76,9 +76,9 @@ public class ProductgroupController {
             return "/productgroup/form";
         }
 
-        productgroupService.save(productgroup);
+        Productgroup productgroup = productgroupService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/productgroup/list";
+        return "redirect:/productgroup/show/" + productgroup.getId();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)

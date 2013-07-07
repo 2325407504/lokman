@@ -73,7 +73,7 @@ public class WasteController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("wasteAttribute") @Valid Waste waste,
+            @ModelAttribute("wasteAttribute") @Valid Waste formData,
             BindingResult result,
             Model model) {
 
@@ -81,9 +81,9 @@ public class WasteController {
             return "/waste/form";
         }
 
-        wasteService.save(waste);
+        Waste waste = wasteService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/waste/list";
+        return "redirect:/waste/show/" + waste.getId();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)

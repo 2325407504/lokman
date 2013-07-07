@@ -1,6 +1,5 @@
 package com.aripd.project.lgk.controller;
 
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
@@ -112,9 +111,11 @@ public class ProductionController {
             Model model) {
 
         if (result.hasErrors()) {
+            model.addAttribute("bigbagAttribute", new Bigbag());
             model.addAttribute("accounts", accountService.findAll());
             model.addAttribute("electricmeters", electricmeterService.findAll());
             model.addAttribute("machines", machineService.findAll());
+            model.addAttribute("products", productService.findAll());
             return "/production/form";
         }
 
@@ -131,7 +132,7 @@ public class ProductionController {
         }
 
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/production/list";
+        return "redirect:/production/show/" + production.getId();
     }
 
     @RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)

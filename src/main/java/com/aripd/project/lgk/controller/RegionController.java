@@ -68,7 +68,7 @@ public class RegionController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("regionAttribute") @Valid Region region,
+            @ModelAttribute("regionAttribute") @Valid Region formData,
             BindingResult result,
             Model model) {
 
@@ -76,9 +76,9 @@ public class RegionController {
             return "/region/form";
         }
 
-        regionService.save(region);
+        Region region = regionService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/region/list";
+        return "redirect:/region/show/" + region.getId();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)

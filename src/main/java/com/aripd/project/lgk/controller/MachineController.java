@@ -74,7 +74,7 @@ public class MachineController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("machineAttribute") @Valid Machine machine,
+            @ModelAttribute("machineAttribute") @Valid Machine formData,
             BindingResult result,
             Model model) {
 
@@ -82,9 +82,9 @@ public class MachineController {
             return "/machine/form";
         }
 
-        machineService.save(machine);
+        Machine machine = machineService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/machine/list";
+        return "redirect:/machine/show/" + machine.getId();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)

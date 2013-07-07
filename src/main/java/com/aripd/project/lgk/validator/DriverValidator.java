@@ -7,11 +7,16 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 
 import com.aripd.project.lgk.domain.Driver;
+import com.aripd.project.lgk.service.DriverService;
+import javax.annotation.Resource;
 
 @Service("driverValidator")
 @Transactional
 public class DriverValidator {
 
+    @Resource(name = "driverService")
+    private DriverService driverService;
+    
     public void validate(Driver driver, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "required", "It is required!");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "required", "It is required!");

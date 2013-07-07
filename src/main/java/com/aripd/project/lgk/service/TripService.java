@@ -23,6 +23,8 @@ public interface TripService {
 
     public List<Trip> findByIntervalAndTruck(DateTime startingTime, DateTime endingTime, Truck truck);
 
+    public List<Trip> findByIntervalAndTruckAndPrincipal(DateTime startingTime, DateTime endingTime, Truck truck, Principal principal);
+
     public Trip save(Trip trip);
 
     public void delete(Long id);
@@ -36,4 +38,6 @@ public interface TripService {
     public void importData(MultipartFile file);
 
     public void exportByIntervalAndTruck(HttpServletResponse response, DateTime startingTime, DateTime endingTime, Truck truck);
+
+    public void exportByIntervalAndTruckAndPrincipal(HttpServletResponse response, DateTime startingTime, DateTime endingTime, Truck findOne, Principal principal);
 }

@@ -13,11 +13,10 @@
     <jsp:param name="active" value="form" />
 </jsp:include>
 
-
 <div class="row-fluid">
     <div class="span12">
-        <spring:url var="tripSave" value="/trip/save" />
-        <form:form id="trip" modelAttribute="tripAttribute" action="${tripSave}" method="post">
+        <spring:url var="save" value="/trip/save" />
+        <form:form id="trip" modelAttribute="tripAttribute" action="${save}" method="post">
             <form:errors path="*" cssClass="alert alert-error" element="div" />
             <form:hidden path="id" />
             <fieldset>
@@ -113,6 +112,8 @@
             $.ajax({
                 type: "GET",
                 url: "truck/get/" + truck_id + "/kilometer",
+                beforeSend: function() {
+                },
                 success: function(response) {
                     $(e).find('[name=startingKm]').val(response);
                     $(e).find('[name=startingKm]').attr('min', response);

@@ -68,7 +68,7 @@ public class QuotaController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("quotaAttribute") @Valid Quota quota,
+            @ModelAttribute("quotaAttribute") @Valid Quota formData,
             BindingResult result,
             Model model) {
 
@@ -76,9 +76,9 @@ public class QuotaController {
             return "/quota/form";
         }
 
-        quotaService.save(quota);
+        Quota quota = quotaService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/quota/list";
+        return "redirect:/quota/show/" + quota.getId();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)

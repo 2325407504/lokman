@@ -4,7 +4,6 @@ import java.security.Principal;
 
 import javax.annotation.Resource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,18 +24,21 @@ import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Trip;
+import com.aripd.project.lgk.model.TripFilterByIntervalAndTruckForm;
+import com.aripd.project.lgk.model.UserTripFilterByIntervalAndTruckForm;
 import com.aripd.project.lgk.service.DriverService;
 import com.aripd.project.lgk.service.TripService;
 import com.aripd.project.lgk.service.TruckService;
-import com.aripd.project.lgk.validator.TripValidator;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_USER') and hasRole('ROLE_OTL'))")
 @Controller
 @RequestMapping("/usertrip")
 public class UserTripController {
 
-    @Autowired
-    private TripValidator tripValidator;
     @Resource(name = "tripService")
     private TripService tripService;
     @Resource(name = "truckService")
@@ -117,11 +119,10 @@ public class UserTripController {
     public String saveAction(
             final RedirectAttributes redirectAttributes,
             Principal principal,
-            @ModelAttribute("usertripAttribute")/* @Valid */ Trip formData,
+            @ModelAttribute("usertripAttribute") @Valid Trip formData,
             BindingResult result,
             Model model) {
 
-        tripValidator.validate(formData, result);
         if (result.hasErrors()) {
             Account account = accountService.findOneByUsername(principal.getName());
             model.addAttribute("trucks", truckService.findByRegion(account.getRegion()));
@@ -132,9 +133,9 @@ public class UserTripController {
         Account account = accountService.findOneByUsername(principal.getName());
         formData.setAccount(account);
 
-        tripService.save(formData);
+        Trip trip = tripService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/usertrip/list";
+        return "redirect:/usertrip/show/" + trip.getId();
     }
 
     @RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)
@@ -178,12 +179,33 @@ public class UserTripController {
         }
     }
 
-    @RequestMapping(value = "/report")
+    @RequestMapping(value = "/report", method = RequestMethod.GET)
     public String reportAction(
             Principal principal,
             Model model) {
         Account account = accountService.findOneByUsername(principal.getName());
+        model.addAttribute("usertripFilterByIntervalAndTruckForm", new UserTripFilterByIntervalAndTruckForm());
         model.addAttribute("trucks", truckService.findByRegion(account.getRegion()));
         return "usertrip/report";
+    }
+
+    @RequestMapping(value = "/report", method = RequestMethod.POST)
+    public String reportAction(
+            final RedirectAttributes redirectAttributes,
+            @ModelAttribute("usertripFilterByIntervalAndTruckForm") @Valid UserTripFilterByIntervalAndTruckForm formData,
+            BindingResult result,
+            @RequestParam("startingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime startingTime,
+            @RequestParam("endingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime endingTime,
+            @RequestParam("truck.id") Long truck_id,
+            HttpServletResponse response,
+            Principal principal,
+            Model model) {
+
+        if (result.hasErrors()) {
+            return "/usertrip/report";
+        }
+
+        tripService.exportByIntervalAndTruckAndPrincipal(response, startingTime, endingTime, truckService.findOne(truck_id), principal);
+        return "redirect:/usertrip/report";
     }
 }

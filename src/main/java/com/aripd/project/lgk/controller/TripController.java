@@ -4,7 +4,6 @@ package com.aripd.project.lgk.controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +28,6 @@ import com.aripd.project.lgk.model.TripFilterByIntervalAndTruckForm;
 import com.aripd.project.lgk.service.DriverService;
 import com.aripd.project.lgk.service.TripService;
 import com.aripd.project.lgk.service.TruckService;
-import com.aripd.project.lgk.validator.TripValidator;
 import javax.validation.Valid;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -40,8 +38,6 @@ import org.springframework.validation.annotation.Validated;
 @RequestMapping("/trip")
 public class TripController {
 
-    @Autowired
-    private TripValidator tripValidator;
     @Resource(name = "tripService")
     private TripService tripService;
     @Resource(name = "truckService")
@@ -95,11 +91,10 @@ public class TripController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("tripAttribute")/* @Valid */ Trip formData,
+            @ModelAttribute("tripAttribute") @Valid Trip formData,
             BindingResult result,
             Model model) {
 
-        tripValidator.validate(formData, result);
         if (result.hasErrors()) {
             model.addAttribute("accounts", accountService.findAll());
             model.addAttribute("trucks", truckService.findAll());

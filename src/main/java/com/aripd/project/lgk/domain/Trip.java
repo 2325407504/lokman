@@ -13,7 +13,9 @@ import org.joda.time.DateTime;
 import com.aripd.account.domain.Account;
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.common.utils.ARIPDJodaDateTimeSerializer;
+import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "trip")
@@ -24,22 +26,31 @@ public class Trip extends BaseEntity {
     @ManyToOne
     @JoinColumn(nullable = false, insertable = true, updatable = true)
     private Account account;
+    @NotNull
     @ManyToOne
     private Truck truck;
+    @NotNull
     @ManyToOne
     private Driver driver;
+    @NotEmpty
     private String startingPoint;
+    @NotNull
     private Integer startingKm;
+    @NotNull
     @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
     @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
     @Column(columnDefinition = "TIMESTAMP")
     private DateTime startingTime;
+    @NotEmpty
     private String endingPoint;
+    @NotNull
     private Integer endingKm;
+    @NotNull
     @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
     @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
     @Column(columnDefinition = "TIMESTAMP")
     private DateTime endingTime;
+    @NotNull
     private Integer loadWeightInTonne;
     @Column(columnDefinition = "TEXT", nullable = true)
     private String remark;
