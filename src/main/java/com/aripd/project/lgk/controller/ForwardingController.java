@@ -121,7 +121,7 @@ public class ForwardingController {
 
         Forwarding forwarding = forwardingService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/forwarding/show" + forwarding.getId();
+        return "redirect:/forwarding/show/" + forwarding.getId();
     }
 
     @RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)
