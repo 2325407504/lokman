@@ -67,7 +67,6 @@ public class FillManager {
 
             HSSFCell cell4 = row.createCell(startColIndex + 4);
             StringBuilder sb4 = new StringBuilder();
-
             Iterator<Bigbag> iterator = datasource.get(i - 2).getBigbags().iterator();
             while (iterator.hasNext()) {
                 Bigbag bigbag = iterator.next();

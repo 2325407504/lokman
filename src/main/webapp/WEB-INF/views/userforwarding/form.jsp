@@ -47,9 +47,9 @@
                     <form:errors cssClass="text-error" path="endingTime" />
                 </div>
                 <div class="control-group">
-                    <form:label path="endingPoint"><spring:message code="Ending Point" /></form:label>
-                    <form:input path="endingPoint" />
-                    <form:errors cssClass="text-error" path="endingPoint" />
+                    <form:label path="endingpoint"><spring:message code="Ending Point" /></form:label>
+                    <form:input path="endingpoint" />
+                    <form:errors cssClass="text-error" path="endingpoint" />
                 </div>
             </fieldset>
         </div>

@@ -18,10 +18,10 @@
     <aripd:datatablescolumn label="Account" field="account.username"/>
     <aripd:datatablescolumn label="Truck" field="truck.plate"/>
     <aripd:datatablescolumn label="Driver" field="driver.name"/>
-    <aripd:datatablescolumn label="Starting Point" field="startingPoint"/>
+    <aripd:datatablescolumn label="Starting Point" field="startingpoint"/>
     <aripd:datatablescolumn label="Starting Time" field="startingTime"/>
     <aripd:datatablescolumn label="Starting Km" field="startingKm"/>
-    <aripd:datatablescolumn label="Ending Point" field="endingPoint"/>
+    <aripd:datatablescolumn label="Ending Point" field="endingpoint"/>
     <aripd:datatablescolumn label="Ending Time" field="endingTime"/>
     <aripd:datatablescolumn label="Ending Km" field="endingKm"/>
     <aripd:datatablescolumn label="Weight" field="loadWeightInTonne"/>

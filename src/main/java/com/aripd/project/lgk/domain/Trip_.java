@@ -20,10 +20,10 @@ public class Trip_ extends BaseEntity_ {
     public static volatile SingularAttribute<Trip, Account> account;
     public static volatile SingularAttribute<Trip, Truck> truck;
     public static volatile SingularAttribute<Trip, Driver> driver;
-    public static volatile SingularAttribute<Trip, String> startingPoint;
+    public static volatile SingularAttribute<Trip, String> startingpoint;
     public static volatile SingularAttribute<Trip, Integer> startingKm;
     public static volatile SingularAttribute<Trip, DateTime> startingTime;
-    public static volatile SingularAttribute<Trip, String> endingPoint;
+    public static volatile SingularAttribute<Trip, String> endingpoint;
     public static volatile SingularAttribute<Trip, Integer> endingKm;
     public static volatile SingularAttribute<Trip, DateTime> endingTime;
     public static volatile SingularAttribute<Trip, Integer> loadWeightInTonne;

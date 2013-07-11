@@ -26,9 +26,13 @@ public class Forwarding_ extends BaseEntity_ {
     public static volatile SingularAttribute<Forwarding, String> plate;
     public static volatile SingularAttribute<Forwarding, DateTime> startingTime;
     public static volatile SingularAttribute<Forwarding, DateTime> endingTime;
-    public static volatile SingularAttribute<Forwarding, String> endingPoint;
+    public static volatile SingularAttribute<Forwarding, Startingpoint> startingpoint;
+    public static volatile SingularAttribute<Forwarding, Endingpoint> endingpoint;
+    public static volatile SingularAttribute<Forwarding, Integer> startingKm;
+    public static volatile SingularAttribute<Forwarding, Integer> endingKm;
     public static volatile SingularAttribute<Forwarding, Integer> loadWeightInTonne;
     public static volatile SingularAttribute<Forwarding, BigDecimal> shippingCost;
+    public static volatile SingularAttribute<Forwarding, String> remark;
     public static volatile SingularAttribute<Forwarding, Subcontractor> subcontractor;
     public static volatile SingularAttribute<Forwarding, Quota> quota;
     public static volatile SetAttribute<Forwarding, Uatf> uatfs;

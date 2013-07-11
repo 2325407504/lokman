@@ -53,8 +53,7 @@
         <property name="subject" value="Hizmet kaydınız" />
     </bean>
 
-    <!-- Configures the annotation-driven Spring MVC Controller programming 
-    model. Note that, with Spring 3.1, this tag works in Servlet MVC only! -->
+    <!-- Configures the annotation-driven Spring MVC Controller programming model. Note that, with Spring 3.1, this tag works in Servlet MVC only! -->
     <mvc:annotation-driven conversion-service="conversionService" validator="validator">
         <mvc:argument-resolvers>
             <bean class="com.aripd.common.dto.datatables.DatatablesArgumentResolver" />
@@ -112,6 +111,8 @@
         <property name="converters">
             <list>
                 <bean class="com.aripd.project.lgk.converter.DriverConverter"></bean>
+                <bean class="com.aripd.project.lgk.converter.TruckConverter"></bean>
+                <bean class="com.aripd.project.lgk.converter.PlateToTruckConverter"></bean>
             </list>
         </property>
     </bean>

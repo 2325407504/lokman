@@ -24,6 +24,10 @@
             <form:input path="client.lastName" />
         </div>
         <div class="control-group">
+            <form:label path="client.birthday"><spring:message code="Birthday" /></form:label>
+            <form:input path="client.birthday" />
+        </div>
+        <div class="control-group">
             <form:label path="email"><spring:message code="E-mail Address" /></form:label>
             <form:input path="email" />
             <form:errors cssClass="text-error" path="email" />

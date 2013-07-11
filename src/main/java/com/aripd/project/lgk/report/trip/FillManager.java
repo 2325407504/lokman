@@ -25,8 +25,7 @@ public class FillManager {
      * @param startColIndex starting column offset
      * @param datasource the data source
      */
-    public static void fillReport(HSSFSheet worksheet, int startRowIndex,
-            int startColIndex, List<Trip> datasource) {
+    public static void fillReport(HSSFSheet worksheet, int startRowIndex, int startColIndex, List<Trip> datasource) {
         // Row offset
         startRowIndex += 2;
 
@@ -66,7 +65,7 @@ public class FillManager {
             cell5.setCellStyle(bodyCellStyle);
 
             HSSFCell cell6 = row.createCell(startColIndex + 6);
-            cell6.setCellValue(datasource.get(i - 2).getStartingPoint());
+            cell6.setCellValue(datasource.get(i - 2).getStartingpoint());
             cell6.setCellStyle(bodyCellStyle);
 
             HSSFCell cell7 = row.createCell(startColIndex + 7);
@@ -78,7 +77,7 @@ public class FillManager {
             cell8.setCellStyle(bodyCellStyle);
 
             HSSFCell cell9 = row.createCell(startColIndex + 9);
-            cell9.setCellValue(datasource.get(i - 2).getEndingPoint());
+            cell9.setCellValue(datasource.get(i - 2).getEndingpoint());
             cell9.setCellStyle(bodyCellStyle);
 
             HSSFCell cell10 = row.createCell(startColIndex + 10);

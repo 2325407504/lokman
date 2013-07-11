@@ -25,6 +25,8 @@ import com.aripd.project.lgk.domain.Truck;
 import com.aripd.project.lgk.domain.Truck_;
 import com.aripd.project.lgk.repository.TruckRepository;
 import com.aripd.project.lgk.service.TruckService;
+import java.util.Arrays;
+import java.util.Iterator;
 
 @Service("truckService")
 @Transactional(readOnly = true)
@@ -67,22 +69,55 @@ public class TruckServiceImpl implements TruckService {
     }
 
     public Integer getKilometer(Long id) {
+        Integer kilometer = 0;
+        if (id == null) {
+            return kilometer;
+        }
+
         Truck truck = this.findOne(id);
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Trip> cq = cb.createQuery(Trip.class);
         Root<Trip> root = cq.from(Trip.class);
-        
+
         List<Predicate> predicateList = new ArrayList<Predicate>();
         Predicate predicate = cb.equal(root.get(Trip_.truck), truck);
         predicateList.add(predicate);
         Predicate[] predicates = new Predicate[predicateList.size()];
         predicateList.toArray(predicates);
         cq.where(predicates);
-        
         cq.orderBy(cb.desc(root.get(Trip_.endingTime)));
 
-        Trip trip = em.createQuery(cq).setMaxResults(1).getSingleResult();
-        return trip.getEndingKm();
+        List<Trip> results = em.createQuery(cq).getResultList();
+        if (!results.isEmpty()) {
+            kilometer = results.get(0).getEndingKm();
+        }
+        return kilometer;
+    }
+
+    public Integer getKilometer(String plate) {
+        Integer kilometer = 0;
+        if (plate == null) {
+            return kilometer;
+        }
+
+        Truck truck = this.findOneByPlate(plate);
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Trip> cq = cb.createQuery(Trip.class);
+        Root<Trip> root = cq.from(Trip.class);
+
+        List<Predicate> predicateList = new ArrayList<Predicate>();
+        Predicate predicate = cb.equal(root.get(Trip_.truck), truck);
+        predicateList.add(predicate);
+        Predicate[] predicates = new Predicate[predicateList.size()];
+        predicateList.toArray(predicates);
+        cq.where(predicates);
+        cq.orderBy(cb.desc(root.get(Trip_.endingTime)));
+
+        List<Trip> results = em.createQuery(cq).getResultList();
+        if (!results.isEmpty()) {
+            kilometer = results.get(0).getEndingKm();
+        }
+        return kilometer;
     }
 
     public DatatablesResultSet<Truck> getRecords(DatatablesCriteria criteria) {
@@ -128,5 +163,24 @@ public class TruckServiceImpl implements TruckService {
         List<Truck> resultList = typedQuery.getResultList();
 
         return new DatatablesResultSet<Truck>(resultList, totalRecords, displaySize);
+    }
+
+    public String[] getPlates(String q) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Truck> cq = cb.createQuery(Truck.class);
+        Root<Truck> root = cq.from(Truck.class);
+
+        Predicate predicate = cb.like(root.get(Truck_.plate), "%" + q + "%");
+        cq.where(predicate);
+        cq.orderBy(cb.desc(root.get(Truck_.plate)));
+
+        List<Truck> trucks = em.createQuery(cq).getResultList();
+        String[] a = new String[trucks.size()];
+        int index = 0;
+        for (Truck truck : trucks) {
+            a[index] = (String) truck.getPlate();
+            index++;
+        }
+        return a;
     }
 }

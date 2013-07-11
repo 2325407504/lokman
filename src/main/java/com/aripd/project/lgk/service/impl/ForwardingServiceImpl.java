@@ -1,11 +1,7 @@
 package com.aripd.project.lgk.service.impl;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,8 +26,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,15 +37,15 @@ import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesSortField;
 import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Forwarding_;
-import com.aripd.project.lgk.domain.Forwarding;
-import com.aripd.project.lgk.domain.Forwarding_;
 import com.aripd.project.lgk.report.forwarding.FillManager;
 import com.aripd.project.lgk.report.forwarding.Layouter;
 import com.aripd.project.lgk.report.forwarding.Writer;
 import com.aripd.project.lgk.repository.ForwardingRepository;
 import com.aripd.project.lgk.repository.UatfRepository;
+import com.aripd.project.lgk.service.EndingpointService;
 import com.aripd.project.lgk.service.ForwardingService;
 import com.aripd.project.lgk.service.QuotaService;
+import com.aripd.project.lgk.service.StartingpointService;
 import com.aripd.project.lgk.service.SubcontractorService;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -71,6 +65,10 @@ public class ForwardingServiceImpl implements ForwardingService {
     private SubcontractorService subcontractorService;
     @Resource(name = "quotaService")
     private QuotaService quotaService;
+    @Resource(name = "startingpointService")
+    private StartingpointService startingpointService;
+    @Resource(name = "endingpointService")
+    private EndingpointService endingpointService;
 
     public Forwarding findOne(Long id) {
         return repository.findOne(id);
@@ -241,11 +239,15 @@ public class ForwardingServiceImpl implements ForwardingService {
             String plate = row.getCell(3).getStringCellValue();
             Date startingTime = row.getCell(4).getDateCellValue();
             Date endingTime = row.getCell(5).getDateCellValue();
-            String endingPoint = row.getCell(6).getStringCellValue();
-            Integer loadWeightInTonne = (int) row.getCell(7).getNumericCellValue();
-            BigDecimal shippingCost = new BigDecimal(row.getCell(8).getNumericCellValue());
-            String subcontractorCode = row.getCell(9).getStringCellValue();
-            String quotaCode = row.getCell(10).getStringCellValue();
+            String startingpoint_code = row.getCell(6).getStringCellValue();
+            String endingpoint_code = row.getCell(7).getStringCellValue();
+            Integer startingKm = (int) row.getCell(8).getNumericCellValue();
+            Integer endingKm = (int) row.getCell(9).getNumericCellValue();
+            Integer loadWeightInTonne = (int) row.getCell(10).getNumericCellValue();
+            String remark = row.getCell(11).getStringCellValue();
+            BigDecimal shippingCost = new BigDecimal(row.getCell(12).getNumericCellValue());
+            String subcontractor_code = row.getCell(13).getStringCellValue();
+            String quota_code = row.getCell(14).getStringCellValue();
 
             forwarding = new Forwarding();
             forwarding.setSubmitted(true);
@@ -255,11 +257,15 @@ public class ForwardingServiceImpl implements ForwardingService {
             forwarding.setPlate(plate);
             forwarding.setStartingTime(new DateTime(startingTime));
             forwarding.setEndingTime(new DateTime(endingTime));
-            forwarding.setEndingPoint(endingPoint);
+            forwarding.setStartingpoint(startingpointService.findOneByCode(startingpoint_code));
+            forwarding.setEndingpoint(endingpointService.findOneByCode(endingpoint_code));
+            forwarding.setStartingKm(startingKm);
+            forwarding.setEndingKm(endingKm);
             forwarding.setLoadWeightInTonne(loadWeightInTonne);
+            forwarding.setRemark(remark);
             forwarding.setShippingCost(shippingCost);
-            forwarding.setSubcontractor(subcontractorService.findOneByCode(subcontractorCode));
-            forwarding.setQuota(quotaService.findOneByCode(quotaCode));
+            forwarding.setSubcontractor(subcontractorService.findOneByCode(subcontractor_code));
+            forwarding.setQuota(quotaService.findOneByCode(quota_code));
 
             forwardings.add(forwarding);
         }

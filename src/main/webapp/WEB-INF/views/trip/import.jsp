@@ -42,10 +42,10 @@
                     <td>user1</td>
                     <td>plate1</td>
                     <td>driverCode1</td>
-                    <td>startingPoint1</td>
+                    <td>startingpoint1</td>
                     <td>123</td>
                     <td>11.02.2013 21:03</td>
-                    <td>endingPoint1</td>
+                    <td>endingpoint1</td>
                     <td>125</td>
                     <td>11.02.2013 22:15</td>
                     <td>11</td>
@@ -55,10 +55,10 @@
                     <td>user2</td>
                     <td>plate2</td>
                     <td>driverCode2</td>
-                    <td>startingPoint2</td>
+                    <td>startingpoint2</td>
                     <td>234</td>
                     <td>10.03.2013 20:12</td>
-                    <td>endingPoint2</td>
+                    <td>endingpoint2</td>
                     <td>245</td>
                     <td>11.03.2013 02:21</td>
                     <td>22</td>

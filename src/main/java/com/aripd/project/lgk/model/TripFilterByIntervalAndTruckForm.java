@@ -10,7 +10,6 @@ public class TripFilterByIntervalAndTruckForm {
     private DateTime startingTime;
     @NotNull
     private DateTime endingTime;
-    @NotNull
     private Truck truck;
 
     public DateTime getStartingTime() {

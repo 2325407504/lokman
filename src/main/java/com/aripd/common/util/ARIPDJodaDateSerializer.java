@@ -1,4 +1,4 @@
-package com.aripd.common.utils;
+package com.aripd.common.util;
 
 import java.io.IOException;
 import java.util.Locale;

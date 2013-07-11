@@ -14,7 +14,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
-import com.aripd.common.utils.ARIPDJodaDateTimeSerializer;
+import com.aripd.common.util.ARIPDJodaDateTimeSerializer;
 
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {

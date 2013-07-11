@@ -38,6 +38,18 @@ public class DriverController {
     @Resource(name = "regionService")
     private RegionService regionService;
 
+    /**
+     * TODO Authorize ile ilgili sorun çıkacak
+     *
+     * @param plate
+     * @return
+     */
+    @RequestMapping(value = "/getnames", method = RequestMethod.GET)
+    public @ResponseBody
+    String[] getNames(@RequestParam(value = "q") String q) {
+        return driverService.getNames(q);
+    }
+
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
     WebResultSet<Driver> datatablesAction(@DatatablesParam DatatablesCriteria criteria) {

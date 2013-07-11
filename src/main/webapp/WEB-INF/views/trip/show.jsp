@@ -20,10 +20,10 @@
             <aripd:descriptionitem label="Account" field="tripAttribute.account.client.fullname"></aripd:descriptionitem>
             <aripd:descriptionitem label="Truck" field="tripAttribute.truck.plate"></aripd:descriptionitem>
             <aripd:descriptionitem label="Driver" field="tripAttribute.driver.name"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Starting Point" field="tripAttribute.startingPoint"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Starting Point" field="tripAttribute.startingpoint"></aripd:descriptionitem>
             <aripd:descriptionitem label="Starting Km" field="tripAttribute.startingKm"></aripd:descriptionitem>
             <aripd:descriptionitem label="Starting Time" field="tripAttribute.startingTime"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Ending Point" field="tripAttribute.endingPoint"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Ending Point" field="tripAttribute.endingpoint"></aripd:descriptionitem>
             <aripd:descriptionitem label="Ending Km" field="tripAttribute.endingKm"></aripd:descriptionitem>
             <aripd:descriptionitem label="Ending Time" field="tripAttribute.endingTime"></aripd:descriptionitem>
             <aripd:descriptionitem label="Weight" field="tripAttribute.loadWeightInTonne"></aripd:descriptionitem>

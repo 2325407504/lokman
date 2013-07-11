@@ -18,7 +18,7 @@ import org.joda.time.DateTime;
 
 import com.aripd.account.domain.Account;
 import com.aripd.common.entity.BaseEntity;
-import com.aripd.common.utils.ARIPDJodaDateTimeSerializer;
+import com.aripd.common.util.ARIPDJodaDateTimeSerializer;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -49,11 +49,21 @@ public class Forwarding extends BaseEntity {
     @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
     @Column(columnDefinition = "TIMESTAMP")
     private DateTime endingTime;
-    @NotEmpty
-    private String endingPoint;
+    @NotNull
+    @ManyToOne
+    private Startingpoint startingpoint;
+    @NotNull
+    @ManyToOne
+    private Endingpoint endingpoint;
+    @NotNull
+    private Integer startingKm;
+    @NotNull
+    private Integer endingKm;
     @Column(nullable = false)
     @NotNull
     private Integer loadWeightInTonne;
+    @Column(columnDefinition = "TEXT", nullable = true)
+    private String remark;
     @Column(nullable = false)
     @NotNull
     private BigDecimal shippingCost;
@@ -128,12 +138,36 @@ public class Forwarding extends BaseEntity {
         this.endingTime = endingTime;
     }
 
-    public String getEndingPoint() {
-        return endingPoint;
+    public Startingpoint getStartingpoint() {
+        return startingpoint;
     }
 
-    public void setEndingPoint(String endingPoint) {
-        this.endingPoint = endingPoint;
+    public void setStartingpoint(Startingpoint startingpoint) {
+        this.startingpoint = startingpoint;
+    }
+
+    public Endingpoint getEndingpoint() {
+        return endingpoint;
+    }
+
+    public void setEndingpoint(Endingpoint endingpoint) {
+        this.endingpoint = endingpoint;
+    }
+
+    public Integer getStartingKm() {
+        return startingKm;
+    }
+
+    public void setStartingKm(Integer startingKm) {
+        this.startingKm = startingKm;
+    }
+
+    public Integer getEndingKm() {
+        return endingKm;
+    }
+
+    public void setEndingKm(Integer endingKm) {
+        this.endingKm = endingKm;
     }
 
     public Integer getLoadWeightInTonne() {
@@ -142,6 +176,14 @@ public class Forwarding extends BaseEntity {
 
     public void setLoadWeightInTonne(Integer loadWeightInTonne) {
         this.loadWeightInTonne = loadWeightInTonne;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public BigDecimal getShippingCost() {

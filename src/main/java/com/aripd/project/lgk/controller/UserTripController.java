@@ -24,7 +24,6 @@ import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Trip;
-import com.aripd.project.lgk.model.TripFilterByIntervalAndTruckForm;
 import com.aripd.project.lgk.model.UserTripFilterByIntervalAndTruckForm;
 import com.aripd.project.lgk.service.DriverService;
 import com.aripd.project.lgk.service.TripService;
@@ -205,7 +204,11 @@ public class UserTripController {
             return "/usertrip/report";
         }
 
-        tripService.exportByIntervalAndTruckAndPrincipal(response, startingTime, endingTime, truckService.findOne(truck_id), principal);
+        if (truck_id == null) {
+            tripService.exportByInterval(response, startingTime, endingTime, principal);
+        } else {
+            tripService.exportByIntervalAndTruck(response, startingTime, endingTime, truckService.findOne(truck_id), principal);
+        }
         return "redirect:/usertrip/report";
     }
 }

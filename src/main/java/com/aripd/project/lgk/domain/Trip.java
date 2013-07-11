@@ -12,7 +12,7 @@ import org.joda.time.DateTime;
 
 import com.aripd.account.domain.Account;
 import com.aripd.common.entity.BaseEntity;
-import com.aripd.common.utils.ARIPDJodaDateTimeSerializer;
+import com.aripd.common.util.ARIPDJodaDateTimeSerializer;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -33,7 +33,7 @@ public class Trip extends BaseEntity {
     @ManyToOne
     private Driver driver;
     @NotEmpty
-    private String startingPoint;
+    private String startingpoint;
     @NotNull
     private Integer startingKm;
     @NotNull
@@ -42,7 +42,7 @@ public class Trip extends BaseEntity {
     @Column(columnDefinition = "TIMESTAMP")
     private DateTime startingTime;
     @NotEmpty
-    private String endingPoint;
+    private String endingpoint;
     @NotNull
     private Integer endingKm;
     @NotNull
@@ -84,12 +84,12 @@ public class Trip extends BaseEntity {
         this.driver = driver;
     }
 
-    public String getStartingPoint() {
-        return startingPoint;
+    public String getStartingpoint() {
+        return startingpoint;
     }
 
-    public void setStartingPoint(String startingPoint) {
-        this.startingPoint = startingPoint;
+    public void setStartingpoint(String startingpoint) {
+        this.startingpoint = startingpoint;
     }
 
     public Integer getStartingKm() {
@@ -108,12 +108,12 @@ public class Trip extends BaseEntity {
         this.startingTime = startingTime;
     }
 
-    public String getEndingPoint() {
-        return endingPoint;
+    public String getEndingpoint() {
+        return endingpoint;
     }
 
-    public void setEndingPoint(String endingPoint) {
-        this.endingPoint = endingPoint;
+    public void setEndingpoint(String endingpoint) {
+        this.endingpoint = endingpoint;
     }
 
     public Integer getEndingKm() {

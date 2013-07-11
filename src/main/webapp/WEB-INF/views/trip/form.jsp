@@ -45,13 +45,13 @@
                     <form:errors cssClass="text-error" path="driver" />
                 </div>
                 <div class="control-group">
-                    <spring:message code="Starting Point" var="startingPoint" />
-                    <spring:message code="Ending Point" var="endingPoint" />
-                    <form:label path="startingPoint">${startingPoint} - ${endingPoint}</form:label>
-                    <form:input path="startingPoint" cssClass="input-medium" placeholder="${startingPoint}" />
-                    <form:errors cssClass="text-error" path="startingPoint" />
-                    <form:input path="endingPoint" cssClass="input-medium" placeholder="${endingPoint}" />
-                    <form:errors cssClass="text-error" path="endingPoint" />
+                    <spring:message code="Starting Point" var="startingpoint" />
+                    <spring:message code="Ending Point" var="endingpoint" />
+                    <form:label path="startingpoint">${startingpoint} - ${endingpoint}</form:label>
+                    <form:input path="startingpoint" cssClass="input-medium" placeholder="${startingpoint}" />
+                    <form:errors cssClass="text-error" path="startingpoint" />
+                    <form:input path="endingpoint" cssClass="input-medium" placeholder="${endingpoint}" />
+                    <form:errors cssClass="text-error" path="endingpoint" />
                 </div>
                 <div class="control-group">
                     <spring:message code="Starting Km" var="startingKm" />
@@ -77,7 +77,7 @@
                     <form:errors cssClass="text-error" path="loadWeightInTonne" />
                 </div>
                 <div class="control-group">
-                    <form:label path="remark" class="control-label"><spring:message code="Remark" /></form:label>
+                    <form:label path="remark"><spring:message code="Remark" /></form:label>
                     <form:textarea path="remark" />
                     <form:errors cssClass="text-error" path="remark" />
                 </div>
@@ -111,24 +111,26 @@
             var truck_id = $(e).find('#truck').val();
             $.ajax({
                 type: "GET",
-                url: "truck/get/" + truck_id + "/kilometer",
+                url: "truck/getkilometerbyid",
+                data: {id: truck_id},
                 beforeSend: function() {
                 },
                 success: function(response) {
+                    console.log(response);
                     $(e).find('[name=startingKm]').val(response);
                     $(e).find('[name=startingKm]').attr('min', response);
                     $(e).find('[name=startingKm]').attr('max', response);
                     $(e).find('[name=endingKm]').val(response);
                     $(e).find('[name=endingKm]').attr('min', response);
                 },
-                error: function(e) {
-                    console.log(e);
-                    alert('Hata: ' + e);
+                error: function(response) {
+                    console.log(response);
                 }
             });
         }
     </script>
 </c:if>
+
 <script type="text/javascript">
     var startDateTextBox = $('#startingTime');
     var endDateTextBox = $('#endingTime');

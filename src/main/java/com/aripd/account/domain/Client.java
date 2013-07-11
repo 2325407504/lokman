@@ -8,6 +8,8 @@ import javax.persistence.Transient;
 import com.aripd.common.entity.BaseEntity;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
 
 @Entity
 @Table(name = "client")
@@ -21,6 +23,10 @@ public class Client extends BaseEntity {
     private String lastName;
     @Column(nullable = true, unique = false)
     private String phonenumber;
+    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+    @Column(columnDefinition = "TIMESTAMP")
+    //@DateTimeFormat(style = "S-")
+    private DateTime birthday;
 
     @Override
     public String toString() {
@@ -68,5 +74,13 @@ public class Client extends BaseEntity {
 
     public void setPhonenumber(String phonenumber) {
         this.phonenumber = phonenumber;
+    }
+
+    public DateTime getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(DateTime birthday) {
+        this.birthday = birthday;
     }
 }

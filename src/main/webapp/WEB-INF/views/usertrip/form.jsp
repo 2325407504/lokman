@@ -35,13 +35,13 @@
                     <form:errors cssClass="text-error" path="driver" />
                 </div>
                 <div class="control-group">
-                    <spring:message code="Starting Point" var="startingPoint" />
-                    <spring:message code="Ending Point" var="endingPoint" />
-                    <form:label path="startingPoint">${startingPoint} - ${endingPoint}</form:label>
-                    <form:input path="startingPoint" cssClass="input-medium" placeholder="${startingPoint}" />
-                    <form:errors cssClass="text-error" path="startingPoint" />
-                    <form:input path="endingPoint" cssClass="input-medium" placeholder="${endingPoint}" />
-                    <form:errors cssClass="text-error" path="endingPoint" />
+                    <spring:message code="Starting Point" var="startingpoint" />
+                    <spring:message code="Ending Point" var="endingpoint" />
+                    <form:label path="startingpoint">${startingpoint} - ${endingpoint}</form:label>
+                    <form:input path="startingpoint" cssClass="input-medium" placeholder="${startingpoint}" />
+                    <form:errors cssClass="text-error" path="startingpoint" />
+                    <form:input path="endingpoint" cssClass="input-medium" placeholder="${endingpoint}" />
+                    <form:errors cssClass="text-error" path="endingpoint" />
                 </div>
                 <div class="control-group">
                     <spring:message code="Starting Km" var="startingKm" />
@@ -67,7 +67,7 @@
                     <form:errors cssClass="text-error" path="loadWeightInTonne" />
                 </div>
                 <div class="control-group">
-                    <form:label path="remark" class="control-label"><spring:message code="Remark" /></form:label>
+                    <form:label path="remark"><spring:message code="Remark" /></form:label>
                     <form:textarea path="remark" />
                     <form:errors cssClass="text-error" path="remark" />
                 </div>

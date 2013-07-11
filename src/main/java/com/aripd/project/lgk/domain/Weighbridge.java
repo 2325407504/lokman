@@ -2,7 +2,7 @@ package com.aripd.project.lgk.domain;
 
 import com.aripd.account.domain.Account;
 import com.aripd.common.entity.BaseEntity;
-import com.aripd.common.utils.ARIPDJodaDateTimeSerializer;
+import com.aripd.common.util.ARIPDJodaDateTimeSerializer;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

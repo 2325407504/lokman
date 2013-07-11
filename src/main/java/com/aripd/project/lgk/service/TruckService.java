@@ -11,6 +11,8 @@ public interface TruckService {
 
     public Integer getKilometer(Long id);
 
+    public Integer getKilometer(String plate);
+
     public Truck findOne(Long id);
 
     public Truck findOneByPlate(String plate);
@@ -26,4 +28,6 @@ public interface TruckService {
     public void delete(Truck truck);
 
     public DatatablesResultSet<Truck> getRecords(DatatablesCriteria criteria);
+
+    public String[] getPlates(String q);
 }

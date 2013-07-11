@@ -17,10 +17,10 @@
         <aripd:description id="trip">
             <aripd:descriptionitem label="Truck" field="usertripAttribute.truck.plate"></aripd:descriptionitem>
             <aripd:descriptionitem label="Driver" field="usertripAttribute.driver.name"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Starting Point" field="usertripAttribute.startingPoint"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Starting Point" field="usertripAttribute.startingpoint"></aripd:descriptionitem>
             <aripd:descriptionitem label="Starting Km" field="usertripAttribute.startingKm"></aripd:descriptionitem>
             <aripd:descriptionitem label="Starting Time" field="usertripAttribute.startingTime"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Ending Point" field="usertripAttribute.endingPoint"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Ending Point" field="usertripAttribute.endingpoint"></aripd:descriptionitem>
             <aripd:descriptionitem label="Ending Km" field="usertripAttribute.endingKm"></aripd:descriptionitem>
             <aripd:descriptionitem label="Ending Time" field="usertripAttribute.endingTime"></aripd:descriptionitem>
             <aripd:descriptionitem label="Weight" field="usertripAttribute.loadWeightInTonne"></aripd:descriptionitem>

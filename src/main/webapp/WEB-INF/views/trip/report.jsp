@@ -19,7 +19,10 @@
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <form:input id="start1" path="startingTime" />
     <form:input id="end1" path="endingTime" />
-    <form:select multiple="false" path="truck.id" items="${trucks}" itemLabel="plate" itemValue="id" />
+    <form:select multiple="false" path="truck.id">
+        <form:option value="" label="--- Tümü" />
+        <form:options items="${trucks}" itemLabel="plate" itemValue="id" />
+    </form:select>
     <button class="btn" type="submit">
         <i class="icon-search"></i>
     </button>

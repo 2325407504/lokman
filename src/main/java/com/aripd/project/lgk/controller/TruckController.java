@@ -23,6 +23,7 @@ import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Truck;
 import com.aripd.project.lgk.service.RegionService;
 import com.aripd.project.lgk.service.TruckService;
+import java.util.List;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_ADMIN') and hasRole('ROLE_OTL'))")
 @Controller
@@ -44,13 +45,37 @@ public class TruckController {
     /**
      * TODO Authorize ile ilgili sorun çıkacak
      *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/getkilometerbyid", method = RequestMethod.GET)
+    public @ResponseBody
+    Integer getKilometerByPlate(@RequestParam(value = "q") Long id) {
+        return truckService.getKilometer(id);
+    }
+
+    /**
+     * TODO Authorize ile ilgili sorun çıkacak
+     *
      * @param plate
      * @return
      */
-    @RequestMapping(value = "/get/{id}/kilometer", method = RequestMethod.GET)
+    @RequestMapping(value = "/getkilometerbyplate", method = RequestMethod.GET)
     public @ResponseBody
-    Integer getKilometer(@PathVariable Long id) {
-        return truckService.getKilometer(id);
+    Integer getKilometerByPlate(@RequestParam(value = "q") String plate) {
+        return truckService.getKilometer(plate);
+    }
+
+    /**
+     * TODO Authorize ile ilgili sorun çıkacak
+     *
+     * @param plate
+     * @return
+     */
+    @RequestMapping(value = "/getplates", method = RequestMethod.GET)
+    public @ResponseBody
+    String[] getPlates(@RequestParam(value = "q") String q) {
+        return truckService.getPlates(q);
     }
 
     @RequestMapping(value = "/list")

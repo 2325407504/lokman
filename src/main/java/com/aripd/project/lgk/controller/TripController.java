@@ -1,6 +1,5 @@
 package com.aripd.project.lgk.controller;
 
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
@@ -172,7 +171,11 @@ public class TripController {
             return "/trip/report";
         }
 
-        tripService.exportByIntervalAndTruck(response, startingTime, endingTime, truckService.findOne(truck_id));
+        if (truck_id == null) {
+            tripService.exportByInterval(response, startingTime, endingTime);
+        } else {
+            tripService.exportByIntervalAndTruck(response, startingTime, endingTime, truckService.findOne(truck_id));
+        }
         return "redirect:/trip/report";
     }
 }

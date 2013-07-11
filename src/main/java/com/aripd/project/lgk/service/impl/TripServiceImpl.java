@@ -76,6 +76,48 @@ public class TripServiceImpl implements TripService {
         return repository.findAll();
     }
 
+    public List<Trip> findByInterval(DateTime startingTime, DateTime endingTime) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Trip> cq = cb.createQuery(Trip.class);
+        Root<Trip> root = cq.from(Trip.class);
+        Join<Trip, Truck> join = root.join(Trip_.truck);
+
+        List<Predicate> predicateList = new ArrayList<Predicate>();
+        Predicate predicate = cb.between(root.get(Trip_.startingTime), startingTime, endingTime);
+
+        cq.where(predicate);
+        cq.orderBy(cb.asc(root.get(Trip_.startingTime)));
+
+        TypedQuery<Trip> typedQuery = em.createQuery(cq);
+        List<Trip> resultList = typedQuery.getResultList();
+
+        return resultList;
+    }
+
+    public List<Trip> findByInterval(DateTime startingTime, DateTime endingTime, Principal principal) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Trip> cq = cb.createQuery(Trip.class);
+        Root<Trip> root = cq.from(Trip.class);
+        Join<Trip, Truck> t = root.join(Trip_.truck);
+        Join<Trip, Account> a = root.join(Trip_.account);
+
+        List<Predicate> predicateList = new ArrayList<Predicate>();
+        Predicate predicate1 = cb.between(root.get(Trip_.startingTime), startingTime, endingTime);
+        Predicate predicate2 = cb.equal(a.get(Account_.username), principal.getName());
+        Predicate predicate = cb.and(predicate1, predicate2);
+        predicateList.add(predicate);
+
+        Predicate[] predicates = new Predicate[predicateList.size()];
+        predicateList.toArray(predicates);
+        cq.where(predicates);
+        cq.orderBy(cb.asc(root.get(Trip_.startingTime)));
+
+        TypedQuery<Trip> typedQuery = em.createQuery(cq);
+        List<Trip> resultList = typedQuery.getResultList();
+
+        return resultList;
+    }
+
     public List<Trip> findByIntervalAndTruck(DateTime startingTime, DateTime endingTime, Truck truck) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Trip> cq = cb.createQuery(Trip.class);
@@ -99,7 +141,7 @@ public class TripServiceImpl implements TripService {
         return resultList;
     }
 
-    public List<Trip> findByIntervalAndTruckAndPrincipal(DateTime startingTime, DateTime endingTime, Truck truck, Principal principal) {
+    public List<Trip> findByIntervalAndTruck(DateTime startingTime, DateTime endingTime, Truck truck, Principal principal) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Trip> cq = cb.createQuery(Trip.class);
         Root<Trip> root = cq.from(Trip.class);
@@ -156,8 +198,8 @@ public class TripServiceImpl implements TripService {
 
         if ((search != null) && (!(search.isEmpty()))) {
             Predicate predicate1 = cb.like(root.get(Trip_.remark), "%" + search + "%");
-            Predicate predicate2 = cb.like(root.get(Trip_.startingPoint), "%" + search + "%");
-            Predicate predicate3 = cb.like(root.get(Trip_.endingPoint), "%" + search + "%");
+            Predicate predicate2 = cb.like(root.get(Trip_.startingpoint), "%" + search + "%");
+            Predicate predicate3 = cb.like(root.get(Trip_.endingpoint), "%" + search + "%");
             Predicate predicate4 = cb.like(account.get(Account_.username), "%" + search + "%");
             Predicate predicate = cb.or(predicate1, predicate2, predicate3, predicate4);
             predicateList.add(predicate);
@@ -265,10 +307,10 @@ public class TripServiceImpl implements TripService {
             String username = row.getCell(0).getStringCellValue();
             String truckPlate = row.getCell(1).getStringCellValue();
             String driverCode = row.getCell(2).getStringCellValue();
-            String startingPoint = row.getCell(3).getStringCellValue();
+            String startingpoint = row.getCell(3).getStringCellValue();
             Integer startingKm = (int) row.getCell(4).getNumericCellValue();
             Date startingTime = row.getCell(5).getDateCellValue();
-            String endingPoint = row.getCell(6).getStringCellValue();
+            String endingpoint = row.getCell(6).getStringCellValue();
             Integer endingKm = (int) row.getCell(7).getNumericCellValue();
             Date endingTime = row.getCell(8).getDateCellValue();
             Integer loadWeightInTonne = (int) row.getCell(9).getNumericCellValue();
@@ -279,10 +321,10 @@ public class TripServiceImpl implements TripService {
             trip.setAccount(accountService.findOneByUsername(username));
             trip.setTruck(truckService.findOneByPlate(truckPlate));
             trip.setDriver(driverService.findOneByCode(driverCode));
-            trip.setStartingPoint(startingPoint);
+            trip.setStartingpoint(startingpoint);
             trip.setStartingKm(startingKm);
             trip.setStartingTime(new DateTime(startingTime));
-            trip.setEndingPoint(endingPoint);
+            trip.setEndingpoint(endingpoint);
             trip.setEndingKm(endingKm);
             trip.setEndingTime(new DateTime(endingTime));
             trip.setLoadWeightInTonne(loadWeightInTonne);
@@ -294,13 +336,71 @@ public class TripServiceImpl implements TripService {
         repository.save(trips);
     }
 
+    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime) {
+        // 1. Create new workbook
+        // 1. Create new workbook
+        HSSFWorkbook workbook = new HSSFWorkbook();
+
+        // 2. Create new worksheet
+        HSSFSheet worksheet = workbook.createSheet("Trip Report");
+
+        // 3. Define starting indices for rows and columns
+        int startRowIndex = 0;
+        int startColIndex = 0;
+
+        // 4. Build layout
+        // Build title, date, and column headers
+        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
+
+        // 5. Fill report
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByInterval(startingTime, endingTime));
+
+        // 6. Set the response properties
+        String fileName = "TripReport.xls";
+        response.setHeader("Content-Disposition", "inline; filename=" + fileName);
+        // Make sure to set the correct content type
+        response.setContentType("application/vnd.ms-excel");
+
+        // 7. Write to the output stream
+        Writer.write(response, worksheet);
+    }
+
+    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime, Principal principal) {
+        // 1. Create new workbook
+        // 1. Create new workbook
+        HSSFWorkbook workbook = new HSSFWorkbook();
+
+        // 2. Create new worksheet
+        HSSFSheet worksheet = workbook.createSheet("Trip Report");
+
+        // 3. Define starting indices for rows and columns
+        int startRowIndex = 0;
+        int startColIndex = 0;
+
+        // 4. Build layout
+        // Build title, date, and column headers
+        Layouter.buildReport(worksheet, startRowIndex, startColIndex);
+
+        // 5. Fill report
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByInterval(startingTime, endingTime, principal));
+
+        // 6. Set the response properties
+        String fileName = "TripReport.xls";
+        response.setHeader("Content-Disposition", "inline; filename=" + fileName);
+        // Make sure to set the correct content type
+        response.setContentType("application/vnd.ms-excel");
+
+        // 7. Write to the output stream
+        Writer.write(response, worksheet);
+    }
+
     public void exportByIntervalAndTruck(HttpServletResponse response, DateTime startingTime, DateTime endingTime, Truck truck) {
         // 1. Create new workbook
         // 1. Create new workbook
         HSSFWorkbook workbook = new HSSFWorkbook();
 
         // 2. Create new worksheet
-        HSSFSheet worksheet = workbook.createSheet("Trip Report for " + truck.getPlate());
+        HSSFSheet worksheet = workbook.createSheet("Trip Report");
 
         // 3. Define starting indices for rows and columns
         int startRowIndex = 0;
@@ -323,13 +423,13 @@ public class TripServiceImpl implements TripService {
         Writer.write(response, worksheet);
     }
 
-    public void exportByIntervalAndTruckAndPrincipal(HttpServletResponse response, DateTime startingTime, DateTime endingTime, Truck truck, Principal principal) {
+    public void exportByIntervalAndTruck(HttpServletResponse response, DateTime startingTime, DateTime endingTime, Truck truck, Principal principal) {
         // 1. Create new workbook
         // 1. Create new workbook
         HSSFWorkbook workbook = new HSSFWorkbook();
 
         // 2. Create new worksheet
-        HSSFSheet worksheet = workbook.createSheet("Trip Report for " + truck.getPlate());
+        HSSFSheet worksheet = workbook.createSheet("Trip Report");
 
         // 3. Define starting indices for rows and columns
         int startRowIndex = 0;
@@ -340,7 +440,7 @@ public class TripServiceImpl implements TripService {
         Layouter.buildReport(worksheet, startRowIndex, startColIndex);
 
         // 5. Fill report
-        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByIntervalAndTruckAndPrincipal(startingTime, endingTime, truck, principal));
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByIntervalAndTruck(startingTime, endingTime, truck, principal));
 
         // 6. Set the response properties
         String fileName = "TripReport.xls";
@@ -351,5 +451,4 @@ public class TripServiceImpl implements TripService {
         // 7. Write to the output stream
         Writer.write(response, worksheet);
     }
-
 }

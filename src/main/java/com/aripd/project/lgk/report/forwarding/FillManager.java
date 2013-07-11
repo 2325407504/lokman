@@ -2,7 +2,6 @@ package com.aripd.project.lgk.report.forwarding;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -14,6 +13,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Uatf;
+import java.util.Iterator;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 
 public class FillManager {
@@ -71,35 +71,53 @@ public class FillManager {
             cell5.setCellStyle(bodyCellStyle);
 
             HSSFCell cell6 = row.createCell(startColIndex + 6);
-            cell6.setCellValue(datasource.get(i - 2).getEndingPoint());
+            cell6.setCellValue(datasource.get(i - 2).getStartingpoint().getName());
             cell6.setCellStyle(bodyCellStyle);
 
             HSSFCell cell7 = row.createCell(startColIndex + 7);
-            cell7.setCellValue(datasource.get(i - 2).getLoadWeightInTonne());
+            cell7.setCellValue(datasource.get(i - 2).getEndingpoint().getName());
             cell7.setCellStyle(bodyCellStyle);
 
             HSSFCell cell8 = row.createCell(startColIndex + 8);
-            cell8.setCellValue(datasource.get(i - 2).getShippingCost().doubleValue());
-            cell8.setCellStyle(numericStyle);
+            cell8.setCellValue(datasource.get(i - 2).getStartingKm());
+            cell8.setCellStyle(bodyCellStyle);
 
             HSSFCell cell9 = row.createCell(startColIndex + 9);
-            cell9.setCellValue(datasource.get(i - 2).getSubcontractor().getName());
+            cell9.setCellValue(datasource.get(i - 2).getEndingKm());
             cell9.setCellStyle(bodyCellStyle);
 
             HSSFCell cell10 = row.createCell(startColIndex + 10);
-            cell10.setCellValue(datasource.get(i - 2).getQuota().getName());
+            cell10.setCellValue(datasource.get(i - 2).getLoadWeightInTonne());
             cell10.setCellStyle(bodyCellStyle);
 
             HSSFCell cell11 = row.createCell(startColIndex + 11);
-            StringBuilder sb = new StringBuilder();
-            Set<Uatf> uatfs = datasource.get(i - 2).getUatfs();
-            for (Uatf uatf : uatfs) {
-                sb.append(uatf.getCode());
-                sb.append("\n");
-            }
-            cell11.setCellValue(sb.toString());
+            cell11.setCellValue(datasource.get(i - 2).getRemark());
             cell11.setCellStyle(bodyCellStyle);
 
+            HSSFCell cell12 = row.createCell(startColIndex + 12);
+            cell12.setCellValue(datasource.get(i - 2).getShippingCost().doubleValue());
+            cell12.setCellStyle(numericStyle);
+
+            HSSFCell cell13 = row.createCell(startColIndex + 13);
+            cell13.setCellValue(datasource.get(i - 2).getSubcontractor().getName());
+            cell13.setCellStyle(bodyCellStyle);
+
+            HSSFCell cell14 = row.createCell(startColIndex + 14);
+            cell14.setCellValue(datasource.get(i - 2).getQuota().getName());
+            cell14.setCellStyle(bodyCellStyle);
+
+            HSSFCell cell15 = row.createCell(startColIndex + 15);
+            StringBuilder sb = new StringBuilder();
+            Iterator<Uatf> iterator = datasource.get(i - 2).getUatfs().iterator();
+            while (iterator.hasNext()) {
+                Uatf uatf = iterator.next();
+                sb.append(uatf.getCode());
+                if (iterator.hasNext()) {
+                    sb.append("\n");
+                }
+            }
+            cell4.setCellValue(sb.toString());
+            cell4.setCellStyle(bodyCellStyle);
         }
     }
 }

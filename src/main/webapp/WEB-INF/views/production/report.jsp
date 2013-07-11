@@ -24,7 +24,7 @@
     </button>
 </form:form>
 
-<p class="lead"><spring:message code="Bigbag" /></p>
+<p class="lead"><spring:message code="Product" /></p>
 <spring:url var="bigbagReport" value="/bigbag/report" />
 <form:form modelAttribute="bigbagFilterByIntervalForm" action="${bigbagReport}" method="post" class="form-inline">
     <form:errors path="*" cssClass="alert alert-error" element="div" />

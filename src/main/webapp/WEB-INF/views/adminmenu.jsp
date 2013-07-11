@@ -13,6 +13,12 @@
 <c:if test="${uri == customer_list}"><c:set var="customer_class" value="active" /></c:if>
 <spring:url value="/expensetype/list" var="expensetype_list" />
 <c:if test="${uri == expensetype_list}"><c:set var="expensetype_class" value="active" /></c:if>
+<spring:url value="/leavetype/list" var="leavetype_list" />
+<c:if test="${uri == leavetype_list}"><c:set var="leavetype_class" value="active" /></c:if>
+<spring:url value="/startingpoint/list" var="startingpoint_list" />
+<c:if test="${uri == startingpoint_list}"><c:set var="startingpoint_class" value="active" /></c:if>
+<spring:url value="/endingpoint/list" var="endingpoint_list" />
+<c:if test="${uri == endingpoint_list}"><c:set var="endingpoint_class" value="active" /></c:if>
 
 <spring:url value="/region/list" var="region_list" />
 <c:if test="${uri == region_list}"><c:set var="region_class" value="active" /></c:if>
@@ -59,11 +65,11 @@
 
     <div class="dropdown-menu pull-right">
         <table class="table">
-            <caption><spring:message code="Admin" /></caption>
-        <tbody>
-            <tr>
-                <td>
-                    <ul class="unstyled">
+            <caption></caption>
+            <tbody>
+                <tr>
+                    <td>
+                        <ul class="unstyled">
                         <sec:authorize access="hasRole('ROLE_SUPERADMIN')">
                             <li class="nav-header"><spring:message code="User Management" /></li>
                             <li class="${role_class}"><a href="${role_list}"><spring:message code="Roles" /></a></li>
@@ -77,6 +83,9 @@
                         <li class="nav-header"><spring:message code="Settings" /></li>
                         <li class="${customer_class}"><a href="${customer_list}"><spring:message code="Customers" /></a></li>
                         <li class="${expensetype_class}"><a href="${expensetype_list}"><spring:message code="Expensetypes" /></a></li>
+                        <li class="${leavetype_class}"><a href="${leavetype_list}"><spring:message code="Leavetypes" /></a></li>
+                        <li class="${startingpoint_class}"><a href="${startingpoint_list}"><spring:message code="Starting Points" /></a></li>
+                        <li class="${endingpoint_class}"><a href="${endingpoint_list}"><spring:message code="Ending Points" /></a></li>
                             <sec:authorize access="hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_ADMIN') and hasRole('ROLE_OTL'))">
                             <li class="${region_class}"><a href="${region_list}"><spring:message code="Regions" /></a></li>
                             <li class="${truck_class}"><a href="${truck_list}"><spring:message code="Trucks" /></a></li>
@@ -98,8 +107,10 @@
                 </td>
                 <td>
                     <ul class="unstyled">
-                        <li class="nav-header"><spring:message code="Personnel" /></li>
-                        <li class="${expense_class}"><a href="${expense_list}"><spring:message code="Expenses" /></a></li>
+                        <sec:authorize access="hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_ADMIN')">
+                            <li class="nav-header"><spring:message code="Personnel" /></li>
+                            <li class="${expense_class}"><a href="${expense_list}"><spring:message code="Expenses" /></a></li>
+                            </sec:authorize>
                     </ul>
                 </td>
                 <td>

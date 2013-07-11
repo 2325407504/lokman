@@ -17,7 +17,7 @@ import org.joda.time.DateTime;
 
 import com.aripd.account.domain.Account;
 import com.aripd.common.entity.BaseEntity;
-import com.aripd.common.utils.ARIPDJodaDateTimeSerializer;
+import com.aripd.common.util.ARIPDJodaDateTimeSerializer;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;

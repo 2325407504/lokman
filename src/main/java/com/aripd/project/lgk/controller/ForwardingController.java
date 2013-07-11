@@ -26,9 +26,12 @@ import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Uatf;
 import com.aripd.project.lgk.model.ForwardingFilterByIntervalForm;
 import com.aripd.project.lgk.model.UatfFilterByIntervalForm;
+import com.aripd.project.lgk.service.EndingpointService;
 import com.aripd.project.lgk.service.ForwardingService;
 import com.aripd.project.lgk.service.QuotaService;
+import com.aripd.project.lgk.service.StartingpointService;
 import com.aripd.project.lgk.service.SubcontractorService;
+import com.aripd.project.lgk.service.TruckService;
 import javax.validation.Valid;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -41,12 +44,18 @@ public class ForwardingController {
 
     @Resource(name = "forwardingService")
     private ForwardingService forwardingService;
+    @Resource(name = "truckService")
+    private TruckService truckService;
     @Resource(name = "quotaService")
     private QuotaService quotaService;
     @Resource(name = "subcontractorService")
     private SubcontractorService subcontractorService;
     @Resource(name = "accountService")
     private AccountService accountService;
+    @Resource(name = "startingpointService")
+    private StartingpointService startingpointService;
+    @Resource(name = "endingpointService")
+    private EndingpointService endingpointService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -73,6 +82,8 @@ public class ForwardingController {
         model.addAttribute("accounts", accountService.findAll());
         model.addAttribute("quotas", quotaService.findAll());
         model.addAttribute("subcontractors", subcontractorService.findAll());
+        model.addAttribute("startingpoints", startingpointService.findAll());
+        model.addAttribute("endingpoints", endingpointService.findAll());
         model.addAttribute("forwardingAttribute", new Forwarding());
         return "forwarding/form";
     }
@@ -85,6 +96,8 @@ public class ForwardingController {
         model.addAttribute("accounts", accountService.findAll());
         model.addAttribute("quotas", quotaService.findAll());
         model.addAttribute("subcontractors", subcontractorService.findAll());
+        model.addAttribute("startingpoints", startingpointService.findAll());
+        model.addAttribute("endingpoints", endingpointService.findAll());
         model.addAttribute("forwardingAttribute", forwardingService.findOne(id));
         return "forwarding/form";
     }
@@ -101,6 +114,8 @@ public class ForwardingController {
             model.addAttribute("accounts", accountService.findAll());
             model.addAttribute("quotas", quotaService.findAll());
             model.addAttribute("subcontractors", subcontractorService.findAll());
+            model.addAttribute("startingpoints", startingpointService.findAll());
+            model.addAttribute("endingpoints", endingpointService.findAll());
             return "/forwarding/form";
         }
 

@@ -22,7 +22,7 @@
             <aripd:descriptionitem label="Plate" field="forwardingAttribute.plate"></aripd:descriptionitem>
             <aripd:descriptionitem label="Starting Time" field="forwardingAttribute.startingTime"></aripd:descriptionitem>
             <aripd:descriptionitem label="Ending Time" field="forwardingAttribute.endingTime"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Ending Point" field="forwardingAttribute.endingPoint"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Ending Point" field="forwardingAttribute.endingpoint"></aripd:descriptionitem>
             <aripd:descriptionitem label="Weight" field="forwardingAttribute.loadWeightInTonne"></aripd:descriptionitem>
             <aripd:descriptionitem label="Shipping Cost" field="forwardingAttribute.shippingCost"></aripd:descriptionitem>
             <aripd:descriptionitem label="Subcontractor" field="forwardingAttribute.subcontractor.name"></aripd:descriptionitem>
