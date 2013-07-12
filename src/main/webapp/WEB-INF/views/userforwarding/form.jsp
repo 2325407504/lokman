@@ -102,20 +102,20 @@
 <c:if test="${userforwardingAttribute.id != null}">
     <div class="row-fluid">
         <div class="span12">
-            <fmt:message key="Code" var="Code"/>
-            <fmt:message key="Company" var="Company"/>
-            <fmt:message key="County" var="County"/>
-            <fmt:message key="City" var="City"/>
-            <fmt:message key="Weight" var="Weight"/>
+            <spring:message code="Code" var="code" />
+            <spring:message code="Company" var="company" />
+            <spring:message code="County" var="county" />
+            <spring:message code="City" var="city" />
+            <spring:message code="Weight" var="weight" />
 
             <spring:url var="uatfSave" value="/useruatf/save/${userforwardingAttribute.id}" />
             <form:form modelAttribute="useruatfAttribute" action="${uatfSave}" method="post" class="form-inline">
                 <form:errors path="*" cssClass="alert alert-error" element="div" />
-                <form:input path="code" cssClass="input-small" placeholder="${Code}" />
-                <form:input path="company" cssClass="input-small" placeholder="${Company}" />
-                <form:input path="county" cssClass="input-small" placeholder="${County}" />
-                <form:input path="city" cssClass="input-small" placeholder="${City}" />
-                <form:input path="loadWeightInTonne" cssClass="input-mini" placeholder="${Weight}" />
+                <form:input path="code" cssClass="input-small" placeholder="${code}" />
+                <form:input path="company" cssClass="input-small" placeholder="${company}" />
+                <form:input path="county" cssClass="input-small" placeholder="${county}" />
+                <form:input path="city" cssClass="input-small" placeholder="${city}" />
+                <form:input path="loadWeightInTonne" cssClass="input-mini" placeholder="${weight}" />
                 <button class="btn" type="submit">
                     <i class="icon-ok"></i>
                 </button>

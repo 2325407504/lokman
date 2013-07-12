@@ -84,7 +84,7 @@
 <c:if test="${invoiceAttribute.id != null}">
     <div class="row-fluid">
         <div class="span12">
-            <fmt:message key="Document No" var="documentNo" />
+            <spring:message code="Document No" var="documentNo" />
 
             <spring:url var="waybillSave" value="/invoice/waybill/add/${invoiceAttribute.id}" />
             <form:form modelAttribute="waybillFilterByDocumentNoForm" action="${waybillSave}" method="post" class="form-inline">

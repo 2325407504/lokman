@@ -62,7 +62,6 @@ public class RoleServiceImpl implements RoleService {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Role> cq = cb.createQuery(Role.class);
 		Root<Role> root = cq.from(Role.class);
-		//Join<Role, Customer> root = cq.from(Role.class).join(Role_.customer);
 
 		// Filtering and Searching
 		List<Predicate> predicateList = new ArrayList<Predicate>();

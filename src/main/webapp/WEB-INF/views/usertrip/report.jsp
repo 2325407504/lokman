@@ -13,6 +13,8 @@
     <jsp:param name="active" value="report" />
 </jsp:include>
 
+<spring:message code="All" var="all" />
+
 <p class="lead"><spring:message code="Trip" /></p>
 <spring:url var="usertripReport" value="/usertrip/report" />
 <form:form modelAttribute="usertripFilterByIntervalAndTruckForm" action="${usertripReport}" method="post" class="form-inline">
@@ -20,7 +22,7 @@
     <form:input id="start1" path="startingTime" />
     <form:input id="end1" path="endingTime" />
     <form:select multiple="false" path="truck.id">
-        <form:option value="" label="--- Tümü" />
+        <form:option value="" label="--- ${all}" />
         <form:options items="${trucks}" itemLabel="plate" itemValue="id" />
     </form:select>
     <button class="btn" type="submit">

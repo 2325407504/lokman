@@ -117,8 +117,7 @@
 
 <div class="row-fluid">
     <div class="span12">
-        <fmt:message key="Product" var="Product"/>
-        <fmt:message key="Weight" var="Weight"/>
+        <spring:message code="Weight" var="weight"/>
 
         <c:if test="${productionAttribute.id != null}">
             <spring:url var="bigbagSave" value="/bigbag/save/{id}">
@@ -130,7 +129,7 @@
                     <form:option value="-" label="---Ürün Seçiniz"/>
                     <form:options items="${products}" itemLabel="name" itemValue="id"/>
                 </form:select>
-                <form:input path="weight" cssClass="input-small" placeholder="${Weight}" />
+                <form:input path="weight" cssClass="input-small" placeholder="${weight}" />
                 <button class="btn btn-primary" type="submit">
                     <i class="icon-ok icon-white"></i>
                 </button>

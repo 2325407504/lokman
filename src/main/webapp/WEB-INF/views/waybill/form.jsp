@@ -84,16 +84,15 @@
 <c:if test="${waybillAttribute.id != null}">
     <div class="row-fluid">
         <div class="span12">
-            <fmt:message key="Product" var="Product"/>
-            <fmt:message key="Weight" var="Weight"/>
-            <fmt:message key="Remark" var="Remark"/>
+            <spring:message code="Weight" var="weight" />
+            <spring:message code="Remark" var="remark" />
 
             <spring:url var="outgoingSave" value="/outgoing/save/${waybillAttribute.id}" />
             <form:form modelAttribute="outgoingAttribute" action="${outgoingSave}" method="post" class="form-inline">
                 <form:errors path="*" cssClass="alert alert-error" element="div" />
                 <form:select multiple="false" path="product.id" items="${products}" itemLabel="name" itemValue="id" />
-                <form:input path="weight" cssClass="input-mini" placeholder="${Weight}" />
-                <form:input path="remark" cssClass="input-small" placeholder="${Remark}" />
+                <form:input path="weight" cssClass="input-mini" placeholder="${weight}" />
+                <form:input path="remark" cssClass="input-small" placeholder="${remark}" />
                 <button class="btn" type="submit"><i class="icon-ok"></i></button>
                 </form:form>
 

@@ -34,5 +34,5 @@ public interface ForwardingService {
 
     public void importData(MultipartFile file);
 
-    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
+    public void export(HttpServletResponse response, DateTime startingTime, DateTime endingTime, String plate, Long startingpoint_id, Long endingpoint_id);
 }

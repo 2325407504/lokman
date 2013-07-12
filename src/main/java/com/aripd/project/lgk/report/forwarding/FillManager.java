@@ -28,8 +28,7 @@ public class FillManager {
      * @param startColIndex starting column offset
      * @param datasource the data source
      */
-    public static void fillReport(HSSFSheet worksheet, int startRowIndex,
-            int startColIndex, List<Forwarding> datasource) {
+    public static void fillReport(HSSFSheet worksheet, int startRowIndex, int startColIndex, List<Forwarding> datasource) {
         // Row offset
         startRowIndex += 2;
 
@@ -47,11 +46,11 @@ public class FillManager {
             HSSFRow row = worksheet.createRow((short) i + 1);
 
             HSSFCell cell0 = row.createCell(startColIndex + 0);
-            cell0.setCellValue(datasource.get(i - 2).getWaybillNo());
+            cell0.setCellValue(datasource.get(i - 2).getAccount().getUsername());
             cell0.setCellStyle(bodyCellStyle);
 
             HSSFCell cell1 = row.createCell(startColIndex + 1);
-            cell1.setCellValue(datasource.get(i - 2).getAccount().getUsername());
+            cell1.setCellValue(datasource.get(i - 2).getWaybillNo());
             cell1.setCellStyle(bodyCellStyle);
 
             HSSFCell cell2 = row.createCell(startColIndex + 2);
@@ -91,19 +90,19 @@ public class FillManager {
             cell10.setCellStyle(bodyCellStyle);
 
             HSSFCell cell11 = row.createCell(startColIndex + 11);
-            cell11.setCellValue(datasource.get(i - 2).getRemark());
-            cell11.setCellStyle(bodyCellStyle);
+            cell11.setCellValue(datasource.get(i - 2).getShippingCost().doubleValue());
+            cell11.setCellStyle(numericStyle);
 
             HSSFCell cell12 = row.createCell(startColIndex + 12);
-            cell12.setCellValue(datasource.get(i - 2).getShippingCost().doubleValue());
-            cell12.setCellStyle(numericStyle);
+            cell12.setCellValue(datasource.get(i - 2).getSubcontractor().getName());
+            cell12.setCellStyle(bodyCellStyle);
 
             HSSFCell cell13 = row.createCell(startColIndex + 13);
-            cell13.setCellValue(datasource.get(i - 2).getSubcontractor().getName());
+            cell13.setCellValue(datasource.get(i - 2).getQuota().getName());
             cell13.setCellStyle(bodyCellStyle);
 
             HSSFCell cell14 = row.createCell(startColIndex + 14);
-            cell14.setCellValue(datasource.get(i - 2).getQuota().getName());
+            cell14.setCellValue(datasource.get(i - 2).getRemark());
             cell14.setCellStyle(bodyCellStyle);
 
             HSSFCell cell15 = row.createCell(startColIndex + 15);
@@ -116,8 +115,8 @@ public class FillManager {
                     sb.append("\n");
                 }
             }
-            cell4.setCellValue(sb.toString());
-            cell4.setCellStyle(bodyCellStyle);
+            cell15.setCellValue(sb.toString());
+            cell15.setCellStyle(bodyCellStyle);
         }
     }
 }

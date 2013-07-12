@@ -18,14 +18,17 @@
     <aripd:datatablescolumn label="Account" field="account.username"/>
     <aripd:datatablescolumn label="Document No" field="waybillNo"/>
     <aripd:datatablescolumn label="Driver" field="driver"/>
-    <aripd:datatablescolumn label="Subcontractor" field="subcontractor.name"/>
-    <aripd:datatablescolumn label="Quota" field="quota.name"/>
     <aripd:datatablescolumn label="Plate" field="plate"/>
     <aripd:datatablescolumn label="Starting Time" field="startingTime"/>
     <aripd:datatablescolumn label="Ending Time" field="endingTime"/>
-    <aripd:datatablescolumn label="Ending Point" field="endingpoint"/>
+    <aripd:datatablescolumn label="Starting Point" field="startingpoint.name"/>
+    <aripd:datatablescolumn label="Ending Point" field="endingpoint.name"/>
+    <aripd:datatablescolumn label="Starting Km" field="startingKm"/>
+    <aripd:datatablescolumn label="Ending Km" field="endingKm"/>
     <aripd:datatablescolumn label="Weight" field="loadWeightInTonne"/>
     <aripd:datatablescolumn label="Shipping Cost" field="shippingCost"/>
+    <aripd:datatablescolumn label="Subcontractor" field="subcontractor.name"/>
+    <aripd:datatablescolumn label="Quota" field="quota.name"/>
 </aripd:datatables>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

@@ -47,6 +47,12 @@
 
 <spring:url value="/expense/list" var="expense_list" />
 <c:if test="${uri == expense_list}"><c:set var="expense_class" value="active" /></c:if>
+<spring:url value="/invoice/list" var="invoice_list" />
+<c:if test="${uri == invoice_list}"><c:set var="invoice_class" value="active" /></c:if>
+<spring:url value="/waybill/list" var="waybill_list" />
+<c:if test="${uri == waybill_list}"><c:set var="waybill_class" value="active" /></c:if>
+<spring:url value="/staff/list" var="staff_list" />
+<c:if test="${uri == staff_list}"><c:set var="staff_class" value="active" /></c:if>
 
 <spring:url value="/trip/list" var="trip_list" />
 <c:if test="${uri == trip_list}"><c:set var="trip_class" value="active" /></c:if>
@@ -55,10 +61,6 @@
 
 <spring:url value="/production/list" var="production_list" />
 <c:if test="${uri == production_list}"><c:set var="production_class" value="active" /></c:if>
-<spring:url value="/invoice/list" var="invoice_list" />
-<c:if test="${uri == invoice_list}"><c:set var="invoice_class" value="active" /></c:if>
-<spring:url value="/waybill/list" var="waybill_list" />
-<c:if test="${uri == waybill_list}"><c:set var="waybill_class" value="active" /></c:if>
 
 <spring:url value="/weighbridge/list" var="weighbridge_list" />
 <c:if test="${uri == weighbridge_list}"><c:set var="weighbridge_class" value="active" /></c:if>
@@ -110,6 +112,9 @@
                         <sec:authorize access="hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_ADMIN')">
                             <li class="nav-header"><spring:message code="Personnel" /></li>
                             <li class="${expense_class}"><a href="${expense_list}"><spring:message code="Expenses" /></a></li>
+                            <li class="${invoice_class}"><a href="${invoice_list}"><spring:message code="Invoices" /></a></li>
+                            <li class="${waybill_class}"><a href="${waybill_list}"><spring:message code="Waybills" /></a></li>
+                            <li class="${staff_class}"><a href="${staff_list}"><spring:message code="Staffs" text="Staffs" /></a></li>
                             </sec:authorize>
                     </ul>
                 </td>
@@ -127,8 +132,6 @@
                         <sec:authorize access="hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_ADMIN') and hasRole('ROLE_URE'))">
                             <li class="nav-header"><spring:message code="Production" /></li>
                             <li class="${production_class}"><a href="${production_list}"><spring:message code="Production" /></a></li>
-                            <li class="${invoice_class}"><a href="${invoice_list}"><spring:message code="Invoices" /></a></li>
-                            <li class="${waybill_class}"><a href="${waybill_list}"><spring:message code="Waybills" /></a></li>
                             </sec:authorize>
                     </ul>
                 </td>

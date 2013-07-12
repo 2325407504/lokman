@@ -145,6 +145,8 @@ public class ForwardingController {
     public String reportAction(Model model) {
         model.addAttribute("forwardingFilterByIntervalForm", new ForwardingFilterByIntervalForm());
         model.addAttribute("uatfFilterByIntervalForm", new UatfFilterByIntervalForm());
+        model.addAttribute("startingpoints", startingpointService.findAll());
+        model.addAttribute("endingpoints", endingpointService.findAll());
         return "forwarding/report";
     }
 
@@ -155,6 +157,9 @@ public class ForwardingController {
             BindingResult result,
             @RequestParam("startingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime startingTime,
             @RequestParam("endingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime endingTime,
+            @RequestParam("plate") String plate,
+            @RequestParam("startingpoint.id") Long startingpoint_id,
+            @RequestParam("endingpoint.id") Long endingpoint_id,
             HttpServletResponse response,
             Model model) {
 
@@ -162,7 +167,7 @@ public class ForwardingController {
             return "/forwarding/report";
         }
 
-        forwardingService.exportByInterval(response, startingTime, endingTime);
+        forwardingService.export(response, startingTime, endingTime, plate, startingpoint_id, endingpoint_id);
         return "redirect:/forwarding/report";
     }
 

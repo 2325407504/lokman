@@ -35,18 +35,22 @@ import com.aripd.account.service.AccountService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesSortField;
+import com.aripd.project.lgk.domain.Endingpoint;
+import com.aripd.project.lgk.domain.Endingpoint_;
 import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Forwarding_;
+import com.aripd.project.lgk.domain.Startingpoint;
+import com.aripd.project.lgk.domain.Startingpoint_;
 import com.aripd.project.lgk.report.forwarding.FillManager;
 import com.aripd.project.lgk.report.forwarding.Layouter;
 import com.aripd.project.lgk.report.forwarding.Writer;
 import com.aripd.project.lgk.repository.ForwardingRepository;
-import com.aripd.project.lgk.repository.UatfRepository;
 import com.aripd.project.lgk.service.EndingpointService;
 import com.aripd.project.lgk.service.ForwardingService;
 import com.aripd.project.lgk.service.QuotaService;
 import com.aripd.project.lgk.service.StartingpointService;
 import com.aripd.project.lgk.service.SubcontractorService;
+import javax.persistence.criteria.Join;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service("forwardingService")
@@ -57,8 +61,6 @@ public class ForwardingServiceImpl implements ForwardingService {
     private EntityManager em;
     @Autowired
     private ForwardingRepository repository;
-    @Autowired
-    private UatfRepository uatfRepository;
     @Resource(name = "accountService")
     private AccountService accountService;
     @Resource(name = "subcontractorService")
@@ -87,9 +89,53 @@ public class ForwardingServiceImpl implements ForwardingService {
         CriteriaQuery<Forwarding> cq = cb.createQuery(Forwarding.class);
         Root<Forwarding> root = cq.from(Forwarding.class);
 
+        Predicate predicate = cb.between(root.get(Forwarding_.startingTime), startingTime, endingTime);
+        cq.where(predicate);
+
+        TypedQuery<Forwarding> typedQuery = em.createQuery(cq);
+        List<Forwarding> resultList = typedQuery.getResultList();
+
+        return resultList;
+    }
+
+    public List<Forwarding> findByInterval(DateTime startingTime, DateTime endingTime, String plate, Long startingpoint_id, Long endingpoint_id) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Forwarding> cq = cb.createQuery(Forwarding.class);
+        Root<Forwarding> root = cq.from(Forwarding.class);
+
         List<Predicate> predicateList = new ArrayList<Predicate>();
         Predicate predicate1 = cb.between(root.get(Forwarding_.startingTime), startingTime, endingTime);
-        predicateList.add(predicate1);
+        Predicate predicate2 = null, predicate3 = null, predicate4 = null;
+        if (plate.equalsIgnoreCase("") == false) {
+            predicate2 = cb.equal(root.get(Forwarding_.plate), plate);
+        }
+        if (startingpoint_id != null) {
+            Join<Forwarding, Startingpoint> startingpoint = root.join(Forwarding_.startingpoint);
+            predicate3 = cb.equal(startingpoint.get(Startingpoint_.id), startingpoint_id);
+        }
+        if (endingpoint_id != null) {
+            Join<Forwarding, Endingpoint> endingpoint = root.join(Forwarding_.endingpoint);
+            predicate4 = cb.equal(endingpoint.get(Endingpoint_.id), endingpoint_id);
+        }
+
+        Predicate predicate = predicate1;
+        if (predicate2 != null && predicate3 == null && predicate4 == null) {
+            predicate = cb.and(predicate1, predicate2);
+        } else if (predicate2 == null && predicate3 != null && predicate4 == null) {
+            predicate = cb.and(predicate1, predicate3);
+        } else if (predicate2 == null && predicate3 == null && predicate4 != null) {
+            predicate = cb.and(predicate1, predicate4);
+        } else if (predicate2 != null && predicate3 != null && predicate4 == null) {
+            predicate = cb.and(predicate1, predicate2, predicate3);
+        } else if (predicate2 != null && predicate3 == null && predicate4 != null) {
+            predicate = cb.and(predicate1, predicate2, predicate4);
+        } else if (predicate2 == null && predicate3 != null && predicate4 != null) {
+            predicate = cb.and(predicate1, predicate3, predicate4);
+        } else if (predicate2 != null && predicate3 != null && predicate4 != null) {
+            predicate = cb.and(predicate1, predicate2, predicate3, predicate4);
+        }
+
+        predicateList.add(predicate);
 
         Predicate[] predicates = new Predicate[predicateList.size()];
         predicateList.toArray(predicates);
@@ -273,7 +319,7 @@ public class ForwardingServiceImpl implements ForwardingService {
         repository.save(forwardings);
     }
 
-    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime) {
+    public void export(HttpServletResponse response, DateTime startingTime, DateTime endingTime, String plate, Long startingpoint_id, Long endingpoint_id) {
         // 1. Create new workbook
         HSSFWorkbook workbook = new HSSFWorkbook();
 
@@ -289,12 +335,11 @@ public class ForwardingServiceImpl implements ForwardingService {
         Layouter.buildReport(worksheet, startRowIndex, startColIndex);
 
         // 5. Fill report
-        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByInterval(startingTime, endingTime));
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByInterval(startingTime, endingTime, plate, startingpoint_id, endingpoint_id));
 
         // 6. Set the response properties
         String fileName = "ForwardingReport.xls";
-        response.setHeader("Content-Disposition", "inline; filename="
-                + fileName);
+        response.setHeader("Content-Disposition", "inline; filename=" + fileName);
         // Make sure to set the correct content type
         response.setContentType("application/vnd.ms-excel");
 

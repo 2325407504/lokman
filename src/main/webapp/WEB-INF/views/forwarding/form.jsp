@@ -133,20 +133,20 @@
 <c:if test="${forwardingAttribute.id != null}">
     <div class="row-fluid">
         <div class="span12">
-            <fmt:message key="Code" var="Code"/>
-            <fmt:message key="Company" var="Company"/>
-            <fmt:message key="County" var="County"/>
-            <fmt:message key="City" var="City"/>
-            <fmt:message key="Weight" var="Weight"/>
+            <spring:message code="Code" var="code" />
+            <spring:message code="Company" var="company" />
+            <spring:message code="County" var="county" />
+            <spring:message code="City" var="city" />
+            <spring:message code="Weight" var="weight" />
 
             <spring:url var="uatfSave" value="/uatf/save/${forwardingAttribute.id}" />
             <form:form modelAttribute="uatfAttribute" action="${uatfSave}" method="post" class="form-inline">
                 <form:errors path="*" cssClass="alert alert-error" element="div" />
-                <form:input path="code" cssClass="input-small" placeholder="${Code}" />
-                <form:input path="company" cssClass="input-small" placeholder="${Company}" />
-                <form:input path="county" cssClass="input-small" placeholder="${County}" />
-                <form:input path="city" cssClass="input-small" placeholder="${City}" />
-                <form:input path="loadWeightInTonne" cssClass="input-mini" placeholder="${Weight}" />
+                <form:input path="code" cssClass="input-small" placeholder="${code}" />
+                <form:input path="company" cssClass="input-small" placeholder="${company}" />
+                <form:input path="county" cssClass="input-small" placeholder="${county}" />
+                <form:input path="city" cssClass="input-small" placeholder="${city}" />
+                <form:input path="loadWeightInTonne" cssClass="input-mini" placeholder="${weight}" />
                 <button class="btn" type="submit">
                     <i class="icon-ok"></i>
                 </button>
@@ -166,148 +166,146 @@
     </div>
 </c:if>
 
-<c:if test="${ empty forwardingAttribute.id }">
-    <script type="text/javascript">
-        function findAndSetKilometer(plate, startingKm, endingKm) {
-            $.ajax({
-                type: "get",
-                url: "truck/getkilometerbyplate",
-                data: {q: plate},
-                beforeSend: function() {
-                },
-                success: function(response) {
-                    console.log(response);
-                    startingKm.val(response);
-                    startingKm.attr('min', response);
-                    startingKm.attr('max', response);
-                    endingKm.val(response);
-                    endingKm.attr('min', response);
-                },
-                error: function(response) {
-                    console.log(response);
-                }
-            });
-        }
+<script type="text/javascript">
+    function findAndSetKilometer(plate, startingKm, endingKm) {
+        $.ajax({
+            type: "get",
+            url: "truck/getkilometerbyplate",
+            data: {q: plate},
+            beforeSend: function() {
+            },
+            success: function(response) {
+                console.log(response);
+                startingKm.val(response);
+                startingKm.attr('min', response);
+                startingKm.attr('max', response);
+                endingKm.val(response);
+                endingKm.attr('min', response);
+            },
+            error: function(response) {
+                console.log(response);
+            }
+        });
+    }
 
-        $('[name=plate]')
-                .attr('autocomplete', 'off')
-                .typeahead()
-                .on('keyup', function(ev) {
+    $('[name=plate]')
+            .attr('autocomplete', 'off')
+            .typeahead()
+            .on('keyup', function(ev) {
 
-            ev.stopPropagation();
-            ev.preventDefault();
+        ev.stopPropagation();
+        ev.preventDefault();
 
-            //filter out up/down, tab, enter, and escape keys
-            if ($.inArray(ev.keyCode, [40, 38, 9, 13, 27]) === -1) {
+        //filter out up/down, tab, enter, and escape keys
+        if ($.inArray(ev.keyCode, [40, 38, 9, 13, 27]) === -1) {
 
-                var self = $(this);
+            var self = $(this);
 
-                // We get the URL from input
-                var urljson = self.attr("data-link");
+            // We get the URL from input
+            var urljson = self.attr("data-link");
 
-                //set typeahead source to empty
-                self.data('typeahead').source = [];
+            //set typeahead source to empty
+            self.data('typeahead').source = [];
 
-                //active used so we aren't triggering duplicate keyup events
-                if (!self.data('active') && self.val().length > 0) {
+            //active used so we aren't triggering duplicate keyup events
+            if (!self.data('active') && self.val().length > 0) {
 
-                    self.data('active', true);
+                self.data('active', true);
 
-                    //Do data request.
-                    $.ajax({
-                        url: urljson,
-                        type: 'get',
-                        data: {q: $(this).val()},
-                        dataType: 'json',
-                        success: function(data) {
+                //Do data request.
+                $.ajax({
+                    url: urljson,
+                    type: 'get',
+                    data: {q: $(this).val()},
+                    dataType: 'json',
+                    success: function(data) {
 
-                            console.log(data);
+                        console.log(data);
 
-                            var form = self.closest('form');
-                            var startingKm = form.find('[name=startingKm]');
-                            var endingKm = form.find('[name=endingKm]');
-                            var init = 0;
-                            startingKm.val(init);
-                            startingKm.attr('min', init);
-                            startingKm.attr('max', init);
-                            endingKm.val(init);
-                            endingKm.attr('min', init);
+                        var form = self.closest('form');
+                        var startingKm = form.find('[name=startingKm]');
+                        var endingKm = form.find('[name=endingKm]');
+                        var init = 0;
+                        startingKm.val(init);
+                        startingKm.attr('min', init);
+                        startingKm.attr('max', init);
+                        endingKm.val(init);
+                        endingKm.attr('min', init);
 
-                            if (data.length > 0) {
-                                self.data('typeahead').updater = function(e) {
-                                    console.log(e);
-                                    findAndSetKilometer(e, startingKm, endingKm);
-                                    return e;
-                                }
+                        if (data.length > 0) {
+                            self.data('typeahead').updater = function(e) {
+                                console.log(e);
+                                findAndSetKilometer(e, startingKm, endingKm);
+                                return e;
                             }
-
-                            //set this to true when your callback executes
-                            self.data('active', true);
-
-                            //set your results into the typehead's source 
-                            self.data('typeahead').source = data;
-
-                            //trigger keyup on the typeahead to make it search
-                            self.trigger('keyup');
-
-                            //All done, set to false to prepare for the next remote query.
-                            self.data('active', false);
                         }
-                    });
-                }
+
+                        //set this to true when your callback executes
+                        self.data('active', true);
+
+                        //set your results into the typehead's source 
+                        self.data('typeahead').source = data;
+
+                        //trigger keyup on the typeahead to make it search
+                        self.trigger('keyup');
+
+                        //All done, set to false to prepare for the next remote query.
+                        self.data('active', false);
+                    }
+                });
             }
-        });
+        }
+    });
 
-        $('[name=driver]')
-                .attr('autocomplete', 'off')
-                .typeahead()
-                .on('keyup', function(ev) {
+    $('[name=driver]')
+            .attr('autocomplete', 'off')
+            .typeahead()
+            .on('keyup', function(ev) {
 
-            ev.stopPropagation();
-            ev.preventDefault();
+        ev.stopPropagation();
+        ev.preventDefault();
 
-            //filter out up/down, tab, enter, and escape keys
-            if ($.inArray(ev.keyCode, [40, 38, 9, 13, 27]) === -1) {
+        //filter out up/down, tab, enter, and escape keys
+        if ($.inArray(ev.keyCode, [40, 38, 9, 13, 27]) === -1) {
 
-                var self = $(this);
+            var self = $(this);
 
-                // We get the URL from input
-                var urljson = self.attr("data-link");
+            // We get the URL from input
+            var urljson = self.attr("data-link");
 
-                //set typeahead source to empty
-                self.data('typeahead').source = [];
+            //set typeahead source to empty
+            self.data('typeahead').source = [];
 
-                //active used so we aren't triggering duplicate keyup events
-                if (!self.data('active') && self.val().length > 0) {
+            //active used so we aren't triggering duplicate keyup events
+            if (!self.data('active') && self.val().length > 0) {
 
-                    self.data('active', true);
+                self.data('active', true);
 
-                    //Do data request.
-                    $.ajax({
-                        url: urljson,
-                        type: 'get',
-                        data: {q: $(this).val()},
-                        dataType: 'json',
-                        success: function(data) {
+                //Do data request.
+                $.ajax({
+                    url: urljson,
+                    type: 'get',
+                    data: {q: $(this).val()},
+                    dataType: 'json',
+                    success: function(data) {
 
-                            //set this to true when your callback executes
-                            self.data('active', true);
+                        //set this to true when your callback executes
+                        self.data('active', true);
 
-                            //set your results into the typehead's source 
-                            self.data('typeahead').source = data;
+                        //set your results into the typehead's source 
+                        self.data('typeahead').source = data;
 
-                            //trigger keyup on the typeahead to make it search
-                            self.trigger('keyup');
+                        //trigger keyup on the typeahead to make it search
+                        self.trigger('keyup');
 
-                            //All done, set to false to prepare for the next remote query.
-                            self.data('active', false);
-                        }
-                    });
-                }
+                        //All done, set to false to prepare for the next remote query.
+                        self.data('active', false);
+                    }
+                });
             }
-        });
-    </script>
-</c:if>
+        }
+    });
+</script>
 
 <script type="text/javascript">
     var startDateTextBox = $('#startingTime');
