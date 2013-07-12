@@ -17,7 +17,7 @@
     <div class="span12">
         <aripd:description id="trip">
             <aripd:descriptionitem label="Status" field="tripAttribute.submitted"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Account" field="tripAttribute.account.client.fullname"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Account" field="tripAttribute.account.employee.fullname"></aripd:descriptionitem>
             <aripd:descriptionitem label="Truck" field="tripAttribute.truck.plate"></aripd:descriptionitem>
             <aripd:descriptionitem label="Driver" field="tripAttribute.driver.name"></aripd:descriptionitem>
             <aripd:descriptionitem label="Starting Point" field="tripAttribute.startingpoint"></aripd:descriptionitem>

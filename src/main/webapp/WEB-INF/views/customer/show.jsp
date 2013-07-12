@@ -24,8 +24,8 @@
         <aripd:description id="customer2">
             <aripd:descriptionitem label="Username" field="customerAttribute.authorized.username"></aripd:descriptionitem>
             <aripd:descriptionitem label="E-mail Address" field="customerAttribute.authorized.email"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Fullname" field="customerAttribute.authorized.client.fullname"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Phone Number" field="customerAttribute.authorized.client.phonenumber"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Fullname" field="customerAttribute.authorized.employee.fullname"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Phone Number" field="customerAttribute.authorized.employee.phonenumber"></aripd:descriptionitem>
         </aripd:description>
     </div>
     <div class="span4">

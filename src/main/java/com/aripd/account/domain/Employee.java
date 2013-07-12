@@ -6,15 +6,19 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.aripd.common.entity.BaseEntity;
+import com.aripd.common.util.ARIPDJodaDateTimeSerializer;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
 @Entity
-@Table(name = "client")
-public class Client extends BaseEntity {
+@Table(name = "employee")
+public class Employee extends BaseEntity {
 
+    @Column(nullable = true, unique = true)
+    private String tckimlik;
     @NotNull
     @Column(nullable = true, unique = false)
     private String firstName;
@@ -22,21 +26,28 @@ public class Client extends BaseEntity {
     @Column(nullable = true, unique = false)
     private String lastName;
     @Column(nullable = true, unique = false)
+    private String address;
+    @Column(nullable = true, unique = false)
     private String phonenumber;
+    @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
     @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
     @Column(columnDefinition = "TIMESTAMP")
     //@DateTimeFormat(style = "S-")
-    private DateTime birthday;
+    private DateTime birthdate;
+    @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
+    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+    @Column(columnDefinition = "TIMESTAMP")
+    private DateTime startingDate;
 
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
 
-    public Client() {
+    public Employee() {
     }
 
-    public Client(String firstName, String lastName) {
+    public Employee(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -76,11 +87,35 @@ public class Client extends BaseEntity {
         this.phonenumber = phonenumber;
     }
 
-    public DateTime getBirthday() {
-        return birthday;
+    public String getTckimlik() {
+        return tckimlik;
     }
 
-    public void setBirthday(DateTime birthday) {
-        this.birthday = birthday;
+    public void setTckimlik(String tckimlik) {
+        this.tckimlik = tckimlik;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public DateTime getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(DateTime birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public DateTime getStartingDate() {
+        return startingDate;
+    }
+
+    public void setStartingDate(DateTime startingDate) {
+        this.startingDate = startingDate;
     }
 }

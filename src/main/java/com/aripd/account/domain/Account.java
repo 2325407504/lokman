@@ -53,7 +53,7 @@ public class Account extends BaseEntity {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Role> roles;
     @ManyToOne(cascade = CascadeType.ALL)
-    private Client client;
+    private Employee employee;
     @ManyToOne
     private Region region;
 
@@ -119,12 +119,12 @@ public class Account extends BaseEntity {
         this.active = active;
     }
 
-    public Client getClient() {
-        return client;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public Region getRegion() {

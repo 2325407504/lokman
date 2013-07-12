@@ -65,19 +65,19 @@
                     <form:errors cssClass="text-error" path="authorized.email" />
                 </div>       
                 <div class="control-group">
-                    <form:label path="authorized.client.firstName"><spring:message code="FirstName" /></form:label>
-                    <form:input path="authorized.client.firstName" />
-                    <form:errors cssClass="text-error" path="authorized.client.firstName" />
+                    <form:label path="authorized.employee.firstName"><spring:message code="FirstName" /></form:label>
+                    <form:input path="authorized.employee.firstName" />
+                    <form:errors cssClass="text-error" path="authorized.employee.firstName" />
                 </div>       
                 <div class="control-group">
-                    <form:label path="authorized.client.lastName"><spring:message code="LastName" /></form:label>
-                    <form:input path="authorized.client.lastName" />
-                    <form:errors cssClass="text-error" path="authorized.client.lastName" />
+                    <form:label path="authorized.employee.lastName"><spring:message code="LastName" /></form:label>
+                    <form:input path="authorized.employee.lastName" />
+                    <form:errors cssClass="text-error" path="authorized.employee.lastName" />
                 </div>
                 <div class="control-group">
-                    <form:label path="authorized.client.phonenumber"><spring:message code="Phone Number" /></form:label>
-                    <form:input path="authorized.client.phonenumber" />
-                    <form:errors cssClass="text-error" path="authorized.client.phonenumber" />
+                    <form:label path="authorized.employee.phonenumber"><spring:message code="Phone Number" /></form:label>
+                    <form:input path="authorized.employee.phonenumber" />
+                    <form:errors cssClass="text-error" path="authorized.employee.phonenumber" />
                 </div>
             </fieldset>
         </div>

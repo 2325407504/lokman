@@ -15,7 +15,7 @@
 
 <aripd:datatables datasource="/weighbridge/get" id="weighbridges" dataUrlShow="/weighbridge/show" dataUrlEdit="/weighbridge/edit">
     <aripd:datatablescolumn label="Action" field="id"/>
-    <aripd:datatablescolumn label="Account" field="account.client.fullname"/>
+    <aripd:datatablescolumn label="Account" field="account.employee.fullname"/>
     <aripd:datatablescolumn label="Clerk" field="clerk"/>
     <aripd:datatablescolumn label="Plate" field="plate"/>
     <aripd:datatablescolumn label="Driver" field="driver"/>

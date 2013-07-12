@@ -51,8 +51,8 @@
 <c:if test="${uri == invoice_list}"><c:set var="invoice_class" value="active" /></c:if>
 <spring:url value="/waybill/list" var="waybill_list" />
 <c:if test="${uri == waybill_list}"><c:set var="waybill_class" value="active" /></c:if>
-<spring:url value="/staff/list" var="staff_list" />
-<c:if test="${uri == staff_list}"><c:set var="staff_class" value="active" /></c:if>
+<spring:url value="/employee/list" var="employee_list" />
+<c:if test="${uri == employee_list}"><c:set var="employee_class" value="active" /></c:if>
 
 <spring:url value="/trip/list" var="trip_list" />
 <c:if test="${uri == trip_list}"><c:set var="trip_class" value="active" /></c:if>
@@ -114,7 +114,7 @@
                             <li class="${expense_class}"><a href="${expense_list}"><spring:message code="Expenses" /></a></li>
                             <li class="${invoice_class}"><a href="${invoice_list}"><spring:message code="Invoices" /></a></li>
                             <li class="${waybill_class}"><a href="${waybill_list}"><spring:message code="Waybills" /></a></li>
-                            <li class="${staff_class}"><a href="${staff_list}"><spring:message code="Staffs" text="Staffs" /></a></li>
+                            <li class="${employee_class}"><a href="${employee_list}"><spring:message code="Employees" /></a></li>
                             </sec:authorize>
                     </ul>
                 </td>

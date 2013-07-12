@@ -17,7 +17,7 @@
     <div class="span4">
         <aripd:description id="waybill-other">
             <aripd:descriptionitem label="Status" field="waybillAttribute.submitted"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Account" field="waybillAttribute.account.client.fullname"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Account" field="waybillAttribute.account.employee.fullname"></aripd:descriptionitem>
         </aripd:description>
     </div>
     <div class="span4">

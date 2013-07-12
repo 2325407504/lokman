@@ -15,7 +15,7 @@
 <form:form modelAttribute="accountAttribute" action="${save}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <form:hidden path="id" />
-    <form:hidden path="client.id" />
+    <form:hidden path="employee.id" />
     <div class="row-fluid">
         <div class="span4">
             <fieldset>
@@ -39,19 +39,19 @@
         <div class="span4">
             <fieldset>
                 <div class="control-group">
-                    <form:label path="client.firstName"><spring:message code="FirstName" /></form:label>
-                    <form:input path="client.firstName" />
-                    <form:errors cssClass="text-error" path="client.firstName" />
+                    <form:label path="employee.firstName"><spring:message code="FirstName" /></form:label>
+                    <form:input path="employee.firstName" />
+                    <form:errors cssClass="text-error" path="employee.firstName" />
                 </div>
                 <div class="control-group">
-                    <form:label path="client.lastName"><spring:message code="LastName" /></form:label>
-                    <form:input path="client.lastName" />
-                    <form:errors cssClass="text-error" path="client.lastName" />
+                    <form:label path="employee.lastName"><spring:message code="LastName" /></form:label>
+                    <form:input path="employee.lastName" />
+                    <form:errors cssClass="text-error" path="employee.lastName" />
                 </div>
                 <div class="control-group">
-                    <form:label path="client.phonenumber"><spring:message code="Phone Number" /></form:label>
-                    <form:input path="client.phonenumber" />
-                    <form:errors cssClass="text-error" path="client.phonenumber" />
+                    <form:label path="employee.phonenumber"><spring:message code="Phone Number" /></form:label>
+                    <form:input path="employee.phonenumber" />
+                    <form:errors cssClass="text-error" path="employee.phonenumber" />
                 </div>
             </fieldset>
         </div>

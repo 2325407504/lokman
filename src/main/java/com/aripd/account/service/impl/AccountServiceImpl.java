@@ -18,8 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.aripd.account.domain.Account;
 import com.aripd.account.domain.Account_;
-import com.aripd.account.domain.Client;
-import com.aripd.account.domain.Client_;
+import com.aripd.account.domain.Employee;
+import com.aripd.account.domain.Employee_;
 import com.aripd.account.repository.AccountRepository;
 import com.aripd.account.service.AccountService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
@@ -68,7 +68,7 @@ public class AccountServiceImpl implements AccountService {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Account> cq = cb.createQuery(Account.class);
         Root<Account> root = cq.from(Account.class);
-        Join<Account, Client> client = root.join(Account_.client);
+        Join<Account, Employee> employee = root.join(Account_.employee);
 
         // Filtering and Searching
         List<Predicate> predicateList = new ArrayList<Predicate>();
@@ -76,7 +76,7 @@ public class AccountServiceImpl implements AccountService {
         if ((search != null) && (!(search.isEmpty()))) {
             Predicate predicate1 = cb.like(root.get(Account_.username), "%" + search + "%");
             Predicate predicate2 = cb.like(root.get(Account_.email), "%" + search + "%");
-            Predicate predicate3 = cb.like(client.get(Client_.lastName), "%" + search + "%");
+            Predicate predicate3 = cb.like(employee.get(Employee_.lastName), "%" + search + "%");
             Predicate predicate = cb.or(predicate1, predicate2, predicate3);
             predicateList.add(predicate);
         }

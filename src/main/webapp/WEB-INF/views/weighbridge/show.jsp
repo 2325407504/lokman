@@ -17,7 +17,7 @@
     <div class="span4">
         <aripd:description id="weighbridge">
             <aripd:descriptionitem label="Status" field="weighbridgeAttribute.submitted"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Account" field="weighbridgeAttribute.account.client.fullname"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Account" field="weighbridgeAttribute.account.employee.fullname"></aripd:descriptionitem>
             <aripd:descriptionitem label="Clerk" field="weighbridgeAttribute.clerk"></aripd:descriptionitem>
             <aripd:descriptionitem label="Plate" field="weighbridgeAttribute.plate"></aripd:descriptionitem>
             <aripd:descriptionitem label="Driver" field="weighbridgeAttribute.driver"></aripd:descriptionitem>

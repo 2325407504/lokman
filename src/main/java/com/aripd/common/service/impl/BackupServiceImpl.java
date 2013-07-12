@@ -65,7 +65,7 @@ public class BackupServiceImpl implements BackupService {
             "product",
             "wastegroup",
             "waste",
-            "client",
+            "employee",
             "account",
             "account_role",
             "customer",

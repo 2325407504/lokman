@@ -15,7 +15,7 @@
 
 <aripd:datatables datasource="/expense/get" id="expenses" dataUrlShow="/expense/show" dataUrlEdit="/expense/edit">
     <aripd:datatablescolumn label="Action" field="id"/>
-    <aripd:datatablescolumn label="Fullname" field="account.client.fullname"/>
+    <aripd:datatablescolumn label="Fullname" field="account.employee.fullname"/>
     <aripd:datatablescolumn label="Account" field="account.username"/>
     <aripd:datatablescolumn label="Expensetype" field="expensetype.name"/>
     <aripd:datatablescolumn label="Date" field="documentDate"/>

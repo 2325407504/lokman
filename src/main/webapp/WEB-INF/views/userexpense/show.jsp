@@ -14,7 +14,7 @@
 <div class="row-fluid">
     <div class="span12">
         <aripd:description id="expense">
-            <aripd:descriptionitem label="Account" field="userexpenseAttribute.account.client.fullname"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Account" field="userexpenseAttribute.account.employee.fullname"></aripd:descriptionitem>
             <aripd:descriptionitem label="Expensetype" field="userexpenseAttribute.expensetype.name"></aripd:descriptionitem>
             <aripd:descriptionitem label="Document Date" field="userexpenseAttribute.documentDate"></aripd:descriptionitem>
             <aripd:descriptionitem label="Company" field="userexpenseAttribute.company"></aripd:descriptionitem>

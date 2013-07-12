@@ -16,7 +16,7 @@
 <div class="row-fluid">
     <div class="span4">
         <aripd:description id="forwarding1">
-            <aripd:descriptionitem label="Account" field="forwardingAttribute.account.client.fullname"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Account" field="forwardingAttribute.account.employee.fullname"></aripd:descriptionitem>
             <aripd:descriptionitem label="Document No" field="forwardingAttribute.waybillNo"></aripd:descriptionitem>
             <aripd:descriptionitem label="Driver" field="forwardingAttribute.driver"></aripd:descriptionitem>
             <aripd:descriptionitem label="Plate" field="forwardingAttribute.plate"></aripd:descriptionitem>

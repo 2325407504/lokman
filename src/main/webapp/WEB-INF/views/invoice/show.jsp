@@ -17,7 +17,7 @@
     <div class="span12">
         <aripd:description id="invoice-other">
             <aripd:descriptionitem label="Status" field="invoiceAttribute.submitted"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Account" field="invoiceAttribute.account.client.fullname"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Account" field="invoiceAttribute.account.employee.fullname"></aripd:descriptionitem>
             <aripd:descriptionitem label="Document No" field="invoiceAttribute.documentNo"></aripd:descriptionitem>
             <aripd:descriptionitem label="Document Date" field="invoiceAttribute.documentDate"></aripd:descriptionitem>
             <aripd:descriptionitem label="Customer" field="invoiceAttribute.customer.name"></aripd:descriptionitem>

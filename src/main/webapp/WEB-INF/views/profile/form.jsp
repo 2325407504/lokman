@@ -16,16 +16,16 @@
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <fieldset>
         <div class="control-group">
-            <form:label path="client.firstName"><spring:message code="FirstName" /></form:label>
-            <form:input path="client.firstName" />
+            <form:label path="employee.firstName"><spring:message code="FirstName" /></form:label>
+            <form:input path="employee.firstName" />
         </div>       
         <div class="control-group">
-            <form:label path="client.lastName"><spring:message code="LastName" /></form:label>
-            <form:input path="client.lastName" />
+            <form:label path="employee.lastName"><spring:message code="LastName" /></form:label>
+            <form:input path="employee.lastName" />
         </div>
         <div class="control-group">
-            <form:label path="client.birthday"><spring:message code="Birthday" /></form:label>
-            <form:input path="client.birthday" />
+            <form:label path="employee.birthday"><spring:message code="Birthday" /></form:label>
+            <form:input path="employee.birthday" />
         </div>
         <div class="control-group">
             <form:label path="email"><spring:message code="E-mail Address" /></form:label>

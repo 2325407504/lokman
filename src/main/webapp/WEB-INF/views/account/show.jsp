@@ -13,9 +13,9 @@
 <c:forEach var="role" items="${accountAttribute.roles}"><span class="label label-success">${role.name}</span>&nbsp;</c:forEach>
 <aripd:description id="account">
     <aripd:descriptionitem label="Username" field="accountAttribute.username"></aripd:descriptionitem>
-    <aripd:descriptionitem label="Fullname" field="accountAttribute.client.fullname"></aripd:descriptionitem>
+    <aripd:descriptionitem label="Fullname" field="accountAttribute.employee.fullname"></aripd:descriptionitem>
     <aripd:descriptionitem label="E-mail Address" field="accountAttribute.email"></aripd:descriptionitem>
-    <aripd:descriptionitem label="Phone Number" field="accountAttribute.client.phonenumber"></aripd:descriptionitem>
+    <aripd:descriptionitem label="Phone Number" field="accountAttribute.employee.phonenumber"></aripd:descriptionitem>
     <aripd:descriptionitem label="Region" field="accountAttribute.region.name"></aripd:descriptionitem>
 </aripd:description>
 
