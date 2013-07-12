@@ -25,7 +25,6 @@ import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Uatf;
 import com.aripd.project.lgk.model.ForwardingFilterByIntervalForm;
-import com.aripd.project.lgk.model.UatfFilterByIntervalForm;
 import com.aripd.project.lgk.service.EndingpointService;
 import com.aripd.project.lgk.service.ForwardingService;
 import com.aripd.project.lgk.service.QuotaService;
@@ -144,7 +143,6 @@ public class ForwardingController {
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public String reportAction(Model model) {
         model.addAttribute("forwardingFilterByIntervalForm", new ForwardingFilterByIntervalForm());
-        model.addAttribute("uatfFilterByIntervalForm", new UatfFilterByIntervalForm());
         model.addAttribute("startingpoints", startingpointService.findAll());
         model.addAttribute("endingpoints", endingpointService.findAll());
         return "forwarding/report";
@@ -164,6 +162,8 @@ public class ForwardingController {
             Model model) {
 
         if (result.hasErrors()) {
+            model.addAttribute("startingpoints", startingpointService.findAll());
+            model.addAttribute("endingpoints", endingpointService.findAll());
             return "/forwarding/report";
         }
 

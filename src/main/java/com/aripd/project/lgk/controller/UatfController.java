@@ -1,9 +1,7 @@
 package com.aripd.project.lgk.controller;
 
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -19,18 +17,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
-import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Uatf;
-import com.aripd.project.lgk.model.UatfFilterByIntervalForm;
 import com.aripd.project.lgk.service.ForwardingService;
 import com.aripd.project.lgk.service.UatfService;
 import javax.validation.Valid;
-import org.joda.time.DateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_ADMIN') and hasRole('ROLE_OTL'))")
 @Controller
@@ -89,23 +81,5 @@ public class UatfController {
 
         uatfService.delete(uatf);
         return "redirect:/forwarding/edit/" + uatf.getForwarding().getId();
-    }
-
-    @RequestMapping(value = "/report", method = RequestMethod.POST)
-    public String reportAction(
-            final RedirectAttributes redirectAttributes,
-            @ModelAttribute("uatfFilterByIntervalForm") @Valid UatfFilterByIntervalForm formData,
-            BindingResult result,
-            @RequestParam("startingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime startingTime,
-            @RequestParam("endingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime endingTime,
-            HttpServletResponse response,
-            Model model) {
-
-        if (result.hasErrors()) {
-            return "/forwarding/report";
-        }
-
-        uatfService.exportByInterval(response, startingTime, endingTime);
-        return "redirect:/forwarding/report";
     }
 }

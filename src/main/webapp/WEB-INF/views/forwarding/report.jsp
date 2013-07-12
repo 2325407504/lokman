@@ -29,7 +29,9 @@
             <div class="control-group">
                 <form:label path="startingTime">${startingTime} - ${endingTime}</form:label>
                 <form:input id="start1" path="startingTime" cssClass="input-medium" placeholder="${startingTime}" />
+                <form:errors cssClass="text-error" path="startingTime" />
                 <form:input id="end1" path="endingTime" cssClass="input-medium" placeholder="${endingTime}" />
+                <form:errors cssClass="text-error" path="endingTime" />
             </div>
             <div class="control-group">
                 <form:label path="plate">${plate}</form:label>
@@ -54,19 +56,6 @@
             </div>
         </div>
     </div>
-</form:form>
-
-<hr>
-
-<p class="lead"><spring:message code="Uatf" /></p>
-<spring:url var="uatfReport" value="/uatf/report" />
-<form:form modelAttribute="uatfFilterByIntervalForm" action="${uatfReport}" method="post" class="form-inline">
-    <form:errors path="*" cssClass="alert alert-error" element="div" />
-    <form:input id="start2" path="startingTime" />
-    <form:input id="end2" path="endingTime" />
-    <button class="btn" type="submit">
-        <i class="icon-search"></i>
-    </button>
 </form:form>
 
 <script type="text/javascript">
@@ -158,45 +147,6 @@
             start1.datetimepicker('option', 'maxDate', end1.datetimepicker('getDate'));
         }
     });
-
-    var start2 = $('#start2');
-    var end2 = $('#end2');
-
-    start2.datetimepicker({
-        maxDate: new Date(),
-        onClose: function(dateText, inst) {
-            if (end2.val() != '') {
-                var testStartDate = start2.datetimepicker('getDate');
-                var testEndDate = end2.datetimepicker('getDate');
-                if (testStartDate > testEndDate)
-                    end2.datetimepicker('setDate', testStartDate);
-            }
-            else {
-                end2.val(dateText);
-            }
-        },
-        onSelect: function(selectedDateTime) {
-            end2.datetimepicker('option', 'minDate', start2.datetimepicker('getDate'));
-        }
-    });
-    end2.datetimepicker({
-        maxDate: new Date(),
-        onClose: function(dateText, inst) {
-            if (start2.val() != '') {
-                var testStartDate = start2.datetimepicker('getDate');
-                var testEndDate = end2.datetimepicker('getDate');
-                if (testStartDate > testEndDate)
-                    start2.datetimepicker('setDate', testEndDate);
-            }
-            else {
-                start2.val(dateText);
-            }
-        },
-        onSelect: function(selectedDateTime) {
-            start2.datetimepicker('option', 'maxDate', end2.datetimepicker('getDate'));
-        }
-    });
-
 </script>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />
