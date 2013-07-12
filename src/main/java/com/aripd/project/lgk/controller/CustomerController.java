@@ -22,9 +22,13 @@ import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.dto.ControllerUtils;
+import com.aripd.project.lgk.domain.Disposalcost;
 import com.aripd.project.lgk.domain.Customer;
+import com.aripd.project.lgk.domain.Shippingcost;
+import com.aripd.project.lgk.service.DisposalcostService;
 import com.aripd.project.lgk.service.CustomerService;
 import com.aripd.project.lgk.service.RegionService;
+import com.aripd.project.lgk.service.ShippingcostService;
 import org.apache.commons.codec.digest.DigestUtils;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_ADMIN')")
@@ -38,6 +42,10 @@ public class CustomerController {
     private RegionService regionService;
     @Resource(name = "accountService")
     private AccountService accountService;
+    @Resource(name = "shippingcostService")
+    private ShippingcostService shippingcostService;
+    @Resource(name = "disposalcostService")
+    private DisposalcostService disposalcostService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -99,6 +107,24 @@ public class CustomerController {
         }
 
         Customer customer = customerService.save(formData);
+        
+        /**
+         * TODO
+         * sadece customer kaydedildiğinde shippingcost ve disposalcost bilgilerinin tekrar tekrar aynı değerleri kaydetmesini nasıl engelleriz?
+         */
+        if (formData.getShippingcost() != null) {
+            Shippingcost shippingcost = new Shippingcost();
+            shippingcost.setCustomer(customer);
+            shippingcost.setCost(formData.getShippingcost());
+            shippingcostService.save(shippingcost);
+        }
+        if (formData.getDisposalcost() != null) {
+            Disposalcost disposalcost = new Disposalcost();
+            disposalcost.setCustomer(customer);
+            disposalcost.setCost(formData.getDisposalcost());
+            disposalcostService.save(disposalcost);
+        }
+
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/customer/show/" + customer.getId();
     }

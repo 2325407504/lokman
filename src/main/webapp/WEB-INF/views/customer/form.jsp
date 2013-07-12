@@ -94,6 +94,16 @@
                     <form:checkbox path="container" />
                     <form:errors cssClass="text-error" path="container" />
                 </div>
+                <div class="control-group">
+                    <form:label path="shippingcost"><spring:message code="Shipping Cost" /></form:label>
+                    <form:input path="shippingcost" />
+                    <form:errors cssClass="text-error" path="shippingcost" />
+                </div>
+                <div class="control-group">
+                    <form:label path="disposalcost"><spring:message code="Disposal Cost" /></form:label>
+                    <form:input path="disposalcost" />
+                    <form:errors cssClass="text-error" path="disposalcost" />
+                </div>
             </fieldset>
         </div>
     </div>

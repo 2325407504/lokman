@@ -6,10 +6,13 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.aripd.common.entity.BaseEntity;
+import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -31,6 +34,14 @@ public class Customer extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @NotNull
     private Account authorized;
+    private Double shippingcost;
+    @JsonIgnore
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
+    private Set<Shippingcost> shippingcosts;
+    private Double disposalcost;
+    @JsonIgnore
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
+    private Set<Disposalcost> disposalcosts;
 
     @Override
     public String toString() {
@@ -99,5 +110,37 @@ public class Customer extends BaseEntity {
 
     public void setContainer(boolean container) {
         this.container = container;
+    }
+
+    public Set<Shippingcost> getShippingcosts() {
+        return shippingcosts;
+    }
+
+    public void setShippingcosts(Set<Shippingcost> shippingcosts) {
+        this.shippingcosts = shippingcosts;
+    }
+
+    public Set<Disposalcost> getDisposalcosts() {
+        return disposalcosts;
+    }
+
+    public void setDisposalcosts(Set<Disposalcost> disposalcosts) {
+        this.disposalcosts = disposalcosts;
+    }
+
+    public Double getShippingcost() {
+        return shippingcost;
+    }
+
+    public void setShippingcost(Double shippingcost) {
+        this.shippingcost = shippingcost;
+    }
+
+    public Double getDisposalcost() {
+        return disposalcost;
+    }
+
+    public void setDisposalcost(Double disposalcost) {
+        this.disposalcost = disposalcost;
     }
 }
