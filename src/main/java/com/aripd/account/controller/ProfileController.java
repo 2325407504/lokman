@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.aripd.account.domain.Account;
+import com.aripd.account.model.ProfileForm;
 import com.aripd.account.service.AccountService;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @PreAuthorize("isFullyAuthenticated()")
@@ -25,6 +27,8 @@ public class ProfileController {
 
     @Resource(name = "accountService")
     private AccountService accountService;
+    @Resource(name = "userDetailsService")
+    private UserDetailsService userDetailsService;
 
     @RequestMapping(value = "/show", method = RequestMethod.GET)
     public String showAction(Principal principal, Model model) {
@@ -40,7 +44,11 @@ public class ProfileController {
             Model model) {
         Account account = accountService.findOneByUsername(principal.getName());
 
-        model.addAttribute("profileAttribute", account);
+        ProfileForm profileForm = new ProfileForm();
+        profileForm.setEmail(account.getEmail());
+        profileForm.setPassword(null);
+        
+        model.addAttribute("profileAttribute", profileForm);
         return "profile/form";
     }
 
@@ -48,7 +56,7 @@ public class ProfileController {
     public String saveAction(
             final RedirectAttributes redirectAttributes,
             Principal principal,
-            @ModelAttribute("profileAttribute") @Valid Account formData,
+            @ModelAttribute("profileAttribute") @Valid ProfileForm formData,
             BindingResult result) {
 
         if (result.hasErrors()) {
@@ -57,9 +65,6 @@ public class ProfileController {
 
         Account account = accountService.findOneByUsername(principal.getName());
 
-        formData.getEmployee().setId(account.getEmployee().getId());
-        account.setEmployee(formData.getEmployee());
-        account.setUsername(formData.getUsername());
         account.setEmail(formData.getEmail());
         if (formData.getPassword().length() == 0) {
             account.setPassword(account.getPassword());
