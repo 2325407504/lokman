@@ -67,7 +67,7 @@ public class ChartController {
     @RequestMapping(value = "/report3", method = RequestMethod.GET)
     public void report3(HttpServletResponse response) {
         response.setContentType("image/png");
-        String query = "SELECT endingTime, loadWeightInTonne FROM trip ORDER BY endingTime ASC";
+        String query = "SELECT endingTime, weight FROM trip ORDER BY endingTime ASC";
         JDBCCategoryDataset dataset = null;
         try {
             dataset = new JDBCCategoryDataset(

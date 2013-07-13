@@ -25,7 +25,7 @@
     <aripd:datatablescolumn label="Ending Point" field="endingpoint.name"/>
     <aripd:datatablescolumn label="Starting Km" field="startingKm"/>
     <aripd:datatablescolumn label="Ending Km" field="endingKm"/>
-    <aripd:datatablescolumn label="Weight" field="loadWeightInTonne"/>
+    <aripd:datatablescolumn label="Weight" field="weight"/>
     <aripd:datatablescolumn label="Shipping Cost" field="shippingCost"/>
     <aripd:datatablescolumn label="Subcontractor" field="subcontractor.name"/>
     <aripd:datatablescolumn label="Quota" field="quota.name"/>

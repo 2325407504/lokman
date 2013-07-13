@@ -26,6 +26,6 @@ public class Trip_ extends BaseEntity_ {
     public static volatile SingularAttribute<Trip, String> endingpoint;
     public static volatile SingularAttribute<Trip, Integer> endingKm;
     public static volatile SingularAttribute<Trip, DateTime> endingTime;
-    public static volatile SingularAttribute<Trip, Integer> loadWeightInTonne;
+    public static volatile SingularAttribute<Trip, Integer> weight;
     public static volatile SingularAttribute<Trip, String> remark;
 }

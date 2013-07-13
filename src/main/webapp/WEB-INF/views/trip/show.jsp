@@ -26,7 +26,7 @@
             <aripd:descriptionitem label="Ending Point" field="tripAttribute.endingpoint"></aripd:descriptionitem>
             <aripd:descriptionitem label="Ending Km" field="tripAttribute.endingKm"></aripd:descriptionitem>
             <aripd:descriptionitem label="Ending Time" field="tripAttribute.endingTime"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Weight" field="tripAttribute.loadWeightInTonne"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Weight" field="tripAttribute.weight"></aripd:descriptionitem>
             <aripd:descriptionitem label="Remark" field="tripAttribute.remark"></aripd:descriptionitem>
         </aripd:description>
     </div>

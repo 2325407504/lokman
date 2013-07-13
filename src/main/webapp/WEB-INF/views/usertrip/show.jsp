@@ -23,7 +23,7 @@
             <aripd:descriptionitem label="Ending Point" field="usertripAttribute.endingpoint"></aripd:descriptionitem>
             <aripd:descriptionitem label="Ending Km" field="usertripAttribute.endingKm"></aripd:descriptionitem>
             <aripd:descriptionitem label="Ending Time" field="usertripAttribute.endingTime"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Weight" field="usertripAttribute.loadWeightInTonne"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Weight" field="usertripAttribute.weight"></aripd:descriptionitem>
             <aripd:descriptionitem label="Remark" field="usertripAttribute.remark"></aripd:descriptionitem>
         </aripd:description>
     </div>

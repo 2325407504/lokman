@@ -7,10 +7,10 @@ import javax.persistence.Transient;
 
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.common.util.ARIPDJodaDateTimeSerializer;
-import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
 
 @Entity
@@ -19,10 +19,10 @@ public class Employee extends BaseEntity {
 
     @Column(nullable = true, unique = true)
     private String tckimlik;
-    @NotNull
+    @NotEmpty
     @Column(nullable = true, unique = false)
     private String firstName;
-    @NotNull
+    @NotEmpty
     @Column(nullable = true, unique = false)
     private String lastName;
     @Column(nullable = true, unique = false)
@@ -31,25 +31,17 @@ public class Employee extends BaseEntity {
     private String phonenumber;
     @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
     @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
-    @Column(columnDefinition = "TIMESTAMP")
+    @Column(columnDefinition = "TIMESTAMP", nullable = true)
     //@DateTimeFormat(style = "S-")
     private DateTime birthdate;
     @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
     @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
-    @Column(columnDefinition = "TIMESTAMP")
+    @Column(columnDefinition = "TIMESTAMP", nullable = true)
     private DateTime startingDate;
 
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
-    }
-
-    public Employee() {
-    }
-
-    public Employee(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
     }
 
     @Transient
@@ -61,6 +53,14 @@ public class Employee extends BaseEntity {
         sb.append(lastName);
 
         return sb.toString();
+    }
+
+    public String getTckimlik() {
+        return tckimlik;
+    }
+
+    public void setTckimlik(String tckimlik) {
+        this.tckimlik = tckimlik;
     }
 
     public String getFirstName() {
@@ -79,28 +79,20 @@ public class Employee extends BaseEntity {
         this.lastName = lastName;
     }
 
-    public String getPhonenumber() {
-        return phonenumber;
-    }
-
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
-    }
-
-    public String getTckimlik() {
-        return tckimlik;
-    }
-
-    public void setTckimlik(String tckimlik) {
-        this.tckimlik = tckimlik;
-    }
-
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
     }
 
     public DateTime getBirthdate() {

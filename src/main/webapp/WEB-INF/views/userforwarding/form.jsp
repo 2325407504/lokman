@@ -56,9 +56,9 @@
         <div class="span4">
             <fieldset>
                 <div class="control-group">
-                    <form:label path="loadWeightInTonne"><spring:message code="Weight" /></form:label>
-                    <form:input path="loadWeightInTonne" />
-                    <form:errors cssClass="text-error" path="loadWeightInTonne" />
+                    <form:label path="weight"><spring:message code="Weight" /></form:label>
+                    <form:input path="weight" />
+                    <form:errors cssClass="text-error" path="weight" />
                 </div>
                 <div class="control-group">
                     <form:label path="shippingCost"><spring:message code="Shipping Cost" /></form:label>
@@ -115,7 +115,7 @@
                 <form:input path="company" cssClass="input-small" placeholder="${company}" />
                 <form:input path="county" cssClass="input-small" placeholder="${county}" />
                 <form:input path="city" cssClass="input-small" placeholder="${city}" />
-                <form:input path="loadWeightInTonne" cssClass="input-mini" placeholder="${weight}" />
+                <form:input path="weight" cssClass="input-mini" placeholder="${weight}" />
                 <button class="btn" type="submit">
                     <i class="icon-ok"></i>
                 </button>
@@ -128,7 +128,7 @@
                 <aripd:datatablescolumn label="Company" field="company"/>
                 <aripd:datatablescolumn label="County" field="county"/>
                 <aripd:datatablescolumn label="City" field="city"/>
-                <aripd:datatablescolumn label="Weight" field="loadWeightInTonne"/>
+                <aripd:datatablescolumn label="Weight" field="weight"/>
                 <aripd:datatablescolumn label="Action" field="id"/>
             </aripd:datatables>
         </div>

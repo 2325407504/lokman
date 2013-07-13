@@ -62,9 +62,9 @@
                     <form:errors cssClass="text-error" path="endingTime" />
                 </div>
                 <div class="control-group">
-                    <form:label path="loadWeightInTonne"><spring:message code="Weight" /></form:label>
-                    <form:input path="loadWeightInTonne" />
-                    <form:errors cssClass="text-error" path="loadWeightInTonne" />
+                    <form:label path="weight"><spring:message code="Weight" /></form:label>
+                    <form:input path="weight" />
+                    <form:errors cssClass="text-error" path="weight" />
                 </div>
                 <div class="control-group">
                     <form:label path="remark"><spring:message code="Remark" /></form:label>

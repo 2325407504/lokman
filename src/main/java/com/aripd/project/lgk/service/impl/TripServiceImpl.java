@@ -313,7 +313,7 @@ public class TripServiceImpl implements TripService {
             String endingpoint = row.getCell(6).getStringCellValue();
             Integer endingKm = (int) row.getCell(7).getNumericCellValue();
             Date endingTime = row.getCell(8).getDateCellValue();
-            Integer loadWeightInTonne = (int) row.getCell(9).getNumericCellValue();
+            Integer weight = (int) row.getCell(9).getNumericCellValue();
             String remark = row.getCell(10).getStringCellValue();
 
             trip = new Trip();
@@ -327,7 +327,7 @@ public class TripServiceImpl implements TripService {
             trip.setEndingpoint(endingpoint);
             trip.setEndingKm(endingKm);
             trip.setEndingTime(new DateTime(endingTime));
-            trip.setLoadWeightInTonne(loadWeightInTonne);
+            trip.setWeight(weight);
             trip.setRemark(remark);
 
             trips.add(trip);

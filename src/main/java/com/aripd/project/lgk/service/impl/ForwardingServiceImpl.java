@@ -289,7 +289,7 @@ public class ForwardingServiceImpl implements ForwardingService {
             String endingpoint_code = row.getCell(7).getStringCellValue();
             Integer startingKm = (int) row.getCell(8).getNumericCellValue();
             Integer endingKm = (int) row.getCell(9).getNumericCellValue();
-            Integer loadWeightInTonne = (int) row.getCell(10).getNumericCellValue();
+            Integer weight = (int) row.getCell(10).getNumericCellValue();
             String remark = row.getCell(11).getStringCellValue();
             BigDecimal shippingCost = new BigDecimal(row.getCell(12).getNumericCellValue());
             String subcontractor_code = row.getCell(13).getStringCellValue();
@@ -307,7 +307,7 @@ public class ForwardingServiceImpl implements ForwardingService {
             forwarding.setEndingpoint(endingpointService.findOneByCode(endingpoint_code));
             forwarding.setStartingKm(startingKm);
             forwarding.setEndingKm(endingKm);
-            forwarding.setLoadWeightInTonne(loadWeightInTonne);
+            forwarding.setWeight(weight);
             forwarding.setRemark(remark);
             forwarding.setShippingCost(shippingCost);
             forwarding.setSubcontractor(subcontractorService.findOneByCode(subcontractor_code));

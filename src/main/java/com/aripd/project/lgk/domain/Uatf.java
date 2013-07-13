@@ -34,7 +34,7 @@ public class Uatf extends BaseEntity {
     private String city;
     @Column(nullable = false)
     @NotNull
-    private Integer loadWeightInTonne;
+    private Integer weight;
 
     @Override
     public String toString() {
@@ -73,12 +73,12 @@ public class Uatf extends BaseEntity {
         this.city = city;
     }
 
-    public Integer getLoadWeightInTonne() {
-        return loadWeightInTonne;
+    public Integer getWeight() {
+        return weight;
     }
 
-    public void setLoadWeightInTonne(Integer loadWeightInTonne) {
-        this.loadWeightInTonne = loadWeightInTonne;
+    public void setWeight(Integer weight) {
+        this.weight = weight;
     }
 
     public Forwarding getForwarding() {

@@ -177,7 +177,7 @@ public class UatfServiceImpl implements UatfService {
             String company = row.getCell(2).getStringCellValue();
             String county = row.getCell(3).getStringCellValue();
             String city = row.getCell(4).getStringCellValue();
-            Integer loadWeightInTonne = (int) row.getCell(5).getNumericCellValue();
+            Integer weight = (int) row.getCell(5).getNumericCellValue();
 
             Forwarding forwarding = forwardingService.findOneByWaybillNo(waybillNo);
             if (forwarding != null) {
@@ -187,7 +187,7 @@ public class UatfServiceImpl implements UatfService {
                 uatf.setCompany(company);
                 uatf.setCounty(county);
                 uatf.setCity(city);
-                uatf.setLoadWeightInTonne(loadWeightInTonne);
+                uatf.setWeight(weight);
 
                 uatfs.add(uatf);
             }

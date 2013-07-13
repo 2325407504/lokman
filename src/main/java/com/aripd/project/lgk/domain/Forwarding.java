@@ -61,7 +61,7 @@ public class Forwarding extends BaseEntity {
     private Integer endingKm;
     @Column(nullable = false)
     @NotNull
-    private Integer loadWeightInTonne;
+    private Integer weight;
     @Column(columnDefinition = "TEXT", nullable = true)
     private String remark;
     @Column(nullable = false)
@@ -170,12 +170,12 @@ public class Forwarding extends BaseEntity {
         this.endingKm = endingKm;
     }
 
-    public Integer getLoadWeightInTonne() {
-        return loadWeightInTonne;
+    public Integer getWeight() {
+        return weight;
     }
 
-    public void setLoadWeightInTonne(Integer loadWeightInTonne) {
-        this.loadWeightInTonne = loadWeightInTonne;
+    public void setWeight(Integer weight) {
+        this.weight = weight;
     }
 
     public String getRemark() {

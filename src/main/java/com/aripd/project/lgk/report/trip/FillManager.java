@@ -57,7 +57,7 @@ public class FillManager {
             cell3.setCellStyle(bodyCellStyle);
 
             HSSFCell cell4 = row.createCell(startColIndex + 4);
-            cell4.setCellValue(datasource.get(i - 2).getLoadWeightInTonne());
+            cell4.setCellValue(datasource.get(i - 2).getWeight());
             cell4.setCellStyle(bodyCellStyle);
 
             HSSFCell cell5 = row.createCell(startColIndex + 5);

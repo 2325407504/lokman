@@ -24,8 +24,8 @@
             <form:input path="employee.lastName" />
         </div>
         <div class="control-group">
-            <form:label path="employee.birthday"><spring:message code="Birthday" /></form:label>
-            <form:input path="employee.birthday" />
+            <form:label path="employee.birthdate"><spring:message code="Date of birth" /></form:label>
+            <form:input path="employee.birthdate" />
         </div>
         <div class="control-group">
             <form:label path="email"><spring:message code="E-mail Address" /></form:label>

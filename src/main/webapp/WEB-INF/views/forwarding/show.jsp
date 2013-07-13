@@ -34,7 +34,7 @@
     </div>
     <div class="span4">
         <aripd:description id="forwarding3">
-            <aripd:descriptionitem label="Weight" field="forwardingAttribute.loadWeightInTonne"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Weight" field="forwardingAttribute.weight"></aripd:descriptionitem>
             <aripd:descriptionitem label="Shipping Cost" field="forwardingAttribute.shippingCost"></aripd:descriptionitem>
             <aripd:descriptionitem label="Subcontractor" field="forwardingAttribute.subcontractor.name"></aripd:descriptionitem>
             <aripd:descriptionitem label="Quota" field="forwardingAttribute.quota.name"></aripd:descriptionitem>
@@ -49,7 +49,7 @@
             <aripd:datatablescolumn label="Company" field="company"/>
             <aripd:datatablescolumn label="County" field="county"/>
             <aripd:datatablescolumn label="City" field="city"/>
-            <aripd:datatablescolumn label="Weight" field="loadWeightInTonne"/>
+            <aripd:datatablescolumn label="Weight" field="weight"/>
         </aripd:datatables>
     </div>
 </div>

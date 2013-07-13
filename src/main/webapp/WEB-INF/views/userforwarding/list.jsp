@@ -22,7 +22,7 @@
 	<aripd:datatablescolumn label="Starting Time" field="startingTime"/>
 	<aripd:datatablescolumn label="Ending Time" field="endingTime"/>
 	<aripd:datatablescolumn label="Ending Point" field="endingpoint"/>
-	<aripd:datatablescolumn label="Weight" field="loadWeightInTonne"/>
+	<aripd:datatablescolumn label="Weight" field="weight"/>
 	<aripd:datatablescolumn label="Shipping Cost" field="shippingCost"/>
 </aripd:datatables>
 

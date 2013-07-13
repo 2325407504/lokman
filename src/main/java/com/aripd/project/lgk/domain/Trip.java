@@ -51,7 +51,7 @@ public class Trip extends BaseEntity {
     @Column(columnDefinition = "TIMESTAMP")
     private DateTime endingTime;
     @NotNull
-    private Integer loadWeightInTonne;
+    private Integer weight;
     @Column(columnDefinition = "TEXT", nullable = true)
     private String remark;
 
@@ -132,12 +132,12 @@ public class Trip extends BaseEntity {
         this.endingTime = endingTime;
     }
 
-    public Integer getLoadWeightInTonne() {
-        return loadWeightInTonne;
+    public Integer getWeight() {
+        return weight;
     }
 
-    public void setLoadWeightInTonne(Integer loadWeightInTonne) {
-        this.loadWeightInTonne = loadWeightInTonne;
+    public void setWeight(Integer weight) {
+        this.weight = weight;
     }
 
     public String getRemark() {
