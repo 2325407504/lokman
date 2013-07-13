@@ -49,7 +49,7 @@ public class Account extends BaseEntity {
     @ManyToMany(cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Role> roles;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     private Employee employee;
     @ManyToOne
     private Region region;
