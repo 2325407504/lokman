@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.aripd.account.domain.Account;
 import com.aripd.account.domain.Role;
 import com.aripd.account.service.AccountService;
+import com.aripd.account.service.EmployeeService;
 import com.aripd.account.service.RoleService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
@@ -42,13 +43,14 @@ public class AccountController {
     private RoleService roleService;
     @Resource(name = "regionService")
     private RegionService regionService;
+    @Resource(name = "employeeService")
+    private EmployeeService employeeService;
 
     /**
-     * TODO
-     * Bunun yerine başka ne yapabiliriz?
-     * 
+     * TODO Bunun yerine başka ne yapabiliriz?
+     *
      * @param binder
-     * @throws Exception 
+     * @throws Exception
      */
     @InitBinder
     protected void initBinder(WebDataBinder binder) throws Exception {
@@ -88,6 +90,7 @@ public class AccountController {
     public String newAction(Model model) {
         model.addAttribute("regions", regionService.findAll());
         model.addAttribute("roles", roleService.findAll());
+        model.addAttribute("employees", employeeService.findAll());
         model.addAttribute("accountAttribute", new Account());
         return "account/form";
     }
@@ -96,6 +99,7 @@ public class AccountController {
     public String editAction(@PathVariable Long id, Model model) {
         model.addAttribute("regions", regionService.findAll());
         model.addAttribute("roles", roleService.findAll());
+        model.addAttribute("employees", employeeService.findAll());
         model.addAttribute("accountAttribute", accountService.findOne(id));
         return "account/form";
     }
@@ -110,6 +114,7 @@ public class AccountController {
         if (result.hasErrors()) {
             model.addAttribute("regions", regionService.findAll());
             model.addAttribute("roles", roleService.findAll());
+            model.addAttribute("employees", employeeService.findAll());
             return "/account/form";
         }
 

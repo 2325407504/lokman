@@ -47,12 +47,12 @@
 
 <spring:url value="/expense/list" var="expense_list" />
 <c:if test="${uri == expense_list}"><c:set var="expense_class" value="active" /></c:if>
+<spring:url value="/employee/list" var="employee_list" />
+<c:if test="${uri == employee_list}"><c:set var="employee_class" value="active" /></c:if>
 <spring:url value="/invoice/list" var="invoice_list" />
 <c:if test="${uri == invoice_list}"><c:set var="invoice_class" value="active" /></c:if>
 <spring:url value="/waybill/list" var="waybill_list" />
 <c:if test="${uri == waybill_list}"><c:set var="waybill_class" value="active" /></c:if>
-<spring:url value="/employee/list" var="employee_list" />
-<c:if test="${uri == employee_list}"><c:set var="employee_class" value="active" /></c:if>
 
 <spring:url value="/trip/list" var="trip_list" />
 <c:if test="${uri == trip_list}"><c:set var="trip_class" value="active" /></c:if>
@@ -112,9 +112,10 @@
                         <sec:authorize access="hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_ADMIN')">
                             <li class="nav-header"><spring:message code="Personnel" /></li>
                             <li class="${expense_class}"><a href="${expense_list}"><spring:message code="Expenses" /></a></li>
+                            <li class="${employee_class}"><a href="${employee_list}"><spring:message code="Employees" /></a></li>
+                            <li class="nav-header"><spring:message code="Accounting" /></li>
                             <li class="${invoice_class}"><a href="${invoice_list}"><spring:message code="Invoices" /></a></li>
                             <li class="${waybill_class}"><a href="${waybill_list}"><spring:message code="Waybills" /></a></li>
-                            <li class="${employee_class}"><a href="${employee_list}"><spring:message code="Employees" /></a></li>
                             </sec:authorize>
                     </ul>
                 </td>

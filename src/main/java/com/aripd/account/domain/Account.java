@@ -13,11 +13,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.project.lgk.domain.Region;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import javax.persistence.Transient;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.LazyCollection;
@@ -52,7 +49,7 @@ public class Account extends BaseEntity {
     @ManyToMany(cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Role> roles;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Employee employee;
     @ManyToOne
     private Region region;

@@ -15,7 +15,6 @@
 <form:form modelAttribute="accountAttribute" action="${save}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <form:hidden path="id" />
-    <form:hidden path="employee.id" />
     <div class="row-fluid">
         <div class="span4">
             <fieldset>
@@ -29,29 +28,19 @@
                     <form:select multiple="false" path="region.id" items="${regions}" itemLabel="name" itemValue="id" />
                     <form:errors cssClass="text-error" path="region" />
                 </div>
-                <div class="control-group">
-                    <form:label path="roles"><spring:message code="Roles" /></form:label>
-                    <form:select multiple="true" size="6" path="roles" items="${roles}" itemLabel="name" itemValue="id" />
-                    <form:errors cssClass="text-error" path="roles" />
-                </div>
             </fieldset>
         </div>
         <div class="span4">
             <fieldset>
                 <div class="control-group">
-                    <form:label path="employee.firstName"><spring:message code="FirstName" /></form:label>
-                    <form:input path="employee.firstName" />
-                    <form:errors cssClass="text-error" path="employee.firstName" />
+                    <form:label path="employee"><spring:message code="Employee" /></form:label>
+                    <form:select multiple="false" path="employee.id" items="${employees}" itemLabel="fullname" itemValue="id" />
+                    <form:errors cssClass="text-error" path="employee" />
                 </div>
                 <div class="control-group">
-                    <form:label path="employee.lastName"><spring:message code="LastName" /></form:label>
-                    <form:input path="employee.lastName" />
-                    <form:errors cssClass="text-error" path="employee.lastName" />
-                </div>
-                <div class="control-group">
-                    <form:label path="employee.phonenumber"><spring:message code="Phone Number" /></form:label>
-                    <form:input path="employee.phonenumber" />
-                    <form:errors cssClass="text-error" path="employee.phonenumber" />
+                    <form:label path="roles"><spring:message code="Roles" /></form:label>
+                    <form:select multiple="true" size="6" path="roles" items="${roles}" itemLabel="name" itemValue="id" />
+                    <form:errors cssClass="text-error" path="roles" />
                 </div>
             </fieldset>
         </div>
