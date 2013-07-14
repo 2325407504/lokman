@@ -41,4 +41,18 @@
     </form:form>
 </c:if>
 
+<script type="text/javascript">
+    $('[name=code]')
+            .attr('autocomplete', 'off')
+            .on('keyup', function(ev) {
+
+        ev.stopPropagation();
+        ev.preventDefault();
+
+        var self = $(this);
+        var newval = self.val().replace(/\s/g, "").toUpperCase();
+        self.val(newval);
+    });
+</script>
+
 <jsp:include page="/WEB-INF/views/footer.jsp" />

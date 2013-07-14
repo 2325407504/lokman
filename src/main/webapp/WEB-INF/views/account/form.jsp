@@ -83,10 +83,22 @@
     </form:form>
 </c:if>
 
-
-
 <c:forEach var="role" items="${accountAttribute.roles}">
     <span class="label label-success">${role.name}</span>&nbsp;
 </c:forEach>
+
+<script type="text/javascript">
+    $('[name=username], [name=email]')
+            .attr('autocomplete', 'off')
+            .on('keyup', function(ev) {
+
+        ev.stopPropagation();
+        ev.preventDefault();
+
+        var self = $(this);
+        var newval = self.val().replace(/\s/g, "").toLowerCase();
+        self.val(newval);
+    });
+</script>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

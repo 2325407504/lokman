@@ -200,6 +200,8 @@
         if ($.inArray(ev.keyCode, [40, 38, 9, 13, 27]) === -1) {
 
             var self = $(this);
+            var newval = self.val().replace(/\s/g, "").toUpperCase();
+            self.val(newval);
 
             // We get the URL from input
             var urljson = self.attr("data-link");

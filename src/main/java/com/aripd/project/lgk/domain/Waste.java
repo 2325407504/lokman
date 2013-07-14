@@ -13,7 +13,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table(name = "waste")
 public class Waste extends BaseEntity {
 
-    @Column(unique = true)
+    @NotEmpty
+    @Column(nullable = false, unique = true)
     private String code;
     @NotEmpty
     private String name;

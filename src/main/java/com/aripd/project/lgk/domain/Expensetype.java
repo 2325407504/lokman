@@ -13,7 +13,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Expensetype extends BaseEntity {
 
     @NotEmpty
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String code;
     @NotEmpty
     private String name;

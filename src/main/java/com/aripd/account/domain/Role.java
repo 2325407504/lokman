@@ -7,15 +7,16 @@ import javax.persistence.Table;
 import com.aripd.common.entity.BaseEntity;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "role")
 public class Role extends BaseEntity {
 
-    @NotNull
+    @NotEmpty
     @Column(nullable = false, unique = true)
     private String code;
-    @NotNull
+    @NotEmpty
     private String name;
 
     @Override

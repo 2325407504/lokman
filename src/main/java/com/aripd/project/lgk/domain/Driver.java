@@ -16,7 +16,8 @@ public class Driver extends BaseEntity {
     private boolean active;
     @ManyToOne
     private Region region;
-    @Column(unique = true)
+    @NotEmpty
+    @Column(nullable = false, unique = true)
     private String code;
     @NotEmpty
     private String name;

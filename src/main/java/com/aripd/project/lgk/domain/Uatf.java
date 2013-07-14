@@ -11,6 +11,7 @@ import com.aripd.common.entity.BaseEntity;
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "uatf")
@@ -20,20 +21,20 @@ public class Uatf extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "forwarding_id")
     private Forwarding forwarding;
-    @Column(nullable = false)
-    @NotNull
+    @NotEmpty
+    @Column(nullable = false, unique = true)
     private String code;
+    @NotEmpty
     @Column(nullable = false)
-    @NotNull
     private String company;
+    @NotEmpty
     @Column(nullable = false)
-    @NotNull
     private String county;
+    @NotEmpty
     @Column(nullable = false)
-    @NotNull
     private String city;
-    @Column(nullable = false)
     @NotNull
+    @Column(nullable = false)
     private Integer weight;
 
     @Override

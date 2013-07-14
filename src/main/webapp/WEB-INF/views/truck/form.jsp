@@ -30,8 +30,8 @@
                 <a class="btn btn-danger" href="javascript:$('#form-${truckAttribute.id}').submit();"><spring:message code="Delete" /></a>
             </c:if>
             <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
-            </div>
-        </fieldset>
+        </div>
+    </fieldset>
 </form:form>
 
 <c:if test="${ !empty truckAttribute.id }">
@@ -40,5 +40,19 @@
         <form:hidden path="id" />
     </form:form>
 </c:if>
+
+<script type="text/javascript">
+    $('[name=plate]')
+            .attr('autocomplete', 'off')
+            .on('keyup', function(ev) {
+
+        ev.stopPropagation();
+        ev.preventDefault();
+
+        var self = $(this);
+        var newval = self.val().replace(/\s/g, "").toUpperCase();
+        self.val(newval);
+    });
+</script>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />
