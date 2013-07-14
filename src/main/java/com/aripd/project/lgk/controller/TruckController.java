@@ -23,7 +23,6 @@ import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Truck;
 import com.aripd.project.lgk.service.RegionService;
 import com.aripd.project.lgk.service.TruckService;
-import java.util.List;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_ADMIN') and hasRole('ROLE_OTL'))")
 @Controller

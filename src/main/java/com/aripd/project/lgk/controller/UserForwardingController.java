@@ -25,8 +25,10 @@ import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Uatf;
+import com.aripd.project.lgk.service.EndingpointService;
 import com.aripd.project.lgk.service.ForwardingService;
 import com.aripd.project.lgk.service.QuotaService;
+import com.aripd.project.lgk.service.StartingpointService;
 import com.aripd.project.lgk.service.SubcontractorService;
 import javax.validation.Valid;
 
@@ -43,6 +45,10 @@ public class UserForwardingController {
     private SubcontractorService subcontractorService;
     @Resource(name = "accountService")
     private AccountService accountService;
+    @Resource(name = "startingpointService")
+    private StartingpointService startingpointService;
+    @Resource(name = "endingpointService")
+    private EndingpointService endingpointService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -85,6 +91,8 @@ public class UserForwardingController {
 
         model.addAttribute("quotas", quotaService.findAll());
         model.addAttribute("subcontractors", subcontractorService.findByRegion(account.getRegion()));
+        model.addAttribute("startingpoints", startingpointService.findAll());
+        model.addAttribute("endingpoints", endingpointService.findAll());
         model.addAttribute("userforwardingAttribute", new Forwarding());
         return "/userforwarding/form";
     }
@@ -107,6 +115,8 @@ public class UserForwardingController {
         model.addAttribute("useruatfAttribute", new Uatf());
         model.addAttribute("quotas", quotaService.findAll());
         model.addAttribute("subcontractors", subcontractorService.findByRegion(account.getRegion()));
+        model.addAttribute("startingpoints", startingpointService.findAll());
+        model.addAttribute("endingpoints", endingpointService.findAll());
         model.addAttribute("userforwardingAttribute", forwarding);
         return "/userforwarding/form";
     }
@@ -124,6 +134,8 @@ public class UserForwardingController {
 
             model.addAttribute("quotas", quotaService.findAll());
             model.addAttribute("subcontractors", subcontractorService.findByRegion(account.getRegion()));
+            model.addAttribute("startingpoints", startingpointService.findAll());
+            model.addAttribute("endingpoints", endingpointService.findAll());
             return "/userforwarding/form";
         }
 

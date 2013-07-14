@@ -20,7 +20,7 @@
     <form:input id="start1" path="startingTime" />
     <form:input id="end1" path="endingTime" />
     <button class="btn" type="submit">
-        <i class="icon-search"></i>
+        <i class="icon-download-alt"></i> <spring:message code="Download" />
     </button>
 </form:form>
 
@@ -31,7 +31,7 @@
     <form:input id="start4" path="startingTime" />
     <form:input id="end4" path="endingTime" />
     <button class="btn" type="submit">
-        <i class="icon-search"></i>
+        <i class="icon-download-alt"></i> <spring:message code="Download" />
     </button>
 </form:form>
 
@@ -42,7 +42,7 @@
     <form:input id="start2" path="startingTime" />
     <form:input id="end2" path="endingTime" />
     <button class="btn" type="submit">
-        <i class="icon-search"></i>
+        <i class="icon-download-alt"></i> <spring:message code="Download" />
     </button>
 </form:form>
 
@@ -53,7 +53,7 @@
     <form:input id="start3" path="startingTime" />
     <form:input id="end3" path="endingTime" />
     <button class="btn" type="submit">
-        <i class="icon-search"></i>
+        <i class="icon-download-alt"></i> <spring:message code="Download" />
     </button>
 </form:form>
 

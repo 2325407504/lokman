@@ -26,7 +26,7 @@
         <form:options items="${trucks}" itemLabel="plate" itemValue="id" />
     </form:select>
     <button class="btn" type="submit">
-        <i class="icon-search"></i>
+        <i class="icon-download-alt"></i> <spring:message code="Download" />
     </button>
 </form:form>
 

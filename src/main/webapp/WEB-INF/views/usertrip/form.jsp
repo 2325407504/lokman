@@ -100,7 +100,7 @@
         function getKilometer(e) {
             var truck_id = $(e).find('#truck').val();
             $.ajax({
-                type: "GET",
+                type: "get",
                 url: "truck/get/" + truck_id + "/kilometer",
                 beforeSend: function() {
                 },

@@ -18,7 +18,7 @@
             <li class="${userexpense_class}"><a href="${userexpense_list}"><spring:message code="Expenses" /></a></li>
                 <sec:authorize access="hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_USER') and hasRole('ROLE_OTL'))">
                 <li class="nav-header"><spring:message code="Logistics" /></li>
-                <li class="${usertrip_class}"><a href="${usertrip_list}"><spring:message code="Trips" /></a></li>
+                <li class="hide ${usertrip_class}"><a href="${usertrip_list}"><spring:message code="Trips" /></a></li>
                 <li class="${userforwarding_class}"><a href="${userforwarding_list}"><spring:message code="Forwardings" /></a></li>
                 </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_USER') and hasRole('ROLE_URE'))">

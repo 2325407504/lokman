@@ -123,7 +123,7 @@
                     <ul class="unstyled">
                         <sec:authorize access="hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_ADMIN') and hasRole('ROLE_OTL'))">
                             <li class="nav-header"><spring:message code="Logistics" /></li>
-                            <li class="${trip_class}"><a href="${trip_list}"><spring:message code="Trips" /></a></li>
+                            <li class="hide ${trip_class}"><a href="${trip_list}"><spring:message code="Trips" /></a></li>
                             <li class="${forwarding_class}"><a href="${forwarding_list}"><spring:message code="Forwardings" /></a></li>
                             </sec:authorize>
                     </ul>

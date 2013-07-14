@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesSortField;
+import com.aripd.project.lgk.domain.Forwarding;
+import com.aripd.project.lgk.domain.Forwarding_;
 import com.aripd.project.lgk.domain.Region;
 import com.aripd.project.lgk.domain.Trip;
 import com.aripd.project.lgk.domain.Trip_;
@@ -25,8 +27,6 @@ import com.aripd.project.lgk.domain.Truck;
 import com.aripd.project.lgk.domain.Truck_;
 import com.aripd.project.lgk.repository.TruckRepository;
 import com.aripd.project.lgk.service.TruckService;
-import java.util.Arrays;
-import java.util.Iterator;
 
 @Service("truckService")
 @Transactional(readOnly = true)
@@ -81,10 +81,7 @@ public class TruckServiceImpl implements TruckService {
 
         List<Predicate> predicateList = new ArrayList<Predicate>();
         Predicate predicate = cb.equal(root.get(Trip_.truck), truck);
-        predicateList.add(predicate);
-        Predicate[] predicates = new Predicate[predicateList.size()];
-        predicateList.toArray(predicates);
-        cq.where(predicates);
+        cq.where(predicate);
         cq.orderBy(cb.desc(root.get(Trip_.endingTime)));
 
         List<Trip> results = em.createQuery(cq).getResultList();
@@ -100,20 +97,16 @@ public class TruckServiceImpl implements TruckService {
             return kilometer;
         }
 
-        Truck truck = this.findOneByPlate(plate);
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Trip> cq = cb.createQuery(Trip.class);
-        Root<Trip> root = cq.from(Trip.class);
+        CriteriaQuery<Forwarding> cq = cb.createQuery(Forwarding.class);
+        Root<Forwarding> root = cq.from(Forwarding.class);
 
         List<Predicate> predicateList = new ArrayList<Predicate>();
-        Predicate predicate = cb.equal(root.get(Trip_.truck), truck);
-        predicateList.add(predicate);
-        Predicate[] predicates = new Predicate[predicateList.size()];
-        predicateList.toArray(predicates);
-        cq.where(predicates);
-        cq.orderBy(cb.desc(root.get(Trip_.endingTime)));
+        Predicate predicate = cb.equal(root.get(Forwarding_.plate), plate);
+        cq.where(predicate);
+        cq.orderBy(cb.desc(root.get(Forwarding_.endingTime)));
 
-        List<Trip> results = em.createQuery(cq).getResultList();
+        List<Forwarding> results = em.createQuery(cq).getResultList();
         if (!results.isEmpty()) {
             kilometer = results.get(0).getEndingKm();
         }
