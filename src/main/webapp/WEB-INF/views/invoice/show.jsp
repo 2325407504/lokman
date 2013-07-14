@@ -14,12 +14,20 @@
 </jsp:include>
 
 <div class="row-fluid">
-    <div class="span12">
-        <aripd:description id="invoice-other">
+    <div class="span4">
+        <aripd:description id="invoice1">
             <aripd:descriptionitem label="Status" field="invoiceAttribute.submitted"></aripd:descriptionitem>
             <aripd:descriptionitem label="Account" field="invoiceAttribute.account.employee.fullname"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Document No" field="invoiceAttribute.documentNo"></aripd:descriptionitem>
+        </aripd:description>
+    </div>
+    <div class="span4">
+        <aripd:description id="invoice2">
             <aripd:descriptionitem label="Document Date" field="invoiceAttribute.documentDate"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Document No" field="invoiceAttribute.documentNo"></aripd:descriptionitem>
+        </aripd:description>
+    </div>
+    <div class="span4">
+        <aripd:description id="invoice2">
             <aripd:descriptionitem label="Customer" field="invoiceAttribute.customer.name"></aripd:descriptionitem>
             <aripd:descriptionitem label="Amount" field="invoiceAttribute.amount"></aripd:descriptionitem>
         </aripd:description>
