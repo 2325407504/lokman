@@ -74,7 +74,7 @@
 
 <script>
     $(function() {
-        $("#documentDate").datetimepicker({
+        $("[name=documentDate]").datepicker({
             maxDate: new Date()
         });
     });

@@ -1,22 +1,17 @@
 package com.aripd.project.lgk.report.expense;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import com.aripd.project.lgk.domain.Expense;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 
 public class FillManager {
-
-    private static DateTimeFormatter formatter = DateTimeFormat.forStyle("MS").withLocale(Locale.GERMAN);
 
     /**
      * Fills the report with content
@@ -52,7 +47,7 @@ public class FillManager {
             cell1.setCellStyle(bodyCellStyle);
 
             HSSFCell cell2 = row.createCell(startColIndex + 2);
-            cell2.setCellValue(datasource.get(i - 2).getDocumentDate().toDate());
+            cell2.setCellValue(datasource.get(i - 2).getDocumentDate());
 
             HSSFCell cell3 = row.createCell(startColIndex + 3);
             cell3.setCellValue(datasource.get(i - 2).getCompany());

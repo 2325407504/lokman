@@ -11,14 +11,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
 
 import com.aripd.account.domain.Account;
 import com.aripd.common.entity.BaseEntity;
-import com.aripd.common.util.ARIPDJodaDateTimeSerializer;
+import java.util.Date;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "waybill")
@@ -33,10 +35,12 @@ public class Waybill extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "invoice_id")
     private Invoice invoice;
-    @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
-    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
-    @Column(columnDefinition = "TIMESTAMP")
-    private DateTime documentDate;
+    @NotNull
+    @Past
+    @DateTimeFormat(style = "S-")
+    @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
+    private Date documentDate;
     @Column(unique = true)
     private String documentNo;
     private String company;
@@ -75,11 +79,11 @@ public class Waybill extends BaseEntity {
         this.invoice = invoice;
     }
 
-    public DateTime getDocumentDate() {
+    public Date getDocumentDate() {
         return documentDate;
     }
 
-    public void setDocumentDate(DateTime documentDate) {
+    public void setDocumentDate(Date documentDate) {
         this.documentDate = documentDate;
     }
 

@@ -236,7 +236,7 @@ public class ExpenseServiceImpl implements ExpenseService {
             expense.setSubmitted(true);
             expense.setAccount(accountService.findOneByUsername(username));
             expense.setExpensetype(expensetypeService.findOneByCode(expensetype_code));
-            expense.setDocumentDate(new DateTime(documentDate));
+            expense.setDocumentDate(documentDate);
             expense.setCompany(company);
             expense.setDescription(description);
             expense.setAmount(amount);

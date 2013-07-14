@@ -6,12 +6,14 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.aripd.common.entity.BaseEntity;
-import com.aripd.common.util.ARIPDJodaDateTimeSerializer;
+import java.util.Date;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "employee")
@@ -20,24 +22,25 @@ public class Employee extends BaseEntity {
     @Column(nullable = true, unique = true)
     private String tckimlik;
     @NotEmpty
-    @Column(nullable = true, unique = false)
+    @Column(nullable = true)
     private String firstName;
     @NotEmpty
-    @Column(nullable = true, unique = false)
+    @Column(nullable = true)
     private String lastName;
-    @Column(nullable = true, unique = false)
+    @Column(nullable = true)
     private String address;
-    @Column(nullable = true, unique = false)
+    @Column(nullable = true)
     private String phonenumber;
-    @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
-    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
-    @Column(columnDefinition = "TIMESTAMP", nullable = true)
-    //@DateTimeFormat(style = "S-")
-    private DateTime birthdate;
-    @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
-    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
-    @Column(columnDefinition = "TIMESTAMP", nullable = true)
-    private DateTime startingDate;
+    @Past
+    @DateTimeFormat(style = "S-")
+    @Temporal(TemporalType.DATE)
+    @Column(nullable = true)
+    private Date birthdate;
+    @Past
+    @DateTimeFormat(style = "S-")
+    @Temporal(TemporalType.DATE)
+    @Column(nullable = true)
+    private Date startingDate;
 
     @Override
     public String toString() {
@@ -95,19 +98,19 @@ public class Employee extends BaseEntity {
         this.phonenumber = phonenumber;
     }
 
-    public DateTime getBirthdate() {
+    public Date getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(DateTime birthdate) {
+    public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
     }
 
-    public DateTime getStartingDate() {
+    public Date getStartingDate() {
         return startingDate;
     }
 
-    public void setStartingDate(DateTime startingDate) {
+    public void setStartingDate(Date startingDate) {
         this.startingDate = startingDate;
     }
 }

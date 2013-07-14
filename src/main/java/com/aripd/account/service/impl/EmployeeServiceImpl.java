@@ -23,7 +23,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -157,8 +156,8 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.setLastName(lastName);
             employee.setAddress(address);
             employee.setPhonenumber(phonenumber);
-            employee.setBirthdate(new DateTime(birthdate));
-            employee.setStartingDate(new DateTime(startingDate));
+            employee.setBirthdate(birthdate);
+            employee.setStartingDate(startingDate);
             employees.add(employee);
         }
 

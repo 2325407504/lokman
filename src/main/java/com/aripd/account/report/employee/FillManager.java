@@ -64,12 +64,12 @@ public class FillManager {
 
             HSSFCell cell5 = row.createCell(startColIndex + 5);
             cell5.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            cell5.setCellValue(datasource.get(i - 2).getBirthdate().toDate());
+            cell5.setCellValue(datasource.get(i - 2).getBirthdate());
             cell5.setCellStyle(numericStyle);
 
             HSSFCell cell6 = row.createCell(startColIndex + 6);
             cell6.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            cell6.setCellValue(datasource.get(i - 2).getStartingDate().toDate());
+            cell6.setCellValue(datasource.get(i - 2).getStartingDate());
             cell6.setCellStyle(numericStyle);
 
         }

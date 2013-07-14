@@ -1,22 +1,17 @@
 package com.aripd.project.lgk.report.outgoing;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import com.aripd.project.lgk.domain.Outgoing;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 
 public class FillManager {
-
-    private static DateTimeFormatter formatter = DateTimeFormat.forStyle("SS").withLocale(Locale.GERMAN);
 
     /**
      * Fills the report with content
@@ -26,7 +21,7 @@ public class FillManager {
      * @param startColIndex starting column offset
      * @param datasource the data source
      */
-    public static void fillReport(HSSFSheet worksheet, int startRowIndex,int startColIndex, List<Outgoing> datasource) {
+    public static void fillReport(HSSFSheet worksheet, int startRowIndex, int startColIndex, List<Outgoing> datasource) {
         // Row offset
         startRowIndex += 2;
 
@@ -48,7 +43,7 @@ public class FillManager {
             cell0.setCellStyle(bodyCellStyle);
 
             HSSFCell cell1 = row.createCell(startColIndex + 1);
-            cell1.setCellValue(formatter.print(datasource.get(i - 2).getWaybill().getDocumentDate()));
+            cell1.setCellValue(datasource.get(i - 2).getWaybill().getDocumentDate());
             cell1.setCellStyle(bodyCellStyle);
 
             HSSFCell cell2 = row.createCell(startColIndex + 2);
@@ -80,7 +75,7 @@ public class FillManager {
             cell8.setCellStyle(bodyCellStyle);
 
             HSSFCell cell9 = row.createCell(startColIndex + 9);
-            cell9.setCellValue(formatter.print(datasource.get(i - 2).getWaybill().getInvoice().getDocumentDate()));
+            cell9.setCellValue(datasource.get(i - 2).getWaybill().getInvoice().getDocumentDate());
             cell9.setCellStyle(bodyCellStyle);
 
             HSSFCell cell10 = row.createCell(startColIndex + 10);
