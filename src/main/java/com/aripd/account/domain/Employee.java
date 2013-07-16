@@ -9,10 +9,11 @@ import com.aripd.common.entity.BaseEntity;
 import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.joda.time.DateTime;
+import org.joda.time.Years;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -32,15 +33,15 @@ public class Employee extends BaseEntity {
     @Column(nullable = true)
     private String phonenumber;
     @Past
-    @DateTimeFormat(style = "S-")
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     @Temporal(TemporalType.DATE)
     @Column(nullable = true)
     private Date birthdate;
     @Past
-    @DateTimeFormat(style = "S-")
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     @Temporal(TemporalType.DATE)
     @Column(nullable = true)
-    private Date startingDate;
+    private Date employmentDate;
 
     @Override
     public String toString() {
@@ -56,6 +57,22 @@ public class Employee extends BaseEntity {
         sb.append(lastName);
 
         return sb.toString();
+    }
+
+    @Transient
+    public int getAnnualLeaveDurationTotal() {
+        DateTime dt1 = new DateTime();
+        DateTime dt2 = new DateTime(employmentDate);
+        int diff = Years.yearsBetween(dt2, dt1).getYears();
+        int leave = 0;
+        if (1 <= diff && diff < 5) {
+            leave = 14;
+        } else if (5 <= diff && diff < 15) {
+            leave = 20;
+        } else if (15 < diff) {
+            leave = 26;
+        }
+        return leave;
     }
 
     public String getTckimlik() {
@@ -106,11 +123,11 @@ public class Employee extends BaseEntity {
         this.birthdate = birthdate;
     }
 
-    public Date getStartingDate() {
-        return startingDate;
+    public Date getEmploymentDate() {
+        return employmentDate;
     }
 
-    public void setStartingDate(Date startingDate) {
-        this.startingDate = startingDate;
+    public void setEmploymentDate(Date employmentDate) {
+        this.employmentDate = employmentDate;
     }
 }

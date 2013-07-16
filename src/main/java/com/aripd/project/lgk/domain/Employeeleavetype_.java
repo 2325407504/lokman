@@ -10,9 +10,9 @@ import com.aripd.common.entity.BaseEntity_;
  *
  * @author cem
  */
-@StaticMetamodel(Leavetype.class)
-public class Leavetype_ extends BaseEntity_ {
+@StaticMetamodel(Employeeleavetype.class)
+public class Employeeleavetype_ extends BaseEntity_ {
 
-    public static volatile SingularAttribute<Leavetype, String> code;
-    public static volatile SingularAttribute<Leavetype, String> name;
+    public static volatile SingularAttribute<Employeeleavetype, String> code;
+    public static volatile SingularAttribute<Employeeleavetype, String> name;
 }

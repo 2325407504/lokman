@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class ExpenseFilterByIntervalForm {
+public class EmployeeleaveFilterByIntervalForm {
 
     @NotNull
     @DateTimeFormat(pattern = "dd.MM.yyyy")

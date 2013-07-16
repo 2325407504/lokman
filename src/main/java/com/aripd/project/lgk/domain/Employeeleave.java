@@ -1,7 +1,5 @@
 package com.aripd.project.lgk.domain;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -14,13 +12,12 @@ import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "expense")
-public class Expense extends BaseEntity {
+@Table(name = "employeeleave")
+public class Employeeleave extends BaseEntity {
 
     @Column(nullable = false)
     private boolean submitted = false;
@@ -28,18 +25,18 @@ public class Expense extends BaseEntity {
     @JoinColumn(nullable = false, insertable = true, updatable = true)
     private Account account;
     @ManyToOne
-    private Expensetype expensetype;
+    private Employeeleavetype employeeleavetype;
     @NotNull
-    @Past
     @DateTimeFormat(pattern = "dd.MM.yyyy")
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
-    private Date documentDate;
-    private String company;
-    private String description;
-    @Column(nullable = false)
+    private Date startingDate;
     @NotNull
-    private BigDecimal amount;
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
+    private Date endingDate;
+    private String remark;
 
     @Override
     public String toString() {
@@ -62,43 +59,35 @@ public class Expense extends BaseEntity {
         this.account = account;
     }
 
-    public Expensetype getExpensetype() {
-        return expensetype;
+    public Employeeleavetype getEmployeeleavetype() {
+        return employeeleavetype;
     }
 
-    public void setExpensetype(Expensetype expensetype) {
-        this.expensetype = expensetype;
+    public void setEmployeeleavetype(Employeeleavetype employeeleavetype) {
+        this.employeeleavetype = employeeleavetype;
     }
 
-    public Date getDocumentDate() {
-        return documentDate;
+    public Date getStartingDate() {
+        return startingDate;
     }
 
-    public void setDocumentDate(Date documentDate) {
-        this.documentDate = documentDate;
+    public void setStartingDate(Date startingDate) {
+        this.startingDate = startingDate;
     }
 
-    public String getDescription() {
-        return description;
+    public Date getEndingDate() {
+        return endingDate;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setEndingDate(Date endingDate) {
+        this.endingDate = endingDate;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

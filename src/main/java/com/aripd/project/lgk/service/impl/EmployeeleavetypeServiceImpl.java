@@ -18,34 +18,34 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesSortField;
-import com.aripd.project.lgk.domain.Leavetype;
-import com.aripd.project.lgk.domain.Leavetype_;
-import com.aripd.project.lgk.repository.LeavetypeRepository;
-import com.aripd.project.lgk.service.LeavetypeService;
+import com.aripd.project.lgk.domain.Employeeleavetype;
+import com.aripd.project.lgk.domain.Employeeleavetype_;
+import com.aripd.project.lgk.repository.EmployeeleavetypeRepository;
+import com.aripd.project.lgk.service.EmployeeleavetypeService;
 
-@Service("leavetypeService")
+@Service("employeeleavetypeService")
 @Transactional(readOnly = true)
-public class LeavetypeServiceImpl implements LeavetypeService {
+public class EmployeeleavetypeServiceImpl implements EmployeeleavetypeService {
 
     @PersistenceContext
     private EntityManager em;
     @Autowired
-    private LeavetypeRepository repository;
+    private EmployeeleavetypeRepository repository;
 
-    public Leavetype findOne(Long id) {
+    public Employeeleavetype findOne(Long id) {
         return repository.findOne(id);
     }
 
-    public Leavetype findOneByCode(String code) {
+    public Employeeleavetype findOneByCode(String code) {
         return repository.findOneByCode(code);
     }
-    public List<Leavetype> findAll() {
+    public List<Employeeleavetype> findAll() {
         return repository.findAll();
     }
 
     @Transactional
-    public Leavetype save(Leavetype leavetype) {
-        return repository.save(leavetype);
+    public Employeeleavetype save(Employeeleavetype employeeleavetype) {
+        return repository.save(employeeleavetype);
     }
 
     @Transactional
@@ -54,11 +54,11 @@ public class LeavetypeServiceImpl implements LeavetypeService {
     }
 
     @Transactional
-    public void delete(Leavetype leavetype) {
-        repository.delete(leavetype);
+    public void delete(Employeeleavetype employeeleavetype) {
+        repository.delete(employeeleavetype);
     }
 
-    public DatatablesResultSet<Leavetype> getRecords(DatatablesCriteria criteria) {
+    public DatatablesResultSet<Employeeleavetype> getRecords(DatatablesCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
         Integer pageNumber = criteria.getPageNumber();
@@ -66,14 +66,14 @@ public class LeavetypeServiceImpl implements LeavetypeService {
         String search = criteria.getSearch();
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Leavetype> cq = cb.createQuery(Leavetype.class);
-        Root<Leavetype> root = cq.from(Leavetype.class);
+        CriteriaQuery<Employeeleavetype> cq = cb.createQuery(Employeeleavetype.class);
+        Root<Employeeleavetype> root = cq.from(Employeeleavetype.class);
 
         // Filtering and Searching
         List<Predicate> predicateList = new ArrayList<Predicate>();
 
         if ((search != null) && (!(search.isEmpty()))) {
-            Predicate predicate = cb.like(root.get(Leavetype_.name), "%" + search + "%");
+            Predicate predicate = cb.like(root.get(Employeeleavetype_.name), "%" + search + "%");
             predicateList.add(predicate);
         }
 
@@ -95,11 +95,11 @@ public class LeavetypeServiceImpl implements LeavetypeService {
         Long totalRecords = (long) em.createQuery(cq).getResultList().size();
 
         // Pagination
-        TypedQuery<Leavetype> typedQuery = em.createQuery(cq);
+        TypedQuery<Employeeleavetype> typedQuery = em.createQuery(cq);
         typedQuery = typedQuery.setFirstResult(displayStart);
         typedQuery = typedQuery.setMaxResults(displaySize);
-        List<Leavetype> resultList = typedQuery.getResultList();
+        List<Employeeleavetype> resultList = typedQuery.getResultList();
 
-        return new DatatablesResultSet<Leavetype>(resultList, totalRecords, displaySize);
+        return new DatatablesResultSet<Employeeleavetype>(resultList, totalRecords, displaySize);
     }
 }

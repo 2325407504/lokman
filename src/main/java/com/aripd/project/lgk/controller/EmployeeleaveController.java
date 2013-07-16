@@ -23,134 +23,134 @@ import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.dto.ControllerUtils;
-import com.aripd.project.lgk.domain.Expense;
-import com.aripd.project.lgk.model.ExpenseFilterByIntervalForm;
-import com.aripd.project.lgk.service.ExpenseService;
-import com.aripd.project.lgk.service.ExpensetypeService;
+import com.aripd.project.lgk.domain.Employeeleave;
+import com.aripd.project.lgk.model.EmployeeleaveFilterByIntervalForm;
+import com.aripd.project.lgk.service.EmployeeleaveService;
+import com.aripd.project.lgk.service.EmployeeleavetypeService;
 import org.springframework.validation.annotation.Validated;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_ADMIN')")
 @Controller
-@RequestMapping("/expense")
-public class ExpenseController {
+@RequestMapping("/employeeleave")
+public class EmployeeleaveController {
 
-    @Resource(name = "expenseService")
-    private ExpenseService expenseService;
+    @Resource(name = "employeeleaveService")
+    private EmployeeleaveService employeeleaveService;
     @Resource(name = "accountService")
     private AccountService accountService;
-    @Resource(name = "expensetypeService")
-    private ExpensetypeService expensetypeService;
+    @Resource(name = "employeeleavetypeService")
+    private EmployeeleavetypeService employeeleavetypeService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
-    WebResultSet<Expense> datatablesAction(@DatatablesParam DatatablesCriteria criteria) {
-        DatatablesResultSet<Expense> resultset = this.expenseService.getRecords(criteria);
+    WebResultSet<Employeeleave> datatablesAction(@DatatablesParam DatatablesCriteria criteria) {
+        DatatablesResultSet<Employeeleave> resultset = this.employeeleaveService.getRecords(criteria);
         return ControllerUtils.getDatatablesResultSet(criteria, resultset);
     }
 
     @RequestMapping(value = "/list")
     public String listAction(Model model) {
-        return "expense/list";
+        return "employeeleave/list";
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
     public String showAction(@PathVariable Long id, Model model) {
-        model.addAttribute("expenseAttribute", expenseService.findOne(id));
-        return "expense/show";
+        model.addAttribute("employeeleaveAttribute", employeeleaveService.findOne(id));
+        return "employeeleave/show";
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
         model.addAttribute("accounts", accountService.findAll());
-        model.addAttribute("expensetypes", expensetypeService.findAll());
-        model.addAttribute("expenseAttribute", new Expense());
-        return "expense/form";
+        model.addAttribute("employeeleavetypes", employeeleavetypeService.findAll());
+        model.addAttribute("employeeleaveAttribute", new Employeeleave());
+        return "employeeleave/form";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
         model.addAttribute("accounts", accountService.findAll());
-        model.addAttribute("expensetypes", expensetypeService.findAll());
-        model.addAttribute("expenseAttribute", expenseService.findOne(id));
-        return "expense/form";
+        model.addAttribute("employeeleavetypes", employeeleavetypeService.findAll());
+        model.addAttribute("employeeleaveAttribute", employeeleaveService.findOne(id));
+        return "employeeleave/form";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("expenseAttribute") @Valid Expense formData,
+            @ModelAttribute("employeeleaveAttribute") @Valid Employeeleave formData,
             BindingResult result,
             Model model) {
 
         if (result.hasErrors()) {
             model.addAttribute("accounts", accountService.findAll());
-            model.addAttribute("expensetypes", expensetypeService.findAll());
-            return "/expense/form";
+            model.addAttribute("employeeleavetypes", employeeleavetypeService.findAll());
+            return "/employeeleave/form";
         }
 
-        Expense expense = expenseService.save(formData);
+        Employeeleave employeeleave = employeeleaveService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/expense/show/" + expense.getId();
+        return "redirect:/employeeleave/show/" + employeeleave.getId();
     }
 
     @RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)
     public String submitAction(@PathVariable Long id) {
-        Expense expense = expenseService.findOne(id);
-        expense.setSubmitted(true ^ expense.isSubmitted());
-        expenseService.save(expense);
-        return "redirect:/expense/show/" + id;
+        Employeeleave employeeleave = employeeleaveService.findOne(id);
+        employeeleave.setSubmitted(true ^ employeeleave.isSubmitted());
+        employeeleaveService.save(employeeleave);
+        return "redirect:/employeeleave/show/" + id;
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public String delete(
             final RedirectAttributes redirectAttributes,
             @RequestParam(value = "id", required = true) Long id) {
-        expenseService.delete(id);
+        employeeleaveService.delete(id);
         redirectAttributes.addFlashAttribute("message", "message.completed.delete");
-        return "redirect:/expense/list";
+        return "redirect:/employeeleave/list";
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public String reportAction(Model model) {
         model.addAttribute("accounts", accountService.findAll());
-        model.addAttribute("expenseFilterByIntervalForm", new ExpenseFilterByIntervalForm());
-        return "expense/report";
+        model.addAttribute("employeeleaveFilterByIntervalForm", new EmployeeleaveFilterByIntervalForm());
+        return "employeeleave/report";
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.POST)
     public String reportAction(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("expenseFilterByIntervalForm") @Valid ExpenseFilterByIntervalForm formData,
+            @ModelAttribute("employeeleaveFilterByIntervalForm") @Valid EmployeeleaveFilterByIntervalForm formData,
             BindingResult result,
             HttpServletResponse response,
             Model model) {
 
         if (result.hasErrors()) {
-            return "/expense/report";
+            return "/employeeleave/report";
         }
 
-        expenseService.exportByInterval(response, formData.getStartingDate(), formData.getEndingDate(), formData.getAccount().getId());
-        return "redirect:/expense/report";
+        employeeleaveService.exportByInterval(response, formData.getStartingDate(), formData.getEndingDate(), formData.getAccount().getId());
+        return "redirect:/employeeleave/report";
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
-        model.addAttribute("expenseImportAttribute", new FileUploadBean());
-        return "expense/import";
+        model.addAttribute("employeeleaveImportAttribute", new FileUploadBean());
+        return "employeeleave/import";
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importData(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("expenseImportAttribute") @Validated FileUploadBean formData,
+            @ModelAttribute("employeeleaveImportAttribute") @Validated FileUploadBean formData,
             BindingResult result) {
 
         if (result.hasErrors()) {
-            return "/expense/import";
+            return "/employeeleave/import";
         }
 
-        expenseService.importData(formData.getFile());
+        employeeleaveService.importData(formData.getFile());
         redirectAttributes.addFlashAttribute("message", "message.completed.import");
-        return "redirect:/expense/list";
+        return "redirect:/employeeleave/list";
     }
 }

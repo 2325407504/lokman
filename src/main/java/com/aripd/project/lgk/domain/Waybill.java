@@ -37,7 +37,7 @@ public class Waybill extends BaseEntity {
     private Invoice invoice;
     @NotNull
     @Past
-    @DateTimeFormat(style = "S-")
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
     private Date documentDate;

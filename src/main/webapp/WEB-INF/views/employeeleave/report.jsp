@@ -5,8 +5,8 @@
 </jsp:include>
 
 <jsp:include page="/WEB-INF/views/subnav.jsp" >
-    <jsp:param name="title" value="Expenses" />
-    <jsp:param name="property" value="expense" />
+    <jsp:param name="title" value="Employeeeleaves" />
+    <jsp:param name="property" value="employeeleave" />
     <jsp:param name="import" value="true" />
     <jsp:param name="report" value="true" />
     <jsp:param name="submit" value="true" />
@@ -17,9 +17,9 @@
 <spring:message code="Ending" var="ending" />
 <spring:message code="All" var="all" />
 
-<p class="lead"><spring:message code="Expense" /></p>
-<spring:url var="expenseReport" value="/expense/report" />
-<form:form modelAttribute="expenseFilterByIntervalForm" action="${expenseReport}" method="post" class="form-inline">
+<p class="lead"><spring:message code="Employeeeleave" /></p>
+<spring:url var="employeeleaveReport" value="/employeeleave/report" />
+<form:form modelAttribute="employeeleaveFilterByIntervalForm" action="${employeeleaveReport}" method="post" class="form-inline">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <form:input path="starting" cssClass="input-medium" placeholder="${starting}" />
     <form:input path="ending" cssClass="input-medium" placeholder="${ending}" />

@@ -50,9 +50,9 @@
                     <form:errors cssClass="text-error" path="birthdate" />
                 </div>
                 <div class="control-group">
-                    <form:label path="startingDate"><spring:message code="Date of starting the job" /></form:label>
-                    <form:input type="datetime" path="startingDate" />
-                    <form:errors cssClass="text-error" path="startingDate" />
+                    <form:label path="employmentDate"><spring:message code="Date of starting the job" /></form:label>
+                    <form:input type="datetime" path="employmentDate" />
+                    <form:errors cssClass="text-error" path="employmentDate" />
                 </div>
                 <div class="form-actions">
                     <c:if test="${ !empty employeeAttribute.id }">
@@ -74,7 +74,7 @@
 
 <script>
     $(function() {
-        $("[name=birthdate], [name=startingDate]").datepicker({
+        $("[name=birthdate], [name=employmentDate]").datepicker({
             maxDate: new Date()
         });
     });

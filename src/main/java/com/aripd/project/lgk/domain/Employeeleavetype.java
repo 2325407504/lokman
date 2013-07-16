@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "leavetype")
-public class Leavetype extends BaseEntity {
+public class Employeeleavetype extends BaseEntity {
 
     @NotEmpty
     @Column(nullable = false, unique = true)

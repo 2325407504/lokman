@@ -1,22 +1,17 @@
-package com.aripd.account.report.employee;
+package com.aripd.project.lgk.report.employeeleave;
 
-import com.aripd.account.domain.Employee;
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
+import com.aripd.project.lgk.domain.Employeeleave;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 
 public class FillManager {
-
-    private static DateTimeFormatter formatter = DateTimeFormat.forStyle("MS").withLocale(Locale.GERMAN);
 
     /**
      * Fills the report with content
@@ -26,7 +21,7 @@ public class FillManager {
      * @param startColIndex starting column offset
      * @param datasource the data source
      */
-    public static void fillReport(HSSFSheet worksheet, int startRowIndex, int startColIndex, List<Employee> datasource) {
+    public static void fillReport(HSSFSheet worksheet, int startRowIndex, int startColIndex, List<Employeeleave> datasource) {
         // Row offset
         startRowIndex += 2;
 
@@ -44,33 +39,23 @@ public class FillManager {
             HSSFRow row = worksheet.createRow((short) i + 1);
 
             HSSFCell cell0 = row.createCell(startColIndex + 0);
-            cell0.setCellValue(datasource.get(i - 2).getTckimlik());
+            cell0.setCellValue(datasource.get(i - 2).getAccount().getUsername());
             cell0.setCellStyle(bodyCellStyle);
 
             HSSFCell cell1 = row.createCell(startColIndex + 1);
-            cell1.setCellValue(datasource.get(i - 2).getFirstName());
+            cell1.setCellValue(datasource.get(i - 2).getEmployeeleavetype().getCode());
             cell1.setCellStyle(bodyCellStyle);
 
             HSSFCell cell2 = row.createCell(startColIndex + 2);
-            cell2.setCellValue(datasource.get(i - 2).getLastName());
+            cell2.setCellValue(datasource.get(i - 2).getStartingDate());
 
             HSSFCell cell3 = row.createCell(startColIndex + 3);
-            cell3.setCellValue(datasource.get(i - 2).getAddress());
+            cell3.setCellValue(datasource.get(i - 2).getEndingDate());
             cell3.setCellStyle(bodyCellStyle);
 
             HSSFCell cell4 = row.createCell(startColIndex + 4);
-            cell4.setCellValue(datasource.get(i - 2).getPhonenumber());
+            cell4.setCellValue(datasource.get(i - 2).getRemark());
             cell4.setCellStyle(bodyCellStyle);
-
-            HSSFCell cell5 = row.createCell(startColIndex + 5);
-            cell5.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            cell5.setCellValue(datasource.get(i - 2).getBirthdate());
-            cell5.setCellStyle(numericStyle);
-
-            HSSFCell cell6 = row.createCell(startColIndex + 6);
-            cell6.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            cell6.setCellValue(datasource.get(i - 2).getEmploymentDate());
-            cell6.setCellStyle(numericStyle);
 
         }
     }

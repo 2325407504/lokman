@@ -20,7 +20,7 @@
     <aripd:datatablescolumn label="Postal Address" field="address"/>
     <aripd:datatablescolumn label="Phone Number" field="phonenumber"/>
     <aripd:datatablescolumn label="Date of birth" field="birthdate"/>
-    <aripd:datatablescolumn label="Date of starting the job" field="startingDate"/>
+    <aripd:datatablescolumn label="Date of starting the job" field="employmentDate"/>
 </aripd:datatables>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

@@ -21,9 +21,12 @@
             <aripd:descriptionitem label="Postal Address" field="employeeAttribute.address"></aripd:descriptionitem>
             <aripd:descriptionitem label="Phone Number" field="employeeAttribute.phonenumber"></aripd:descriptionitem>
             <aripd:descriptionitem label="Date of birth" field="employeeAttribute.birthdate"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Date of starting the job" field="employeeAttribute.startingDate"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Date of starting the job" field="employeeAttribute.employmentDate"></aripd:descriptionitem>
         </aripd:description>
     </div>
 </div>
+
+start: <spring:eval expression="employeeAttribute.employmentDate" />
+total leave: ${employeeAttribute.annualLeaveDurationTotal}
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

@@ -5,13 +5,13 @@
 </jsp:include>
 
 <jsp:include page="/WEB-INF/views/subnav.jsp" >
-    <jsp:param name="title" value="Leavetypes" />
-    <jsp:param name="property" value="leavetype" />
+    <jsp:param name="title" value="Employeeleavetypes" />
+    <jsp:param name="property" value="employeeleavetype" />
     <jsp:param name="active" value="form" />
 </jsp:include>
 
-<spring:url var="leavetypeSave" value="/leavetype/save" />
-<form:form modelAttribute="leavetypeAttribute" action="${leavetypeSave}" method="post">
+<spring:url var="save" value="/employeeleavetype/save" />
+<form:form modelAttribute="employeeleavetypeAttribute" action="${save}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <form:hidden path="id" />
     <fieldset>
@@ -26,17 +26,17 @@
             <form:errors cssClass="text-error" path="name" />
         </div>
         <div class="form-actions">
-            <c:if test="${ !empty leavetypeAttribute.id }">
-                <a class="btn btn-danger" href="javascript:$('#form-${leavetypeAttribute.id}').submit();"><spring:message code="Delete" /></a>
+            <c:if test="${ !empty employeeleavetypeAttribute.id }">
+                <a class="btn btn-danger" href="javascript:$('#form-${employeeleavetypeAttribute.id}').submit();"><spring:message code="Delete" /></a>
             </c:if>
             <button class="btn btn-primary" type="submit"><spring:message code="Save" /></button>
         </div>
     </fieldset>
 </form:form>
 
-<c:if test="${ !empty leavetypeAttribute.id }">
-    <spring:url var="deleteUrl" value="/leavetype/delete?id=${leavetypeAttribute.id}" />
-    <form:form id="form-${leavetypeAttribute.id}" modelAttribute="leavetypeAttribute" action="${deleteUrl}" method="delete">
+<c:if test="${ !empty employeeleavetypeAttribute.id }">
+    <spring:url var="deleteUrl" value="/employeeleavetype/delete?id=${employeeleavetypeAttribute.id}" />
+    <form:form id="form-${employeeleavetypeAttribute.id}" modelAttribute="employeeleavetypeAttribute" action="${deleteUrl}" method="delete">
         <form:hidden path="id" />
     </form:form>
 </c:if>

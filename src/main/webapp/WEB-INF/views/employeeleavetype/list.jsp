@@ -5,12 +5,12 @@
 </jsp:include>
 
 <jsp:include page="/WEB-INF/views/subnav.jsp" >
-    <jsp:param name="title" value="Leavetypes" />
-    <jsp:param name="property" value="leavetype" />
+    <jsp:param name="title" value="Employeeleavetypes" />
+    <jsp:param name="property" value="employeeleavetype" />
     <jsp:param name="active" value="list" />
 </jsp:include>
 
-<aripd:datatables datasource="/leavetype/get" id="leavetypes" dataUrlShow="/leavetype/show" dataUrlEdit="/leavetype/edit">
+<aripd:datatables datasource="/employeeleavetype/get" id="employeeleavetypes" dataUrlShow="/employeeleavetype/show" dataUrlEdit="/employeeleavetype/edit">
     <aripd:datatablescolumn label="Action" field="id"/>
     <aripd:datatablescolumn label="Code" field="code"/>
     <aripd:datatablescolumn label="Name" field="name"/>

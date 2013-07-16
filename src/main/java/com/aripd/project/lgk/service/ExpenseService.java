@@ -8,8 +8,8 @@ import com.aripd.account.domain.Account;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Expense;
+import java.util.Date;
 import java.util.List;
-import org.joda.time.DateTime;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ExpenseService {
@@ -18,7 +18,7 @@ public interface ExpenseService {
 
     public Expense findOneByAccountAndId(Account account, Long id);
 
-    public List<Expense> findByInterval(DateTime startingTime, DateTime endingTime);
+    public List<Expense> findByInterval(Date starting, Date ending, Long account_id);
 
     public Expense save(Expense expense);
 
@@ -32,5 +32,5 @@ public interface ExpenseService {
 
     public void importData(MultipartFile file);
 
-    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
+    public void exportByInterval(HttpServletResponse response, Date starting, Date ending, Long account_id);
 }

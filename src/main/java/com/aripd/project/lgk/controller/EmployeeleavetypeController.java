@@ -20,21 +20,21 @@ import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.dto.ControllerUtils;
-import com.aripd.project.lgk.domain.Leavetype;
-import com.aripd.project.lgk.service.LeavetypeService;
+import com.aripd.project.lgk.domain.Employeeleavetype;
+import com.aripd.project.lgk.service.EmployeeleavetypeService;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_ADMIN')")
 @Controller
 @RequestMapping("/leavetype")
-public class LeavetypeController {
+public class EmployeeleavetypeController {
 
     @Resource(name = "leavetypeService")
-    private LeavetypeService leavetypeService;
+    private EmployeeleavetypeService leavetypeService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
-    WebResultSet<Leavetype> datatablesAction(@DatatablesParam DatatablesCriteria criteria) {
-        DatatablesResultSet<Leavetype> resultset = this.leavetypeService.getRecords(criteria);
+    WebResultSet<Employeeleavetype> datatablesAction(@DatatablesParam DatatablesCriteria criteria) {
+        DatatablesResultSet<Employeeleavetype> resultset = this.leavetypeService.getRecords(criteria);
         return ControllerUtils.getDatatablesResultSet(criteria, resultset);
     }
 
@@ -53,7 +53,7 @@ public class LeavetypeController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-        model.addAttribute("leavetypeAttribute", new Leavetype());
+        model.addAttribute("leavetypeAttribute", new Employeeleavetype());
         return "leavetype/form";
     }
 
@@ -68,7 +68,7 @@ public class LeavetypeController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("leavetypeAttribute") @Valid Leavetype formData,
+            @ModelAttribute("leavetypeAttribute") @Valid Employeeleavetype formData,
             BindingResult result,
             Model model) {
 
@@ -76,7 +76,7 @@ public class LeavetypeController {
             return "/leavetype/form";
         }
 
-        Leavetype leavetype = leavetypeService.save(formData);
+        Employeeleavetype leavetype = leavetypeService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/leavetype/show/" + leavetype.getId();
     }

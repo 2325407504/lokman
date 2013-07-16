@@ -1,8 +1,6 @@
 package com.aripd.project.lgk.service.impl;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.MathContext;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,47 +35,43 @@ import com.aripd.account.service.AccountService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesSortField;
-import com.aripd.project.lgk.domain.Expense;
-import com.aripd.project.lgk.domain.Expense_;
-import com.aripd.project.lgk.report.expense.FillManager;
-import com.aripd.project.lgk.report.expense.Layouter;
-import com.aripd.project.lgk.report.expense.Writer;
-import com.aripd.project.lgk.repository.ExpenseRepository;
-import com.aripd.project.lgk.service.ExpenseService;
-import com.aripd.project.lgk.service.ExpensetypeService;
+import com.aripd.project.lgk.domain.Employeeleave;
+import com.aripd.project.lgk.domain.Employeeleave_;
+import com.aripd.project.lgk.report.employeeleave.FillManager;
+import com.aripd.project.lgk.report.employeeleave.Layouter;
+import com.aripd.project.lgk.report.employeeleave.Writer;
+import com.aripd.project.lgk.repository.EmployeeleaveRepository;
+import com.aripd.project.lgk.service.EmployeeleaveService;
+import com.aripd.project.lgk.service.EmployeeleavetypeService;
 import org.springframework.web.multipart.MultipartFile;
 
-@Service("expenseService")
+@Service("employeeleaveService")
 @Transactional(readOnly = true)
-public class ExpenseServiceImpl implements ExpenseService {
+public class EmployeeleaveServiceImpl implements EmployeeleaveService {
 
     @PersistenceContext
     private EntityManager em;
     @Autowired
-    private ExpenseRepository repository;
+    private EmployeeleaveRepository repository;
     @Resource(name = "accountService")
     private AccountService accountService;
-    @Resource(name = "expensetypeService")
-    private ExpensetypeService expensetypeService;
+    @Resource(name = "employeeleavetypeService")
+    private EmployeeleavetypeService employeeleavetypeService;
 
-    public Expense findOne(Long id) {
+    public Employeeleave findOne(Long id) {
         return repository.findOne(id);
     }
 
-    public Expense findOneByAccountAndId(Account account, Long id) {
-        return repository.findOneByAccountAndId(account, id);
-    }
-
-    public List<Expense> findByInterval(Date starting, Date ending, Long account_id) {
+    public List<Employeeleave> findByInterval(Date starting, Date ending, Long account_id) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Expense> cq = cb.createQuery(Expense.class);
-        Root<Expense> root = cq.from(Expense.class);
+        CriteriaQuery<Employeeleave> cq = cb.createQuery(Employeeleave.class);
+        Root<Employeeleave> root = cq.from(Employeeleave.class);
 
         List<Predicate> predicateList = new ArrayList<Predicate>();
-        Predicate predicate1 = cb.between(root.get(Expense_.documentDate), starting, ending);
+        Predicate predicate1 = cb.between(root.get(Employeeleave_.starting), starting, ending);
         Predicate predicate2 = null;
         if (account_id != null) {
-            Join<Expense, Account> account = root.join(Expense_.account);
+            Join<Employeeleave, Account> account = root.join(Employeeleave_.account);
             predicate2 = cb.equal(account.get(Account_.id), account_id);
         }
 
@@ -92,15 +86,15 @@ public class ExpenseServiceImpl implements ExpenseService {
         predicateList.toArray(predicates);
         cq.where(predicates);
 
-        TypedQuery<Expense> typedQuery = em.createQuery(cq);
-        List<Expense> resultList = typedQuery.getResultList();
+        TypedQuery<Employeeleave> typedQuery = em.createQuery(cq);
+        List<Employeeleave> resultList = typedQuery.getResultList();
 
         return resultList;
     }
 
     @Transactional
-    public Expense save(Expense expense) {
-        return repository.save(expense);
+    public Employeeleave save(Employeeleave leave) {
+        return repository.save(leave);
     }
 
     @Transactional
@@ -109,11 +103,11 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Transactional
-    public void delete(Expense expense) {
-        repository.delete(expense);
+    public void delete(Employeeleave leave) {
+        repository.delete(leave);
     }
 
-    public DatatablesResultSet<Expense> getRecords(DatatablesCriteria criteria) {
+    public DatatablesResultSet<Employeeleave> getRecords(DatatablesCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
         Integer pageNumber = criteria.getPageNumber();
@@ -121,18 +115,17 @@ public class ExpenseServiceImpl implements ExpenseService {
         String search = criteria.getSearch();
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Expense> cq = cb.createQuery(Expense.class);
-        Root<Expense> root = cq.from(Expense.class);
-        Join<Expense, Account> account = root.join(Expense_.account);
+        CriteriaQuery<Employeeleave> cq = cb.createQuery(Employeeleave.class);
+        Root<Employeeleave> root = cq.from(Employeeleave.class);
+        Join<Employeeleave, Account> account = root.join(Employeeleave_.account);
 
         // Filtering and Searching
         List<Predicate> predicateList = new ArrayList<Predicate>();
 
         if ((search != null) && (!(search.isEmpty()))) {
             Predicate predicate1 = cb.like(account.get(Account_.username), "%" + search + "%");
-            Predicate predicate2 = cb.like(root.get(Expense_.company), "%" + search + "%");
-            Predicate predicate3 = cb.like(root.get(Expense_.description), "%" + search + "%");
-            Predicate predicate = cb.or(predicate1, predicate2, predicate3);
+            Predicate predicate2 = cb.like(root.get(Employeeleave_.remark), "%" + search + "%");
+            Predicate predicate = cb.or(predicate1, predicate2);
             predicateList.add(predicate);
         }
 
@@ -154,15 +147,15 @@ public class ExpenseServiceImpl implements ExpenseService {
         Long totalRecords = (long) em.createQuery(cq).getResultList().size();
 
         // Pagination
-        TypedQuery<Expense> typedQuery = em.createQuery(cq);
+        TypedQuery<Employeeleave> typedQuery = em.createQuery(cq);
         typedQuery = typedQuery.setFirstResult(displayStart);
         typedQuery = typedQuery.setMaxResults(displaySize);
-        List<Expense> resultList = typedQuery.getResultList();
+        List<Employeeleave> resultList = typedQuery.getResultList();
 
-        return new DatatablesResultSet<Expense>(resultList, totalRecords, displaySize);
+        return new DatatablesResultSet<Employeeleave>(resultList, totalRecords, displaySize);
     }
 
-    public DatatablesResultSet<Expense> getRecords(Principal principal, DatatablesCriteria criteria) {
+    public DatatablesResultSet<Employeeleave> getRecords(Principal principal, DatatablesCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
         Integer pageNumber = criteria.getPageNumber();
@@ -170,17 +163,17 @@ public class ExpenseServiceImpl implements ExpenseService {
         String search = criteria.getSearch();
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Expense> cq = cb.createQuery(Expense.class);
-        Root<Expense> root = cq.from(Expense.class);
+        CriteriaQuery<Employeeleave> cq = cb.createQuery(Employeeleave.class);
+        Root<Employeeleave> root = cq.from(Employeeleave.class);
 
         // Filtering and Searching
         List<Predicate> predicateList = new ArrayList<Predicate>();
 
         Account account = accountService.findOneByUsername(principal.getName());
-        Predicate predicate_ = cb.equal(root.get(Expense_.account), account);
+        Predicate predicate_ = cb.equal(root.get(Employeeleave_.account), account);
 
         if ((search != null) && (!(search.isEmpty()))) {
-            Predicate predicate1 = cb.like(root.get(Expense_.description), "%" + search + "%");
+            Predicate predicate1 = cb.like(root.get(Employeeleave_.remark), "%" + search + "%");
             Predicate predicate = cb.and(predicate_, predicate1);
             predicateList.add(predicate);
         } else {
@@ -205,12 +198,12 @@ public class ExpenseServiceImpl implements ExpenseService {
         Long totalRecords = (long) em.createQuery(cq).getResultList().size();
 
         // Pagination
-        TypedQuery<Expense> typedQuery = em.createQuery(cq);
+        TypedQuery<Employeeleave> typedQuery = em.createQuery(cq);
         typedQuery = typedQuery.setFirstResult(displayStart);
         typedQuery = typedQuery.setMaxResults(displaySize);
-        List<Expense> resultList = typedQuery.getResultList();
+        List<Employeeleave> resultList = typedQuery.getResultList();
 
-        return new DatatablesResultSet<Expense>(resultList, totalRecords, displaySize);
+        return new DatatablesResultSet<Employeeleave>(resultList, totalRecords, displaySize);
     }
 
     public void importData(MultipartFile file) {
@@ -226,8 +219,8 @@ public class ExpenseServiceImpl implements ExpenseService {
         Sheet worksheet = workbook.getSheetAt(0);
         Iterator<Row> rows = worksheet.rowIterator();
 
-        List<Expense> expenses = new ArrayList<Expense>();
-        Expense expense;
+        List<Employeeleave> leaves = new ArrayList<Employeeleave>();
+        Employeeleave employeeleave;
 
         //while (rows.hasNext()) {
         for (int i = 1; i <= worksheet.getLastRowNum(); i++) {
@@ -235,25 +228,23 @@ public class ExpenseServiceImpl implements ExpenseService {
             Row row = worksheet.getRow(i);
 
             String username = row.getCell(0).getStringCellValue();
-            String expensetype_code = row.getCell(1).getStringCellValue();
-            Date documentDate = row.getCell(2).getDateCellValue();
-            String company = row.getCell(3).getStringCellValue();
-            String description = row.getCell(4).getStringCellValue();
-            BigDecimal amount = new BigDecimal(row.getCell(5).getNumericCellValue(), MathContext.DECIMAL64);
+            String leavetype_code = row.getCell(1).getStringCellValue();
+            Date startingDate = row.getCell(2).getDateCellValue();
+            Date endingDate = row.getCell(3).getDateCellValue();
+            String remark = row.getCell(4).getStringCellValue();
 
-            expense = new Expense();
-            expense.setSubmitted(true);
-            expense.setAccount(accountService.findOneByUsername(username));
-            expense.setExpensetype(expensetypeService.findOneByCode(expensetype_code));
-            expense.setDocumentDate(documentDate);
-            expense.setCompany(company);
-            expense.setDescription(description);
-            expense.setAmount(amount);
+            employeeleave = new Employeeleave();
+            employeeleave.setSubmitted(true);
+            employeeleave.setAccount(accountService.findOneByUsername(username));
+            employeeleave.setEmployeeleavetype(employeeleavetypeService.findOneByCode(leavetype_code));
+            employeeleave.setStartingDate(startingDate);
+            employeeleave.setEndingDate(endingDate);
+            employeeleave.setRemark(remark);
 
-            expenses.add(expense);
+            leaves.add(employeeleave);
         }
 
-        repository.save(expenses);
+        repository.save(leaves);
     }
 
     public void exportByInterval(HttpServletResponse response, Date starting, Date ending, Long account_id) {
@@ -261,7 +252,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         HSSFWorkbook workbook = new HSSFWorkbook();
 
         // 2. Create new worksheet
-        HSSFSheet worksheet = workbook.createSheet("Expenses");
+        HSSFSheet worksheet = workbook.createSheet("Employee Leaves");
 
         // 3. Define starting indices for rows and columns
         int startRowIndex = 0;
@@ -275,9 +266,8 @@ public class ExpenseServiceImpl implements ExpenseService {
         FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByInterval(starting, ending, account_id));
 
         // 6. Set the response properties
-        String fileName = "ExpenseReport.xls";
-        response.setHeader("Content-Disposition", "inline; filename="
-                + fileName);
+        String fileName = "EmployeeLeaveReport.xls";
+        response.setHeader("Content-Disposition", "inline; filename=" + fileName);
         // Make sure to set the correct content type
         response.setContentType("application/vnd.ms-excel");
 

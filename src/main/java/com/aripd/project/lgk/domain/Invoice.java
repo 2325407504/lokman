@@ -33,7 +33,7 @@ public class Invoice extends BaseEntity {
     private String documentNo;
     @NotNull
     @Past
-    @DateTimeFormat(style = "S-")
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
     private Date documentDate;

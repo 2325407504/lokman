@@ -148,7 +148,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             String address = row.getCell(3).getStringCellValue();
             String phonenumber = row.getCell(4).getStringCellValue();
             Date birthdate = row.getCell(5).getDateCellValue();
-            Date startingDate = row.getCell(6).getDateCellValue();
+            Date employmentDate = row.getCell(6).getDateCellValue();
 
             employee = new Employee();
             employee.setTckimlik(tckimlik);
@@ -157,7 +157,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.setAddress(address);
             employee.setPhonenumber(phonenumber);
             employee.setBirthdate(birthdate);
-            employee.setStartingDate(startingDate);
+            employee.setEmploymentDate(employmentDate);
             employees.add(employee);
         }
 
