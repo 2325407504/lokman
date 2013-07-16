@@ -28,13 +28,13 @@ import com.aripd.project.lgk.service.EmployeeleavetypeService;
 @RequestMapping("/leavetype")
 public class EmployeeleavetypeController {
 
-    @Resource(name = "leavetypeService")
-    private EmployeeleavetypeService leavetypeService;
+    @Resource(name = "employeeleavetypeService")
+    private EmployeeleavetypeService employeeleavetypeService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
     WebResultSet<Employeeleavetype> datatablesAction(@DatatablesParam DatatablesCriteria criteria) {
-        DatatablesResultSet<Employeeleavetype> resultset = this.leavetypeService.getRecords(criteria);
+        DatatablesResultSet<Employeeleavetype> resultset = this.employeeleavetypeService.getRecords(criteria);
         return ControllerUtils.getDatatablesResultSet(criteria, resultset);
     }
 
@@ -47,7 +47,7 @@ public class EmployeeleavetypeController {
     public String showAction(
             @PathVariable Long id,
             Model model) {
-        model.addAttribute("leavetypeAttribute", leavetypeService.findOne(id));
+        model.addAttribute("leavetypeAttribute", employeeleavetypeService.findOne(id));
         return "leavetype/show";
     }
 
@@ -61,7 +61,7 @@ public class EmployeeleavetypeController {
     public String editAction(
             @PathVariable Long id,
             Model model) {
-        model.addAttribute("leavetypeAttribute", leavetypeService.findOne(id));
+        model.addAttribute("leavetypeAttribute", employeeleavetypeService.findOne(id));
         return "leavetype/form";
     }
 
@@ -76,7 +76,7 @@ public class EmployeeleavetypeController {
             return "/leavetype/form";
         }
 
-        Employeeleavetype leavetype = leavetypeService.save(formData);
+        Employeeleavetype leavetype = employeeleavetypeService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/leavetype/show/" + leavetype.getId();
     }
@@ -85,7 +85,7 @@ public class EmployeeleavetypeController {
     public String delete(
             final RedirectAttributes redirectAttributes,
             @RequestParam(value = "id", required = true) Long id) {
-        leavetypeService.delete(id);
+        employeeleavetypeService.delete(id);
         redirectAttributes.addFlashAttribute("message", "message.completed.delete");
         return "redirect:/leavetype/list";
     }
