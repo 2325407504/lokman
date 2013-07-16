@@ -5,7 +5,7 @@
 </jsp:include>
 
 <jsp:include page="/WEB-INF/views/subnav.jsp" >
-    <jsp:param name="title" value="Employeeeleaves" />
+    <jsp:param name="title" value="Employee Leaves" />
     <jsp:param name="property" value="employeeleave" />
     <jsp:param name="import" value="true" />
     <jsp:param name="report" value="true" />
@@ -17,7 +17,7 @@
     <aripd:datatablescolumn label="Action" field="id"/>
     <aripd:datatablescolumn label="Fullname" field="account.employee.fullname"/>
     <aripd:datatablescolumn label="Account" field="account.username"/>
-    <aripd:datatablescolumn label="Employeeeleavetype" field="employeeleavetype.name"/>
+    <aripd:datatablescolumn label="Employee Leave Type" field="employeeleavetype.name"/>
     <aripd:datatablescolumn label="Date" field="documentDate"/>
     <aripd:datatablescolumn label="Company" field="company"/>
     <aripd:datatablescolumn label="Description" field="description"/>

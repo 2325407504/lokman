@@ -5,7 +5,7 @@
 </jsp:include>
 
 <jsp:include page="/WEB-INF/views/subnav.jsp" >
-    <jsp:param name="title" value="Employeeeleaves" />
+    <jsp:param name="title" value="Employee Leaves" />
     <jsp:param name="property" value="employeeleave" />
     <jsp:param name="import" value="true" />
     <jsp:param name="report" value="true" />
@@ -13,16 +13,16 @@
     <jsp:param name="active" value="report" />
 </jsp:include>
 
-<spring:message code="Starting" var="starting" />
-<spring:message code="Ending" var="ending" />
+<spring:message code="Starting Date" var="startingDate" />
+<spring:message code="Ending Date" var="endingDate" />
 <spring:message code="All" var="all" />
 
-<p class="lead"><spring:message code="Employeeeleave" /></p>
+<p class="lead"><spring:message code="Employee Leave" /></p>
 <spring:url var="employeeleaveReport" value="/employeeleave/report" />
 <form:form modelAttribute="employeeleaveFilterByIntervalForm" action="${employeeleaveReport}" method="post" class="form-inline">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
-    <form:input path="starting" cssClass="input-medium" placeholder="${starting}" />
-    <form:input path="ending" cssClass="input-medium" placeholder="${ending}" />
+    <form:input path="startingDate" cssClass="input-medium" placeholder="${startingDate}" />
+    <form:input path="endingDate" cssClass="input-medium" placeholder="${endingDate}" />
     <form:select multiple="false" path="account.id" cssClass="input-medium">
         <form:option value="" label="--- ${all}" />
         <form:options items="${accounts}" itemLabel="employee.fullname" itemValue="id" />
@@ -34,8 +34,8 @@
 
 
 <script type="text/javascript">
-    var start1 = $('#starting');
-    var end1 = $('#ending');
+    var start1 = $('[name=startingDate]');
+    var end1 = $('[name=endingDate]');
 
     start1.datepicker({
         maxDate: new Date(),

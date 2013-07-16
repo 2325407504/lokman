@@ -5,7 +5,7 @@
 </jsp:include>
 
 <jsp:include page="/WEB-INF/views/subnav.jsp" >
-    <jsp:param name="title" value="Employeeeleaves" />
+    <jsp:param name="title" value="Employee Leaves" />
     <jsp:param name="property" value="employeeleave" />
     <jsp:param name="import" value="true" />
     <jsp:param name="report" value="true" />
@@ -16,12 +16,12 @@
 <div class="row-fluid">
     <div class="span12">
         <aripd:description id="employeeleave">
+            <aripd:descriptionitem label="Submit" field="employeeleaveAttribute.submitted"></aripd:descriptionitem>
             <aripd:descriptionitem label="Account" field="employeeleaveAttribute.account.employee.fullname"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Employeeeleavetype" field="employeeleaveAttribute.employeeleavetype.name"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Document Date" field="employeeleaveAttribute.documentDate"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Company" field="employeeleaveAttribute.company"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Description" field="employeeleaveAttribute.description"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Amount" field="employeeleaveAttribute.amount"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Employee Leave Type" field="employeeleaveAttribute.employeeleavetype.name"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Starting Date" field="employeeleaveAttribute.startingDate"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Ending Date" field="employeeleaveAttribute.endingDate"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Remark" field="employeeleaveAttribute.remark"></aripd:descriptionitem>
         </aripd:description>
     </div>
 </div>

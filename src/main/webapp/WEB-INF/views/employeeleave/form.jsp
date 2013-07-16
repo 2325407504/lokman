@@ -5,7 +5,7 @@
 </jsp:include>
 
 <jsp:include page="/WEB-INF/views/subnav.jsp" >
-    <jsp:param name="title" value="Employeeeleaves" />
+    <jsp:param name="title" value="Employee Leaves" />
     <jsp:param name="property" value="employeeleave" />
     <jsp:param name="import" value="true" />
     <jsp:param name="report" value="true" />
@@ -30,29 +30,24 @@
                     <form:errors cssClass="text-error" path="account" />
                 </div>
                 <div class="control-group">
-                    <form:label path="employeeleavetype"><spring:message code="Employeeeleavetype" /></form:label>
+                    <form:label path="employeeleavetype"><spring:message code="Employee Leave Type" /></form:label>
                     <form:select path="employeeleavetype.id" multiple="false" items="${employeeleavetypes}" itemLabel="name" itemValue="id"/>
                     <form:errors cssClass="text-error" path="employeeleavetype" />
                 </div>
                 <div class="control-group">
-                    <form:label path="documentDate"><spring:message code="Date" /></form:label>
-                    <form:input type="datetime" path="documentDate" />
-                    <form:errors cssClass="text-error" path="documentDate" />
+                    <form:label path="startingDate"><spring:message code="Starting Date" /></form:label>
+                    <form:input type="date" path="startingDate" />
+                    <form:errors cssClass="text-error" path="startingDate" />
                 </div>
                 <div class="control-group">
-                    <form:label path="company"><spring:message code="Company" /></form:label>
-                    <form:input path="company" />
-                    <form:errors cssClass="text-error" path="company" />
+                    <form:label path="endingDate"><spring:message code="Ending Date" /></form:label>
+                    <form:input type="date" path="endingDate" />
+                    <form:errors cssClass="text-error" path="endingDate" />
                 </div>
                 <div class="control-group">
-                    <form:label path="description"><spring:message code="Description" /></form:label>
-                    <form:input path="description" />
-                    <form:errors cssClass="text-error" path="description" />
-                </div>
-                <div class="control-group">
-                    <form:label path="amount"><spring:message code="Amount" /></form:label>
-                    <form:input path="amount" />
-                    <form:errors cssClass="text-error" path="amount" />
+                    <form:label path="remark"><spring:message code="Remark" /></form:label>
+                    <form:textarea path="remark" />
+                    <form:errors cssClass="text-error" path="remark" />
                 </div>
                 <div class="form-actions">
                     <c:if test="${ !empty employeeleaveAttribute.id }">
@@ -72,11 +67,43 @@
     </div>
 </div>
 
-<script>
-    $(function() {
-        $("[name=documentDate]").datepicker({
-            maxDate: new Date()
-        });
+<script type="text/javascript">
+    var startDateTextBox = $('[name=startingDate]');
+    var endDateTextBox = $('[name=endingDate]');
+
+    startDateTextBox.datepicker({
+        maxDate: new Date(),
+        onClose: function(dateText, inst) {
+            if (endDateTextBox.val() != '') {
+                var testStartDate = startDateTextBox.datepicker('getDate');
+                var testEndDate = endDateTextBox.datepicker('getDate');
+                if (testStartDate > testEndDate)
+                    endDateTextBox.datepicker('setDate', testStartDate);
+            }
+            else {
+                endDateTextBox.val(dateText);
+            }
+        },
+        onSelect: function(selectedDate) {
+            endDateTextBox.datepicker('option', 'minDate', startDateTextBox.datepicker('getDate'));
+        }
+    });
+    endDateTextBox.datepicker({
+        maxDate: new Date(),
+        onClose: function(dateText, inst) {
+            if (startDateTextBox.val() != '') {
+                var testStartDate = startDateTextBox.datepicker('getDate');
+                var testEndDate = endDateTextBox.datepicker('getDate');
+                if (testStartDate > testEndDate)
+                    startDateTextBox.datepicker('setDate', testEndDate);
+            }
+            else {
+                startDateTextBox.val(dateText);
+            }
+        },
+        onSelect: function(selectedDate) {
+            startDateTextBox.datepicker('option', 'maxDate', endDateTextBox.datepicker('getDate'));
+        }
     });
 </script>
 

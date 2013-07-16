@@ -43,7 +43,7 @@ public class FillManager {
             cell0.setCellStyle(bodyCellStyle);
 
             HSSFCell cell1 = row.createCell(startColIndex + 1);
-            cell1.setCellValue(datasource.get(i - 2).getEmployeeleavetype().getCode());
+            cell1.setCellValue(datasource.get(i - 2).getEmployeeleavetype().getName());
             cell1.setCellStyle(bodyCellStyle);
 
             HSSFCell cell2 = row.createCell(startColIndex + 2);
