@@ -68,7 +68,7 @@ public class EmployeeleaveServiceImpl implements EmployeeleaveService {
         Root<Employeeleave> root = cq.from(Employeeleave.class);
 
         List<Predicate> predicateList = new ArrayList<Predicate>();
-        Predicate predicate1 = cb.between(root.get(Employeeleave_.starting), starting, ending);
+        Predicate predicate1 = cb.between(root.get(Employeeleave_.startingDate), starting, ending);
         Predicate predicate2 = null;
         if (account_id != null) {
             Join<Employeeleave, Account> account = root.join(Employeeleave_.account);
