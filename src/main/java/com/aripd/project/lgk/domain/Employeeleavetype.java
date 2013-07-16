@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "leavetype")
+@Table(name = "employeeleavetype")
 public class Employeeleavetype extends BaseEntity {
 
     @NotEmpty

@@ -25,7 +25,7 @@ import com.aripd.project.lgk.service.EmployeeleavetypeService;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_ADMIN')")
 @Controller
-@RequestMapping("/leavetype")
+@RequestMapping("/employeeleavetype")
 public class EmployeeleavetypeController {
 
     @Resource(name = "employeeleavetypeService")
@@ -40,45 +40,45 @@ public class EmployeeleavetypeController {
 
     @RequestMapping(value = "/list")
     public String listAction(Model model) {
-        return "leavetype/list";
+        return "/employeeleavetype/list";
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
     public String showAction(
             @PathVariable Long id,
             Model model) {
-        model.addAttribute("leavetypeAttribute", employeeleavetypeService.findOne(id));
-        return "leavetype/show";
+        model.addAttribute("employeeleavetypeAttribute", employeeleavetypeService.findOne(id));
+        return "/employeeleavetype/show";
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-        model.addAttribute("leavetypeAttribute", new Employeeleavetype());
-        return "leavetype/form";
+        model.addAttribute("employeeleavetypeAttribute", new Employeeleavetype());
+        return "/employeeleavetype/form";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(
             @PathVariable Long id,
             Model model) {
-        model.addAttribute("leavetypeAttribute", employeeleavetypeService.findOne(id));
-        return "leavetype/form";
+        model.addAttribute("employeeleavetypeAttribute", employeeleavetypeService.findOne(id));
+        return "/employeeleavetype/form";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("leavetypeAttribute") @Valid Employeeleavetype formData,
+            @ModelAttribute("employeeleavetypeAttribute") @Valid Employeeleavetype formData,
             BindingResult result,
             Model model) {
 
         if (result.hasErrors()) {
-            return "/leavetype/form";
+            return "/employeeleavetype/form";
         }
 
-        Employeeleavetype leavetype = employeeleavetypeService.save(formData);
+        Employeeleavetype employeeleavetype = employeeleavetypeService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/leavetype/show/" + leavetype.getId();
+        return "redirect:/employeeleavetype/show/" + employeeleavetype.getId();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
@@ -87,6 +87,6 @@ public class EmployeeleavetypeController {
             @RequestParam(value = "id", required = true) Long id) {
         employeeleavetypeService.delete(id);
         redirectAttributes.addFlashAttribute("message", "message.completed.delete");
-        return "redirect:/leavetype/list";
+        return "redirect:/employeeleavetype/list";
     }
 }
