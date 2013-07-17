@@ -13,16 +13,16 @@
     <jsp:param name="active" value="report" />
 </jsp:include>
 
-<spring:message code="Starting" var="starting" />
-<spring:message code="Ending" var="ending" />
+<spring:message code="Starting Date" var="startingDate" />
+<spring:message code="Ending Date" var="endingDate" />
 <spring:message code="All" var="all" />
 
 <p class="lead"><spring:message code="Expense" /></p>
 <spring:url var="expenseReport" value="/expense/report" />
 <form:form modelAttribute="expenseFilterByIntervalForm" action="${expenseReport}" method="post" class="form-inline">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
-    <form:input path="starting" cssClass="input-medium" placeholder="${starting}" />
-    <form:input path="ending" cssClass="input-medium" placeholder="${ending}" />
+    <form:input path="startingDate" cssClass="input-medium" placeholder="${startingDate}" />
+    <form:input path="endingDate" cssClass="input-medium" placeholder="${endingDate}" />
     <form:select multiple="false" path="account.id" cssClass="input-medium">
         <form:option value="" label="--- ${all}" />
         <form:options items="${accounts}" itemLabel="employee.fullname" itemValue="id" />

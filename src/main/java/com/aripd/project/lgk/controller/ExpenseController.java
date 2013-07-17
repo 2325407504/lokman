@@ -50,13 +50,13 @@ public class ExpenseController {
 
     @RequestMapping(value = "/list")
     public String listAction(Model model) {
-        return "expense/list";
+        return "/expense/list";
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
     public String showAction(@PathVariable Long id, Model model) {
         model.addAttribute("expenseAttribute", expenseService.findOne(id));
-        return "expense/show";
+        return "/expense/show";
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
@@ -64,7 +64,7 @@ public class ExpenseController {
         model.addAttribute("accounts", accountService.findAll());
         model.addAttribute("expensetypes", expensetypeService.findAll());
         model.addAttribute("expenseAttribute", new Expense());
-        return "expense/form";
+        return "/expense/form";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
@@ -72,7 +72,7 @@ public class ExpenseController {
         model.addAttribute("accounts", accountService.findAll());
         model.addAttribute("expensetypes", expensetypeService.findAll());
         model.addAttribute("expenseAttribute", expenseService.findOne(id));
-        return "expense/form";
+        return "/expense/form";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -114,7 +114,7 @@ public class ExpenseController {
     public String reportAction(Model model) {
         model.addAttribute("accounts", accountService.findAll());
         model.addAttribute("expenseFilterByIntervalForm", new ExpenseFilterByIntervalForm());
-        return "expense/report";
+        return "/expense/report";
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.POST)
@@ -126,6 +126,7 @@ public class ExpenseController {
             Model model) {
 
         if (result.hasErrors()) {
+            model.addAttribute("accounts", accountService.findAll());
             return "/expense/report";
         }
 
@@ -136,7 +137,7 @@ public class ExpenseController {
     @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
         model.addAttribute("expenseImportAttribute", new FileUploadBean());
-        return "expense/import";
+        return "/expense/import";
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)

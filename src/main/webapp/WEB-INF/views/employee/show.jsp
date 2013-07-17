@@ -28,5 +28,5 @@
 
 start: <spring:eval expression="employeeAttribute.employmentDate" />
 total leave: ${employeeAttribute.annualLeaveDurationTotal}
-
+leaveTotal: ${leaveTotal}
 <jsp:include page="/WEB-INF/views/footer.jsp" />

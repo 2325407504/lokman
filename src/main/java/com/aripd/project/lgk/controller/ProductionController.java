@@ -70,7 +70,7 @@ public class ProductionController {
 
     @RequestMapping(value = "/list")
     public String listAction(Model model) {
-        return "production/list";
+        return "/production/list";
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
@@ -78,7 +78,7 @@ public class ProductionController {
             @PathVariable Long id,
             Model model) {
         model.addAttribute("productionAttribute", productionService.findOne(id));
-        return "production/show";
+        return "/production/show";
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
@@ -87,7 +87,7 @@ public class ProductionController {
         model.addAttribute("electricmeters", electricmeterService.findAll());
         model.addAttribute("machines", machineService.findAll());
         model.addAttribute("productionAttribute", new Production());
-        return "production/form";
+        return "/production/form";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
@@ -100,7 +100,7 @@ public class ProductionController {
         model.addAttribute("machines", machineService.findAll());
         model.addAttribute("products", productService.findAll());
         model.addAttribute("productionAttribute", productionService.findOne(id));
-        return "production/form";
+        return "/production/form";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -158,7 +158,7 @@ public class ProductionController {
         model.addAttribute("bigbagFilterByIntervalForm", new BigbagFilterByIntervalForm());
         model.addAttribute("compensationFilterByIntervalForm", new CompensationFilterByIntervalForm());
         model.addAttribute("machinetimeFilterByIntervalForm", new MachinetimeFilterByIntervalForm());
-        return "production/report";
+        return "/production/report";
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.POST)
@@ -172,6 +172,10 @@ public class ProductionController {
             Model model) {
 
         if (result.hasErrors()) {
+            model.addAttribute("productionFilterByIntervalForm", new ProductionFilterByIntervalForm());
+            model.addAttribute("bigbagFilterByIntervalForm", new BigbagFilterByIntervalForm());
+            model.addAttribute("compensationFilterByIntervalForm", new CompensationFilterByIntervalForm());
+            model.addAttribute("machinetimeFilterByIntervalForm", new MachinetimeFilterByIntervalForm());
             return "/production/report";
         }
 
@@ -182,7 +186,7 @@ public class ProductionController {
     @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
         model.addAttribute("productionImportAttribute", new FileUploadBean());
-        return "production/import";
+        return "/production/import";
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)

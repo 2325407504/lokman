@@ -1,6 +1,7 @@
 package com.aripd.account.report.employee;
 
 import com.aripd.account.domain.Employee;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -15,8 +16,6 @@ import org.joda.time.format.DateTimeFormatter;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 
 public class FillManager {
-
-    private static DateTimeFormatter formatter = DateTimeFormat.forStyle("MS").withLocale(Locale.GERMAN);
 
     /**
      * Fills the report with content
@@ -63,14 +62,20 @@ public class FillManager {
             cell4.setCellStyle(bodyCellStyle);
 
             HSSFCell cell5 = row.createCell(startColIndex + 5);
-            cell5.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            cell5.setCellValue(datasource.get(i - 2).getBirthdate());
-            cell5.setCellStyle(numericStyle);
+            Date data5 = datasource.get(i - 2).getBirthdate();
+            if (data5 == null) {
+                cell5.setCellType(HSSFCell.CELL_TYPE_BLANK);
+            } else {
+                cell5.setCellValue(data5);
+            }
 
             HSSFCell cell6 = row.createCell(startColIndex + 6);
-            cell6.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-            cell6.setCellValue(datasource.get(i - 2).getEmploymentDate());
-            cell6.setCellStyle(numericStyle);
+            Date data6 = datasource.get(i - 2).getEmploymentDate();
+            if (data6 == null) {
+                cell6.setCellType(HSSFCell.CELL_TYPE_BLANK);
+            } else {
+                cell6.setCellValue(data6);
+            }
 
         }
     }

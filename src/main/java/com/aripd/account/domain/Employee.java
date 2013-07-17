@@ -6,11 +6,13 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.aripd.common.entity.BaseEntity;
+import com.aripd.common.util.ARIPDDateSerializer;
 import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Past;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
 import org.joda.time.Years;
@@ -32,11 +34,13 @@ public class Employee extends BaseEntity {
     private String address;
     @Column(nullable = true)
     private String phonenumber;
+    @JsonSerialize(using = ARIPDDateSerializer.class)
     @Past
     @DateTimeFormat(pattern = "dd.MM.yyyy")
     @Temporal(TemporalType.DATE)
     @Column(nullable = true)
     private Date birthdate;
+    @JsonSerialize(using = ARIPDDateSerializer.class)
     @Past
     @DateTimeFormat(pattern = "dd.MM.yyyy")
     @Temporal(TemporalType.DATE)

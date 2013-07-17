@@ -43,6 +43,7 @@ import com.aripd.project.lgk.report.employeeleave.Writer;
 import com.aripd.project.lgk.repository.EmployeeleaveRepository;
 import com.aripd.project.lgk.service.EmployeeleaveService;
 import com.aripd.project.lgk.service.EmployeeleavetypeService;
+import org.joda.time.DateMidnight;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service("employeeleaveService")
@@ -273,5 +274,31 @@ public class EmployeeleaveServiceImpl implements EmployeeleaveService {
 
         // 7. Write to the output stream
         Writer.write(response, worksheet);
+    }
+
+    public List<Employeeleave> getLeaveTotal(Integer year, Long account_id) {
+        DateMidnight startingDateTime = new DateMidnight().withYear(year).withDayOfYear(1);
+        DateMidnight endingDateTime = startingDateTime.plusYears(1);
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Employeeleave> cq = cb.createQuery(Employeeleave.class);
+        Root<Employeeleave> root = cq.from(Employeeleave.class);
+        Join<Employeeleave, Account> account = root.join(Employeeleave_.account);
+
+        Predicate predicate1 = cb.between(root.get(Employeeleave_.startingDate), startingDateTime.toDate(), endingDateTime.toDate());
+        Predicate predicate2 = cb.equal(account.get(Account_.id), account_id);
+        Predicate predicate = cb.and(predicate1, predicate2);
+
+        List<Predicate> predicateList = new ArrayList<Predicate>();
+        predicateList.add(predicate);
+
+        Predicate[] predicates = new Predicate[predicateList.size()];
+        predicateList.toArray(predicates);
+        cq.where(predicates);
+
+        TypedQuery<Employeeleave> typedQuery = em.createQuery(cq);
+        List<Employeeleave> resultList = typedQuery.getResultList();
+
+        return resultList;
     }
 }

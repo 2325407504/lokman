@@ -30,4 +30,6 @@ public interface EmployeeleaveService {
     public void importData(MultipartFile file);
 
     public void exportByInterval(HttpServletResponse response, Date starting, Date ending, Long account_id);
+
+    public List<Employeeleave> getLeaveTotal(Integer year, Long account_id);
 }

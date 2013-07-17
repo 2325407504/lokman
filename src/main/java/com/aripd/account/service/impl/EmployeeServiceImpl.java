@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -33,7 +32,6 @@ import com.aripd.account.report.employee.FillManager;
 import com.aripd.account.report.employee.Layouter;
 import com.aripd.account.report.employee.Writer;
 import com.aripd.account.repository.EmployeeRepository;
-import com.aripd.account.service.AccountService;
 import com.aripd.account.service.EmployeeService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
@@ -48,8 +46,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EntityManager em;
     @Autowired
     private EmployeeRepository repository;
-    @Resource(name = "accountService")
-    private AccountService accountService;
 
     public Employee findOne(Long id) {
         return repository.findOne(id);
@@ -184,13 +180,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         // 6. Set the response properties
         String fileName = "EmployeeReport.xls";
-        response.setHeader("Content-Disposition", "inline; filename="
-                + fileName);
+        response.setHeader("Content-Disposition", "inline; filename=" + fileName);
         // Make sure to set the correct content type
         response.setContentType("application/vnd.ms-excel");
 
         // 7. Write to the output stream
         Writer.write(response, worksheet);
-
     }
 }

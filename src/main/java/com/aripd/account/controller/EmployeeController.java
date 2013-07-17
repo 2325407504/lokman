@@ -24,6 +24,7 @@ import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.dto.ControllerUtils;
+import com.aripd.project.lgk.service.EmployeeleaveService;
 import org.springframework.validation.annotation.Validated;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_ADMIN')")
@@ -33,6 +34,8 @@ public class EmployeeController {
 
     @Resource(name = "employeeService")
     private EmployeeService employeeService;
+    @Resource(name = "employeeleaveService")
+    private EmployeeleaveService employeeleaveService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -43,25 +46,26 @@ public class EmployeeController {
 
     @RequestMapping(value = "/list")
     public String listAction(Model model) {
-        return "employee/list";
+        return "/employee/list";
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
     public String showAction(@PathVariable Long id, Model model) {
+        model.addAttribute("leaveTotal", employeeleaveService.getLeaveTotal(2011, id));
         model.addAttribute("employeeAttribute", employeeService.findOne(id));
-        return "employee/show";
+        return "/employee/show";
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
         model.addAttribute("employeeAttribute", new Employee());
-        return "employee/form";
+        return "/employee/form";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
         model.addAttribute("employeeAttribute", employeeService.findOne(id));
-        return "employee/form";
+        return "/employee/form";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -89,21 +93,12 @@ public class EmployeeController {
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
-    public String reportAction(Model model) {
-        return "employee/report";
+    public String reportAction() {
+        return "/employee/report";
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.POST)
-    public String reportAction(
-            final RedirectAttributes redirectAttributes,
-            BindingResult result,
-            HttpServletResponse response,
-            Model model) {
-
-        if (result.hasErrors()) {
-            return "/employee/report";
-        }
-
+    public String reportAction(HttpServletResponse response) {
         employeeService.exportData(response);
         return "redirect:/employee/report";
     }
@@ -111,7 +106,7 @@ public class EmployeeController {
     @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
         model.addAttribute("employeeImportAttribute", new FileUploadBean());
-        return "employee/import";
+        return "/employee/import";
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
