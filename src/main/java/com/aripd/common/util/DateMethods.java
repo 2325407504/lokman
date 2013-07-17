@@ -13,10 +13,10 @@ public class DateMethods {
     /**
      * Ref
      * http://stackoverflow.com/questions/4600034/calculate-number-of-weekdays-between-two-dates-in-java
-     * 
+     *
      * @param start
      * @param end
-     * @return 
+     * @return
      */
     static public long nofWorkdays(Date start, Date end) {
         Calendar c1 = GregorianCalendar.getInstance();
