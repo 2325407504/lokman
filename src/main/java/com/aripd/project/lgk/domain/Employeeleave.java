@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import com.aripd.account.domain.Account;
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.common.util.ARIPDDateSerializer;
-import java.util.Calendar;
+import com.aripd.common.util.DateMethods;
 import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,9 +17,6 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
-import org.joda.time.DateMidnight;
-import org.joda.time.DateTime;
-import org.joda.time.Years;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -50,6 +47,11 @@ public class Employeeleave extends BaseEntity {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
+    }
+    
+    @Transient
+    public long getNofWorkdays() {
+        return DateMethods.nofWorkdays(startingDate, endingDate);
     }
 
     public boolean isSubmitted() {

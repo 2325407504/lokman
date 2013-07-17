@@ -37,6 +37,7 @@ import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesSortField;
 import com.aripd.project.lgk.domain.Employeeleave;
 import com.aripd.project.lgk.domain.Employeeleave_;
+import com.aripd.project.lgk.model.EmployeeleaveReportModel;
 import com.aripd.project.lgk.report.employeeleave.FillManager;
 import com.aripd.project.lgk.report.employeeleave.Layouter;
 import com.aripd.project.lgk.report.employeeleave.Writer;
@@ -44,6 +45,7 @@ import com.aripd.project.lgk.repository.EmployeeleaveRepository;
 import com.aripd.project.lgk.service.EmployeeleaveService;
 import com.aripd.project.lgk.service.EmployeeleavetypeService;
 import org.joda.time.DateMidnight;
+import org.joda.time.DateTime;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service("employeeleaveService")
@@ -63,34 +65,8 @@ public class EmployeeleaveServiceImpl implements EmployeeleaveService {
         return repository.findOne(id);
     }
 
-    public List<Employeeleave> findByInterval(Date starting, Date ending, Long account_id) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Employeeleave> cq = cb.createQuery(Employeeleave.class);
-        Root<Employeeleave> root = cq.from(Employeeleave.class);
-
-        List<Predicate> predicateList = new ArrayList<Predicate>();
-        Predicate predicate1 = cb.between(root.get(Employeeleave_.startingDate), starting, ending);
-        Predicate predicate2 = null;
-        if (account_id != null) {
-            Join<Employeeleave, Account> account = root.join(Employeeleave_.account);
-            predicate2 = cb.equal(account.get(Account_.id), account_id);
-        }
-
-        Predicate predicate = predicate1;
-        if (predicate2 != null) {
-            predicate = cb.and(predicate1, predicate2);
-        }
-
-        predicateList.add(predicate);
-
-        Predicate[] predicates = new Predicate[predicateList.size()];
-        predicateList.toArray(predicates);
-        cq.where(predicates);
-
-        TypedQuery<Employeeleave> typedQuery = em.createQuery(cq);
-        List<Employeeleave> resultList = typedQuery.getResultList();
-
-        return resultList;
+    public List<Employeeleave> findByAccount(Account account) {
+        return repository.findByAccount(account);
     }
 
     @Transactional
@@ -248,12 +224,12 @@ public class EmployeeleaveServiceImpl implements EmployeeleaveService {
         repository.save(leaves);
     }
 
-    public void exportByInterval(HttpServletResponse response, Date starting, Date ending, Long account_id) {
+    public void exportByAccount(HttpServletResponse response, Account account) {
         // 1. Create new workbook
         HSSFWorkbook workbook = new HSSFWorkbook();
 
         // 2. Create new worksheet
-        HSSFSheet worksheet = workbook.createSheet("Employee Leaves");
+        HSSFSheet worksheet = workbook.createSheet("Employee Leaves for " + account.getUsername());
 
         // 3. Define starting indices for rows and columns
         int startRowIndex = 0;
@@ -264,7 +240,7 @@ public class EmployeeleaveServiceImpl implements EmployeeleaveService {
         Layouter.buildReport(worksheet, startRowIndex, startColIndex);
 
         // 5. Fill report
-        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByInterval(starting, ending, account_id));
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.retrieveDatasource(account));
 
         // 6. Set the response properties
         String fileName = "EmployeeLeaveReport.xls";
@@ -274,6 +250,22 @@ public class EmployeeleaveServiceImpl implements EmployeeleaveService {
 
         // 7. Write to the output stream
         Writer.write(response, worksheet);
+    }
+
+    public List<EmployeeleaveReportModel> retrieveDatasource(Account account) {
+        Date employmentDate = account.getEmployee().getEmploymentDate();
+        DateTime employmentDateTime = new DateTime(employmentDate);
+        DateTime endDate = new DateTime();
+
+        List<EmployeeleaveReportModel> ermList = new ArrayList<EmployeeleaveReportModel>();
+        for (DateTime date = employmentDateTime; date.isBefore(endDate); date = date.plusYears(1)) {
+            EmployeeleaveReportModel erm = new EmployeeleaveReportModel();
+            erm.setDate(date.toDate());
+            erm.setQualified(Integer.MIN_VALUE);
+            erm.setUsed(Integer.SIZE);
+            ermList.add(erm);
+        }
+        return ermList;
     }
 
     public List<Employeeleave> getLeaveTotal(Integer year, Long account_id) {

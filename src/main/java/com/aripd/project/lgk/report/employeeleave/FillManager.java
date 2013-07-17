@@ -8,8 +8,9 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.ss.usermodel.CellStyle;
 
-import com.aripd.project.lgk.domain.Employeeleave;
+import com.aripd.project.lgk.model.EmployeeleaveReportModel;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
+import org.apache.poi.hssf.util.CellReference;
 
 public class FillManager {
 
@@ -21,7 +22,7 @@ public class FillManager {
      * @param startColIndex starting column offset
      * @param datasource the data source
      */
-    public static void fillReport(HSSFSheet worksheet, int startRowIndex, int startColIndex, List<Employeeleave> datasource) {
+    public static void fillReport(HSSFSheet worksheet, int startRowIndex, int startColIndex, List<EmployeeleaveReportModel> datasource) {
         // Row offset
         startRowIndex += 2;
 
@@ -39,23 +40,22 @@ public class FillManager {
             HSSFRow row = worksheet.createRow((short) i + 1);
 
             HSSFCell cell0 = row.createCell(startColIndex + 0);
-            cell0.setCellValue(datasource.get(i - 2).getAccount().getUsername());
+            cell0.setCellValue(datasource.get(i - 2).getDate());
             cell0.setCellStyle(bodyCellStyle);
 
             HSSFCell cell1 = row.createCell(startColIndex + 1);
-            cell1.setCellValue(datasource.get(i - 2).getEmployeeleavetype().getName());
+            cell1.setCellValue(datasource.get(i - 2).getQualified());
             cell1.setCellStyle(bodyCellStyle);
+            String columnLetter1 = CellReference.convertNumToColString(cell1.getColumnIndex());
 
             HSSFCell cell2 = row.createCell(startColIndex + 2);
-            cell2.setCellValue(datasource.get(i - 2).getStartingDate());
+            cell2.setCellValue(datasource.get(i - 2).getUsed());
+            String columnLetter2 = CellReference.convertNumToColString(cell2.getColumnIndex());
 
             HSSFCell cell3 = row.createCell(startColIndex + 3);
-            cell3.setCellValue(datasource.get(i - 2).getEndingDate());
-            cell3.setCellStyle(bodyCellStyle);
-
-            HSSFCell cell4 = row.createCell(startColIndex + 4);
-            cell4.setCellValue(datasource.get(i - 2).getRemark());
-            cell4.setCellStyle(bodyCellStyle);
+            cell3.setCellType(HSSFCell.CELL_TYPE_FORMULA);
+            cell3.setCellFormula(columnLetter1 + (row.getRowNum() + 1) + "-" + columnLetter2 + (row.getRowNum() + 1));
+            cell1.setCellStyle(numericStyle);
 
         }
     }

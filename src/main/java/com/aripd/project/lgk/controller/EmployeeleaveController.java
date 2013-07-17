@@ -1,5 +1,6 @@
 package com.aripd.project.lgk.controller;
 
+import com.aripd.account.domain.Account;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -126,10 +127,12 @@ public class EmployeeleaveController {
             Model model) {
 
         if (result.hasErrors()) {
+            model.addAttribute("accounts", accountService.findAll());
             return "/employeeleave/report";
         }
 
-        employeeleaveService.exportByInterval(response, formData.getStartingDate(), formData.getEndingDate(), formData.getAccount().getId());
+        Account account = accountService.findOne(formData.getAccount().getId());
+        employeeleaveService.exportByAccount(response, account);
         return "redirect:/employeeleave/report";
     }
 
