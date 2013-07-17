@@ -9,7 +9,6 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.ss.usermodel.CellStyle;
 
 import com.aripd.project.lgk.model.EmployeeleaveReportModel;
-import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.util.CellReference;
 
 public class FillManager {
@@ -31,9 +30,6 @@ public class FillManager {
         bodyCellStyle.setAlignment(CellStyle.ALIGN_CENTER);
         bodyCellStyle.setWrapText(true);
 
-        HSSFCellStyle numericStyle = worksheet.getWorkbook().createCellStyle();
-        numericStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("#,##0.00"));
-
         // Create body
         for (int i = startRowIndex; i + startRowIndex - 2 < datasource.size() + 2; i++) {
             // Create a new row
@@ -44,18 +40,29 @@ public class FillManager {
             cell0.setCellStyle(bodyCellStyle);
 
             HSSFCell cell1 = row.createCell(startColIndex + 1);
+            String columnLetter1 = CellReference.convertNumToColString(cell1.getColumnIndex());
             cell1.setCellValue(datasource.get(i - 2).getQualified());
             cell1.setCellStyle(bodyCellStyle);
-            String columnLetter1 = CellReference.convertNumToColString(cell1.getColumnIndex());
 
             HSSFCell cell2 = row.createCell(startColIndex + 2);
-            cell2.setCellValue(datasource.get(i - 2).getUsed());
             String columnLetter2 = CellReference.convertNumToColString(cell2.getColumnIndex());
+            cell2.setCellValue(datasource.get(i - 2).getUsed());
 
             HSSFCell cell3 = row.createCell(startColIndex + 3);
+            String columnLetter3 = CellReference.convertNumToColString(cell3.getColumnIndex());
             cell3.setCellType(HSSFCell.CELL_TYPE_FORMULA);
             cell3.setCellFormula(columnLetter1 + (row.getRowNum() + 1) + "-" + columnLetter2 + (row.getRowNum() + 1));
-            cell1.setCellStyle(numericStyle);
+
+            HSSFCell cell4 = row.createCell(startColIndex + 4);
+            String columnLetter4 = CellReference.convertNumToColString(cell4.getColumnIndex());
+
+            String preVal = "0";
+            if (i > startRowIndex) {
+                preVal = columnLetter4 + row.getRowNum();
+            }
+
+            cell4.setCellType(HSSFCell.CELL_TYPE_FORMULA);
+            cell4.setCellFormula(columnLetter3 + (row.getRowNum() + 1) + "+" + preVal);
 
         }
     }

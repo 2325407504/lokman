@@ -27,6 +27,7 @@ public class Layouter {
         worksheet.setColumnWidth(1, 5000);
         worksheet.setColumnWidth(2, 5000);
         worksheet.setColumnWidth(3, 5000);
+        worksheet.setColumnWidth(4, 5000);
 
         // Build the title and date headers
         buildTitle(worksheet, startRowIndex, startColIndex);
@@ -61,7 +62,7 @@ public class Layouter {
         cellTitle.setCellStyle(cellStyleTitle);
 
         // Create merged region for the report title
-        worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 3));
+        worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 4));
 
         // Create date header
         HSSFRow dateTitle = worksheet.createRow((short) startRowIndex + 1);
@@ -108,8 +109,12 @@ public class Layouter {
         cell2.setCellStyle(headerCellStyle);
 
         HSSFCell cell3 = rowHeader.createCell(startColIndex + 3);
-        cell3.setCellValue("Remain");
+        cell3.setCellValue("Remaining");
         cell3.setCellStyle(headerCellStyle);
+
+        HSSFCell cell4 = rowHeader.createCell(startColIndex + 4);
+        cell4.setCellValue("Accumulated");
+        cell4.setCellStyle(headerCellStyle);
 
     }
 }

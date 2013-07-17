@@ -6,13 +6,14 @@
 
 <ul class="breadcrumb">
     <li><a href="${homeUrl}"><spring:message code="Home" /></a> <span class="divider">/</span></li>
-    <li class="active"><spring:message code="Procedures" /></li>
+    <li class="active"><spring:message code="Procedures" /> <span class="divider">/</li>
+    <li class="active">${userprocAttribute.name}</li>
 </ul>
 
-<aripd:description id="userproc">
-    <aripd:descriptionitem label="Name" field="userprocAttribute.name"></aripd:descriptionitem>
-    <aripd:descriptionitem label="Description" field="userprocAttribute.description"></aripd:descriptionitem>
-    <aripd:descriptionitem label="Content" field="userprocAttribute.content"></aripd:descriptionitem>
-</aripd:description>
+<h1>${userprocAttribute.name}</h1>
+<p class="lead">${userprocAttribute.description}</p>
+<div class="bs-docs-example" data-content="${userprocAttribute.name}">
+    ${userprocAttribute.content}
+</div>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />
