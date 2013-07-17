@@ -63,22 +63,6 @@ public class Employee extends BaseEntity {
         return sb.toString();
     }
 
-    @Transient
-    public int getAnnualLeaveDurationTotal() {
-        DateTime dt1 = new DateTime();
-        DateTime dt2 = new DateTime(employmentDate);
-        int diff = Years.yearsBetween(dt2, dt1).getYears();
-        int leave = 0;
-        if (1 <= diff && diff < 5) {
-            leave = 14;
-        } else if (5 <= diff && diff < 15) {
-            leave = 20;
-        } else if (15 < diff) {
-            leave = 26;
-        }
-        return leave;
-    }
-
     public String getTckimlik() {
         return tckimlik;
     }

@@ -22,6 +22,9 @@
         <script type="text/javascript" src="resources/jquery-ui-timepicker/jquery-ui-timepicker-tr.js"></script>
         <script type="text/javascript" src="resources/js/ui.datepicker-tr.js"></script>
 
+        <script type="text/javascript" src="resources/redactor/redactor.js"></script>
+        <link rel="stylesheet" href="resources/redactor/redactor.css" />
+
         <script type="text/javascript" src="resources/js/master.js"></script>
         <link rel="stylesheet" href="resources/css/master.css" />
 

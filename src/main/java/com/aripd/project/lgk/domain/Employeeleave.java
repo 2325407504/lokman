@@ -48,7 +48,7 @@ public class Employeeleave extends BaseEntity {
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
-    
+
     @Transient
     public long getNofWorkdays() {
         return DateMethods.nofWorkdays(startingDate, endingDate);

@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aripd.common.service.BackupService;
-import com.google.common.base.Joiner;
 
 @Service("backupService")
 @Transactional(readOnly = true)
@@ -41,6 +40,8 @@ public class BackupServiceImpl implements BackupService {
     String pathProgramMysql;
     @Value("${path.directory.export}")
     String pathDirectoryExport;
+    @Value("${backup.table.names}")
+    String backupTableNames;
 
     @Override
     @Scheduled(cron = "${cron.backup.database}")
@@ -52,45 +53,8 @@ public class BackupServiceImpl implements BackupService {
 
         Process p;
 
-        String[] table = {
-            "role",
-            "region",
-            "electricmeter",
-            "machine",
-            "expensetype",
-            "leavetype",
-            "startingpoint",
-            "endingpoint",
-            "productgroup",
-            "product",
-            "wastegroup",
-            "waste",
-            "employee",
-            "account",
-            "account_role",
-            "customer",
-            "driver",
-            "truck",
-            "quota",
-            "subcontractor",
-            "expense",
-            "trip",
-            "forwarding",
-            "uatf",
-            "production",
-            "bigbag",
-            "compensation",
-            "extrication",
-            "invoice",
-            "waybill",
-            "weighbridge",
-            "outgoing",
-            "machinetime"
-        };
-        String tables = Joiner.on(" ").join(table);
-
         String cmd = pathProgramMysqldump + " --skip-triggers --compact --no-create-info --skip-tz-utc -u " + jdbcUsername + " -p"
-                + jdbcPassword + " " + jdbcDbname + " " + tables + " --result-file="
+                + jdbcPassword + " " + jdbcDbname + " " + backupTableNames + " --result-file="
                 + pathDirectoryExport + strDate + ".sql";
         try {
             p = Runtime.getRuntime().exec(cmd);

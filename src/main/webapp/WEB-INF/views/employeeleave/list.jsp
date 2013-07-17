@@ -19,6 +19,7 @@
     <aripd:datatablescolumn label="Employee Leave Type" field="employeeleavetype.name"/>
     <aripd:datatablescolumn label="Starting Date" field="startingDate"/>
     <aripd:datatablescolumn label="Ending Date" field="endingDate"/>
+    <aripd:datatablescolumn label="Ending Date" field="nofWorkdays"/>
     <aripd:datatablescolumn label="Remark" field="remark"/>
 </aripd:datatables>
 

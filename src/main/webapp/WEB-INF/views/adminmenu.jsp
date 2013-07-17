@@ -9,6 +9,8 @@
 <spring:url value="/backup/list" var="backup_list" />
 <c:if test="${uri == backup_list}"><c:set var="backup_class" value="active" /></c:if>
 
+<spring:url value="/proc/list" var="proc_list" />
+<c:if test="${uri == proc_list}"><c:set var="proc_class" value="active" /></c:if>
 <spring:url value="/customer/list" var="customer_list" />
 <c:if test="${uri == customer_list}"><c:set var="customer_class" value="active" /></c:if>
 <spring:url value="/expensetype/list" var="expensetype_list" />
@@ -85,6 +87,7 @@
                 <td>
                     <ul class="unstyled">
                         <li class="nav-header"><spring:message code="Settings" /></li>
+                        <li class="${proc_class}"><a href="${proc_list}"><spring:message code="Procedures" /></a></li>
                         <li class="${customer_class}"><a href="${customer_list}"><spring:message code="Customers" /></a></li>
                         <li class="${expensetype_class}"><a href="${expensetype_list}"><spring:message code="Expensetypes" /></a></li>
                         <li class="${employeeleavetype_class}"><a href="${employeeleavetype_list}"><spring:message code="Employee Leave Types" /></a></li>

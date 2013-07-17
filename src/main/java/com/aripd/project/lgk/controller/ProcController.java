@@ -20,95 +20,73 @@ import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.dto.ControllerUtils;
-import com.aripd.project.lgk.domain.Driver;
-import com.aripd.project.lgk.service.DriverService;
-import com.aripd.project.lgk.service.RegionService;
-import com.aripd.project.lgk.validator.DriverValidator;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.aripd.project.lgk.domain.Proc;
+import com.aripd.project.lgk.service.ProcService;
 
-@PreAuthorize("hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_ADMIN') and hasRole('ROLE_OTL'))")
+@PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_ADMIN')")
 @Controller
-@RequestMapping("/driver")
-public class DriverController {
+@RequestMapping("/proc")
+public class ProcController {
 
-    @Autowired
-    private DriverValidator driverValidator;
-    @Resource(name = "driverService")
-    private DriverService driverService;
-    @Resource(name = "regionService")
-    private RegionService regionService;
-
-    /**
-     * TODO Authorize ile ilgili sorun çıkacak
-     *
-     * @param plate
-     * @return
-     */
-    @RequestMapping(value = "/getnames", method = RequestMethod.GET)
-    public @ResponseBody
-    String[] getNames(@RequestParam(value = "q") String q) {
-        return driverService.getNames(q);
-    }
+    @Resource(name = "procService")
+    private ProcService procService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
-    WebResultSet<Driver> datatablesAction(@DatatablesParam DatatablesCriteria criteria) {
-        DatatablesResultSet<Driver> resultset = this.driverService.getRecords(criteria);
+    WebResultSet<Proc> datatablesAction(@DatatablesParam DatatablesCriteria criteria) {
+        DatatablesResultSet<Proc> resultset = this.procService.getRecords(criteria);
         return ControllerUtils.getDatatablesResultSet(criteria, resultset);
     }
 
     @RequestMapping(value = "/list")
     public String listAction(Model model) {
-        return "/driver/list";
+        return "/proc/list";
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
     public String showAction(
             @PathVariable Long id,
             Model model) {
-        model.addAttribute("driverAttribute", driverService.findOne(id));
-        return "/driver/show";
+        model.addAttribute("procAttribute", procService.findOne(id));
+        return "/proc/show";
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-        model.addAttribute("regions", regionService.findAll());
-        model.addAttribute("driverAttribute", new Driver());
-        return "/driver/form";
+        model.addAttribute("procAttribute", new Proc());
+        return "/proc/form";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(
             @PathVariable Long id,
             Model model) {
-        model.addAttribute("regions", regionService.findAll());
-        model.addAttribute("driverAttribute", driverService.findOne(id));
-        return "/driver/form";
+        model.addAttribute("procAttribute", procService.findOne(id));
+        return "/proc/form";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
-            @ModelAttribute("driverAttribute") @Valid Driver formData,
+            @ModelAttribute("procAttribute") @Valid Proc formData,
             BindingResult result,
             Model model) {
 
         if (result.hasErrors()) {
-            model.addAttribute("regions", regionService.findAll());
-            return "/driver/form";
+            return "/proc/form";
         }
 
-        Driver driver = driverService.save(formData);
+        Proc proc = procService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/driver/show/" + driver.getId();
+        return "redirect:/proc/show/" + proc.getId();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public String delete(
             final RedirectAttributes redirectAttributes,
             @RequestParam(value = "id", required = true) Long id) {
-        driverService.delete(id);
+        procService.delete(id);
         redirectAttributes.addFlashAttribute("message", "message.completed.delete");
-        return "redirect:/driver/list";
+        return "redirect:/proc/list";
     }
 }

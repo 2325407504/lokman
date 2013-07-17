@@ -44,8 +44,8 @@ import com.aripd.project.lgk.report.employeeleave.Writer;
 import com.aripd.project.lgk.repository.EmployeeleaveRepository;
 import com.aripd.project.lgk.service.EmployeeleaveService;
 import com.aripd.project.lgk.service.EmployeeleavetypeService;
-import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
+import org.joda.time.Years;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service("employeeleaveService")
@@ -261,24 +261,34 @@ public class EmployeeleaveServiceImpl implements EmployeeleaveService {
         for (DateTime date = employmentDateTime; date.isBefore(endDate); date = date.plusYears(1)) {
             EmployeeleaveReportModel erm = new EmployeeleaveReportModel();
             erm.setDate(date.toDate());
-            erm.setQualified(Integer.MIN_VALUE);
-            erm.setUsed(Integer.SIZE);
+            erm.setQualified(this.getAnnualLeaveQualified(account, date));
+            erm.setUsed(this.getAnnualLeaveUsed(account, date, date.plusYears(1)));
             ermList.add(erm);
         }
         return ermList;
     }
 
-    public List<Employeeleave> getLeaveTotal(Integer year, Long account_id) {
-        DateMidnight startingDateTime = new DateMidnight().withYear(year).withDayOfYear(1);
-        DateMidnight endingDateTime = startingDateTime.plusYears(1);
+    public int getAnnualLeaveQualified(Account account, DateTime dt1) {
+        DateTime dt2 = new DateTime(account.getEmployee().getEmploymentDate());
+        int diff = Years.yearsBetween(dt2, dt1).getYears();
+        int leave = 0;
+        if (1 <= diff && diff <= 5) {
+            leave = 14;
+        } else if (5 < diff && diff < 15) {
+            leave = 20;
+        } else if (15 <= diff) {
+            leave = 26;
+        }
+        return leave;
+    }
 
+    public int getAnnualLeaveUsed(Account account, DateTime dt1, DateTime dt2) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Employeeleave> cq = cb.createQuery(Employeeleave.class);
         Root<Employeeleave> root = cq.from(Employeeleave.class);
-        Join<Employeeleave, Account> account = root.join(Employeeleave_.account);
 
-        Predicate predicate1 = cb.between(root.get(Employeeleave_.startingDate), startingDateTime.toDate(), endingDateTime.toDate());
-        Predicate predicate2 = cb.equal(account.get(Account_.id), account_id);
+        Predicate predicate1 = cb.between(root.get(Employeeleave_.startingDate), dt1.toDate(), dt2.toDate());
+        Predicate predicate2 = cb.equal(root.get(Employeeleave_.account), account);
         Predicate predicate = cb.and(predicate1, predicate2);
 
         List<Predicate> predicateList = new ArrayList<Predicate>();
@@ -291,6 +301,10 @@ public class EmployeeleaveServiceImpl implements EmployeeleaveService {
         TypedQuery<Employeeleave> typedQuery = em.createQuery(cq);
         List<Employeeleave> resultList = typedQuery.getResultList();
 
-        return resultList;
+        int leave = 0;
+        for (Employeeleave employeeleave : resultList) {
+            leave += employeeleave.getNofWorkdays();
+        }
+        return leave;
     }
 }

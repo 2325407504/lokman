@@ -51,7 +51,6 @@ public class EmployeeController {
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
     public String showAction(@PathVariable Long id, Model model) {
-        model.addAttribute("leaveTotal", employeeleaveService.getLeaveTotal(2011, id));
         model.addAttribute("employeeAttribute", employeeService.findOne(id));
         return "/employee/show";
     }
