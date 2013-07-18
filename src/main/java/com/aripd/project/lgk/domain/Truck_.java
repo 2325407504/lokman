@@ -1,6 +1,5 @@
 package com.aripd.project.lgk.domain;
 
-import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -17,5 +16,4 @@ public class Truck_ extends BaseEntity_ {
     public static volatile SingularAttribute<Truck, Boolean> active;
     public static volatile SingularAttribute<Truck, Region> region;
     public static volatile SingularAttribute<Truck, String> plate;
-    //public static volatile ListAttribute<Truck, Trip> trips;
 }

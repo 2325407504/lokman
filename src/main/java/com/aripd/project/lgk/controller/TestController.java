@@ -1,5 +1,6 @@
 package com.aripd.project.lgk.controller;
 
+import com.aripd.project.lgk.service.ForwardingService;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -24,12 +25,20 @@ import com.googlecode.charts4j.Color;
 import com.googlecode.charts4j.GCharts;
 import com.googlecode.charts4j.PieChart;
 import com.googlecode.charts4j.Slice;
+import javax.annotation.Resource;
 
 @Controller
-@RequestMapping("/trip")
-public class ChartController {
+@RequestMapping("/test")
+public class TestController {
 
-    protected static Logger logger = Logger.getLogger(ChartController.class);
+    protected static Logger logger = Logger.getLogger(TestController.class);
+    @Resource(name = "forwardingService")
+    private ForwardingService forwardingService;
+
+    @RequestMapping(value = "/chart")
+    public String chartAction(Model model) {
+        return "/test/chart";
+    }
 
     @RequestMapping(value = "/report1", method = RequestMethod.GET)
     public String report1(Model model) {
@@ -45,7 +54,7 @@ public class ChartController {
 
         model.addAttribute("pieUrl", pieChart.toURLString());
 
-        return "trip/report1";
+        return "/test/report";
     }
 
     @RequestMapping(value = "/report2", method = RequestMethod.GET)
@@ -67,7 +76,7 @@ public class ChartController {
     @RequestMapping(value = "/report3", method = RequestMethod.GET)
     public void report3(HttpServletResponse response) {
         response.setContentType("image/png");
-        String query = "SELECT endingTime, weight FROM trip ORDER BY endingTime ASC";
+        String query = "SELECT endingTime, weight FROM test ORDER BY endingTime ASC";
         JDBCCategoryDataset dataset = null;
         try {
             dataset = new JDBCCategoryDataset(

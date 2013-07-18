@@ -44,18 +44,6 @@ public class TruckController {
     /**
      * TODO Authorize ile ilgili sorun çıkacak
      *
-     * @param id
-     * @return
-     */
-    @RequestMapping(value = "/getkilometerbyid", method = RequestMethod.GET)
-    public @ResponseBody
-    Integer getKilometerByPlate(@RequestParam(value = "q") Long id) {
-        return truckService.getKilometer(id);
-    }
-
-    /**
-     * TODO Authorize ile ilgili sorun çıkacak
-     *
      * @param plate
      * @return
      */

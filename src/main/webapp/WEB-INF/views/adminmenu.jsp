@@ -58,8 +58,6 @@
 <spring:url value="/waybill/list" var="waybill_list" />
 <c:if test="${uri == waybill_list}"><c:set var="waybill_class" value="active" /></c:if>
 
-<spring:url value="/trip/list" var="trip_list" />
-<c:if test="${uri == trip_list}"><c:set var="trip_class" value="active" /></c:if>
 <spring:url value="/forwarding/list" var="forwarding_list" />
 <c:if test="${uri == forwarding_list}"><c:set var="forwarding_class" value="active" /></c:if>
 
@@ -129,7 +127,6 @@
                     <ul class="unstyled">
                         <sec:authorize access="hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_ADMIN') and hasRole('ROLE_OTL'))">
                             <li class="nav-header"><spring:message code="Logistics" /></li>
-                            <li class="hide ${trip_class}"><a href="${trip_list}"><spring:message code="Trips" /></a></li>
                             <li class="${forwarding_class}"><a href="${forwarding_list}"><spring:message code="Forwardings" /></a></li>
                             </sec:authorize>
                     </ul>

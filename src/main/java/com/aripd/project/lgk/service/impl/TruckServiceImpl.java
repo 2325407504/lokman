@@ -21,8 +21,6 @@ import com.aripd.common.dto.datatables.DatatablesSortField;
 import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Forwarding_;
 import com.aripd.project.lgk.domain.Region;
-import com.aripd.project.lgk.domain.Trip;
-import com.aripd.project.lgk.domain.Trip_;
 import com.aripd.project.lgk.domain.Truck;
 import com.aripd.project.lgk.domain.Truck_;
 import com.aripd.project.lgk.repository.TruckRepository;
@@ -68,51 +66,6 @@ public class TruckServiceImpl implements TruckService {
         repository.delete(truck);
     }
 
-    public Integer getKilometer(Long id) {
-        Integer kilometer = 0;
-        if (id == null) {
-            return kilometer;
-        }
-
-        Truck truck = this.findOne(id);
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Trip> cq = cb.createQuery(Trip.class);
-        Root<Trip> root = cq.from(Trip.class);
-
-        List<Predicate> predicateList = new ArrayList<Predicate>();
-        Predicate predicate = cb.equal(root.get(Trip_.truck), truck);
-        cq.where(predicate);
-        cq.orderBy(cb.desc(root.get(Trip_.endingTime)));
-
-        List<Trip> results = em.createQuery(cq).getResultList();
-        if (!results.isEmpty()) {
-            kilometer = results.get(0).getEndingKm();
-        }
-        return kilometer;
-    }
-
-    public Integer getKilometer(String plate) {
-        Integer kilometer = 0;
-        if (plate == null) {
-            return kilometer;
-        }
-
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Forwarding> cq = cb.createQuery(Forwarding.class);
-        Root<Forwarding> root = cq.from(Forwarding.class);
-
-        List<Predicate> predicateList = new ArrayList<Predicate>();
-        Predicate predicate = cb.equal(root.get(Forwarding_.plate), plate);
-        cq.where(predicate);
-        cq.orderBy(cb.desc(root.get(Forwarding_.endingTime)));
-
-        List<Forwarding> results = em.createQuery(cq).getResultList();
-        if (!results.isEmpty()) {
-            kilometer = results.get(0).getEndingKm();
-        }
-        return kilometer;
-    }
-
     public DatatablesResultSet<Truck> getRecords(DatatablesCriteria criteria) {
         Integer displaySize = criteria.getDisplaySize();
         Integer displayStart = criteria.getDisplayStart();
@@ -156,6 +109,28 @@ public class TruckServiceImpl implements TruckService {
         List<Truck> resultList = typedQuery.getResultList();
 
         return new DatatablesResultSet<Truck>(resultList, totalRecords, displaySize);
+    }
+
+    public Integer getKilometer(String plate) {
+        Integer kilometer = 0;
+        if (plate == null) {
+            return kilometer;
+        }
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Forwarding> cq = cb.createQuery(Forwarding.class);
+        Root<Forwarding> root = cq.from(Forwarding.class);
+
+        List<Predicate> predicateList = new ArrayList<Predicate>();
+        Predicate predicate = cb.equal(root.get(Forwarding_.plate), plate);
+        cq.where(predicate);
+        cq.orderBy(cb.desc(root.get(Forwarding_.endingTime)));
+
+        List<Forwarding> results = em.createQuery(cq).getResultList();
+        if (!results.isEmpty()) {
+            kilometer = results.get(0).getEndingKm();
+        }
+        return kilometer;
     }
 
     public String[] getPlates(String q) {

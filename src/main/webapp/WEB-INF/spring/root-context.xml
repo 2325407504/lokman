@@ -63,6 +63,7 @@
 
     <mvc:interceptors>
         <ref bean="localeChangeInterceptor" />
+        <ref bean="csrfHandlerInterceptor" />
         <bean class="com.aripd.common.interceptor.TestInterceptor" />
         <bean class="com.aripd.common.interceptor.ExecuteTimeInterceptor" />
         <!-- bean class="com.aripd.common.interceptor.MaintenanceInterceptor"> 
@@ -82,6 +83,10 @@
     <task:executor id="taskExecutor" pool-size="5" />
     <task:annotation-driven executor="taskExecutor" scheduler="taskScheduler" />
 
+    <!-- CSRF Handler Interceptor and Data Value Processor -->
+    <bean id="csrfHandlerInterceptor" class="com.aripd.common.csrf.CSRFHandlerInterceptor"/>
+    <bean name="requestDataValueProcessor" class="com.aripd.common.csrf.CSRFRequestDataValueProcessor"/>
+    
     <!-- Application Message Bundle -->
     <bean id="messageSource"
           class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
