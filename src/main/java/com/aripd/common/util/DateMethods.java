@@ -31,7 +31,8 @@ public class DateMethods {
 
         //end Saturday to start Saturday 
         long days = (c2.getTimeInMillis() - c1.getTimeInMillis()) / (1000 * 60 * 60 * 24);
-        long daysWithoutSunday = days - (days * 2 / 7);
+        long daysWithoutSaturdayAndSunday = days - (days * 2 / 7);
+        long daysWithoutSunday = days - (days * 1 / 7);
 
         if (w1 == Calendar.SUNDAY) {
             w1 = Calendar.MONDAY;
