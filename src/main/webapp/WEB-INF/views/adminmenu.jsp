@@ -17,6 +17,8 @@
 <c:if test="${uri == expensetype_list}"><c:set var="expensetype_class" value="active" /></c:if>
 <spring:url value="/employeeleavetype/list" var="employeeleavetype_list" />
 <c:if test="${uri == employeeleavetype_list}"><c:set var="employeeleavetype_class" value="active" /></c:if>
+<spring:url value="/employeeworkinghourtype/list" var="employeeworkinghourtype_list" />
+<c:if test="${uri == employeeworkinghourtype_list}"><c:set var="employeeworkinghourtype_class" value="active" /></c:if>
 <spring:url value="/startingpoint/list" var="startingpoint_list" />
 <c:if test="${uri == startingpoint_list}"><c:set var="startingpoint_class" value="active" /></c:if>
 <spring:url value="/endingpoint/list" var="endingpoint_list" />
@@ -53,6 +55,8 @@
 <c:if test="${uri == employee_list}"><c:set var="employee_class" value="active" /></c:if>
 <spring:url value="/employeeleave/list" var="employeeleave_list" />
 <c:if test="${uri == employeeleave_list}"><c:set var="employeeleave_class" value="active" /></c:if>
+<spring:url value="/employeeworkinghour/list" var="employeeworkinghour_list" />
+<c:if test="${uri == employeeworkinghour_list}"><c:set var="employeeworkinghour_class" value="active" /></c:if>
 <spring:url value="/invoice/list" var="invoice_list" />
 <c:if test="${uri == invoice_list}"><c:set var="invoice_class" value="active" /></c:if>
 <spring:url value="/waybill/list" var="waybill_list" />
@@ -89,6 +93,7 @@
                         <li class="${customer_class}"><a href="${customer_list}"><spring:message code="Customers" /></a></li>
                         <li class="${expensetype_class}"><a href="${expensetype_list}"><spring:message code="Expensetypes" /></a></li>
                         <li class="${employeeleavetype_class}"><a href="${employeeleavetype_list}"><spring:message code="Employee Leave Types" /></a></li>
+                        <li class="${employeeworkinghourtype_class}"><a href="${employeeworkinghourtype_list}"><spring:message code="Employee Working Hour Types" /></a></li>
                         <li class="${startingpoint_class}"><a href="${startingpoint_list}"><spring:message code="Starting Points" /></a></li>
                         <li class="${endingpoint_class}"><a href="${endingpoint_list}"><spring:message code="Ending Points" /></a></li>
                             <sec:authorize access="hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_ADMIN') and hasRole('ROLE_OTL'))">
@@ -117,6 +122,7 @@
                             <li class="${expense_class}"><a href="${expense_list}"><spring:message code="Expenses" /></a></li>
                             <li class="${employee_class}"><a href="${employee_list}"><spring:message code="Employees" /></a></li>
                             <li class="${employeeleave_class}"><a href="${employeeleave_list}"><spring:message code="Employee Leaves" /></a></li>
+                            <li class="${employeeworkinghour_class}"><a href="${employeeworkinghour_list}"><spring:message code="Employee Working Hours" /></a></li>
                             <li class="nav-header"><spring:message code="Accounting" /></li>
                             <li class="${invoice_class}"><a href="${invoice_list}"><spring:message code="Invoices" /></a></li>
                             <li class="${waybill_class}"><a href="${waybill_list}"><spring:message code="Waybills" /></a></li>

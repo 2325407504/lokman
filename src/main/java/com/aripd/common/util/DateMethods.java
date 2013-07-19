@@ -3,6 +3,9 @@ package com.aripd.common.util;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.Hours;
 
 /**
  *
@@ -29,7 +32,6 @@ public class DateMethods {
         int w2 = c2.get(Calendar.DAY_OF_WEEK);
         c2.add(Calendar.DAY_OF_WEEK, -w2 + 1);
 
-        //end Saturday to start Saturday 
         long days = (c2.getTimeInMillis() - c1.getTimeInMillis()) / (1000 * 60 * 60 * 24);
         long daysWithoutSaturdayAndSunday = days - (days * 2 / 7);
         long daysWithoutSunday = days - (days * 1 / 7);

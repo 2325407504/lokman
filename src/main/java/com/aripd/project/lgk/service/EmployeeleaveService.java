@@ -19,11 +19,11 @@ public interface EmployeeleaveService {
 
     public List<Employeeleave> findByAccount(Account account);
 
-    public Employeeleave save(Employeeleave leave);
+    public Employeeleave save(Employeeleave employeeleave);
 
     public void delete(Long id);
 
-    public void delete(Employeeleave leave);
+    public void delete(Employeeleave employeeleave);
 
     public DatatablesResultSet<Employeeleave> getRecords(DatatablesCriteria criteria);
 
