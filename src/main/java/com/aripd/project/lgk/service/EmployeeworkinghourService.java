@@ -8,9 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Employeeworkinghour;
-import com.aripd.project.lgk.model.EmployeeworkinghourReportModel;
+import com.aripd.project.lgk.model.EmployeeworkinghourFilterByIntervalForm;
 import java.util.List;
-import org.joda.time.DateTime;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface EmployeeworkinghourService {
@@ -31,11 +30,7 @@ public interface EmployeeworkinghourService {
 
     public void importData(MultipartFile file);
 
-    public void exportByAccount(HttpServletResponse response, Account account);
+    public void export(HttpServletResponse response, EmployeeworkinghourFilterByIntervalForm formData);
 
-    public List<EmployeeworkinghourReportModel> retrieveDatasource(Account account);
-
-    public int getAnnualLeaveQualified(Account account, DateTime dt1);
-
-    public int getAnnualLeaveUsed(Account account, DateTime dt1, DateTime dt2);
+    public List<Employeeworkinghour> retrieveDatasource(EmployeeworkinghourFilterByIntervalForm formData);
 }

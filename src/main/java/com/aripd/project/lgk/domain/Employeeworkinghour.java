@@ -32,12 +32,12 @@ public class Employeeworkinghour extends BaseEntity {
     @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
     @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
     @Column(columnDefinition = "TIMESTAMP")
-    private DateTime startingDateTime;
+    private DateTime startingTime;
     @NotNull
     @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)
     @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
     @Column(columnDefinition = "TIMESTAMP")
-    private DateTime endingDateTime;
+    private DateTime endingTime;
     private String remark;
 
     @Override
@@ -47,7 +47,7 @@ public class Employeeworkinghour extends BaseEntity {
 
     @Transient
     public long getNofWorkhours() {
-        return Hours.hoursBetween(startingDateTime, endingDateTime).getHours();
+        return Hours.hoursBetween(startingTime, endingTime).getHours();
     }
 
     public boolean isSubmitted() {
@@ -74,20 +74,20 @@ public class Employeeworkinghour extends BaseEntity {
         this.employeeworkinghourtype = employeeworkinghourtype;
     }
 
-    public DateTime getStartingDateTime() {
-        return startingDateTime;
+    public DateTime getStartingTime() {
+        return startingTime;
     }
 
-    public void setStartingDateTime(DateTime startingDateTime) {
-        this.startingDateTime = startingDateTime;
+    public void setStartingTime(DateTime startingTime) {
+        this.startingTime = startingTime;
     }
 
-    public DateTime getEndingDateTime() {
-        return endingDateTime;
+    public DateTime getEndingTime() {
+        return endingTime;
     }
 
-    public void setEndingDateTime(DateTime endingDateTime) {
-        this.endingDateTime = endingDateTime;
+    public void setEndingTime(DateTime endingTime) {
+        this.endingTime = endingTime;
     }
 
     public String getRemark() {

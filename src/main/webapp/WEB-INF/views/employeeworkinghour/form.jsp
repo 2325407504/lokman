@@ -35,14 +35,14 @@
                     <form:errors cssClass="text-error" path="employeeworkinghourtype" />
                 </div>
                 <div class="control-group">
-                    <form:label path="startingDateTime"><spring:message code="Starting Time" /></form:label>
-                    <form:input type="date" path="startingDateTime" />
-                    <form:errors cssClass="text-error" path="startingDateTime" />
+                    <form:label path="startingTime"><spring:message code="Starting Time" /></form:label>
+                    <form:input type="date" path="startingTime" />
+                    <form:errors cssClass="text-error" path="startingTime" />
                 </div>
                 <div class="control-group">
-                    <form:label path="endingDateTime"><spring:message code="Ending Time" /></form:label>
-                    <form:input type="date" path="endingDateTime" />
-                    <form:errors cssClass="text-error" path="endingDateTime" />
+                    <form:label path="endingTime"><spring:message code="Ending Time" /></form:label>
+                    <form:input type="date" path="endingTime" />
+                    <form:errors cssClass="text-error" path="endingTime" />
                 </div>
                 <div class="control-group">
                     <form:label path="remark"><spring:message code="Remark" /></form:label>
@@ -68,8 +68,8 @@
 </div>
 
 <script type="text/javascript">
-    var startDateTextBox = $('#startingDateTime');
-    var endDateTextBox = $('#endingDateTime');
+    var startDateTextBox = $('[name=startingTime]');
+    var endDateTextBox = $('[name=endingTime]');
 
     startDateTextBox.datetimepicker({
         maxDate: new Date(),

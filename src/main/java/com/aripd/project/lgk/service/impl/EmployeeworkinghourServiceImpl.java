@@ -37,7 +37,8 @@ import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesSortField;
 import com.aripd.project.lgk.domain.Employeeworkinghour;
 import com.aripd.project.lgk.domain.Employeeworkinghour_;
-import com.aripd.project.lgk.model.EmployeeworkinghourReportModel;
+import com.aripd.project.lgk.domain.Employeeworkinghourtype;
+import com.aripd.project.lgk.model.EmployeeworkinghourFilterByIntervalForm;
 import com.aripd.project.lgk.report.employeeworkinghour.FillManager;
 import com.aripd.project.lgk.report.employeeworkinghour.Layouter;
 import com.aripd.project.lgk.report.employeeworkinghour.Writer;
@@ -45,7 +46,6 @@ import com.aripd.project.lgk.repository.EmployeeworkinghourRepository;
 import com.aripd.project.lgk.service.EmployeeworkinghourService;
 import com.aripd.project.lgk.service.EmployeeworkinghourtypeService;
 import org.joda.time.DateTime;
-import org.joda.time.Years;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service("employeeworkinghourService")
@@ -206,16 +206,16 @@ public class EmployeeworkinghourServiceImpl implements EmployeeworkinghourServic
 
             String username = row.getCell(0).getStringCellValue();
             String workinghourtype_code = row.getCell(1).getStringCellValue();
-            Date startingDateTime = row.getCell(2).getDateCellValue();
-            Date endingDateTime = row.getCell(3).getDateCellValue();
+            Date startingTime = row.getCell(2).getDateCellValue();
+            Date endingTime = row.getCell(3).getDateCellValue();
             String remark = row.getCell(4).getStringCellValue();
 
             employeeworkinghour = new Employeeworkinghour();
             employeeworkinghour.setSubmitted(true);
             employeeworkinghour.setAccount(accountService.findOneByUsername(username));
             employeeworkinghour.setEmployeeworkinghourtype(employeeworkinghourtypeService.findOneByCode(workinghourtype_code));
-            employeeworkinghour.setStartingDateTime(new DateTime(startingDateTime));
-            employeeworkinghour.setEndingDateTime(new DateTime(endingDateTime));
+            employeeworkinghour.setStartingTime(new DateTime(startingTime));
+            employeeworkinghour.setEndingTime(new DateTime(endingTime));
             employeeworkinghour.setRemark(remark);
 
             workinghours.add(employeeworkinghour);
@@ -224,12 +224,12 @@ public class EmployeeworkinghourServiceImpl implements EmployeeworkinghourServic
         repository.save(workinghours);
     }
 
-    public void exportByAccount(HttpServletResponse response, Account account) {
+    public void export(HttpServletResponse response, EmployeeworkinghourFilterByIntervalForm formData) {
         // 1. Create new workbook
         HSSFWorkbook workbook = new HSSFWorkbook();
 
         // 2. Create new worksheet
-        HSSFSheet worksheet = workbook.createSheet("Employee Working Hours for " + account.getUsername());
+        HSSFSheet worksheet = workbook.createSheet("Employee Working Hours");
 
         // 3. Define starting indices for rows and columns
         int startRowIndex = 0;
@@ -240,7 +240,7 @@ public class EmployeeworkinghourServiceImpl implements EmployeeworkinghourServic
         Layouter.buildReport(worksheet, startRowIndex, startColIndex);
 
         // 5. Fill report
-        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.retrieveDatasource(account));
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.retrieveDatasource(formData));
 
         // 6. Set the response properties
         String fileName = "EmployeeWorkingHourReport.xls";
@@ -252,44 +252,20 @@ public class EmployeeworkinghourServiceImpl implements EmployeeworkinghourServic
         Writer.write(response, worksheet);
     }
 
-    public List<EmployeeworkinghourReportModel> retrieveDatasource(Account account) {
-        Date employmentDate = account.getEmployee().getEmploymentDate();
-        DateTime employmentDateTime = new DateTime(employmentDate);
-        DateTime endDate = new DateTime();
+    public List<Employeeworkinghour> retrieveDatasource(EmployeeworkinghourFilterByIntervalForm formData) {
+        Account account = accountService.findOne(formData.getAccount().getId());
+        DateTime startingTime = formData.getStartingTime();
+        DateTime endingTime = formData.getEndingTime();
+        Employeeworkinghourtype employeeworkinghourtype = formData.getEmployeeworkinghourtype();
 
-        List<EmployeeworkinghourReportModel> ermList = new ArrayList<EmployeeworkinghourReportModel>();
-        for (DateTime date = employmentDateTime; date.isBefore(endDate); date = date.plusYears(1)) {
-            EmployeeworkinghourReportModel erm = new EmployeeworkinghourReportModel();
-            erm.setDate(date.toDate());
-            erm.setQualified(this.getAnnualLeaveQualified(account, date));
-            erm.setUsed(this.getAnnualLeaveUsed(account, date, date.plusYears(1)));
-            ermList.add(erm);
-        }
-        return ermList;
-    }
-
-    public int getAnnualLeaveQualified(Account account, DateTime dt1) {
-        DateTime dt2 = new DateTime(account.getEmployee().getEmploymentDate());
-        int diff = Years.yearsBetween(dt2, dt1).getYears();
-        int workinghour = 0;
-        if (1 <= diff && diff <= 5) {
-            workinghour = 14;
-        } else if (5 < diff && diff < 15) {
-            workinghour = 20;
-        } else if (15 <= diff) {
-            workinghour = 26;
-        }
-        return workinghour;
-    }
-
-    public int getAnnualLeaveUsed(Account account, DateTime dt1, DateTime dt2) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Employeeworkinghour> cq = cb.createQuery(Employeeworkinghour.class);
         Root<Employeeworkinghour> root = cq.from(Employeeworkinghour.class);
 
-        Predicate predicate1 = cb.between(root.get(Employeeworkinghour_.startingDateTime), dt1, dt2);
+        Predicate predicate1 = cb.between(root.get(Employeeworkinghour_.startingTime), startingTime, endingTime);
         Predicate predicate2 = cb.equal(root.get(Employeeworkinghour_.account), account);
-        Predicate predicate = cb.and(predicate1, predicate2);
+        Predicate predicate3 = cb.equal(root.get(Employeeworkinghour_.employeeworkinghourtype), employeeworkinghourtype);
+        Predicate predicate = cb.and(predicate1, predicate2, predicate3);
 
         List<Predicate> predicateList = new ArrayList<Predicate>();
         predicateList.add(predicate);
@@ -301,10 +277,6 @@ public class EmployeeworkinghourServiceImpl implements EmployeeworkinghourServic
         TypedQuery<Employeeworkinghour> typedQuery = em.createQuery(cq);
         List<Employeeworkinghour> resultList = typedQuery.getResultList();
 
-        int workinghour = 0;
-        for (Employeeworkinghour employeeworkinghour : resultList) {
-            workinghour += employeeworkinghour.getNofWorkhours();
-        }
-        return workinghour;
+        return resultList;
     }
 }

@@ -114,6 +114,7 @@ public class EmployeeworkinghourController {
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public String reportAction(Model model) {
         model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("employeeworkinghourtypes", employeeworkinghourtypeService.findAll());
         model.addAttribute("employeeworkinghourFilterByIntervalForm", new EmployeeworkinghourFilterByIntervalForm());
         return "employeeworkinghour/report";
     }
@@ -128,11 +129,11 @@ public class EmployeeworkinghourController {
 
         if (result.hasErrors()) {
             model.addAttribute("accounts", accountService.findAll());
+            model.addAttribute("employeeworkinghourtypes", employeeworkinghourtypeService.findAll());
             return "/employeeworkinghour/report";
         }
 
-        Account account = accountService.findOne(formData.getAccount().getId());
-        employeeworkinghourService.exportByAccount(response, account);
+        employeeworkinghourService.export(response, formData);
         return "redirect:/employeeworkinghour/report";
     }
 

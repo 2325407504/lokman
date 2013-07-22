@@ -27,7 +27,6 @@ public class Layouter {
         worksheet.setColumnWidth(1, 5000);
         worksheet.setColumnWidth(2, 5000);
         worksheet.setColumnWidth(3, 5000);
-        worksheet.setColumnWidth(4, 5000);
 
         // Build the title and date headers
         buildTitle(worksheet, startRowIndex, startColIndex);
@@ -62,7 +61,7 @@ public class Layouter {
         cellTitle.setCellStyle(cellStyleTitle);
 
         // Create merged region for the report title
-        worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 4));
+        worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 3));
 
         // Create date header
         HSSFRow dateTitle = worksheet.createRow((short) startRowIndex + 1);
@@ -97,24 +96,20 @@ public class Layouter {
         rowHeader.setHeight((short) 500);
 
         HSSFCell cell0 = rowHeader.createCell(startColIndex + 0);
-        cell0.setCellValue("Date");
+        cell0.setCellValue("Starting Time");
         cell0.setCellStyle(headerCellStyle);
 
         HSSFCell cell1 = rowHeader.createCell(startColIndex + 1);
-        cell1.setCellValue("Qualified");
+        cell1.setCellValue("Ending Time");
         cell1.setCellStyle(headerCellStyle);
 
         HSSFCell cell2 = rowHeader.createCell(startColIndex + 2);
-        cell2.setCellValue("Used");
+        cell2.setCellValue("Working Hour");
         cell2.setCellStyle(headerCellStyle);
 
         HSSFCell cell3 = rowHeader.createCell(startColIndex + 3);
-        cell3.setCellValue("Remaining");
+        cell3.setCellValue("Accumulated");
         cell3.setCellStyle(headerCellStyle);
-
-        HSSFCell cell4 = rowHeader.createCell(startColIndex + 4);
-        cell4.setCellValue("Accumulated");
-        cell4.setCellStyle(headerCellStyle);
 
     }
 }

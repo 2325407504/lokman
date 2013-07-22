@@ -18,7 +18,7 @@ public class Employeeworkinghour_ extends BaseEntity_ {
     public static volatile SingularAttribute<Employeeworkinghour, Boolean> submitted;
     public static volatile SingularAttribute<Employeeworkinghour, Account> account;
     public static volatile SingularAttribute<Employeeworkinghour, Employeeworkinghourtype> employeeworkinghourtype;
-    public static volatile SingularAttribute<Employeeworkinghour, DateTime> startingDateTime;
-    public static volatile SingularAttribute<Employeeworkinghour, DateTime> endingDateTime;
+    public static volatile SingularAttribute<Employeeworkinghour, DateTime> startingTime;
+    public static volatile SingularAttribute<Employeeworkinghour, DateTime> endingTime;
     public static volatile SingularAttribute<Employeeworkinghour, String> remark;
 }

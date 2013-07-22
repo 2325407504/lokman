@@ -17,8 +17,8 @@
     <aripd:datatablescolumn label="Action" field="id"/>
     <aripd:datatablescolumn label="Fullname" field="account.employee.fullname"/>
     <aripd:datatablescolumn label="Employee Working Hour Type" field="employeeworkinghourtype.name"/>
-    <aripd:datatablescolumn label="Starting Time" field="startingDateTime"/>
-    <aripd:datatablescolumn label="Ending Time" field="endingDateTime"/>
+    <aripd:datatablescolumn label="Starting Time" field="startingTime"/>
+    <aripd:datatablescolumn label="Ending Time" field="endingTime"/>
     <aripd:datatablescolumn label="Hour" field="nofWorkhours"/>
     <aripd:datatablescolumn label="Remark" field="remark"/>
 </aripd:datatables>
