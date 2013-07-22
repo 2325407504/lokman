@@ -104,13 +104,13 @@ public class UserForwardingController {
             @PathVariable Long id,
             Model model) {
 
-        Forwarding forwarding = forwardingService.findOne(id);
+        Account account = accountService.findOneByUsername(principal.getName());
+        Forwarding forwarding = forwardingService.findOneByAccountAndId(account, id);
+
         if (forwarding.isSubmitted()) {
             redirectAttributes.addFlashAttribute("message", "message.record.not.editable");
             return "redirect:/userforwarding/show/" + forwarding.getId();
         }
-
-        Account account = accountService.findOneByUsername(principal.getName());
 
         model.addAttribute("useruatfAttribute", new Uatf());
         model.addAttribute("quotas", quotaService.findAll());
@@ -129,9 +129,9 @@ public class UserForwardingController {
             BindingResult result,
             Model model) {
 
-        if (result.hasErrors()) {
-            Account account = accountService.findOneByUsername(principal.getName());
+        Account account = accountService.findOneByUsername(principal.getName());
 
+        if (result.hasErrors()) {
             model.addAttribute("quotas", quotaService.findAll());
             model.addAttribute("subcontractors", subcontractorService.findByRegion(account.getRegion()));
             model.addAttribute("startingpoints", startingpointService.findAll());
@@ -139,7 +139,6 @@ public class UserForwardingController {
             return "/userforwarding/form";
         }
 
-        Account account = accountService.findOneByUsername(principal.getName());
         formData.setAccount(account);
 
         Forwarding forwarding = forwardingService.save(formData);
@@ -151,8 +150,7 @@ public class UserForwardingController {
     public String submitAction(
             final RedirectAttributes redirectAttributes,
             Principal principal,
-            @PathVariable Long id,
-            Model model) {
+            @PathVariable Long id) {
 
         Account account = accountService.findOneByUsername(principal.getName());
         Forwarding forwarding = forwardingService.findOneByAccountAndId(account, id);
