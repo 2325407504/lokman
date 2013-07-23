@@ -33,6 +33,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.aripd.account.domain.Account;
 import com.aripd.account.domain.Account_;
+import com.aripd.account.domain.Employee;
+import com.aripd.account.domain.Employee_;
 import com.aripd.account.service.AccountService;
 import com.aripd.account.service.EmployeeService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
@@ -40,6 +42,7 @@ import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesSortField;
 import com.aripd.project.lgk.domain.Payment;
 import com.aripd.project.lgk.domain.Payment_;
+import com.aripd.project.lgk.model.PaymentFilterByIntervalForm;
 import com.aripd.project.lgk.report.payment.FillManager;
 import com.aripd.project.lgk.report.payment.Layouter;
 import com.aripd.project.lgk.report.payment.Writer;
@@ -71,7 +74,7 @@ public class PaymentServiceImpl implements PaymentService {
         return repository.findOneByAccountAndId(account, id);
     }
 
-    public List<Payment> findByInterval(Date starting, Date ending, Long account_id) {
+    public List<Payment> findByInterval(Date starting, Date ending, Long employee_id) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Payment> cq = cb.createQuery(Payment.class);
         Root<Payment> root = cq.from(Payment.class);
@@ -79,9 +82,9 @@ public class PaymentServiceImpl implements PaymentService {
         List<Predicate> predicateList = new ArrayList<Predicate>();
         Predicate predicate1 = cb.between(root.get(Payment_.documentDate), starting, ending);
         Predicate predicate2 = null;
-        if (account_id != null) {
-            Join<Payment, Account> account = root.join(Payment_.account);
-            predicate2 = cb.equal(account.get(Account_.id), account_id);
+        if (employee_id != null) {
+            Join<Payment, Employee> employee = root.join(Payment_.employee);
+            predicate2 = cb.equal(employee.get(Employee_.id), employee_id);
         }
 
         Predicate predicate = predicate1;
@@ -258,7 +261,7 @@ public class PaymentServiceImpl implements PaymentService {
         repository.save(payments);
     }
 
-    public void exportByInterval(HttpServletResponse response, Date starting, Date ending, Long account_id) {
+    public void export(HttpServletResponse response, PaymentFilterByIntervalForm formData) {
         // 1. Create new workbook
         HSSFWorkbook workbook = new HSSFWorkbook();
 
@@ -274,12 +277,11 @@ public class PaymentServiceImpl implements PaymentService {
         Layouter.buildReport(worksheet, startRowIndex, startColIndex);
 
         // 5. Fill report
-        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByInterval(starting, ending, account_id));
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByInterval(formData.getStartingDate(), formData.getEndingDate(), formData.getEmployee().getId()));
 
         // 6. Set the response properties
         String fileName = "PaymentReport.xls";
-        response.setHeader("Content-Disposition", "inline; filename="
-                + fileName);
+        response.setHeader("Content-Disposition", "inline; filename=" + fileName);
         // Make sure to set the correct content type
         response.setContentType("application/vnd.ms-excel");
 

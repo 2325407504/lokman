@@ -47,7 +47,7 @@ public class FillManager {
             cell1.setCellStyle(bodyCellStyle);
 
             HSSFCell cell2 = row.createCell(startColIndex + 2);
-            cell2.setCellValue(datasource.get(i - 2).getPaymenttype().getCode());
+            cell2.setCellValue(datasource.get(i - 2).getPaymenttype().getName());
             cell2.setCellStyle(bodyCellStyle);
 
             HSSFCell cell3 = row.createCell(startColIndex + 3);

@@ -1,5 +1,7 @@
 package com.aripd.project.lgk.controller;
 
+import com.aripd.account.domain.Account;
+import com.aripd.account.service.AccountService;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aripd.account.service.AccountService;
+import com.aripd.account.service.EmployeeService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesParam;
@@ -27,6 +29,7 @@ import com.aripd.project.lgk.domain.Payment;
 import com.aripd.project.lgk.model.PaymentFilterByIntervalForm;
 import com.aripd.project.lgk.service.PaymentService;
 import com.aripd.project.lgk.service.PaymenttypeService;
+import java.security.Principal;
 import org.springframework.validation.annotation.Validated;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_ADMIN')")
@@ -36,10 +39,12 @@ public class PaymentController {
 
     @Resource(name = "paymentService")
     private PaymentService paymentService;
-    @Resource(name = "accountService")
-    private AccountService accountService;
     @Resource(name = "paymenttypeService")
     private PaymenttypeService paymenttypeService;
+    @Resource(name = "employeeService")
+    private EmployeeService employeeService;
+    @Resource(name = "accountService")
+    private AccountService accountService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -61,7 +66,7 @@ public class PaymentController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("employees", employeeService.findAll());
         model.addAttribute("paymenttypes", paymenttypeService.findAll());
         model.addAttribute("paymentAttribute", new Payment());
         return "/payment/form";
@@ -69,7 +74,7 @@ public class PaymentController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
-        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("employees", employeeService.findAll());
         model.addAttribute("paymenttypes", paymenttypeService.findAll());
         model.addAttribute("paymentAttribute", paymentService.findOne(id));
         return "/payment/form";
@@ -78,15 +83,19 @@ public class PaymentController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
+            Principal principal,
             @ModelAttribute("paymentAttribute") @Valid Payment formData,
             BindingResult result,
             Model model) {
 
         if (result.hasErrors()) {
-            model.addAttribute("accounts", accountService.findAll());
+            model.addAttribute("employees", employeeService.findAll());
             model.addAttribute("paymenttypes", paymenttypeService.findAll());
             return "/payment/form";
         }
+
+        Account account = accountService.findOneByUsername(principal.getName());
+        formData.setAccount(account);
 
         Payment payment = paymentService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
@@ -96,7 +105,9 @@ public class PaymentController {
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public String delete(
             final RedirectAttributes redirectAttributes,
+            Principal principal,
             @RequestParam(value = "id", required = true) Long id) {
+        
         paymentService.delete(id);
         redirectAttributes.addFlashAttribute("message", "message.completed.delete");
         return "redirect:/payment/list";
@@ -104,7 +115,7 @@ public class PaymentController {
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public String reportAction(Model model) {
-        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("employees", employeeService.findAll());
         model.addAttribute("paymentFilterByIntervalForm", new PaymentFilterByIntervalForm());
         return "/payment/report";
     }
@@ -118,11 +129,11 @@ public class PaymentController {
             Model model) {
 
         if (result.hasErrors()) {
-            model.addAttribute("accounts", accountService.findAll());
+            model.addAttribute("employees", employeeService.findAll());
             return "/payment/report";
         }
 
-        paymentService.exportByInterval(response, formData.getStartingDate(), formData.getEndingDate(), formData.getAccount().getId());
+        paymentService.export(response, formData);
         return "redirect:/payment/report";
     }
 

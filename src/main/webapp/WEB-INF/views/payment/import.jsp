@@ -10,7 +10,6 @@
     <jsp:param name="new" value="true" />
     <jsp:param name="import" value="true" />
     <jsp:param name="report" value="true" />
-    <jsp:param name="submit" value="true" />
     <jsp:param name="active" value="import" />
 </jsp:include>
 

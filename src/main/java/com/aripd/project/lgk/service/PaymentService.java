@@ -8,6 +8,7 @@ import com.aripd.account.domain.Account;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Payment;
+import com.aripd.project.lgk.model.PaymentFilterByIntervalForm;
 import java.util.Date;
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,5 +33,5 @@ public interface PaymentService {
 
     public void importData(MultipartFile file);
 
-    public void exportByInterval(HttpServletResponse response, Date starting, Date ending, Long account_id);
+    public void export(HttpServletResponse response, PaymentFilterByIntervalForm formData);
 }

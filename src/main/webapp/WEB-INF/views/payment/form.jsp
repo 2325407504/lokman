@@ -10,7 +10,6 @@
     <jsp:param name="new" value="true" />
     <jsp:param name="import" value="true" />
     <jsp:param name="report" value="true" />
-    <jsp:param name="submit" value="true" />
     <jsp:param name="active" value="form" />
 </jsp:include>
 
@@ -22,13 +21,9 @@
             <form:hidden path="id" />
             <fieldset>
                 <div class="control-group">
-                    <form:checkbox path="submitted" /> <spring:message code="message.record.submitted" />
-                    <form:errors cssClass="text-error" path="submitted" />
-                </div>
-                <div class="control-group">
-                    <form:label path="account"><spring:message code="Account" /></form:label>
-                    <form:select multiple="false" path="account.id" items="${accounts}" itemLabel="employee.fullname" itemValue="id" />
-                    <form:errors cssClass="text-error" path="account" />
+                    <form:label path="employee"><spring:message code="Employee" /></form:label>
+                    <form:select multiple="false" path="employee.id" items="${employees}" itemLabel="fullname" itemValue="id" />
+                    <form:errors cssClass="text-error" path="employee" />
                 </div>
                 <div class="control-group">
                     <form:label path="paymenttype"><spring:message code="Paymenttype" /></form:label>
@@ -41,14 +36,9 @@
                     <form:errors cssClass="text-error" path="documentDate" />
                 </div>
                 <div class="control-group">
-                    <form:label path="company"><spring:message code="Company" /></form:label>
-                    <form:input path="company" />
-                    <form:errors cssClass="text-error" path="company" />
-                </div>
-                <div class="control-group">
-                    <form:label path="description"><spring:message code="Description" /></form:label>
-                    <form:input path="description" />
-                    <form:errors cssClass="text-error" path="description" />
+                    <form:label path="remark"><spring:message code="Remark" /></form:label>
+                    <form:textarea path="remark" />
+                    <form:errors cssClass="text-error" path="remark" />
                 </div>
                 <div class="control-group">
                     <form:label path="amount"><spring:message code="Amount" /></form:label>

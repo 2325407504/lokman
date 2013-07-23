@@ -102,9 +102,11 @@ public class UserExpenseController {
             final RedirectAttributes redirectAttributes,
             Principal principal,
             @ModelAttribute("userexpenseAttribute") @Valid Expense formData,
-            BindingResult result) {
+            BindingResult result,
+            Model model) {
 
         if (result.hasErrors()) {
+            model.addAttribute("expensetypes", expensetypeService.findAll());
             return "/userexpense/form";
         }
 

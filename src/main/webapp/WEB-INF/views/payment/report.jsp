@@ -10,7 +10,6 @@
     <jsp:param name="new" value="true" />
     <jsp:param name="import" value="true" />
     <jsp:param name="report" value="true" />
-    <jsp:param name="submit" value="true" />
     <jsp:param name="active" value="report" />
 </jsp:include>
 
@@ -20,17 +19,31 @@
 
 <p class="lead"><spring:message code="Payment" /></p>
 <spring:url var="paymentReport" value="/payment/report" />
-<form:form modelAttribute="paymentFilterByIntervalForm" action="${paymentReport}" method="post" class="form-inline">
+<form:form modelAttribute="paymentFilterByIntervalForm" action="${paymentReport}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
-    <form:input path="startingDate" cssClass="input-medium" placeholder="${startingDate}" />
-    <form:input path="endingDate" cssClass="input-medium" placeholder="${endingDate}" />
-    <form:select multiple="false" path="account.id" cssClass="input-medium">
-        <form:option value="" label="--- ${all}" />
-        <form:options items="${accounts}" itemLabel="employee.fullname" itemValue="id" />
-    </form:select>
-    <button class="btn" type="submit">
-        <i class="icon-download-alt"></i> <spring:message code="Download" />
-    </button>
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="control-group">
+                <form:label path="startingDate">${startingDate} - ${endingDate}</form:label>
+                <form:input id="start1" path="startingDate" cssClass="input-medium" placeholder="${startingDate}" />
+                <form:errors cssClass="text-error" path="startingDate" />
+                <form:input id="end1" path="endingDate" cssClass="input-medium" placeholder="${endingDate}" />
+                <form:errors cssClass="text-error" path="endingDate" />
+            </div>
+            <div class="control-group">
+                <form:label path="employee"><spring:message code="Employee" /></form:label>
+                <form:select multiple="false" path="employee.id" cssClass="input-medium">
+                    <form:option value="" label="--- ${all}" />
+                    <form:options items="${employees}" itemLabel="fullname" itemValue="id" />
+                </form:select>
+            </div>
+            <div class="control-group">
+                <button class="btn" type="submit">
+                    <i class="icon-download-alt"></i> <spring:message code="Download" />
+                </button>
+            </div>
+        </div>
+    </div>
 </form:form>
 
 

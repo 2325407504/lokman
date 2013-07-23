@@ -110,6 +110,8 @@
     </div>
 </c:if>
 
+<spring:url var="autocompleteSource" value="/waybill/autocomplete" />
+
 <script>
     $(function() {
         $("[name=documentDate]").datepicker({
@@ -117,7 +119,7 @@
         });
 
         $("#autocomplete").autocomplete({
-            source: "/lokman/waybill/autocomplete",
+            source: "${autocompleteSource}",
             minLength: 2
         });
     });
