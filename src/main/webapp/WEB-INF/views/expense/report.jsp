@@ -35,8 +35,8 @@
 
 
 <script type="text/javascript">
-    var start1 = $('#starting');
-    var end1 = $('#ending');
+    var start1 = $('[name=startingDate]');
+    var end1 = $('[name=endingDate]');
 
     start1.datepicker({
         maxDate: new Date(),
