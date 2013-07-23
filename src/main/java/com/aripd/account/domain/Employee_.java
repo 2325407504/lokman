@@ -20,5 +20,5 @@ public class Employee_ extends BaseEntity_ {
     public static volatile SingularAttribute<Employee, String> firstName;
     public static volatile SingularAttribute<Employee, String> lastName;
     public static volatile SingularAttribute<Employee, String> phonenumber;
-    public static volatile SingularAttribute<Employee, String> tckimlik;
+    public static volatile SingularAttribute<Employee, String> tckimlikno;
 }

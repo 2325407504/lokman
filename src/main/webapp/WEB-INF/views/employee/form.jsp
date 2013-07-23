@@ -21,9 +21,9 @@
             <form:hidden path="id" />
             <fieldset>
                 <div class="control-group">
-                    <form:label path="tckimlik"><spring:message code="TC Kimlik" /></form:label>
-                    <form:input path="tckimlik" />
-                    <form:errors cssClass="text-error" path="tckimlik" />
+                    <form:label path="tckimlikno"><spring:message code="TC Kimlik No" /></form:label>
+                    <form:input path="tckimlikno" />
+                    <form:errors cssClass="text-error" path="tckimlikno" />
                 </div>
                 <div class="control-group">
                     <form:label path="firstName"><spring:message code="FirstName" /></form:label>

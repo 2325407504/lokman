@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.aripd.account.domain.Account;
+import com.aripd.account.domain.Employee;
 import com.aripd.common.entity.BaseEntity;
 import java.util.Date;
 import javax.persistence.Temporal;
@@ -22,11 +23,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "payment")
 public class Payment extends BaseEntity {
 
-    @Column(nullable = false)
-    private boolean submitted = false;
     @ManyToOne
     @JoinColumn(nullable = false, insertable = true, updatable = true)
     private Account account;
+    @ManyToOne
+    private Employee employee;
     @ManyToOne
     private Paymenttype paymenttype;
     @NotNull
@@ -35,8 +36,7 @@ public class Payment extends BaseEntity {
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
     private Date documentDate;
-    private String company;
-    private String description;
+    private String remark;
     @Column(nullable = false)
     @NotNull
     private BigDecimal amount;
@@ -46,20 +46,20 @@ public class Payment extends BaseEntity {
         return ToStringBuilder.reflectionToString(this);
     }
 
-    public boolean isSubmitted() {
-        return submitted;
-    }
-
-    public void setSubmitted(boolean submitted) {
-        this.submitted = submitted;
-    }
-
     public Account getAccount() {
         return account;
     }
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public Paymenttype getPaymenttype() {
@@ -78,12 +78,12 @@ public class Payment extends BaseEntity {
         this.documentDate = documentDate;
     }
 
-    public String getDescription() {
-        return description;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public BigDecimal getAmount() {
@@ -94,11 +94,4 @@ public class Payment extends BaseEntity {
         this.amount = amount;
     }
 
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
 }

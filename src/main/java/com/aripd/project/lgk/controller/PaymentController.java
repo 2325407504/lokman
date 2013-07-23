@@ -93,14 +93,6 @@ public class PaymentController {
         return "redirect:/payment/show/" + payment.getId();
     }
 
-    @RequestMapping(value = "/submit/{id}", method = RequestMethod.GET)
-    public String submitAction(@PathVariable Long id) {
-        Payment payment = paymentService.findOne(id);
-        payment.setSubmitted(true ^ payment.isSubmitted());
-        paymentService.save(payment);
-        return "redirect:/payment/show/" + id;
-    }
-
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public String delete(
             final RedirectAttributes redirectAttributes,

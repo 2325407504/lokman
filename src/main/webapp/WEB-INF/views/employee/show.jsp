@@ -16,7 +16,7 @@
 <div class="row-fluid">
     <div class="span12">
         <aripd:description id="employee">
-            <aripd:descriptionitem label="TC Kimlik" field="employeeAttribute.tckimlik"></aripd:descriptionitem>
+            <aripd:descriptionitem label="TC Kimlik No" field="employeeAttribute.tckimlikno"></aripd:descriptionitem>
             <aripd:descriptionitem label="First Name" field="employeeAttribute.firstName"></aripd:descriptionitem>
             <aripd:descriptionitem label="Last Name" field="employeeAttribute.lastName"></aripd:descriptionitem>
             <aripd:descriptionitem label="Postal Address" field="employeeAttribute.address"></aripd:descriptionitem>

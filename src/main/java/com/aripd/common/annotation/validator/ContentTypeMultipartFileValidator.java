@@ -1,5 +1,6 @@
-package com.aripd.common.annotation;
+package com.aripd.common.annotation.validator;
 
+import com.aripd.common.annotation.ContentType;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;

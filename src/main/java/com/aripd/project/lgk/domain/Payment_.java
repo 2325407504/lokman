@@ -6,6 +6,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
 import com.aripd.account.domain.Account;
+import com.aripd.account.domain.Employee;
 import com.aripd.common.entity.BaseEntity_;
 import java.util.Date;
 
@@ -17,11 +18,10 @@ import java.util.Date;
 @StaticMetamodel(Payment.class)
 public class Payment_ extends BaseEntity_ {
 
-    public static volatile SingularAttribute<Payment, Boolean> submitted;
     public static volatile SingularAttribute<Payment, Account> account;
+    public static volatile SingularAttribute<Payment, Employee> employee;
     public static volatile SingularAttribute<Payment, Paymenttype> paymenttype;
     public static volatile SingularAttribute<Payment, Date> documentDate;
-    public static volatile SingularAttribute<Payment, String> company;
-    public static volatile SingularAttribute<Payment, String> description;
+    public static volatile SingularAttribute<Payment, String> remark;
     public static volatile SingularAttribute<Payment, BigDecimal> amount;
 }

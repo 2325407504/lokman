@@ -15,7 +15,7 @@
 
 <aripd:datatables datasource="/employee/get" id="employees" dataUrlShow="/employee/show" dataUrlEdit="/employee/edit">
     <aripd:datatablescolumn label="Action" field="id"/>
-    <aripd:datatablescolumn label="TC Kimlik" field="tckimlik"/>
+    <aripd:datatablescolumn label="TC Kimlik No" field="tckimlikno"/>
     <aripd:datatablescolumn label="First Name" field="firstName"/>
     <aripd:datatablescolumn label="Last Name" field="lastName"/>
     <aripd:datatablescolumn label="Postal Address" field="address"/>

@@ -12,6 +12,8 @@ public interface EmployeeService {
 
     public Employee findOne(Long id);
 
+    public Employee findOneByTckimlikno(String tckimlikno);
+
     public List<Employee> findAll();
 
     public Employee save(Employee employee);

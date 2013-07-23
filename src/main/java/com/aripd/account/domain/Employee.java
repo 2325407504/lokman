@@ -13,17 +13,18 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Past;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.joda.time.DateTime;
-import org.joda.time.Years;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "employee")
 public class Employee extends BaseEntity {
 
+    @Length(min = 11, max = 11)
+    @NotEmpty
     @Column(nullable = true, unique = true)
-    private String tckimlik;
+    private String tckimlikno;
     @NotEmpty
     @Column(nullable = true)
     private String firstName;
@@ -63,12 +64,12 @@ public class Employee extends BaseEntity {
         return sb.toString();
     }
 
-    public String getTckimlik() {
-        return tckimlik;
+    public String getTckimlikno() {
+        return tckimlikno;
     }
 
-    public void setTckimlik(String tckimlik) {
-        this.tckimlik = tckimlik;
+    public void setTckimlikno(String tckimlikno) {
+        this.tckimlikno = tckimlikno;
     }
 
     public String getFirstName() {

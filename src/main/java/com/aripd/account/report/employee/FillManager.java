@@ -43,7 +43,7 @@ public class FillManager {
             HSSFRow row = worksheet.createRow((short) i + 1);
 
             HSSFCell cell0 = row.createCell(startColIndex + 0);
-            cell0.setCellValue(datasource.get(i - 2).getTckimlik());
+            cell0.setCellValue(datasource.get(i - 2).getTckimlikno());
             cell0.setCellStyle(bodyCellStyle);
 
             HSSFCell cell1 = row.createCell(startColIndex + 1);

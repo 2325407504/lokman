@@ -51,6 +51,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return repository.findOne(id);
     }
 
+    public Employee findOneByTckimlikno(String tckimlikno) {
+        return repository.findOneByTckimlikno(tckimlikno);
+    }
+
     public List<Employee> findAll() {
         return repository.findAll();
     }
@@ -147,7 +151,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             Date employmentDate = row.getCell(6).getDateCellValue();
 
             employee = new Employee();
-            employee.setTckimlik(tckimlik);
+            employee.setTckimlikno(tckimlik);
             employee.setFirstName(firstName);
             employee.setLastName(lastName);
             employee.setAddress(address);

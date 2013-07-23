@@ -1,5 +1,6 @@
 package com.aripd.common.annotation;
 
+import com.aripd.common.annotation.validator.ContentTypeMultipartFileValidator;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

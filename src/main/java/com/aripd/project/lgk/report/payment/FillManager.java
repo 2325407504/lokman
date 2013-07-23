@@ -43,18 +43,18 @@ public class FillManager {
             cell0.setCellStyle(bodyCellStyle);
 
             HSSFCell cell1 = row.createCell(startColIndex + 1);
-            cell1.setCellValue(datasource.get(i - 2).getPaymenttype().getCode());
+            cell1.setCellValue(datasource.get(i - 2).getEmployee().getFullname());
             cell1.setCellStyle(bodyCellStyle);
 
             HSSFCell cell2 = row.createCell(startColIndex + 2);
-            cell2.setCellValue(datasource.get(i - 2).getDocumentDate());
+            cell2.setCellValue(datasource.get(i - 2).getPaymenttype().getCode());
+            cell2.setCellStyle(bodyCellStyle);
 
             HSSFCell cell3 = row.createCell(startColIndex + 3);
-            cell3.setCellValue(datasource.get(i - 2).getCompany());
-            cell3.setCellStyle(bodyCellStyle);
+            cell3.setCellValue(datasource.get(i - 2).getDocumentDate());
 
             HSSFCell cell4 = row.createCell(startColIndex + 4);
-            cell4.setCellValue(datasource.get(i - 2).getDescription());
+            cell4.setCellValue(datasource.get(i - 2).getRemark());
             cell4.setCellStyle(bodyCellStyle);
 
             HSSFCell cell5 = row.createCell(startColIndex + 5);

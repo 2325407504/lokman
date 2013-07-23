@@ -102,19 +102,19 @@ public class Layouter {
         cell0.setCellStyle(headerCellStyle);
 
         HSSFCell cell1 = rowHeader.createCell(startColIndex + 1);
-        cell1.setCellValue("Payment Type");
+        cell1.setCellValue("Employee");
         cell1.setCellStyle(headerCellStyle);
 
         HSSFCell cell2 = rowHeader.createCell(startColIndex + 2);
-        cell2.setCellValue("Document Date");
+        cell2.setCellValue("Payment Type");
         cell2.setCellStyle(headerCellStyle);
 
         HSSFCell cell3 = rowHeader.createCell(startColIndex + 3);
-        cell3.setCellValue("Company");
+        cell3.setCellValue("Document Date");
         cell3.setCellStyle(headerCellStyle);
 
         HSSFCell cell4 = rowHeader.createCell(startColIndex + 4);
-        cell4.setCellValue("Description");
+        cell4.setCellValue("Remark");
         cell4.setCellStyle(headerCellStyle);
 
         HSSFCell cell5 = rowHeader.createCell(startColIndex + 5);

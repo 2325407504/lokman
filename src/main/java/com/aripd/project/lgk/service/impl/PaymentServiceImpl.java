@@ -34,6 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aripd.account.domain.Account;
 import com.aripd.account.domain.Account_;
 import com.aripd.account.service.AccountService;
+import com.aripd.account.service.EmployeeService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesSortField;
@@ -57,6 +58,8 @@ public class PaymentServiceImpl implements PaymentService {
     private PaymentRepository repository;
     @Resource(name = "accountService")
     private AccountService accountService;
+    @Resource(name = "employeeService")
+    private EmployeeService employeeService;
     @Resource(name = "paymenttypeService")
     private PaymenttypeService paymenttypeService;
 
@@ -130,9 +133,8 @@ public class PaymentServiceImpl implements PaymentService {
 
         if ((search != null) && (!(search.isEmpty()))) {
             Predicate predicate1 = cb.like(account.get(Account_.username), "%" + search + "%");
-            Predicate predicate2 = cb.like(root.get(Payment_.company), "%" + search + "%");
-            Predicate predicate3 = cb.like(root.get(Payment_.description), "%" + search + "%");
-            Predicate predicate = cb.or(predicate1, predicate2, predicate3);
+            Predicate predicate2 = cb.like(root.get(Payment_.remark), "%" + search + "%");
+            Predicate predicate = cb.or(predicate1, predicate2);
             predicateList.add(predicate);
         }
 
@@ -180,7 +182,7 @@ public class PaymentServiceImpl implements PaymentService {
         Predicate predicate_ = cb.equal(root.get(Payment_.account), account);
 
         if ((search != null) && (!(search.isEmpty()))) {
-            Predicate predicate1 = cb.like(root.get(Payment_.description), "%" + search + "%");
+            Predicate predicate1 = cb.like(root.get(Payment_.remark), "%" + search + "%");
             Predicate predicate = cb.and(predicate_, predicate1);
             predicateList.add(predicate);
         } else {
@@ -235,19 +237,19 @@ public class PaymentServiceImpl implements PaymentService {
             Row row = worksheet.getRow(i);
 
             String username = row.getCell(0).getStringCellValue();
-            String paymenttype_code = row.getCell(1).getStringCellValue();
-            Date documentDate = row.getCell(2).getDateCellValue();
-            String company = row.getCell(3).getStringCellValue();
-            String description = row.getCell(4).getStringCellValue();
-            BigDecimal amount = new BigDecimal(row.getCell(5).getNumericCellValue(), MathContext.DECIMAL64);
+            String tckimlikno = row.getCell(1).getStringCellValue();
+            String paymenttype_code = row.getCell(2).getStringCellValue();
+            Date documentDate = row.getCell(3).getDateCellValue();
+            String company = row.getCell(4).getStringCellValue();
+            String remark = row.getCell(5).getStringCellValue();
+            BigDecimal amount = new BigDecimal(row.getCell(6).getNumericCellValue(), MathContext.DECIMAL64);
 
             payment = new Payment();
-            payment.setSubmitted(true);
             payment.setAccount(accountService.findOneByUsername(username));
+            payment.setEmployee(employeeService.findOneByTckimlikno(tckimlikno));
             payment.setPaymenttype(paymenttypeService.findOneByCode(paymenttype_code));
             payment.setDocumentDate(documentDate);
-            payment.setCompany(company);
-            payment.setDescription(description);
+            payment.setRemark(remark);
             payment.setAmount(amount);
 
             payments.add(payment);
