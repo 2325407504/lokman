@@ -8,6 +8,8 @@
 <c:if test="${uri == account_list}"><c:set var="account_class" value="active" /></c:if>
 <spring:url value="/backup/list" var="backup_list" />
 <c:if test="${uri == backup_list}"><c:set var="backup_class" value="active" /></c:if>
+<spring:url value="/memberlog/list" var="memberlog_list" />
+<c:if test="${uri == memberlog_list}"><c:set var="memberlog_class" value="active" /></c:if>
 
 <spring:url value="/proc/list" var="proc_list" />
 <c:if test="${uri == proc_list}"><c:set var="proc_class" value="active" /></c:if>
@@ -15,6 +17,8 @@
 <c:if test="${uri == customer_list}"><c:set var="customer_class" value="active" /></c:if>
 <spring:url value="/expensetype/list" var="expensetype_list" />
 <c:if test="${uri == expensetype_list}"><c:set var="expensetype_class" value="active" /></c:if>
+<spring:url value="/paymenttype/list" var="paymenttype_list" />
+<c:if test="${uri == paymenttype_list}"><c:set var="paymenttype_class" value="active" /></c:if>
 <spring:url value="/employeeleavetype/list" var="employeeleavetype_list" />
 <c:if test="${uri == employeeleavetype_list}"><c:set var="employeeleavetype_class" value="active" /></c:if>
 <spring:url value="/employeeworkinghourtype/list" var="employeeworkinghourtype_list" />
@@ -51,6 +55,8 @@
 
 <spring:url value="/expense/list" var="expense_list" />
 <c:if test="${uri == expense_list}"><c:set var="expense_class" value="active" /></c:if>
+<spring:url value="/payment/list" var="payment_list" />
+<c:if test="${uri == payment_list}"><c:set var="payment_class" value="active" /></c:if>
 <spring:url value="/employee/list" var="employee_list" />
 <c:if test="${uri == employee_list}"><c:set var="employee_class" value="active" /></c:if>
 <spring:url value="/employeeleave/list" var="employeeleave_list" />
@@ -83,6 +89,7 @@
                             <li class="${role_class}"><a href="${role_list}"><spring:message code="Roles" /></a></li>
                             <li class="${account_class}"><a href="${account_list}"><spring:message code="Accounts" /></a></li>
                             <li class="${backup_class}"><a href="${backup_list}"><spring:message code="Backup" /></a></li>
+                            <li class="${memberlog_class}"><a href="${memberlog_list}"><spring:message code="Memberlogs" /></a></li>
                             </sec:authorize>
                     </ul>
                 </td>
@@ -92,6 +99,7 @@
                         <li class="${proc_class}"><a href="${proc_list}"><spring:message code="Procedures" /></a></li>
                         <li class="${customer_class}"><a href="${customer_list}"><spring:message code="Customers" /></a></li>
                         <li class="${expensetype_class}"><a href="${expensetype_list}"><spring:message code="Expensetypes" /></a></li>
+                        <li class="${paymenttype_class}"><a href="${paymenttype_list}"><spring:message code="Paymenttypes" /></a></li>
                         <li class="${employeeleavetype_class}"><a href="${employeeleavetype_list}"><spring:message code="Employee Leave Types" /></a></li>
                         <li class="${employeeworkinghourtype_class}"><a href="${employeeworkinghourtype_list}"><spring:message code="Employee Working Hour Types" /></a></li>
                         <li class="${startingpoint_class}"><a href="${startingpoint_list}"><spring:message code="Starting Points" /></a></li>
@@ -120,6 +128,7 @@
                         <sec:authorize access="hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_ADMIN')">
                             <li class="nav-header"><spring:message code="Personnel" /></li>
                             <li class="${expense_class}"><a href="${expense_list}"><spring:message code="Expenses" /></a></li>
+                            <li class="${payment_class}"><a href="${payment_list}"><spring:message code="Payments" /></a></li>
                             <li class="${employee_class}"><a href="${employee_list}"><spring:message code="Employees" /></a></li>
                             <li class="${employeeleave_class}"><a href="${employeeleave_list}"><spring:message code="Employee Leaves" /></a></li>
                             <li class="${employeeworkinghour_class}"><a href="${employeeworkinghour_list}"><spring:message code="Employee Working Hours" /></a></li>

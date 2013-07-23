@@ -7,6 +7,7 @@
 <jsp:include page="/WEB-INF/views/subnav.jsp" >
     <jsp:param name="title" value="Expensetypes" />
     <jsp:param name="property" value="expensetype" />
+    <jsp:param name="new" value="true" />
     <jsp:param name="active" value="form" />
 </jsp:include>
 

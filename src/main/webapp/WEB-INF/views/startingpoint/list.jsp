@@ -7,6 +7,7 @@
 <jsp:include page="/WEB-INF/views/subnav.jsp" >
     <jsp:param name="title" value="Starting Points" />
     <jsp:param name="property" value="startingpoint" />
+    <jsp:param name="new" value="true" />
     <jsp:param name="active" value="list" />
 </jsp:include>
 

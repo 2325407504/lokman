@@ -1,50 +1,85 @@
 package com.aripd.common.interceptor;
 
+import com.aripd.account.domain.Account;
+import com.aripd.account.domain.Memberlog;
+import com.aripd.account.service.AccountService;
+import com.aripd.account.service.MemberlogService;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class ExecuteTimeInterceptor extends HandlerInterceptorAdapter {
 
-	private static final Logger logger = Logger
-			.getLogger(ExecuteTimeInterceptor.class);
+    private static final Logger logger = Logger.getLogger(ExecuteTimeInterceptor.class);
+    @PersistenceContext
+    private EntityManager em;
+    @Autowired
+    private MemberlogService memberlogService;
+    @Autowired
+    private AccountService accountService;
 
-	// before the actual handler will be executed
-	public boolean preHandle(HttpServletRequest request,
-			HttpServletResponse response, Object handler) throws Exception {
+    // before the actual handler will be executed
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-		long startTime = System.currentTimeMillis();
-		request.setAttribute("startTime", startTime);
+        long startTime = System.currentTimeMillis();
+        request.setAttribute("startTime", startTime);
 
-		return true;
-	}
+        return true;
+    }
 
-	// after the handler is executed
-	public void postHandle(HttpServletRequest request,
-			HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
+    // after the handler is executed
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 
-		long startTime = (Long) request.getAttribute("startTime");
+        long startTime = (Long) request.getAttribute("startTime");
 
-		long endTime = System.currentTimeMillis();
+        long endTime = System.currentTimeMillis();
 
-		long executeTime = endTime - startTime;
+        long executeTime = endTime - startTime;
 
-		// modified the exisitng modelAndView
-		// TODO datatables kullanırken ve ajax da hata veriyor ve sayfa yüklenirken sorun çıkabiliyor
-		//modelAndView.addObject("executeTime", executeTime);
+        // log it
+        if (logger.isDebugEnabled()) {
+            logger.debug("[" + handler + "] executeTime : " + executeTime + "ms");
+        }
 
-		// log it
-		if (logger.isDebugEnabled()) {
-			logger.debug("[" + handler + "] executeTime : " + executeTime
-					+ "ms");
-		}
-		
-		System.out.println("executeTime : " + executeTime + "ms");
+        // modified the existing modelAndView
+        String type;
+        if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+            type = "ajax";
+            System.out.println("Ajax Execution Time : " + executeTime + "ms");
+        } else {
+            type = "page";
+            //modelAndView.addObject("executeTime", executeTime);
+            System.out.println("Page Execution Time : " + executeTime + "ms");
+        }
 
-	}
+        /**
+         * Save the log to the database
+         */
+        SecurityContext context = (SecurityContext) request.getSession().getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
+        if (context != null) {
+            Authentication authentication = context.getAuthentication();
+            Account account = accountService.findOneByUsername(authentication.getName());
 
+            Memberlog memberlog = new Memberlog();
+            memberlog.setAccount(account);
+            memberlog.setSessionId(request.getSession().getId());
+            memberlog.setIpAddress(request.getRemoteAddr());
+            memberlog.setCreatedAt(new DateTime(startTime));
+            memberlog.setUpdatedAt(new DateTime(endTime));
+            memberlog.setExecuteTime(executeTime);
+            memberlog.setUrl(request.getRequestURL().toString());
+            memberlog.setType(type);
+            memberlogService.save(memberlog);
+        }
+    }
 }

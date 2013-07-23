@@ -7,6 +7,7 @@
 <jsp:include page="/WEB-INF/views/subnav.jsp" >
     <jsp:param name="title" value="Electricmeters" />
     <jsp:param name="property" value="electricmeter" />
+    <jsp:param name="new" value="true" />
     <jsp:param name="active" value="list" />
 </jsp:include>
 

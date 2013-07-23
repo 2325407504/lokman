@@ -7,6 +7,7 @@
 <jsp:include page="/WEB-INF/views/subnav.jsp" >
     <jsp:param name="title" value="Subcontractors" />
     <jsp:param name="property" value="subcontractor" />
+    <jsp:param name="new" value="true" />
     <jsp:param name="active" value="form" />
 </jsp:include>
 

@@ -7,6 +7,7 @@
 <jsp:include page="/WEB-INF/views/subnav.jsp" >
     <jsp:param name="title" value="Accounts" />
     <jsp:param name="property" value="account" />
+    <jsp:param name="new" value="true" />
     <jsp:param name="active" value="show" />
 </jsp:include>
 

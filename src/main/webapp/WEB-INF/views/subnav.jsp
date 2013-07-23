@@ -20,16 +20,20 @@
 <spring:url var="list" value="/{property}/list">
     <spring:param name="property" value="${param.property}" />
 </spring:url>
-<spring:url var="new" value="/{property}/new">
-    <spring:param name="property" value="${param.property}" />
-</spring:url>
 
 <ul class="nav nav-tabs">
     <li class=""><a href="${home}"><i class="icon-home"></i></a></li>
-    <li class="${list_class}"><a href="${list}"><spring:message code="${param.title}" text="${param.title}" /></a></li>
-    <li class="${new_class}">
-        <a href="${new}"><spring:message code="New Entry" /></a>
+    <li class="${list_class}">
+        <a href="${list}"><spring:message code="${param.title}" text="${param.title}" /></a>
     </li>
+    <c:if test="${param.new}">
+        <spring:url var="new" value="/{property}/new">
+            <spring:param name="property" value="${param.property}" />
+        </spring:url>
+        <li class="${new_class}">
+            <a href="${new}"><spring:message code="New Entry" /></a>
+        </li>
+    </c:if>
     <c:if test="${param.import}">
         <c:if test="${param.active == 'import'}"><c:set var="import_class" value="active" /></c:if>
         <spring:url var="import" value="/{property}/import">

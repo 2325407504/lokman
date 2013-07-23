@@ -7,11 +7,12 @@
 <jsp:include page="/WEB-INF/views/subnav.jsp" >
     <jsp:param name="title" value="Productions" />
     <jsp:param name="property" value="userproduction" />
+    <jsp:param name="new" value="true" />
     <jsp:param name="submit" value="true" />
     <jsp:param name="active" value="list" />
 </jsp:include>
 
-<aripd:datatables datasource="/userproduction/get" id="productions" dataUrlShow="/userproduction/show" dataUrlEdit="/userproduction/edit" sortingColumn="2" sortingDirection="desc">
+<aripd:datatables datasource="/userproduction/get" id="productions" dataUrlShow="/userproduction/show" dataUrlEdit="/userproduction/edit">
     <aripd:datatablescolumn label="Action" field="id"/>
     <aripd:datatablescolumn label="Shift" field="shiftdate"/>
     <aripd:datatablescolumn label="Feed" field="feed"/>

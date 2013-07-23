@@ -4,11 +4,11 @@ import java.io.File;
 
 public interface BackupService {
 
-    void backup();
+    public void backup();
 
-    void restore(String file);
+    public void restore(String file);
 
-    void delete(String file);
+    public void delete(String file);
 
-    File[] findAll();
+    public File[] findAll();
 }

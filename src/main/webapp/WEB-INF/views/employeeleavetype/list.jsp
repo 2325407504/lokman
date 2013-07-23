@@ -7,6 +7,7 @@
 <jsp:include page="/WEB-INF/views/subnav.jsp" >
     <jsp:param name="title" value="Employee Leave Types" />
     <jsp:param name="property" value="employeeleavetype" />
+    <jsp:param name="new" value="true" />
     <jsp:param name="active" value="list" />
 </jsp:include>
 
