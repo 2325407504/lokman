@@ -45,12 +45,7 @@
     var end1 = $('[name=endingTime]');
 
     start1.datetimepicker({
-        showButtonPanel: false,
         maxDate: new Date(),
-        showMinute: false,
-        hourGrid: 8,
-        stepHour: 8,
-        hourText: "Vardiya",
         onClose: function(dateText, inst) {
             if (end1.val() != '') {
                 var testStartDate = start1.datetimepicker('getDate');
@@ -67,12 +62,7 @@
         }
     });
     end1.datetimepicker({
-        showButtonPanel: false,
         maxDate: new Date(),
-        showMinute: false,
-        hourGrid: 8,
-        stepHour: 8,
-        hourText: "Vardiya",
         onClose: function(dateText, inst) {
             if (start1.val() != '') {
                 var testStartDate = start1.datetimepicker('getDate');
@@ -88,6 +78,7 @@
             start1.datetimepicker('option', 'maxDate', end1.datetimepicker('getDate'));
         }
     });
+
 </script>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />
