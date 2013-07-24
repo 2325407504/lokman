@@ -32,6 +32,12 @@ import org.springframework.validation.annotation.Validated;
 @RequestMapping("/employee")
 public class EmployeeController {
 
+    private static final String PATH = "/employee";
+    private static final String LIST_VIEW = PATH + "/list";
+    private static final String SHOW_VIEW = PATH + "/show";
+    private static final String FORM_VIEW = PATH + "/form";
+    private static final String IMPORT_VIEW = PATH + "/import";
+    private static final String REPORT_VIEW = PATH + "/report";
     @Resource(name = "employeeService")
     private EmployeeService employeeService;
     @Resource(name = "employeeleaveService")
@@ -46,25 +52,25 @@ public class EmployeeController {
 
     @RequestMapping(value = "/list")
     public String listAction(Model model) {
-        return "/employee/list";
+        return LIST_VIEW;
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
     public String showAction(@PathVariable Long id, Model model) {
         model.addAttribute("employeeAttribute", employeeService.findOne(id));
-        return "/employee/show";
+        return SHOW_VIEW;
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
         model.addAttribute("employeeAttribute", new Employee());
-        return "/employee/form";
+        return FORM_VIEW;
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
         model.addAttribute("employeeAttribute", employeeService.findOne(id));
-        return "/employee/form";
+        return FORM_VIEW;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -75,7 +81,7 @@ public class EmployeeController {
             Model model) {
 
         if (result.hasErrors()) {
-            return "/employee/form";
+            return FORM_VIEW;
         }
 
         Employee employee = employeeService.save(formData);
@@ -88,24 +94,24 @@ public class EmployeeController {
             @RequestParam(value = "id", required = true) Long id) {
         employeeService.delete(id);
         redirectAttributes.addFlashAttribute("message", "message.completed.delete");
-        return "redirect:/employee/list";
+        return "redirect:" + LIST_VIEW;
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public String reportAction() {
-        return "/employee/report";
+        return REPORT_VIEW;
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.POST)
     public String reportAction(HttpServletResponse response) {
         employeeService.exportData(response);
-        return "redirect:/employee/report";
+        return "redirect:" + REPORT_VIEW;
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
         model.addAttribute("employeeImportAttribute", new FileUploadBean());
-        return "/employee/import";
+        return IMPORT_VIEW;
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
@@ -115,11 +121,11 @@ public class EmployeeController {
             BindingResult result) {
 
         if (result.hasErrors()) {
-            return "/employee/import";
+            return IMPORT_VIEW;
         }
 
         employeeService.importData(formData.getFile());
         redirectAttributes.addFlashAttribute("message", "message.completed.import");
-        return "redirect:/employee/list";
+        return "redirect:" + LIST_VIEW;
     }
 }

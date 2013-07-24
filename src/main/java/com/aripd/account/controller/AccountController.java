@@ -37,6 +37,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/account")
 public class AccountController {
 
+    private static final String PATH = "/account";
+    private static final String LIST_VIEW = PATH + "/list";
+    private static final String SHOW_VIEW = PATH + "/show";
+    private static final String FORM_VIEW = PATH + "/form";
     @Resource(name = "accountService")
     private AccountService accountService;
     @Resource(name = "roleService")
@@ -77,13 +81,13 @@ public class AccountController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listAction(Model model) {
-        return "account/list";
+        return LIST_VIEW;
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
     public String showAction(@PathVariable Long id, Model model) {
         model.addAttribute("accountAttribute", accountService.findOne(id));
-        return "account/show";
+        return SHOW_VIEW;
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
@@ -92,7 +96,7 @@ public class AccountController {
         model.addAttribute("roles", roleService.findAll());
         model.addAttribute("employees", employeeService.findAll());
         model.addAttribute("accountAttribute", new Account());
-        return "account/form";
+        return FORM_VIEW;
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
@@ -101,7 +105,7 @@ public class AccountController {
         model.addAttribute("roles", roleService.findAll());
         model.addAttribute("employees", employeeService.findAll());
         model.addAttribute("accountAttribute", accountService.findOne(id));
-        return "account/form";
+        return FORM_VIEW;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -115,7 +119,7 @@ public class AccountController {
             model.addAttribute("regions", regionService.findAll());
             model.addAttribute("roles", roleService.findAll());
             model.addAttribute("employees", employeeService.findAll());
-            return "/account/form";
+            return FORM_VIEW;
         }
 
         if (formData.getId() != null) {
@@ -137,6 +141,6 @@ public class AccountController {
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public String delete(@RequestParam(value = "id", required = true) Long id) {
         accountService.delete(id);
-        return "redirect:/account/list";
+        return "redirect:" + LIST_VIEW;
     }
 }

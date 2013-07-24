@@ -29,6 +29,9 @@ import com.aripd.common.dto.ControllerUtils;
 @RequestMapping("/memberlog")
 public class MemberlogController {
 
+    private static final String PATH = "/memberlog";
+    private static final String LIST_VIEW = PATH + "/list";
+    private static final String REPORT_VIEW = PATH + "/report";
     @Resource(name = "memberlogService")
     private MemberlogService memberlogService;
     @Resource(name = "accountService")
@@ -43,14 +46,14 @@ public class MemberlogController {
 
     @RequestMapping(value = "/list")
     public String listAction(Model model) {
-        return "/memberlog/list";
+        return LIST_VIEW;
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public String reportAction(Model model) {
         model.addAttribute("accounts", accountService.findAll());
         model.addAttribute("memberlogFilterByIntervalForm", new MemberlogFilterByIntervalForm());
-        return "/memberlog/report";
+        return REPORT_VIEW;
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.POST)
@@ -63,10 +66,10 @@ public class MemberlogController {
 
         if (result.hasErrors()) {
             model.addAttribute("accounts", accountService.findAll());
-            return "/memberlog/report";
+            return REPORT_VIEW;
         }
 
         memberlogService.export(response, formData);
-        return "redirect:/memberlog/report";
+        return "redirect:" + REPORT_VIEW;
     }
 }

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.aripd.account.domain.Account;
 import com.aripd.account.model.ProfileForm;
 import com.aripd.account.service.AccountService;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @PreAuthorize("isFullyAuthenticated()")
@@ -25,17 +24,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/profile")
 public class ProfileController {
 
+    private static final String PATH = "/profile";
+    private static final String SHOW_VIEW = PATH + "/show";
+    private static final String FORM_VIEW = PATH + "/form";
     @Resource(name = "accountService")
     private AccountService accountService;
-    @Resource(name = "userDetailsService")
-    private UserDetailsService userDetailsService;
 
     @RequestMapping(value = "/show", method = RequestMethod.GET)
     public String showAction(Principal principal, Model model) {
         Account account = accountService.findOneByUsername(principal.getName());
 
         model.addAttribute("profileAttribute", account);
-        return "profile/show";
+        return SHOW_VIEW;
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -47,9 +47,9 @@ public class ProfileController {
         ProfileForm profileForm = new ProfileForm();
         profileForm.setEmail(account.getEmail());
         profileForm.setPassword(null);
-        
+
         model.addAttribute("profileAttribute", profileForm);
-        return "profile/form";
+        return FORM_VIEW;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -60,7 +60,7 @@ public class ProfileController {
             BindingResult result) {
 
         if (result.hasErrors()) {
-            return "/profile/form";
+            return FORM_VIEW;
         }
 
         Account account = accountService.findOneByUsername(principal.getName());
@@ -74,6 +74,6 @@ public class ProfileController {
 
         accountService.save(account);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
-        return "redirect:/profile/show";
+        return "redirect:" + SHOW_VIEW;
     }
 }

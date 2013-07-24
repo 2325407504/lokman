@@ -30,6 +30,10 @@ import com.aripd.common.dto.ControllerUtils;
 public class RoleController {
 
     protected static Logger logger = Logger.getLogger(RoleController.class);
+    private static final String PATH = "/role";
+    private static final String LIST_VIEW = PATH + "/list";
+    private static final String SHOW_VIEW = PATH + "/show";
+    private static final String FORM_VIEW = PATH + "/form";
     @Resource(name = "roleService")
     private RoleService roleService;
 
@@ -42,28 +46,28 @@ public class RoleController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listAction(Model model) {
-        return "role/list";
+        return LIST_VIEW;
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
     public String showAction(@PathVariable Long id, Model model) {
-        logger.debug("Received request to show existing record");
+        logger.debug("Received request to show a record");
         model.addAttribute("roleAttribute", roleService.findOne(id));
-        return "role/show";
+        return SHOW_VIEW;
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-        logger.debug("Received request to show add new record");
+        logger.debug("Received request to add a new record");
         model.addAttribute("roleAttribute", new Role());
-        return "role/form";
+        return FORM_VIEW;
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
-        logger.debug("Received request to show edit existing record");
+        logger.debug("Received request to edit an existing record");
         model.addAttribute("roleAttribute", roleService.findOne(id));
-        return "role/form";
+        return FORM_VIEW;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -73,10 +77,10 @@ public class RoleController {
             BindingResult result) {
         if (result.hasErrors()) {
             logger.error(result);
-            return "/role/form";
+            return FORM_VIEW;
         }
 
-        logger.debug("Received request to save existing record");
+        logger.debug("Received request to save a record");
         Role role = roleService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/role/show/" + role.getId();
@@ -85,9 +89,9 @@ public class RoleController {
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public String delete(final RedirectAttributes redirectAttributes,
             @RequestParam(value = "id", required = true) Long id) {
-        logger.debug("Received request to delete existing record");
+        logger.debug("Received request to delete an existing record");
         roleService.delete(id);
         redirectAttributes.addFlashAttribute("message", "message.completed.delete");
-        return "redirect:/role/list";
+        return "redirect:" + LIST_VIEW;
     }
 }
