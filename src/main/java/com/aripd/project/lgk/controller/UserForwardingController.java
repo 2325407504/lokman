@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aripd.account.domain.Account;
-import com.aripd.account.service.AccountService;
+import com.aripd.member.domain.Member;
+import com.aripd.member.service.MemberService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesParam;
@@ -43,8 +43,8 @@ public class UserForwardingController {
     private QuotaService quotaService;
     @Resource(name = "subcontractorService")
     private SubcontractorService subcontractorService;
-    @Resource(name = "accountService")
-    private AccountService accountService;
+    @Resource(name = "memberService")
+    private MemberService memberService;
     @Resource(name = "startingpointService")
     private StartingpointService startingpointService;
     @Resource(name = "endingpointService")
@@ -71,8 +71,8 @@ public class UserForwardingController {
             @PathVariable Long id,
             Model model) {
 
-        Account account = accountService.findOneByUsername(principal.getName());
-        Forwarding forwarding = forwardingService.findOneByAccountAndId(account, id);
+        Member member = memberService.findOneByUsername(principal.getName());
+        Forwarding forwarding = forwardingService.findOneByMemberAndId(member, id);
 
         if (forwarding instanceof Forwarding == false) {
             redirectAttributes.addFlashAttribute("message", "message.record.not.access");
@@ -87,10 +87,10 @@ public class UserForwardingController {
     public String newAction(
             Principal principal,
             Model model) {
-        Account account = accountService.findOneByUsername(principal.getName());
+        Member member = memberService.findOneByUsername(principal.getName());
 
         model.addAttribute("quotas", quotaService.findAll());
-        model.addAttribute("subcontractors", subcontractorService.findByRegion(account.getRegion()));
+        model.addAttribute("subcontractors", subcontractorService.findByRegion(member.getEmployee().getRegion()));
         model.addAttribute("startingpoints", startingpointService.findAll());
         model.addAttribute("endingpoints", endingpointService.findAll());
         model.addAttribute("userforwardingAttribute", new Forwarding());
@@ -104,8 +104,8 @@ public class UserForwardingController {
             @PathVariable Long id,
             Model model) {
 
-        Account account = accountService.findOneByUsername(principal.getName());
-        Forwarding forwarding = forwardingService.findOneByAccountAndId(account, id);
+        Member member = memberService.findOneByUsername(principal.getName());
+        Forwarding forwarding = forwardingService.findOneByMemberAndId(member, id);
 
         if (forwarding.isSubmitted()) {
             redirectAttributes.addFlashAttribute("message", "message.record.not.editable");
@@ -114,7 +114,7 @@ public class UserForwardingController {
 
         model.addAttribute("useruatfAttribute", new Uatf());
         model.addAttribute("quotas", quotaService.findAll());
-        model.addAttribute("subcontractors", subcontractorService.findByRegion(account.getRegion()));
+        model.addAttribute("subcontractors", subcontractorService.findByRegion(member.getEmployee().getRegion()));
         model.addAttribute("startingpoints", startingpointService.findAll());
         model.addAttribute("endingpoints", endingpointService.findAll());
         model.addAttribute("userforwardingAttribute", forwarding);
@@ -129,17 +129,17 @@ public class UserForwardingController {
             BindingResult result,
             Model model) {
 
-        Account account = accountService.findOneByUsername(principal.getName());
+        Member member = memberService.findOneByUsername(principal.getName());
 
         if (result.hasErrors()) {
             model.addAttribute("quotas", quotaService.findAll());
-            model.addAttribute("subcontractors", subcontractorService.findByRegion(account.getRegion()));
+            model.addAttribute("subcontractors", subcontractorService.findByRegion(member.getEmployee().getRegion()));
             model.addAttribute("startingpoints", startingpointService.findAll());
             model.addAttribute("endingpoints", endingpointService.findAll());
             return "/userforwarding/form";
         }
 
-        formData.setAccount(account);
+        formData.setMember(member);
 
         Forwarding forwarding = forwardingService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
@@ -152,8 +152,8 @@ public class UserForwardingController {
             Principal principal,
             @PathVariable Long id) {
 
-        Account account = accountService.findOneByUsername(principal.getName());
-        Forwarding forwarding = forwardingService.findOneByAccountAndId(account, id);
+        Member member = memberService.findOneByUsername(principal.getName());
+        Forwarding forwarding = forwardingService.findOneByMemberAndId(member, id);
 
         if (forwarding instanceof Forwarding == false) {
             redirectAttributes.addFlashAttribute("message", "message.record.not.access");
@@ -171,8 +171,8 @@ public class UserForwardingController {
             Principal principal,
             @RequestParam(value = "id", required = true) Long id) {
 
-        Account account = accountService.findOneByUsername(principal.getName());
-        Forwarding forwarding = forwardingService.findOneByAccountAndId(account, id);
+        Member member = memberService.findOneByUsername(principal.getName());
+        Forwarding forwarding = forwardingService.findOneByMemberAndId(member, id);
 
         if (forwarding instanceof Forwarding == false) {
             redirectAttributes.addFlashAttribute("message", "message.record.not.access");

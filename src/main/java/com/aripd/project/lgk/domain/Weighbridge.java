@@ -1,6 +1,6 @@
 package com.aripd.project.lgk.domain;
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.common.util.ARIPDJodaDateTimeSerializer;
 import java.util.List;
@@ -28,7 +28,7 @@ public class Weighbridge extends BaseEntity {
     private boolean submitted = false;
     @ManyToOne
     @JoinColumn(nullable = false, insertable = true, updatable = true)
-    private Account account;
+    private Member member;
     private String clerk;
     @NotBlank
     private String plate;
@@ -69,12 +69,12 @@ public class Weighbridge extends BaseEntity {
         this.submitted = submitted;
     }
 
-    public Account getAccount() {
-        return account;
+    public Member getMember() {
+        return member;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public String getClerk() {

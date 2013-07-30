@@ -16,7 +16,7 @@
 
 <aripd:datatables datasource="/employeeleave/get" id="employeeleaves" dataUrlShow="/employeeleave/show" dataUrlEdit="/employeeleave/edit">
     <aripd:datatablescolumn label="Action" field="id"/>
-    <aripd:datatablescolumn label="Fullname" field="account.employee.fullname"/>
+    <aripd:datatablescolumn label="Member" field="member.employee.fullname"/>
     <aripd:datatablescolumn label="Employee Leave Type" field="employeeleavetype.name"/>
     <aripd:datatablescolumn label="Starting Date" field="startingDate"/>
     <aripd:datatablescolumn label="Ending Date" field="endingDate"/>

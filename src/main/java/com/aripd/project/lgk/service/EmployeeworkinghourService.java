@@ -1,12 +1,12 @@
 package com.aripd.project.lgk.service;
 
-import com.aripd.account.domain.Account;
 import java.security.Principal;
 
 import javax.servlet.http.HttpServletResponse;
 
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.project.lgk.domain.Employee;
 import com.aripd.project.lgk.domain.Employeeworkinghour;
 import com.aripd.project.lgk.model.EmployeeworkinghourFilterByIntervalForm;
 import java.util.List;
@@ -16,7 +16,7 @@ public interface EmployeeworkinghourService {
 
     public Employeeworkinghour findOne(Long id);
 
-    public List<Employeeworkinghour> findByAccount(Account account);
+    public List<Employeeworkinghour> findByEmployee(Employee employee);
 
     public Employeeworkinghour save(Employeeworkinghour employeeworkinghour);
 
@@ -28,7 +28,7 @@ public interface EmployeeworkinghourService {
 
     public DatatablesResultSet<Employeeworkinghour> getRecords(Principal principal, DatatablesCriteria criteria);
 
-    public void importData(MultipartFile file);
+    public void importData(MultipartFile file, Principal principal);
 
     public void export(HttpServletResponse response, EmployeeworkinghourFilterByIntervalForm formData);
 

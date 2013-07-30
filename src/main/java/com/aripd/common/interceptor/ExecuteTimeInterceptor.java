@@ -1,9 +1,9 @@
 package com.aripd.common.interceptor;
 
-import com.aripd.account.domain.Account;
-import com.aripd.account.domain.Memberlog;
-import com.aripd.account.service.AccountService;
-import com.aripd.account.service.MemberlogService;
+import com.aripd.member.domain.Member;
+import com.aripd.member.domain.Memberlog;
+import com.aripd.member.service.MemberService;
+import com.aripd.member.service.MemberlogService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +26,7 @@ public class ExecuteTimeInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private MemberlogService memberlogService;
     @Autowired
-    private AccountService accountService;
+    private MemberService memberService;
 
     // before the actual handler will be executed
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -68,10 +68,10 @@ public class ExecuteTimeInterceptor extends HandlerInterceptorAdapter {
         SecurityContext context = (SecurityContext) request.getSession().getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
         if (context != null) {
             Authentication authentication = context.getAuthentication();
-            Account account = accountService.findOneByUsername(authentication.getName());
+            Member member = memberService.findOneByUsername(authentication.getName());
 
             Memberlog memberlog = new Memberlog();
-            memberlog.setAccount(account);
+            memberlog.setMember(member);
             memberlog.setSessionId(request.getSession().getId());
             memberlog.setIpAddress(request.getRemoteAddr());
             memberlog.setCreatedAt(new DateTime(startTime));

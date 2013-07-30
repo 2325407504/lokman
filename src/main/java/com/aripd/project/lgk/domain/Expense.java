@@ -8,7 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import com.aripd.common.entity.BaseEntity;
 import java.util.Date;
 import javax.persistence.Temporal;
@@ -26,7 +26,7 @@ public class Expense extends BaseEntity {
     private boolean submitted = false;
     @ManyToOne
     @JoinColumn(nullable = false, insertable = true, updatable = true)
-    private Account account;
+    private Member member;
     @ManyToOne
     private Expensetype expensetype;
     @NotNull
@@ -54,12 +54,12 @@ public class Expense extends BaseEntity {
         this.submitted = submitted;
     }
 
-    public Account getAccount() {
-        return account;
+    public Member getMember() {
+        return member;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public Expensetype getExpensetype() {
@@ -78,6 +78,14 @@ public class Expense extends BaseEntity {
         this.documentDate = documentDate;
     }
 
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -92,13 +100,5 @@ public class Expense extends BaseEntity {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
-    }
-
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
     }
 }

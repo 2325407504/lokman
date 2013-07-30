@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aripd.account.service.AccountService;
+import com.aripd.member.service.MemberService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesParam;
@@ -36,8 +36,8 @@ public class ExpenseController {
 
     @Resource(name = "expenseService")
     private ExpenseService expenseService;
-    @Resource(name = "accountService")
-    private AccountService accountService;
+    @Resource(name = "memberService")
+    private MemberService memberService;
     @Resource(name = "expensetypeService")
     private ExpensetypeService expensetypeService;
 
@@ -61,7 +61,7 @@ public class ExpenseController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("members", memberService.findAll());
         model.addAttribute("expensetypes", expensetypeService.findAll());
         model.addAttribute("expenseAttribute", new Expense());
         return "/expense/form";
@@ -69,7 +69,7 @@ public class ExpenseController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
-        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("members", memberService.findAll());
         model.addAttribute("expensetypes", expensetypeService.findAll());
         model.addAttribute("expenseAttribute", expenseService.findOne(id));
         return "/expense/form";
@@ -83,7 +83,7 @@ public class ExpenseController {
             Model model) {
 
         if (result.hasErrors()) {
-            model.addAttribute("accounts", accountService.findAll());
+            model.addAttribute("members", memberService.findAll());
             model.addAttribute("expensetypes", expensetypeService.findAll());
             return "/expense/form";
         }
@@ -112,7 +112,7 @@ public class ExpenseController {
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public String reportAction(Model model) {
-        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("members", memberService.findAll());
         model.addAttribute("expenseFilterByIntervalForm", new ExpenseFilterByIntervalForm());
         return "/expense/report";
     }
@@ -126,11 +126,11 @@ public class ExpenseController {
             Model model) {
 
         if (result.hasErrors()) {
-            model.addAttribute("accounts", accountService.findAll());
+            model.addAttribute("members", memberService.findAll());
             return "/expense/report";
         }
 
-        expenseService.exportByInterval(response, formData.getStartingDate(), formData.getEndingDate(), formData.getAccount().getId());
+        expenseService.export(response, formData.getStartingDate(), formData.getEndingDate(), formData.getEmployee().getMember().getId());
         return "redirect:/expense/report";
     }
 

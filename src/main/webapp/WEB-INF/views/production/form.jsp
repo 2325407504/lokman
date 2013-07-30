@@ -26,9 +26,9 @@
                     <form:errors cssClass="text-error" path="submitted" />
                 </div>
                 <div class="control-group">
-                    <form:label path="account"><spring:message code="Account" /></form:label>
-                    <form:select multiple="false" path="account.id" items="${accounts}" itemLabel="employee.fullname" itemValue="id" />
-                    <form:errors cssClass="text-error" path="account" />
+                    <form:label path="member"><spring:message code="Member" /></form:label>
+                    <form:select multiple="false" path="member.id" items="${members}" itemLabel="employee.fullname" itemValue="id" />
+                    <form:errors cssClass="text-error" path="member" />
                 </div>
                 <div class="control-group">
                     <form:label path="shiftdate"><spring:message code="Shift" /></form:label>

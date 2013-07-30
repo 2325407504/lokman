@@ -4,7 +4,7 @@ import java.security.Principal;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Payment;
@@ -17,9 +17,9 @@ public interface PaymentService {
 
     public Payment findOne(Long id);
 
-    public Payment findOneByAccountAndId(Account account, Long id);
+    public Payment findOneByMemberAndId(Member member, Long id);
 
-    public List<Payment> findByInterval(Date starting, Date ending, Long account_id);
+    public List<Payment> findByInterval(Date starting, Date ending, Long member_id);
 
     public Payment save(Payment payment);
 
@@ -31,7 +31,7 @@ public interface PaymentService {
 
     public DatatablesResultSet<Payment> getRecords(Principal principal, DatatablesCriteria criteria);
 
-    public void importData(MultipartFile file);
+    public void importData(MultipartFile file, Principal principal);
 
     public void export(HttpServletResponse response, PaymentFilterByIntervalForm formData);
 }

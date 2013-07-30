@@ -1,6 +1,5 @@
 package com.aripd.project.lgk.controller;
 
-import com.aripd.account.domain.Account;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aripd.account.service.AccountService;
+import com.aripd.member.service.MemberService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesParam;
@@ -28,6 +27,7 @@ import com.aripd.project.lgk.domain.Employeeworkinghour;
 import com.aripd.project.lgk.model.EmployeeworkinghourFilterByIntervalForm;
 import com.aripd.project.lgk.service.EmployeeworkinghourService;
 import com.aripd.project.lgk.service.EmployeeworkinghourtypeService;
+import java.security.Principal;
 import org.springframework.validation.annotation.Validated;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_ADMIN')")
@@ -37,8 +37,8 @@ public class EmployeeworkinghourController {
 
     @Resource(name = "employeeworkinghourService")
     private EmployeeworkinghourService employeeworkinghourService;
-    @Resource(name = "accountService")
-    private AccountService accountService;
+    @Resource(name = "memberService")
+    private MemberService memberService;
     @Resource(name = "employeeworkinghourtypeService")
     private EmployeeworkinghourtypeService employeeworkinghourtypeService;
 
@@ -62,7 +62,7 @@ public class EmployeeworkinghourController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("members", memberService.findAll());
         model.addAttribute("employeeworkinghourtypes", employeeworkinghourtypeService.findAll());
         model.addAttribute("employeeworkinghourAttribute", new Employeeworkinghour());
         return "employeeworkinghour/form";
@@ -70,7 +70,7 @@ public class EmployeeworkinghourController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
-        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("members", memberService.findAll());
         model.addAttribute("employeeworkinghourtypes", employeeworkinghourtypeService.findAll());
         model.addAttribute("employeeworkinghourAttribute", employeeworkinghourService.findOne(id));
         return "employeeworkinghour/form";
@@ -84,7 +84,7 @@ public class EmployeeworkinghourController {
             Model model) {
 
         if (result.hasErrors()) {
-            model.addAttribute("accounts", accountService.findAll());
+            model.addAttribute("members", memberService.findAll());
             model.addAttribute("employeeworkinghourtypes", employeeworkinghourtypeService.findAll());
             return "/employeeworkinghour/form";
         }
@@ -113,7 +113,7 @@ public class EmployeeworkinghourController {
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public String reportAction(Model model) {
-        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("members", memberService.findAll());
         model.addAttribute("employeeworkinghourtypes", employeeworkinghourtypeService.findAll());
         model.addAttribute("employeeworkinghourFilterByIntervalForm", new EmployeeworkinghourFilterByIntervalForm());
         return "employeeworkinghour/report";
@@ -128,7 +128,7 @@ public class EmployeeworkinghourController {
             Model model) {
 
         if (result.hasErrors()) {
-            model.addAttribute("accounts", accountService.findAll());
+            model.addAttribute("members", memberService.findAll());
             model.addAttribute("employeeworkinghourtypes", employeeworkinghourtypeService.findAll());
             return "/employeeworkinghour/report";
         }
@@ -146,6 +146,7 @@ public class EmployeeworkinghourController {
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importData(
             final RedirectAttributes redirectAttributes,
+            Principal principal,
             @ModelAttribute("employeeworkinghourImportAttribute") @Validated FileUploadBean formData,
             BindingResult result) {
 
@@ -153,7 +154,7 @@ public class EmployeeworkinghourController {
             return "/employeeworkinghour/import";
         }
 
-        employeeworkinghourService.importData(formData.getFile());
+        employeeworkinghourService.importData(formData.getFile(), principal);
         redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/employeeworkinghour/list";
     }

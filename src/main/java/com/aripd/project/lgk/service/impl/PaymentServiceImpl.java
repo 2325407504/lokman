@@ -31,12 +31,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aripd.account.domain.Account;
-import com.aripd.account.domain.Account_;
-import com.aripd.account.domain.Employee;
-import com.aripd.account.domain.Employee_;
-import com.aripd.account.service.AccountService;
-import com.aripd.account.service.EmployeeService;
+import com.aripd.member.domain.Member;
+import com.aripd.member.domain.Member_;
+import com.aripd.project.lgk.domain.Employee;
+import com.aripd.project.lgk.domain.Employee_;
+import com.aripd.member.service.MemberService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesSortField;
@@ -47,6 +46,7 @@ import com.aripd.project.lgk.report.payment.FillManager;
 import com.aripd.project.lgk.report.payment.Layouter;
 import com.aripd.project.lgk.report.payment.Writer;
 import com.aripd.project.lgk.repository.PaymentRepository;
+import com.aripd.project.lgk.service.EmployeeService;
 import com.aripd.project.lgk.service.PaymentService;
 import com.aripd.project.lgk.service.PaymenttypeService;
 import org.springframework.web.multipart.MultipartFile;
@@ -59,8 +59,8 @@ public class PaymentServiceImpl implements PaymentService {
     private EntityManager em;
     @Autowired
     private PaymentRepository repository;
-    @Resource(name = "accountService")
-    private AccountService accountService;
+    @Resource(name = "memberService")
+    private MemberService memberService;
     @Resource(name = "employeeService")
     private EmployeeService employeeService;
     @Resource(name = "paymenttypeService")
@@ -70,8 +70,8 @@ public class PaymentServiceImpl implements PaymentService {
         return repository.findOne(id);
     }
 
-    public Payment findOneByAccountAndId(Account account, Long id) {
-        return repository.findOneByAccountAndId(account, id);
+    public Payment findOneByMemberAndId(Member member, Long id) {
+        return repository.findOneByMemberAndId(member, id);
     }
 
     public List<Payment> findByInterval(Date starting, Date ending, Long employee_id) {
@@ -129,13 +129,13 @@ public class PaymentServiceImpl implements PaymentService {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Payment> cq = cb.createQuery(Payment.class);
         Root<Payment> root = cq.from(Payment.class);
-        Join<Payment, Account> account = root.join(Payment_.account);
+        Join<Payment, Member> member = root.join(Payment_.member);
 
         // Filtering and Searching
         List<Predicate> predicateList = new ArrayList<Predicate>();
 
         if ((search != null) && (!(search.isEmpty()))) {
-            Predicate predicate1 = cb.like(account.get(Account_.username), "%" + search + "%");
+            Predicate predicate1 = cb.like(member.get(Member_.username), "%" + search + "%");
             Predicate predicate2 = cb.like(root.get(Payment_.remark), "%" + search + "%");
             Predicate predicate = cb.or(predicate1, predicate2);
             predicateList.add(predicate);
@@ -181,8 +181,8 @@ public class PaymentServiceImpl implements PaymentService {
         // Filtering and Searching
         List<Predicate> predicateList = new ArrayList<Predicate>();
 
-        Account account = accountService.findOneByUsername(principal.getName());
-        Predicate predicate_ = cb.equal(root.get(Payment_.account), account);
+        Member member = memberService.findOneByUsername(principal.getName());
+        Predicate predicate_ = cb.equal(root.get(Payment_.member), member);
 
         if ((search != null) && (!(search.isEmpty()))) {
             Predicate predicate1 = cb.like(root.get(Payment_.remark), "%" + search + "%");
@@ -218,7 +218,7 @@ public class PaymentServiceImpl implements PaymentService {
         return new DatatablesResultSet<Payment>(resultList, totalRecords, displaySize);
     }
 
-    public void importData(MultipartFile file) {
+    public void importData(MultipartFile file, Principal principal) {
         Workbook workbook = null;
         try {
             workbook = WorkbookFactory.create(file.getInputStream());
@@ -239,16 +239,17 @@ public class PaymentServiceImpl implements PaymentService {
             //Row row = rows.next();
             Row row = worksheet.getRow(i);
 
-            String username = row.getCell(0).getStringCellValue();
-            String tckimlikno = row.getCell(1).getStringCellValue();
-            String paymenttype_code = row.getCell(2).getStringCellValue();
-            Date documentDate = row.getCell(3).getDateCellValue();
-            String company = row.getCell(4).getStringCellValue();
-            String remark = row.getCell(5).getStringCellValue();
-            BigDecimal amount = new BigDecimal(row.getCell(6).getNumericCellValue(), MathContext.DECIMAL64);
+            Member member = memberService.findOneByUsername(principal.getName());
+            
+            String tckimlikno = row.getCell(0).getStringCellValue();
+            String paymenttype_code = row.getCell(1).getStringCellValue();
+            Date documentDate = row.getCell(2).getDateCellValue();
+            String company = row.getCell(3).getStringCellValue();
+            String remark = row.getCell(4).getStringCellValue();
+            BigDecimal amount = new BigDecimal(row.getCell(5).getNumericCellValue(), MathContext.DECIMAL64);
 
             payment = new Payment();
-            payment.setAccount(accountService.findOneByUsername(username));
+            payment.setMember(member);
             payment.setEmployee(employeeService.findOneByTckimlikno(tckimlikno));
             payment.setPaymenttype(paymenttypeService.findOneByCode(paymenttype_code));
             payment.setDocumentDate(documentDate);

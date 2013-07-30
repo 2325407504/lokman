@@ -1,6 +1,6 @@
 package com.aripd.project.lgk.domain;
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -10,9 +10,11 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -31,9 +33,8 @@ public class Customer extends BaseEntity {
     private String name;
     private String address;
     private String phonenumber;
-    @OneToOne(cascade = CascadeType.ALL)
-    @NotNull
-    private Account authorized;
+    @OneToOne
+    private Member member;
     private Double shippingcost;
     @JsonIgnore
     @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
@@ -96,12 +97,12 @@ public class Customer extends BaseEntity {
         this.phonenumber = phonenumber;
     }
 
-    public Account getAuthorized() {
-        return authorized;
+    public Member getMember() {
+        return member;
     }
 
-    public void setAuthorized(Account authorized) {
-        this.authorized = authorized;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public boolean isContainer() {

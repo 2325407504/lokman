@@ -6,7 +6,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 import org.joda.time.DateTime;
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import com.aripd.common.entity.BaseEntity_;
 import javax.persistence.metamodel.ListAttribute;
 
@@ -19,7 +19,7 @@ import javax.persistence.metamodel.ListAttribute;
 public class Production_ extends BaseEntity_ {
 
     public static volatile SingularAttribute<Production, Boolean> submitted;
-    public static volatile SingularAttribute<Production, Account> account;
+    public static volatile SingularAttribute<Production, Member> member;
     public static volatile SingularAttribute<Production, DateTime> shiftdate;
     public static volatile SingularAttribute<Production, Double> feed;
     public static volatile SingularAttribute<Production, String> remark;

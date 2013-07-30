@@ -1,6 +1,6 @@
 package com.aripd.project.lgk.model;
 
-import com.aripd.account.domain.Account;
+import com.aripd.project.lgk.domain.Employee;
 import java.util.Date;
 import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,7 +13,7 @@ public class ExpenseFilterByIntervalForm {
     @NotNull
     @DateTimeFormat(pattern = "dd.MM.yyyy")
     private Date endingDate;
-    private Account account;
+    private Employee employee;
 
     public Date getStartingDate() {
         return startingDate;
@@ -31,11 +31,11 @@ public class ExpenseFilterByIntervalForm {
         this.endingDate = endingDate;
     }
 
-    public Account getAccount() {
-        return account;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

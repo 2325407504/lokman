@@ -6,7 +6,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 import org.joda.time.DateTime;
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import com.aripd.common.entity.BaseEntity_;
 
 /**
@@ -18,7 +18,7 @@ import com.aripd.common.entity.BaseEntity_;
 public class Waybill_ extends BaseEntity_ {
 
     public static volatile SingularAttribute<Expense, Boolean> submitted;
-    public static volatile SingularAttribute<Waybill, Account> account;
+    public static volatile SingularAttribute<Waybill, Member> member;
     public static volatile SingularAttribute<Waybill, Invoice> invoice;
     public static volatile SingularAttribute<Waybill, DateTime> documentDate;
     public static volatile SingularAttribute<Waybill, String> documentNo;

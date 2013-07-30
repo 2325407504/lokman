@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import com.aripd.common.entity.BaseEntity_;
 import java.util.Date;
 
@@ -18,7 +18,7 @@ import java.util.Date;
 public class Expense_ extends BaseEntity_ {
 
     public static volatile SingularAttribute<Expense, Boolean> submitted;
-    public static volatile SingularAttribute<Expense, Account> account;
+    public static volatile SingularAttribute<Expense, Member> member;
     public static volatile SingularAttribute<Expense, Expensetype> expensetype;
     public static volatile SingularAttribute<Expense, Date> documentDate;
     public static volatile SingularAttribute<Expense, String> company;

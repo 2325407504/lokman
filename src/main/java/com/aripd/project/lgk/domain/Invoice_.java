@@ -5,7 +5,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 import org.joda.time.DateTime;
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import com.aripd.common.entity.BaseEntity_;
 import java.math.BigDecimal;
 import javax.persistence.metamodel.SetAttribute;
@@ -19,7 +19,7 @@ import javax.persistence.metamodel.SetAttribute;
 public class Invoice_ extends BaseEntity_ {
 
     public static volatile SingularAttribute<Expense, Boolean> submitted;
-    public static volatile SingularAttribute<Invoice, Account> account;
+    public static volatile SingularAttribute<Invoice, Member> member;
     public static volatile SingularAttribute<Invoice, DateTime> documentDate;
     public static volatile SingularAttribute<Invoice, String> documentNo;
     public static volatile SingularAttribute<Invoice, Customer> customer;

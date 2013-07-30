@@ -29,8 +29,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aripd.account.domain.Account;
-import com.aripd.account.service.AccountService;
+import com.aripd.member.domain.Member;
+import com.aripd.member.service.MemberService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesSortField;
@@ -51,15 +51,15 @@ public class ProductionServiceImpl implements ProductionService {
     private EntityManager em;
     @Autowired
     private ProductionRepository repository;
-    @Resource(name = "accountService")
-    private AccountService accountService;
+    @Resource(name = "memberService")
+    private MemberService memberService;
 
     public Production findOne(Long id) {
         return repository.findOne(id);
     }
 
-    public Production findOneByAccountAndId(Account account, Long id) {
-        return repository.findOneByAccountAndId(account, id);
+    public Production findOneByMemberAndId(Member member, Long id) {
+        return repository.findOneByMemberAndId(member, id);
     }
 
     public Production findOneByShiftdate(DateTime shiftdate) {
@@ -160,8 +160,8 @@ public class ProductionServiceImpl implements ProductionService {
         // Filtering and Searching
         List<Predicate> predicateList = new ArrayList<Predicate>();
 
-        Account account = accountService.findOneByUsername(principal.getName());
-        Predicate predicate_ = cb.equal(root.get(Production_.account), account);
+        Member member = memberService.findOneByUsername(principal.getName());
+        Predicate predicate_ = cb.equal(root.get(Production_.member), member);
 
         if ((search != null) && (!(search.isEmpty()))) {
             Predicate predicate1 = cb.like(root.get(Production_.remark), "%" + search + "%");
@@ -225,7 +225,7 @@ public class ProductionServiceImpl implements ProductionService {
 
             production = new Production();
             production.setSubmitted(true);
-            production.setAccount(accountService.findOneByUsername(username));
+            production.setMember(memberService.findOneByUsername(username));
             production.setShiftdate(new DateTime(shiftdate));
             production.setFeed(feed);
             production.setRemark(remark);
@@ -236,7 +236,7 @@ public class ProductionServiceImpl implements ProductionService {
         repository.save(productions);
     }
 
-    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime) {
+    public void export(HttpServletResponse response, DateTime startingTime, DateTime endingTime) {
         // 1. Create new workbook
         HSSFWorkbook workbook = new HSSFWorkbook();
 

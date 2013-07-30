@@ -33,8 +33,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aripd.account.domain.Account;
-import com.aripd.account.service.AccountService;
+import com.aripd.member.domain.Member;
+import com.aripd.member.service.MemberService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesSortField;
@@ -58,8 +58,8 @@ public class InvoiceServiceImpl implements InvoiceService {
     private InvoiceRepository repository;
     @Autowired
     private UatfRepository uatfRepository;
-    @Resource(name = "accountService")
-    private AccountService accountService;
+    @Resource(name = "memberService")
+    private MemberService memberService;
 
     public Invoice findOne(Long id) {
         return repository.findOne(id);
@@ -162,8 +162,8 @@ public class InvoiceServiceImpl implements InvoiceService {
         // Filtering and Searching
         List<Predicate> predicateList = new ArrayList<Predicate>();
 
-        Account account = accountService.findOneByUsername(principal.getName());
-        Predicate predicate_ = cb.equal(root.get(Invoice_.account), account);
+        Member member = memberService.findOneByUsername(principal.getName());
+        Predicate predicate_ = cb.equal(root.get(Invoice_.member), member);
 
         if ((search != null) && (!(search.isEmpty()))) {
             Predicate predicate1 = cb.like(root.get(Invoice_.documentNo), "%" + search + "%");
@@ -234,7 +234,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             invoice = new Invoice();
             /*
              invoice.setSubmitted(true);
-             invoice.setAccount(accountService.findOneByUsername(username));
+             invoice.setMember(memberService.findOneByUsername(username));
              invoice.setDocumentDate(new DateTime(documentDate));
              invoice.setDocumentNo(documentNo);
              invoice.setCompany(company);

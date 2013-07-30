@@ -1,6 +1,6 @@
 package com.aripd.project.lgk.model;
 
-import com.aripd.account.domain.Employee;
+import com.aripd.project.lgk.domain.Employee;
 import java.util.Date;
 import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;

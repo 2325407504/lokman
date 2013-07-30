@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import com.aripd.common.entity.BaseEntity;
 import java.util.Date;
 import javax.persistence.Temporal;
@@ -30,7 +30,7 @@ public class Waybill extends BaseEntity {
     private boolean submitted = false;
     @ManyToOne
     @JoinColumn(nullable = false, insertable = true, updatable = true)
-    private Account account;
+    private Member member;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "invoice_id")
@@ -63,12 +63,12 @@ public class Waybill extends BaseEntity {
         this.submitted = submitted;
     }
 
-    public Account getAccount() {
-        return account;
+    public Member getMember() {
+        return member;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public Invoice getInvoice() {

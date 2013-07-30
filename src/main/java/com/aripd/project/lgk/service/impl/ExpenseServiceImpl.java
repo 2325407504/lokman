@@ -31,9 +31,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aripd.account.domain.Account;
-import com.aripd.account.domain.Account_;
-import com.aripd.account.service.AccountService;
+import com.aripd.member.domain.Member;
+import com.aripd.member.domain.Member_;
+import com.aripd.member.service.MemberService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesSortField;
@@ -55,8 +55,8 @@ public class ExpenseServiceImpl implements ExpenseService {
     private EntityManager em;
     @Autowired
     private ExpenseRepository repository;
-    @Resource(name = "accountService")
-    private AccountService accountService;
+    @Resource(name = "memberService")
+    private MemberService memberService;
     @Resource(name = "expensetypeService")
     private ExpensetypeService expensetypeService;
 
@@ -64,11 +64,11 @@ public class ExpenseServiceImpl implements ExpenseService {
         return repository.findOne(id);
     }
 
-    public Expense findOneByAccountAndId(Account account, Long id) {
-        return repository.findOneByAccountAndId(account, id);
+    public Expense findOneByMemberAndId(Member member, Long id) {
+        return repository.findOneByMemberAndId(member, id);
     }
 
-    public List<Expense> findByInterval(Date starting, Date ending, Long account_id) {
+    public List<Expense> findByInterval(Date starting, Date ending, Long member_id) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Expense> cq = cb.createQuery(Expense.class);
         Root<Expense> root = cq.from(Expense.class);
@@ -76,9 +76,9 @@ public class ExpenseServiceImpl implements ExpenseService {
         List<Predicate> predicateList = new ArrayList<Predicate>();
         Predicate predicate1 = cb.between(root.get(Expense_.documentDate), starting, ending);
         Predicate predicate2 = null;
-        if (account_id != null) {
-            Join<Expense, Account> account = root.join(Expense_.account);
-            predicate2 = cb.equal(account.get(Account_.id), account_id);
+        if (member_id != null) {
+            Join<Expense, Member> member = root.join(Expense_.member);
+            predicate2 = cb.equal(member.get(Member_.id), member_id);
         }
 
         Predicate predicate = predicate1;
@@ -123,13 +123,13 @@ public class ExpenseServiceImpl implements ExpenseService {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Expense> cq = cb.createQuery(Expense.class);
         Root<Expense> root = cq.from(Expense.class);
-        Join<Expense, Account> account = root.join(Expense_.account);
+        Join<Expense, Member> member = root.join(Expense_.member);
 
         // Filtering and Searching
         List<Predicate> predicateList = new ArrayList<Predicate>();
 
         if ((search != null) && (!(search.isEmpty()))) {
-            Predicate predicate1 = cb.like(account.get(Account_.username), "%" + search + "%");
+            Predicate predicate1 = cb.like(member.get(Member_.username), "%" + search + "%");
             Predicate predicate2 = cb.like(root.get(Expense_.company), "%" + search + "%");
             Predicate predicate3 = cb.like(root.get(Expense_.description), "%" + search + "%");
             Predicate predicate = cb.or(predicate1, predicate2, predicate3);
@@ -176,8 +176,8 @@ public class ExpenseServiceImpl implements ExpenseService {
         // Filtering and Searching
         List<Predicate> predicateList = new ArrayList<Predicate>();
 
-        Account account = accountService.findOneByUsername(principal.getName());
-        Predicate predicate_ = cb.equal(root.get(Expense_.account), account);
+        Member member = memberService.findOneByUsername(principal.getName());
+        Predicate predicate_ = cb.equal(root.get(Expense_.member), member);
 
         if ((search != null) && (!(search.isEmpty()))) {
             Predicate predicate1 = cb.like(root.get(Expense_.description), "%" + search + "%");
@@ -243,7 +243,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
             expense = new Expense();
             expense.setSubmitted(true);
-            expense.setAccount(accountService.findOneByUsername(username));
+            expense.setMember(memberService.findOneByUsername(username));
             expense.setExpensetype(expensetypeService.findOneByCode(expensetype_code));
             expense.setDocumentDate(documentDate);
             expense.setCompany(company);
@@ -256,7 +256,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         repository.save(expenses);
     }
 
-    public void exportByInterval(HttpServletResponse response, Date starting, Date ending, Long account_id) {
+    public void export(HttpServletResponse response, Date starting, Date ending, Long member_id) {
         // 1. Create new workbook
         HSSFWorkbook workbook = new HSSFWorkbook();
 
@@ -272,7 +272,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         Layouter.buildReport(worksheet, startRowIndex, startColIndex);
 
         // 5. Fill report
-        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByInterval(starting, ending, account_id));
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByInterval(starting, ending, member_id));
 
         // 6. Set the response properties
         String fileName = "ExpenseReport.xls";

@@ -4,8 +4,8 @@
 
 <spring:url value="/role/list" var="role_list" />
 <c:if test="${uri == role_list}"><c:set var="role_class" value="active" /></c:if>
-<spring:url value="/account/list" var="account_list" />
-<c:if test="${uri == account_list}"><c:set var="account_class" value="active" /></c:if>
+<spring:url value="/member/list" var="member_list" />
+<c:if test="${uri == member_list}"><c:set var="member_class" value="active" /></c:if>
 <spring:url value="/backup/list" var="backup_list" />
 <c:if test="${uri == backup_list}"><c:set var="backup_class" value="active" /></c:if>
 <spring:url value="/memberlog/list" var="memberlog_list" />
@@ -87,7 +87,7 @@
                         <sec:authorize access="hasRole('ROLE_SUPERADMIN')">
                             <li class="nav-header"><spring:message code="User Management" /></li>
                             <li class="${role_class}"><a href="${role_list}"><spring:message code="Roles" /></a></li>
-                            <li class="${account_class}"><a href="${account_list}"><spring:message code="Accounts" /></a></li>
+                            <li class="${member_class}"><a href="${member_list}"><spring:message code="Members" /></a></li>
                             <li class="${backup_class}"><a href="${backup_list}"><spring:message code="Backup" /></a></li>
                             <li class="${memberlog_class}"><a href="${memberlog_list}"><spring:message code="Memberlogs" /></a></li>
                             </sec:authorize>

@@ -16,7 +16,7 @@
 
 <aripd:datatables datasource="/production/get" id="productions" dataUrlShow="/production/show" dataUrlEdit="/production/edit" sortingColumn="2" sortingDirection="desc">
     <aripd:datatablescolumn label="Action" field="id"/>
-    <aripd:datatablescolumn label="Account" field="account.username"/>
+    <aripd:datatablescolumn label="Member" field="member.username"/>
     <aripd:datatablescolumn label="Shift" field="shiftdate"/>
     <aripd:datatablescolumn label="Feed" field="feed"/>
     <aripd:datatablescolumn label="Remark" field="remark"/>

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aripd.account.service.AccountService;
+import com.aripd.member.service.MemberService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesParam;
@@ -49,8 +49,8 @@ public class ForwardingController {
     private QuotaService quotaService;
     @Resource(name = "subcontractorService")
     private SubcontractorService subcontractorService;
-    @Resource(name = "accountService")
-    private AccountService accountService;
+    @Resource(name = "memberService")
+    private MemberService memberService;
     @Resource(name = "startingpointService")
     private StartingpointService startingpointService;
     @Resource(name = "endingpointService")
@@ -78,7 +78,7 @@ public class ForwardingController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("members", memberService.findAll());
         model.addAttribute("quotas", quotaService.findAll());
         model.addAttribute("subcontractors", subcontractorService.findAll());
         model.addAttribute("startingpoints", startingpointService.findAll());
@@ -92,7 +92,7 @@ public class ForwardingController {
             @PathVariable Long id,
             Model model) {
         model.addAttribute("uatfAttribute", new Uatf());
-        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("members", memberService.findAll());
         model.addAttribute("quotas", quotaService.findAll());
         model.addAttribute("subcontractors", subcontractorService.findAll());
         model.addAttribute("startingpoints", startingpointService.findAll());
@@ -110,7 +110,7 @@ public class ForwardingController {
 
         if (result.hasErrors()) {
             model.addAttribute("uatfAttribute", new Uatf());
-            model.addAttribute("accounts", accountService.findAll());
+            model.addAttribute("members", memberService.findAll());
             model.addAttribute("quotas", quotaService.findAll());
             model.addAttribute("subcontractors", subcontractorService.findAll());
             model.addAttribute("startingpoints", startingpointService.findAll());

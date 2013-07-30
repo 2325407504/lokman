@@ -1,7 +1,7 @@
 package com.aripd.project.lgk.controller;
 
-import com.aripd.account.domain.Account;
-import com.aripd.account.service.AccountService;
+import com.aripd.member.domain.Member;
+import com.aripd.member.service.MemberService;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aripd.account.service.EmployeeService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesParam;
@@ -27,6 +26,7 @@ import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Payment;
 import com.aripd.project.lgk.model.PaymentFilterByIntervalForm;
+import com.aripd.project.lgk.service.EmployeeService;
 import com.aripd.project.lgk.service.PaymentService;
 import com.aripd.project.lgk.service.PaymenttypeService;
 import java.security.Principal;
@@ -43,8 +43,8 @@ public class PaymentController {
     private PaymenttypeService paymenttypeService;
     @Resource(name = "employeeService")
     private EmployeeService employeeService;
-    @Resource(name = "accountService")
-    private AccountService accountService;
+    @Resource(name = "memberService")
+    private MemberService memberService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -94,8 +94,8 @@ public class PaymentController {
             return "/payment/form";
         }
 
-        Account account = accountService.findOneByUsername(principal.getName());
-        formData.setAccount(account);
+        Member member = memberService.findOneByUsername(principal.getName());
+        formData.setMember(member);
 
         Payment payment = paymentService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
@@ -146,6 +146,7 @@ public class PaymentController {
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importData(
             final RedirectAttributes redirectAttributes,
+            Principal principal,
             @ModelAttribute("paymentImportAttribute") @Validated FileUploadBean formData,
             BindingResult result) {
 
@@ -153,7 +154,7 @@ public class PaymentController {
             return "/payment/import";
         }
 
-        paymentService.importData(formData.getFile());
+        paymentService.importData(formData.getFile(), principal);
         redirectAttributes.addFlashAttribute("message", "message.completed.import");
         return "redirect:/payment/list";
     }

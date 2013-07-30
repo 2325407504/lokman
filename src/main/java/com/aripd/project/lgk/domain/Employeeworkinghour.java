@@ -6,7 +6,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.common.util.ARIPDJodaDateTimeSerializer;
 import javax.persistence.Transient;
@@ -25,7 +25,9 @@ public class Employeeworkinghour extends BaseEntity {
     private boolean submitted = false;
     @ManyToOne
     @JoinColumn(nullable = false, insertable = true, updatable = true)
-    private Account account;
+    private Member member;
+    @ManyToOne
+    private Employee employee;
     @ManyToOne
     private Employeeworkinghourtype employeeworkinghourtype;
     @NotNull
@@ -58,12 +60,20 @@ public class Employeeworkinghour extends BaseEntity {
         this.submitted = submitted;
     }
 
-    public Account getAccount() {
-        return account;
+    public Member getMember() {
+        return member;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public Employeeworkinghourtype getEmployeeworkinghourtype() {
@@ -97,4 +107,5 @@ public class Employeeworkinghour extends BaseEntity {
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
 }

@@ -4,7 +4,7 @@ import java.security.Principal;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Production;
@@ -16,7 +16,7 @@ public interface ProductionService {
 
     public Production findOne(Long id);
 
-    public Production findOneByAccountAndId(Account account, Long id);
+    public Production findOneByMemberAndId(Member member, Long id);
 
     public Production findOneByShiftdate(DateTime dateTime);
 
@@ -34,5 +34,5 @@ public interface ProductionService {
 
     public void importData(MultipartFile file);
 
-    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
+    public void export(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

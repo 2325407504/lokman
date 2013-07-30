@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aripd.account.service.AccountService;
+import com.aripd.member.service.MemberService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesParam;
@@ -41,8 +41,8 @@ public class InvoiceController {
 
     @Resource(name = "invoiceService")
     private InvoiceService invoiceService;
-    @Resource(name = "accountService")
-    private AccountService accountService;
+    @Resource(name = "memberService")
+    private MemberService memberService;
     @Resource(name = "customerService")
     private CustomerService customerService;
     @Resource(name = "waybillService")
@@ -77,7 +77,7 @@ public class InvoiceController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("members", memberService.findAll());
         model.addAttribute("customers", customerService.findAll());
         model.addAttribute("invoiceAttribute", new Invoice());
         return "invoice/form";
@@ -88,7 +88,7 @@ public class InvoiceController {
             @PathVariable Long id,
             Model model) {
         model.addAttribute("waybillFilterByDocumentNoForm", new WaybillFilterByDocumentNoForm());
-        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("members", memberService.findAll());
         model.addAttribute("customers", customerService.findAll());
         model.addAttribute("invoiceAttribute", invoiceService.findOne(id));
         return "invoice/form";
@@ -102,12 +102,12 @@ public class InvoiceController {
             Model model) {
 
         if (result.hasErrors()) {
-            model.addAttribute("accounts", accountService.findAll());
+            model.addAttribute("members", memberService.findAll());
             model.addAttribute("customers", customerService.findAll());
             return "/invoice/form";
         }
 
-        formData.setAccount(formData.getAccount());
+        formData.setMember(formData.getMember());
         Invoice invoice = invoiceService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/invoice/show/" + invoice.getId();

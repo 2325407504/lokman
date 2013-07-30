@@ -3,7 +3,7 @@ package com.aripd.project.lgk.service;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import com.aripd.common.dto.autocomplete.AutocompleteCriteria;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
@@ -16,7 +16,7 @@ public interface WaybillService {
 
     public Waybill findOne(Long id);
 
-    public Waybill findOneByAccountAndId(Account account, Long id);
+    public Waybill findOneByMemberAndId(Member member, Long id);
 
     public Waybill findOneByDocumentNo(String documentNo);
 
@@ -36,5 +36,5 @@ public interface WaybillService {
 
     public void importData(MultipartFile file);
 
-    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
+    public void export(HttpServletResponse response, DateTime startingTime, DateTime endingTime);
 }

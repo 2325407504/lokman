@@ -1,7 +1,7 @@
 package com.aripd.project.lgk.domain;
 
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -19,7 +19,7 @@ import javax.persistence.metamodel.ListAttribute;
 public class Weighbridge_ extends BaseEntity_ {
 
     public static volatile SingularAttribute<Weighbridge, Boolean> submitted;
-    public static volatile SingularAttribute<Weighbridge, Account> account;
+    public static volatile SingularAttribute<Weighbridge, Member> member;
     public static volatile SingularAttribute<Weighbridge, String> clerk;
     public static volatile SingularAttribute<Weighbridge, String> plate;
     public static volatile SingularAttribute<Weighbridge, String> driver;

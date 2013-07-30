@@ -18,7 +18,7 @@
     <div class="span12">
         <aripd:description id="employeeworkinghour">
             <aripd:descriptionitem label="Submit" field="employeeworkinghourAttribute.submitted"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Account" field="employeeworkinghourAttribute.account.employee.fullname"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Member" field="employeeworkinghourAttribute.member.employee.fullname"></aripd:descriptionitem>
             <aripd:descriptionitem label="Employee Working Hour Type" field="employeeworkinghourAttribute.employeeworkinghourtype.name"></aripd:descriptionitem>
             <aripd:descriptionitem label="Starting Time" field="employeeworkinghourAttribute.startingTime"></aripd:descriptionitem>
             <aripd:descriptionitem label="Ending Time" field="employeeworkinghourAttribute.endingTime"></aripd:descriptionitem>

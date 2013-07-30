@@ -25,7 +25,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th><spring:message code="Account" /></th>
+                    <th><spring:message code="Member" /></th>
                     <th><spring:message code="Employee Leave Type" /></th>
                     <th><spring:message code="Starting Date" /></th>
                     <th><spring:message code="Ending Date" /></th>

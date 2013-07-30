@@ -15,7 +15,7 @@
 
 <aripd:datatables datasource="/payment/get" id="payments" dataUrlShow="/payment/show" dataUrlEdit="/payment/edit">
     <aripd:datatablescolumn label="Action" field="id"/>
-    <aripd:datatablescolumn label="Fullname" field="employee.fullname"/>
+    <aripd:datatablescolumn label="Employee" field="employee.fullname"/>
     <aripd:datatablescolumn label="Paymenttype" field="paymenttype.name"/>
     <aripd:datatablescolumn label="Document Date" field="documentDate"/>
     <aripd:datatablescolumn label="Remark" field="remark"/>

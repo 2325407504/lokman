@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aripd.account.service.AccountService;
+import com.aripd.member.service.MemberService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesParam;
@@ -41,8 +41,8 @@ public class WeighbridgeController {
 
     @Resource(name = "weighbridgeService")
     private WeighbridgeService weighbridgeService;
-    @Resource(name = "accountService")
-    private AccountService accountService;
+    @Resource(name = "memberService")
+    private MemberService memberService;
     @Resource(name = "wasteService")
     private WasteService wasteService;
     @Resource(name = "extricationService")
@@ -68,7 +68,7 @@ public class WeighbridgeController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("members", memberService.findAll());
         model.addAttribute("wastes", wasteService.findAll());
         model.addAttribute("weighbridgeAttribute", new Weighbridge());
         return "weighbridge/form";
@@ -76,7 +76,7 @@ public class WeighbridgeController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
-        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("members", memberService.findAll());
         model.addAttribute("wastes", wasteService.findAll());
         model.addAttribute("weighbridgeAttribute", weighbridgeService.findOne(id));
         return "weighbridge/form";
@@ -90,7 +90,7 @@ public class WeighbridgeController {
             Model model) {
 
         if (result.hasErrors()) {
-            model.addAttribute("accounts", accountService.findAll());
+            model.addAttribute("members", memberService.findAll());
             model.addAttribute("wastes", wasteService.findAll());
             return "/weighbridge/form";
         }

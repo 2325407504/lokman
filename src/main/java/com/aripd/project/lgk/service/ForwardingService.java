@@ -4,7 +4,7 @@ import java.security.Principal;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Forwarding;
@@ -16,7 +16,7 @@ public interface ForwardingService {
 
     public Forwarding findOne(Long id);
 
-    public Forwarding findOneByAccountAndId(Account account, Long id);
+    public Forwarding findOneByMemberAndId(Member member, Long id);
 
     public Forwarding findOneByWaybillNo(String waybillNo);
 

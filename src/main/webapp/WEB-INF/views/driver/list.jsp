@@ -15,7 +15,7 @@
     <aripd:datatablescolumn label="Action" field="id"/>
     <aripd:datatablescolumn label="Region" field="region.name"/>
     <aripd:datatablescolumn label="Code" field="code"/>
-    <aripd:datatablescolumn label="Fullname" field="name"/>
+    <aripd:datatablescolumn label="Driver" field="name"/>
     <aripd:datatablescolumn label="Phone Number" field="phonenumber"/>
 </aripd:datatables>
 

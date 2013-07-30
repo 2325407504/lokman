@@ -12,13 +12,14 @@
 </jsp:include>
 
 <aripd:datatables datasource="/memberlog/get" id="memberlogs">
-    <aripd:datatablescolumn label="Action" field="id"/>
-    <aripd:datatablescolumn label="Account" field="account.employee.fullname"/>
-    <aripd:datatablescolumn label="Name" field="sessionId"/>
-    <aripd:datatablescolumn label="Name" field="ipAddress"/>
-    <aripd:datatablescolumn label="Name" field="executeTime"/>
-    <aripd:datatablescolumn label="Name" field="url"/>
-    <aripd:datatablescolumn label="Name" field="type"/>
+    <aripd:datatablescolumn label="Id" field="id"/>
+    <aripd:datatablescolumn label="Member" field="member.username"/>
+    <aripd:datatablescolumn label="Session Id" field="sessionId"/>
+    <aripd:datatablescolumn label="IP Address" field="ipAddress"/>
+    <aripd:datatablescolumn label="Created At" field="createdAt"/>
+    <aripd:datatablescolumn label="Execute Time" field="executeTime"/>
+    <aripd:datatablescolumn label="URL" field="url"/>
+    <aripd:datatablescolumn label="Type" field="type"/>
 </aripd:datatables>
 
 <jsp:include page="/WEB-INF/views/footer.jsp" />

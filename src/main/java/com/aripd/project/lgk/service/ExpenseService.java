@@ -4,7 +4,7 @@ import java.security.Principal;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Expense;
@@ -16,9 +16,9 @@ public interface ExpenseService {
 
     public Expense findOne(Long id);
 
-    public Expense findOneByAccountAndId(Account account, Long id);
+    public Expense findOneByMemberAndId(Member member, Long id);
 
-    public List<Expense> findByInterval(Date starting, Date ending, Long account_id);
+    public List<Expense> findByInterval(Date starting, Date ending, Long member_id);
 
     public Expense save(Expense expense);
 
@@ -32,5 +32,5 @@ public interface ExpenseService {
 
     public void importData(MultipartFile file);
 
-    public void exportByInterval(HttpServletResponse response, Date starting, Date ending, Long account_id);
+    public void export(HttpServletResponse response, Date starting, Date ending, Long member_id);
 }

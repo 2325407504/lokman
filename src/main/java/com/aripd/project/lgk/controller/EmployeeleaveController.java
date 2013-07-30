@@ -1,6 +1,6 @@
 package com.aripd.project.lgk.controller;
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aripd.account.service.AccountService;
+import com.aripd.member.service.MemberService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesParam;
@@ -37,8 +37,8 @@ public class EmployeeleaveController {
 
     @Resource(name = "employeeleaveService")
     private EmployeeleaveService employeeleaveService;
-    @Resource(name = "accountService")
-    private AccountService accountService;
+    @Resource(name = "memberService")
+    private MemberService memberService;
     @Resource(name = "employeeleavetypeService")
     private EmployeeleavetypeService employeeleavetypeService;
 
@@ -62,7 +62,7 @@ public class EmployeeleaveController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("members", memberService.findAll());
         model.addAttribute("employeeleavetypes", employeeleavetypeService.findAll());
         model.addAttribute("employeeleaveAttribute", new Employeeleave());
         return "employeeleave/form";
@@ -70,7 +70,7 @@ public class EmployeeleaveController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
-        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("members", memberService.findAll());
         model.addAttribute("employeeleavetypes", employeeleavetypeService.findAll());
         model.addAttribute("employeeleaveAttribute", employeeleaveService.findOne(id));
         return "employeeleave/form";
@@ -84,7 +84,7 @@ public class EmployeeleaveController {
             Model model) {
 
         if (result.hasErrors()) {
-            model.addAttribute("accounts", accountService.findAll());
+            model.addAttribute("members", memberService.findAll());
             model.addAttribute("employeeleavetypes", employeeleavetypeService.findAll());
             return "/employeeleave/form";
         }
@@ -113,7 +113,7 @@ public class EmployeeleaveController {
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public String reportAction(Model model) {
-        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("members", memberService.findAll());
         model.addAttribute("employeeleaveFilterByIntervalForm", new EmployeeleaveFilterByIntervalForm());
         return "employeeleave/report";
     }
@@ -127,12 +127,12 @@ public class EmployeeleaveController {
             Model model) {
 
         if (result.hasErrors()) {
-            model.addAttribute("accounts", accountService.findAll());
+            model.addAttribute("members", memberService.findAll());
             return "/employeeleave/report";
         }
 
-        Account account = accountService.findOne(formData.getAccount().getId());
-        employeeleaveService.exportByAccount(response, account);
+        Member member = memberService.findOne(formData.getEmployee().getMember().getId());
+        employeeleaveService.export(response, member);
         return "redirect:/employeeleave/report";
     }
 

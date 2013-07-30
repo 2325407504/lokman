@@ -32,7 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import com.aripd.common.dto.autocomplete.AutocompleteCriteria;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
@@ -66,8 +66,8 @@ public class WaybillServiceImpl implements WaybillService {
         return repository.findOneByDocumentNo(documentNo);
     }
 
-    public Waybill findOneByAccountAndId(Account account, Long id) {
-        return repository.findOneByAccountAndId(account, id);
+    public Waybill findOneByMemberAndId(Member member, Long id) {
+        return repository.findOneByMemberAndId(member, id);
     }
 
     public List<Waybill> findByInterval(DateTime startingTime, DateTime endingTime) {
@@ -265,7 +265,7 @@ public class WaybillServiceImpl implements WaybillService {
             waybill = new Waybill();
             /*
              waybill.setSubmitted(true);
-             waybill.setAccount(accountService.findOneByUsername(username));
+             waybill.setMember(memberService.findOneByUsername(username));
              waybill.setDocumentDate(new DateTime(documentDate));
              waybill.setDocumentNo(documentNo);
              waybill.setCompany(company);
@@ -282,7 +282,7 @@ public class WaybillServiceImpl implements WaybillService {
         repository.save(waybills);
     }
 
-    public void exportByInterval(HttpServletResponse response, DateTime startingTime, DateTime endingTime) {
+    public void export(HttpServletResponse response, DateTime startingTime, DateTime endingTime) {
         // 1. Create new workbook
         HSSFWorkbook workbook = new HSSFWorkbook();
 

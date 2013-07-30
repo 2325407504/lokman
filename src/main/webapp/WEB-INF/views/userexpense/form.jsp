@@ -22,7 +22,7 @@
                 <div class="control-group">
                     <form:label path="expensetype"><spring:message code="Expensetype" /></form:label>
                     <form:select path="expensetype.id" multiple="false" items="${expensetypes}" itemLabel="name" itemValue="id"/>
-                    <form:errors cssClass="text-error" path="account" />
+                    <form:errors cssClass="text-error" path="member" />
                 </div>
                 <div class="control-group">
                     <form:label path="documentDate"><spring:message code="Date" /></form:label>

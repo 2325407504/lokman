@@ -29,12 +29,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aripd.account.domain.Account;
-import com.aripd.account.domain.Account_;
-import com.aripd.account.service.AccountService;
+import com.aripd.member.domain.Member;
+import com.aripd.member.domain.Member_;
+import com.aripd.member.service.MemberService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesSortField;
+import com.aripd.project.lgk.domain.Employee;
 import com.aripd.project.lgk.domain.Employeeleave;
 import com.aripd.project.lgk.domain.Employeeleave_;
 import com.aripd.project.lgk.model.EmployeeleaveReportModel;
@@ -56,8 +57,8 @@ public class EmployeeleaveServiceImpl implements EmployeeleaveService {
     private EntityManager em;
     @Autowired
     private EmployeeleaveRepository repository;
-    @Resource(name = "accountService")
-    private AccountService accountService;
+    @Resource(name = "memberService")
+    private MemberService memberService;
     @Resource(name = "employeeleavetypeService")
     private EmployeeleavetypeService employeeleavetypeService;
 
@@ -65,8 +66,8 @@ public class EmployeeleaveServiceImpl implements EmployeeleaveService {
         return repository.findOne(id);
     }
 
-    public List<Employeeleave> findByAccount(Account account) {
-        return repository.findByAccount(account);
+    public List<Employeeleave> findByEmployee(Employee employee) {
+        return repository.findByEmployee(employee);
     }
 
     @Transactional
@@ -94,13 +95,13 @@ public class EmployeeleaveServiceImpl implements EmployeeleaveService {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Employeeleave> cq = cb.createQuery(Employeeleave.class);
         Root<Employeeleave> root = cq.from(Employeeleave.class);
-        Join<Employeeleave, Account> account = root.join(Employeeleave_.account);
+        Join<Employeeleave, Member> member = root.join(Employeeleave_.member);
 
         // Filtering and Searching
         List<Predicate> predicateList = new ArrayList<Predicate>();
 
         if ((search != null) && (!(search.isEmpty()))) {
-            Predicate predicate1 = cb.like(account.get(Account_.username), "%" + search + "%");
+            Predicate predicate1 = cb.like(member.get(Member_.username), "%" + search + "%");
             Predicate predicate2 = cb.like(root.get(Employeeleave_.remark), "%" + search + "%");
             Predicate predicate = cb.or(predicate1, predicate2);
             predicateList.add(predicate);
@@ -146,8 +147,8 @@ public class EmployeeleaveServiceImpl implements EmployeeleaveService {
         // Filtering and Searching
         List<Predicate> predicateList = new ArrayList<Predicate>();
 
-        Account account = accountService.findOneByUsername(principal.getName());
-        Predicate predicate_ = cb.equal(root.get(Employeeleave_.account), account);
+        Member member = memberService.findOneByUsername(principal.getName());
+        Predicate predicate_ = cb.equal(root.get(Employeeleave_.member), member);
 
         if ((search != null) && (!(search.isEmpty()))) {
             Predicate predicate1 = cb.like(root.get(Employeeleave_.remark), "%" + search + "%");
@@ -212,7 +213,7 @@ public class EmployeeleaveServiceImpl implements EmployeeleaveService {
 
             employeeleave = new Employeeleave();
             employeeleave.setSubmitted(true);
-            employeeleave.setAccount(accountService.findOneByUsername(username));
+            employeeleave.setMember(memberService.findOneByUsername(username));
             employeeleave.setEmployeeleavetype(employeeleavetypeService.findOneByCode(leavetype_code));
             employeeleave.setStartingDate(startingDate);
             employeeleave.setEndingDate(endingDate);
@@ -224,12 +225,12 @@ public class EmployeeleaveServiceImpl implements EmployeeleaveService {
         repository.save(leaves);
     }
 
-    public void exportByAccount(HttpServletResponse response, Account account) {
+    public void export(HttpServletResponse response, Member member) {
         // 1. Create new workbook
         HSSFWorkbook workbook = new HSSFWorkbook();
 
         // 2. Create new worksheet
-        HSSFSheet worksheet = workbook.createSheet("Employee Leaves for " + account.getUsername());
+        HSSFSheet worksheet = workbook.createSheet("Employee Leaves for " + member.getUsername());
 
         // 3. Define starting indices for rows and columns
         int startRowIndex = 0;
@@ -240,7 +241,7 @@ public class EmployeeleaveServiceImpl implements EmployeeleaveService {
         Layouter.buildReport(worksheet, startRowIndex, startColIndex);
 
         // 5. Fill report
-        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.retrieveDatasource(account));
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.retrieveDatasource(member));
 
         // 6. Set the response properties
         String fileName = "EmployeeLeaveReport.xls";
@@ -252,8 +253,8 @@ public class EmployeeleaveServiceImpl implements EmployeeleaveService {
         Writer.write(response, worksheet);
     }
 
-    public List<EmployeeleaveReportModel> retrieveDatasource(Account account) {
-        Date employmentDate = account.getEmployee().getEmploymentDate();
+    public List<EmployeeleaveReportModel> retrieveDatasource(Member member) {
+        Date employmentDate = member.getEmployee().getEmploymentDate();
         DateTime employmentDateTime = new DateTime(employmentDate);
         DateTime endDate = new DateTime();
 
@@ -261,15 +262,15 @@ public class EmployeeleaveServiceImpl implements EmployeeleaveService {
         for (DateTime date = employmentDateTime; date.isBefore(endDate); date = date.plusYears(1)) {
             EmployeeleaveReportModel erm = new EmployeeleaveReportModel();
             erm.setDate(date.toDate());
-            erm.setQualified(this.getAnnualLeaveQualified(account, date));
-            erm.setUsed(this.getAnnualLeaveUsed(account, date, date.plusYears(1)));
+            erm.setQualified(this.getAnnualLeaveQualified(member, date));
+            erm.setUsed(this.getAnnualLeaveUsed(member, date, date.plusYears(1)));
             ermList.add(erm);
         }
         return ermList;
     }
 
-    public int getAnnualLeaveQualified(Account account, DateTime dt1) {
-        DateTime dt2 = new DateTime(account.getEmployee().getEmploymentDate());
+    public int getAnnualLeaveQualified(Member member, DateTime dt1) {
+        DateTime dt2 = new DateTime(member.getEmployee().getEmploymentDate());
         int diff = Years.yearsBetween(dt2, dt1).getYears();
         int leave = 0;
         if (1 <= diff && diff <= 5) {
@@ -282,13 +283,13 @@ public class EmployeeleaveServiceImpl implements EmployeeleaveService {
         return leave;
     }
 
-    public int getAnnualLeaveUsed(Account account, DateTime dt1, DateTime dt2) {
+    public int getAnnualLeaveUsed(Member member, DateTime dt1, DateTime dt2) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Employeeleave> cq = cb.createQuery(Employeeleave.class);
         Root<Employeeleave> root = cq.from(Employeeleave.class);
 
         Predicate predicate1 = cb.between(root.get(Employeeleave_.startingDate), dt1.toDate(), dt2.toDate());
-        Predicate predicate2 = cb.equal(root.get(Employeeleave_.account), account);
+        Predicate predicate2 = cb.equal(root.get(Employeeleave_.member), member);
         Predicate predicate = cb.and(predicate1, predicate2);
 
         List<Predicate> predicateList = new ArrayList<Predicate>();

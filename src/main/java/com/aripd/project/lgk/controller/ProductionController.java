@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aripd.account.service.AccountService;
+import com.aripd.member.service.MemberService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesParam;
@@ -48,8 +48,8 @@ public class ProductionController {
 
     @Resource(name = "productionService")
     private ProductionService productionService;
-    @Resource(name = "accountService")
-    private AccountService accountService;
+    @Resource(name = "memberService")
+    private MemberService memberService;
     @Resource(name = "productService")
     private ProductService productService;
     @Resource(name = "electricmeterService")
@@ -83,7 +83,7 @@ public class ProductionController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("members", memberService.findAll());
         model.addAttribute("electricmeters", electricmeterService.findAll());
         model.addAttribute("machines", machineService.findAll());
         model.addAttribute("productionAttribute", new Production());
@@ -95,7 +95,7 @@ public class ProductionController {
             @PathVariable Long id,
             Model model) {
         model.addAttribute("bigbagAttribute", new Bigbag());
-        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("members", memberService.findAll());
         model.addAttribute("electricmeters", electricmeterService.findAll());
         model.addAttribute("machines", machineService.findAll());
         model.addAttribute("products", productService.findAll());
@@ -112,7 +112,7 @@ public class ProductionController {
 
         if (result.hasErrors()) {
             model.addAttribute("bigbagAttribute", new Bigbag());
-            model.addAttribute("accounts", accountService.findAll());
+            model.addAttribute("members", memberService.findAll());
             model.addAttribute("electricmeters", electricmeterService.findAll());
             model.addAttribute("machines", machineService.findAll());
             model.addAttribute("products", productService.findAll());
@@ -179,7 +179,7 @@ public class ProductionController {
             return "/production/report";
         }
 
-        productionService.exportByInterval(response, startingTime, endingTime);
+        productionService.export(response, startingTime, endingTime);
         return "redirect:/production/report";
     }
 

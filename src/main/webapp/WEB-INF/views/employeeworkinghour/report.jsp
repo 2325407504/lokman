@@ -24,8 +24,8 @@
     <div class="row-fluid">
         <div class="span12">
             <div class="control-group">
-                <form:label path="account"><spring:message code="Account" /></form:label>
-                <form:select multiple="false" path="account.id" cssClass="input-medium" items="${accounts}" itemLabel="employee.fullname" itemValue="id" />
+                <form:label path="member"><spring:message code="Member" /></form:label>
+                <form:select multiple="false" path="member.id" cssClass="input-medium" items="${members}" itemLabel="employee.fullname" itemValue="id" />
             </div>
             <div class="control-group">
                 <form:label path="startingTime">${startingTime} - ${endingTime}</form:label>

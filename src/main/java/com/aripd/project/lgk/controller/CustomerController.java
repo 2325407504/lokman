@@ -1,7 +1,6 @@
 package com.aripd.project.lgk.controller;
 
-import com.aripd.account.domain.Account;
-import com.aripd.account.service.AccountService;
+import com.aripd.member.service.MemberService;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
@@ -27,9 +26,7 @@ import com.aripd.project.lgk.domain.Customer;
 import com.aripd.project.lgk.domain.Shippingcost;
 import com.aripd.project.lgk.service.DisposalcostService;
 import com.aripd.project.lgk.service.CustomerService;
-import com.aripd.project.lgk.service.RegionService;
 import com.aripd.project.lgk.service.ShippingcostService;
-import org.apache.commons.codec.digest.DigestUtils;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_ADMIN')")
 @Controller
@@ -38,10 +35,8 @@ public class CustomerController {
 
     @Resource(name = "customerService")
     private CustomerService customerService;
-    @Resource(name = "regionService")
-    private RegionService regionService;
-    @Resource(name = "accountService")
-    private AccountService accountService;
+    @Resource(name = "memberService")
+    private MemberService memberService;
     @Resource(name = "shippingcostService")
     private ShippingcostService shippingcostService;
     @Resource(name = "disposalcostService")
@@ -69,7 +64,7 @@ public class CustomerController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-        model.addAttribute("regions", regionService.findAll());
+        model.addAttribute("members", memberService.findAll());
         model.addAttribute("customerAttribute", new Customer());
         return "customer/form";
     }
@@ -78,7 +73,7 @@ public class CustomerController {
     public String editAction(
             @PathVariable Long id,
             Model model) {
-        model.addAttribute("regions", regionService.findAll());
+        model.addAttribute("members", memberService.findAll());
         model.addAttribute("customerAttribute", customerService.findOne(id));
         return "customer/form";
     }
@@ -91,26 +86,19 @@ public class CustomerController {
             Model model) {
 
         if (result.hasErrors()) {
-            model.addAttribute("regions", regionService.findAll());
+            model.addAttribute("members", memberService.findAll());
             return "/customer/form";
         }
 
-        if (formData.getAuthorized().getId() != null) {
-            Account account = accountService.findOne(formData.getAuthorized().getId());
-            if (formData.getAuthorized().getPassword().length() == 0) {
-                formData.getAuthorized().setPassword(account.getPassword());
-            } else {
-                formData.getAuthorized().setPassword(DigestUtils.md5Hex(formData.getAuthorized().getPassword()));
-            }
-        } else {
-            formData.getAuthorized().setPassword(DigestUtils.md5Hex(formData.getAuthorized().getPassword()));
+        if (formData.getMember().getId() == null) {
+            formData.setMember(null);
         }
-
         Customer customer = customerService.save(formData);
-        
+
         /**
-         * TODO
-         * sadece customer kaydedildiğinde shippingcost ve disposalcost bilgilerinin tekrar tekrar aynı değerleri kaydetmesini nasıl engelleriz?
+         * TODO sadece customer kaydedildiğinde shippingcost ve disposalcost
+         * bilgilerinin tekrar tekrar aynı değerleri kaydetmesini nasıl
+         * engelleriz?
          */
         if (formData.getShippingcost() != null) {
             Shippingcost shippingcost = new Shippingcost();

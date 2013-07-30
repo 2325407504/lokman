@@ -11,15 +11,14 @@
     <jsp:param name="active" value="form" />
 </jsp:include>
 
-<spring:url var="customerSave" value="/customer/save" />
-<form:form modelAttribute="customerAttribute" action="${customerSave}" method="post">
+<spring:url var="save" value="/customer/save" />
+<form:form modelAttribute="customerAttribute" action="${save}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <form:hidden path="id" />
-    <form:hidden path="authorized.id" />
     <div class="row-fluid">
         <div class="span4">
             <fieldset>
-                <legend>Firma Cari Bilgileri</legend>
+                <legend><spring:message code="Customer" /></legend>
                 <div class="control-group">
                     <form:label path="taxNo"><spring:message code="Tax No" /></form:label>
                     <form:input path="taxNo" />
@@ -49,42 +48,7 @@
         </div>
         <div class="span4">
             <fieldset>
-                <legend>Firma Yetkilisi Bilgileri</legend>
-                <div class="control-group">
-                    <form:label path="authorized.username"><spring:message code="Username" /></form:label>
-                    <form:input path="authorized.username" />
-                    <form:errors cssClass="text-error" path="authorized.username" />
-                </div>       
-                <div class="control-group">
-                    <form:label path="authorized.password"><spring:message code="Password" /></form:label>
-                    <form:input type="password" path="authorized.password" />
-                    <form:errors cssClass="text-error" path="authorized.password" />
-                </div>       
-                <div class="control-group">
-                    <form:label path="authorized.email"><spring:message code="E-mail Address" /></form:label>
-                    <form:input path="authorized.email" />
-                    <form:errors cssClass="text-error" path="authorized.email" />
-                </div>       
-                <div class="control-group">
-                    <form:label path="authorized.employee.firstName"><spring:message code="FirstName" /></form:label>
-                    <form:input path="authorized.employee.firstName" />
-                    <form:errors cssClass="text-error" path="authorized.employee.firstName" />
-                </div>       
-                <div class="control-group">
-                    <form:label path="authorized.employee.lastName"><spring:message code="LastName" /></form:label>
-                    <form:input path="authorized.employee.lastName" />
-                    <form:errors cssClass="text-error" path="authorized.employee.lastName" />
-                </div>
-                <div class="control-group">
-                    <form:label path="authorized.employee.phonenumber"><spring:message code="Phone Number" /></form:label>
-                    <form:input path="authorized.employee.phonenumber" />
-                    <form:errors cssClass="text-error" path="authorized.employee.phonenumber" />
-                </div>
-            </fieldset>
-        </div>
-        <div class="span4">
-            <fieldset>
-                <legend>Firma Diger Bilgileri</legend>
+                <legend><spring:message code="Additional Information" /></legend>
                 <div class="control-group">
                     <form:label path="active">Aktif mi?</form:label>
                     <form:checkbox path="active" />
@@ -104,6 +68,19 @@
                     <form:label path="disposalcost"><spring:message code="Disposal Cost" /></form:label>
                     <form:input path="disposalcost" />
                     <form:errors cssClass="text-error" path="disposalcost" />
+                </div>
+            </fieldset>
+        </div>
+        <div class="span4">
+            <fieldset>
+                <legend><spring:message code="Member" /></legend>
+                <div class="control-group">
+                    <form:label path="member"><spring:message code="Member" /></form:label>
+                    <form:select path="member.id" multiple="false">
+                        <form:option value="" label="-----" />
+                        <form:options items="${members}" itemLabel="username" itemValue="id" />
+                    </form:select>
+                    <form:errors cssClass="text-error" path="member" />
                 </div>
             </fieldset>
         </div>

@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aripd.account.domain.Account;
-import com.aripd.account.service.AccountService;
+import com.aripd.member.domain.Member;
+import com.aripd.member.service.MemberService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesParam;
@@ -35,8 +35,8 @@ public class UserExpenseController {
 
     @Resource(name = "expenseService")
     private ExpenseService expenseService;
-    @Resource(name = "accountService")
-    private AccountService accountService;
+    @Resource(name = "memberService")
+    private MemberService memberService;
     @Resource(name = "expensetypeService")
     private ExpensetypeService expensetypeService;
 
@@ -61,8 +61,8 @@ public class UserExpenseController {
             @PathVariable Long id,
             Model model) {
 
-        Account account = accountService.findOneByUsername(principal.getName());
-        Expense expense = expenseService.findOneByAccountAndId(account, id);
+        Member member = memberService.findOneByUsername(principal.getName());
+        Expense expense = expenseService.findOneByMemberAndId(member, id);
 
         if (expense instanceof Expense == false) {
             redirectAttributes.addFlashAttribute("message", "message.record.not.access");
@@ -110,8 +110,8 @@ public class UserExpenseController {
             return "/userexpense/form";
         }
 
-        Account account = accountService.findOneByUsername(principal.getName());
-        formData.setAccount(account);
+        Member member = memberService.findOneByUsername(principal.getName());
+        formData.setMember(member);
 
         Expense expense = expenseService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
@@ -125,8 +125,8 @@ public class UserExpenseController {
             @PathVariable Long id,
             Model model) {
 
-        Account account = accountService.findOneByUsername(principal.getName());
-        Expense expense = expenseService.findOneByAccountAndId(account, id);
+        Member member = memberService.findOneByUsername(principal.getName());
+        Expense expense = expenseService.findOneByMemberAndId(member, id);
 
         if (expense instanceof Expense == false) {
             redirectAttributes.addFlashAttribute("message", "message.record.not.access");
@@ -144,8 +144,8 @@ public class UserExpenseController {
             Principal principal,
             @RequestParam(value = "id", required = true) Long id) {
 
-        Account account = accountService.findOneByUsername(principal.getName());
-        Expense expense = expenseService.findOneByAccountAndId(account, id);
+        Member member = memberService.findOneByUsername(principal.getName());
+        Expense expense = expenseService.findOneByMemberAndId(member, id);
 
         if (expense instanceof Expense == false) {
             redirectAttributes.addFlashAttribute("message", "message.record.not.access");

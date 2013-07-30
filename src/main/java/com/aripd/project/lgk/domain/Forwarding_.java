@@ -8,7 +8,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 import org.joda.time.DateTime;
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import com.aripd.common.entity.BaseEntity_;
 
 /**
@@ -20,7 +20,7 @@ import com.aripd.common.entity.BaseEntity_;
 public class Forwarding_ extends BaseEntity_ {
 
     public static volatile SingularAttribute<Forwarding, Boolean> submitted;
-    public static volatile SingularAttribute<Forwarding, Account> account;
+    public static volatile SingularAttribute<Forwarding, Member> member;
     public static volatile SingularAttribute<Forwarding, String> waybillNo;
     public static volatile SingularAttribute<Forwarding, String> driver;
     public static volatile SingularAttribute<Forwarding, String> plate;

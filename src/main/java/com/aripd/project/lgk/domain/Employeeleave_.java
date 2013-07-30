@@ -3,7 +3,7 @@ package com.aripd.project.lgk.domain;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import com.aripd.common.entity.BaseEntity_;
 import java.util.Date;
 
@@ -16,7 +16,8 @@ import java.util.Date;
 public class Employeeleave_ extends BaseEntity_ {
 
     public static volatile SingularAttribute<Employeeleave, Boolean> submitted;
-    public static volatile SingularAttribute<Employeeleave, Account> account;
+    public static volatile SingularAttribute<Employeeleave, Member> member;
+    public static volatile SingularAttribute<Employeeleave, Employee> employee;
     public static volatile SingularAttribute<Employeeleave, Employeeleavetype> employeeleavetype;
     public static volatile SingularAttribute<Employeeleave, Date> startingDate;
     public static volatile SingularAttribute<Employeeleave, Date> endingDate;

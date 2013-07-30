@@ -1,16 +1,17 @@
 package com.aripd.project.lgk.model;
 
-import com.aripd.account.domain.Account;
+import com.aripd.project.lgk.domain.Employee;
 
 public class EmployeeleaveFilterByIntervalForm {
 
-    private Account account;
+    private Employee employee;
 
-    public Account getAccount() {
-        return account;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
+
 }

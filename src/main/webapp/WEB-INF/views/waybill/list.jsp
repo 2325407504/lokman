@@ -16,7 +16,7 @@
 
 <aripd:datatables datasource="/waybill/get" id="waybills" dataUrlShow="/waybill/show" dataUrlEdit="/waybill/edit">
     <aripd:datatablescolumn label="Action" field="id"/>
-    <aripd:datatablescolumn label="Account" field="account.username"/>
+    <aripd:datatablescolumn label="Member" field="member.username"/>
     <aripd:datatablescolumn label="Document No" field="documentNo"/>
     <aripd:datatablescolumn label="Document Date" field="documentDate"/>
     <aripd:datatablescolumn label="Company" field="company"/>

@@ -1,7 +1,7 @@
 package com.aripd.project.lgk.service.impl;
 
-import com.aripd.account.domain.Account;
-import com.aripd.account.service.AccountService;
+import com.aripd.member.domain.Member;
+import com.aripd.member.service.MemberService;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -55,8 +55,8 @@ public class WeighbridgeServiceImpl implements WeighbridgeService {
     private EntityManager em;
     @Autowired
     private WeighbridgeRepository repository;
-    @Resource(name = "accountService")
-    private AccountService accountService;
+    @Resource(name = "memberService")
+    private MemberService memberService;
 
     public Weighbridge findOne(Long id) {
         return repository.findOne(id);
@@ -159,7 +159,7 @@ public class WeighbridgeServiceImpl implements WeighbridgeService {
         List<Weighbridge> weighbridges = new ArrayList<Weighbridge>();
         Weighbridge weighbridge;
 
-        Account account = accountService.findOneByUsername(principal.getName());
+        Member member = memberService.findOneByUsername(principal.getName());
 
         //while (rows.hasNext()) {
         for (int i = 1; i <= worksheet.getLastRowNum(); i++) {
@@ -202,7 +202,7 @@ public class WeighbridgeServiceImpl implements WeighbridgeService {
 
             weighbridge = new Weighbridge();
             weighbridge.setSubmitted(true);
-            weighbridge.setAccount(account);
+            weighbridge.setMember(member);
             weighbridge.setClerk(clerk);
             weighbridge.setPlate(plate);
             weighbridge.setDriver(driver);

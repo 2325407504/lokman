@@ -14,7 +14,7 @@
 
 <aripd:datatables datasource="/userforwarding/get" id="forwardings" dataUrlShow="/userforwarding/show" dataUrlEdit="/userforwarding/edit">
 	<aripd:datatablescolumn label="Action" field="id"/>
-	<aripd:datatablescolumn label="Account" field="account.username"/>
+	<aripd:datatablescolumn label="Member" field="member.username"/>
 	<aripd:datatablescolumn label="Document No" field="waybillNo"/>
 	<aripd:datatablescolumn label="Driver" field="driver"/>
 	<aripd:datatablescolumn label="Subcontractor" field="subcontractor.name"/>

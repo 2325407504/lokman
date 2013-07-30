@@ -30,8 +30,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aripd.account.domain.Account;
-import com.aripd.account.service.AccountService;
+import com.aripd.member.domain.Member;
+import com.aripd.member.service.MemberService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesSortField;
@@ -61,8 +61,8 @@ public class ForwardingServiceImpl implements ForwardingService {
     private EntityManager em;
     @Autowired
     private ForwardingRepository repository;
-    @Resource(name = "accountService")
-    private AccountService accountService;
+    @Resource(name = "memberService")
+    private MemberService memberService;
     @Resource(name = "subcontractorService")
     private SubcontractorService subcontractorService;
     @Resource(name = "quotaService")
@@ -80,8 +80,8 @@ public class ForwardingServiceImpl implements ForwardingService {
         return repository.findOneByWaybillNo(waybillNo);
     }
 
-    public Forwarding findOneByAccountAndId(Account account, Long id) {
-        return repository.findOneByAccountAndId(account, id);
+    public Forwarding findOneByMemberAndId(Member member, Long id) {
+        return repository.findOneByMemberAndId(member, id);
     }
 
     public List<Forwarding> findByInterval(DateTime startingTime, DateTime endingTime) {
@@ -221,8 +221,8 @@ public class ForwardingServiceImpl implements ForwardingService {
         // Filtering and Searching
         List<Predicate> predicateList = new ArrayList<Predicate>();
 
-        Account account = accountService.findOneByUsername(principal.getName());
-        Predicate predicate_ = cb.equal(root.get(Forwarding_.account), account);
+        Member member = memberService.findOneByUsername(principal.getName());
+        Predicate predicate_ = cb.equal(root.get(Forwarding_.member), member);
 
         if ((search != null) && (!(search.isEmpty()))) {
             Predicate predicate1 = cb.like(root.get(Forwarding_.waybillNo), "%" + search + "%");
@@ -297,7 +297,7 @@ public class ForwardingServiceImpl implements ForwardingService {
 
             forwarding = new Forwarding();
             forwarding.setSubmitted(true);
-            forwarding.setAccount(accountService.findOneByUsername(username));
+            forwarding.setMember(memberService.findOneByUsername(username));
             forwarding.setWaybillNo(waybillNo);
             forwarding.setDriver(driver);
             forwarding.setPlate(plate);

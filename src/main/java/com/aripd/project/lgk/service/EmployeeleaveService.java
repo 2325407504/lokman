@@ -1,12 +1,13 @@
 package com.aripd.project.lgk.service;
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import java.security.Principal;
 
 import javax.servlet.http.HttpServletResponse;
 
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
+import com.aripd.project.lgk.domain.Employee;
 import com.aripd.project.lgk.domain.Employeeleave;
 import com.aripd.project.lgk.model.EmployeeleaveReportModel;
 import java.util.List;
@@ -17,7 +18,7 @@ public interface EmployeeleaveService {
 
     public Employeeleave findOne(Long id);
 
-    public List<Employeeleave> findByAccount(Account account);
+    public List<Employeeleave> findByEmployee(Employee employee);
 
     public Employeeleave save(Employeeleave employeeleave);
 
@@ -31,11 +32,11 @@ public interface EmployeeleaveService {
 
     public void importData(MultipartFile file);
 
-    public void exportByAccount(HttpServletResponse response, Account account);
+    public void export(HttpServletResponse response, Member member);
 
-    public List<EmployeeleaveReportModel> retrieveDatasource(Account account);
+    public List<EmployeeleaveReportModel> retrieveDatasource(Member member);
 
-    public int getAnnualLeaveQualified(Account account, DateTime dt1);
+    public int getAnnualLeaveQualified(Member member, DateTime dt1);
 
-    public int getAnnualLeaveUsed(Account account, DateTime dt1, DateTime dt2);
+    public int getAnnualLeaveUsed(Member member, DateTime dt1, DateTime dt2);
 }

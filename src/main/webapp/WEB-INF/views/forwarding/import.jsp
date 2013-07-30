@@ -25,7 +25,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th><spring:message code="Account" /></th>
+                    <th><spring:message code="Member" /></th>
                     <th><spring:message code="Waybill" /></th>
                     <th><spring:message code="Driver" /></th>
                     <th><spring:message code="Plate" /></th>

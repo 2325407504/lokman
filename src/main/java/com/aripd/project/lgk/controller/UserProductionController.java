@@ -1,6 +1,6 @@
 package com.aripd.project.lgk.controller;
 
-import com.aripd.account.domain.Account;
+import com.aripd.member.domain.Member;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aripd.account.service.AccountService;
+import com.aripd.member.service.MemberService;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesParam;
@@ -50,8 +50,8 @@ public class UserProductionController {
 
     @Resource(name = "productionService")
     private ProductionService productionService;
-    @Resource(name = "accountService")
-    private AccountService accountService;
+    @Resource(name = "memberService")
+    private MemberService memberService;
     @Resource(name = "productService")
     private ProductService productService;
     @Resource(name = "electricmeterService")
@@ -84,7 +84,7 @@ public class UserProductionController {
             @PathVariable Long id,
             Model model) {
 
-        Account account = accountService.findOneByUsername(principal.getName());
+        Member member = memberService.findOneByUsername(principal.getName());
         Production production = productionService.findOne(id);
 
         if (production instanceof Production == false) {
@@ -113,8 +113,8 @@ public class UserProductionController {
             @PathVariable Long id,
             Model model) {
 
-        Account account = accountService.findOneByUsername(principal.getName());
-        Production production = productionService.findOneByAccountAndId(account, id);
+        Member member = memberService.findOneByUsername(principal.getName());
+        Production production = productionService.findOneByMemberAndId(member, id);
 
         if (production.isSubmitted()) {
             redirectAttributes.addFlashAttribute("message", "message.record.not.editable");
@@ -145,8 +145,8 @@ public class UserProductionController {
             return "/userproduction/form";
         }
 
-        Account account = accountService.findOneByUsername(principal.getName());
-        formData.setAccount(account);
+        Member member = memberService.findOneByUsername(principal.getName());
+        formData.setMember(member);
 
         Production production = productionService.save(formData);
 
@@ -170,8 +170,8 @@ public class UserProductionController {
             Principal principal,
             @PathVariable Long id) {
 
-        Account account = accountService.findOneByUsername(principal.getName());
-        Production production = productionService.findOneByAccountAndId(account, id);
+        Member member = memberService.findOneByUsername(principal.getName());
+        Production production = productionService.findOneByMemberAndId(member, id);
 
         if (production instanceof Production == false) {
             redirectAttributes.addFlashAttribute("message", "message.record.not.access");
@@ -189,8 +189,8 @@ public class UserProductionController {
             Principal principal,
             @RequestParam(value = "id", required = true) Long id) {
 
-        Account account = accountService.findOneByUsername(principal.getName());
-        Production production = productionService.findOneByAccountAndId(account, id);
+        Member member = memberService.findOneByUsername(principal.getName());
+        Production production = productionService.findOneByMemberAndId(member, id);
 
         if (production instanceof Production == false) {
             redirectAttributes.addFlashAttribute("message", "message.record.not.access");
@@ -232,7 +232,7 @@ public class UserProductionController {
             return "/userproduction/report";
         }
 
-        productionService.exportByInterval(response, startingTime, endingTime);
+        productionService.export(response, startingTime, endingTime);
         return "redirect:/userproduction/report";
     }
 

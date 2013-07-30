@@ -24,9 +24,9 @@
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <form:input path="startingDate" cssClass="input-medium" placeholder="${startingDate}" />
     <form:input path="endingDate" cssClass="input-medium" placeholder="${endingDate}" />
-    <form:select multiple="false" path="account.id" cssClass="input-medium">
+    <form:select multiple="false" path="member.id" cssClass="input-medium">
         <form:option value="" label="--- ${all}" />
-        <form:options items="${accounts}" itemLabel="employee.fullname" itemValue="id" />
+        <form:options items="${members}" itemLabel="employee.fullname" itemValue="id" />
     </form:select>
     <button class="btn" type="submit">
         <i class="icon-download-alt"></i> <spring:message code="Download" />
