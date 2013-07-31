@@ -25,9 +25,9 @@
         <div class="span12">
             <div class="control-group">
                 <form:label path="startingDate">${startingDate} - ${endingDate}</form:label>
-                <form:input id="start1" path="startingDate" cssClass="input-medium" placeholder="${startingDate}" />
+                <form:input path="startingDate" cssClass="input-medium" placeholder="${startingDate}" />
                 <form:errors cssClass="text-error" path="startingDate" />
-                <form:input id="end1" path="endingDate" cssClass="input-medium" placeholder="${endingDate}" />
+                <form:input path="endingDate" cssClass="input-medium" placeholder="${endingDate}" />
                 <form:errors cssClass="text-error" path="endingDate" />
             </div>
             <div class="control-group">

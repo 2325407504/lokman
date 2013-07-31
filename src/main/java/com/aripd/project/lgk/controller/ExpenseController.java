@@ -130,7 +130,7 @@ public class ExpenseController {
             return "/expense/report";
         }
 
-        expenseService.export(response, formData.getStartingDate(), formData.getEndingDate(), formData.getEmployee().getMember().getId());
+        expenseService.export(response, formData.getStartingDate(), formData.getEndingDate(), formData.getMember().getId());
         return "redirect:/expense/report";
     }
 

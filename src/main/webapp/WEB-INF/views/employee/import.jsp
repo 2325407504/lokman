@@ -24,7 +24,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th><spring:message code="TC Kimlik" /></th>
+                    <th><spring:message code="TC Kimlik No" /></th>
                     <th><spring:message code="FirstName" /></th>
                     <th><spring:message code="LastName" /></th>
                     <th><spring:message code="Postal Address" /></th>

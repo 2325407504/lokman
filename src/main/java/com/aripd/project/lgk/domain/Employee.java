@@ -9,13 +9,19 @@ import javax.persistence.Transient;
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.common.util.ARIPDDateSerializer;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Past;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -54,6 +60,10 @@ public class Employee extends BaseEntity {
     private Member member;
     @ManyToOne
     private Region region;
+    @JsonIgnore
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Payment> payments;
 
     @Override
     public String toString() {
@@ -141,5 +151,13 @@ public class Employee extends BaseEntity {
 
     public void setRegion(Region region) {
         this.region = region;
+    }
+
+    public List<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
     }
 }

@@ -20,17 +20,31 @@
 
 <p class="lead"><spring:message code="Expense" /></p>
 <spring:url var="expenseReport" value="/expense/report" />
-<form:form modelAttribute="expenseFilterByIntervalForm" action="${expenseReport}" method="post" class="form-inline">
+<form:form modelAttribute="expenseFilterByIntervalForm" action="${expenseReport}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
-    <form:input path="startingDate" cssClass="input-medium" placeholder="${startingDate}" />
-    <form:input path="endingDate" cssClass="input-medium" placeholder="${endingDate}" />
-    <form:select multiple="false" path="member.id" cssClass="input-medium">
-        <form:option value="" label="--- ${all}" />
-        <form:options items="${members}" itemLabel="employee.fullname" itemValue="id" />
-    </form:select>
-    <button class="btn" type="submit">
-        <i class="icon-download-alt"></i> <spring:message code="Download" />
-    </button>
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="control-group">
+                <form:label path="startingDate">${startingDate} - ${endingDate}</form:label>
+                <form:input path="startingDate" cssClass="input-medium" placeholder="${startingDate}" />
+                <form:errors cssClass="text-error" path="startingDate" />
+                <form:input path="endingDate" cssClass="input-medium" placeholder="${endingDate}" />
+                <form:errors cssClass="text-error" path="endingDate" />
+            </div>
+            <div class="control-group">
+                <form:label path="member"><spring:message code="Expense" /></form:label>
+                <form:select multiple="false" path="member.id" cssClass="input-medium">
+                    <form:option value="" label="--- ${all}" />
+                    <form:options items="${members}" itemLabel="username" itemValue="id" />
+                </form:select>
+            </div>
+            <div class="control-group">
+                <button class="btn" type="submit">
+                    <i class="icon-download-alt"></i> <spring:message code="Download" />
+                </button>
+            </div>
+        </div>
+    </div>
 </form:form>
 
 

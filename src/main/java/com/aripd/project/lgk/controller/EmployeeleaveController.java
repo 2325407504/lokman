@@ -26,6 +26,7 @@ import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Employeeleave;
 import com.aripd.project.lgk.model.EmployeeleaveFilterByIntervalForm;
+import com.aripd.project.lgk.service.EmployeeService;
 import com.aripd.project.lgk.service.EmployeeleaveService;
 import com.aripd.project.lgk.service.EmployeeleavetypeService;
 import org.springframework.validation.annotation.Validated;
@@ -39,6 +40,8 @@ public class EmployeeleaveController {
     private EmployeeleaveService employeeleaveService;
     @Resource(name = "memberService")
     private MemberService memberService;
+    @Resource(name = "employeeService")
+    private EmployeeService employeeService;
     @Resource(name = "employeeleavetypeService")
     private EmployeeleavetypeService employeeleavetypeService;
 
@@ -62,7 +65,7 @@ public class EmployeeleaveController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-        model.addAttribute("members", memberService.findAll());
+        model.addAttribute("employees", employeeService.findAll());
         model.addAttribute("employeeleavetypes", employeeleavetypeService.findAll());
         model.addAttribute("employeeleaveAttribute", new Employeeleave());
         return "employeeleave/form";
@@ -70,7 +73,7 @@ public class EmployeeleaveController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
-        model.addAttribute("members", memberService.findAll());
+        model.addAttribute("employees", employeeService.findAll());
         model.addAttribute("employeeleavetypes", employeeleavetypeService.findAll());
         model.addAttribute("employeeleaveAttribute", employeeleaveService.findOne(id));
         return "employeeleave/form";
@@ -84,7 +87,7 @@ public class EmployeeleaveController {
             Model model) {
 
         if (result.hasErrors()) {
-            model.addAttribute("members", memberService.findAll());
+            model.addAttribute("employees", employeeService.findAll());
             model.addAttribute("employeeleavetypes", employeeleavetypeService.findAll());
             return "/employeeleave/form";
         }
@@ -113,7 +116,7 @@ public class EmployeeleaveController {
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public String reportAction(Model model) {
-        model.addAttribute("members", memberService.findAll());
+        model.addAttribute("employees", employeeService.findAll());
         model.addAttribute("employeeleaveFilterByIntervalForm", new EmployeeleaveFilterByIntervalForm());
         return "employeeleave/report";
     }
@@ -127,7 +130,7 @@ public class EmployeeleaveController {
             Model model) {
 
         if (result.hasErrors()) {
-            model.addAttribute("members", memberService.findAll());
+            model.addAttribute("employees", employeeService.findAll());
             return "/employeeleave/report";
         }
 
