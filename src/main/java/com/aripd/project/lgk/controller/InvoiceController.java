@@ -132,7 +132,7 @@ public class InvoiceController {
         return "redirect:/invoice/edit/" + id;
     }
 
-    @RequestMapping(value = "/waybill/remove/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/waybill/remove/{id}", method = RequestMethod.GET)
     public String waybillRemoveAction(
             @PathVariable Long id,
             final RedirectAttributes redirectAttributes) {

@@ -50,7 +50,7 @@
         </c:if>
                         }
         <c:if test="${not empty dataUrlDelete}">
-                        $('td:eq(${actionColumn})', nRow).append('<form style="display:inline" method="POST" action="<spring:url value="${dataUrlDelete}" />/' + aData.id + '"><button type="submit"><i class="icon-remove"></i></button></form>&nbsp;');
+                        $('td:eq(${actionColumn})', nRow).append('<a href="<spring:url value="${dataUrlDelete}" />/' + aData.id + '"><i class="icon-remove"></i></a>&nbsp;');
         </c:if>
     </c:if>
                 },

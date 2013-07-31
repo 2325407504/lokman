@@ -23,8 +23,10 @@ import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.model.FileUploadBean;
 import com.aripd.common.dto.ControllerUtils;
+import com.aripd.member.domain.Member;
 import com.aripd.project.lgk.domain.Employeeworkinghour;
 import com.aripd.project.lgk.model.EmployeeworkinghourFilterByIntervalForm;
+import com.aripd.project.lgk.service.EmployeeService;
 import com.aripd.project.lgk.service.EmployeeworkinghourService;
 import com.aripd.project.lgk.service.EmployeeworkinghourtypeService;
 import java.security.Principal;
@@ -39,6 +41,8 @@ public class EmployeeworkinghourController {
     private EmployeeworkinghourService employeeworkinghourService;
     @Resource(name = "memberService")
     private MemberService memberService;
+    @Resource(name = "employeeService")
+    private EmployeeService employeeService;
     @Resource(name = "employeeworkinghourtypeService")
     private EmployeeworkinghourtypeService employeeworkinghourtypeService;
 
@@ -62,7 +66,7 @@ public class EmployeeworkinghourController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(Model model) {
-        model.addAttribute("members", memberService.findAll());
+        model.addAttribute("employees", employeeService.findAll());
         model.addAttribute("employeeworkinghourtypes", employeeworkinghourtypeService.findAll());
         model.addAttribute("employeeworkinghourAttribute", new Employeeworkinghour());
         return "employeeworkinghour/form";
@@ -70,7 +74,7 @@ public class EmployeeworkinghourController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editAction(@PathVariable Long id, Model model) {
-        model.addAttribute("members", memberService.findAll());
+        model.addAttribute("employees", employeeService.findAll());
         model.addAttribute("employeeworkinghourtypes", employeeworkinghourtypeService.findAll());
         model.addAttribute("employeeworkinghourAttribute", employeeworkinghourService.findOne(id));
         return "employeeworkinghour/form";
@@ -79,16 +83,20 @@ public class EmployeeworkinghourController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
+            Principal principal,
             @ModelAttribute("employeeworkinghourAttribute") @Valid Employeeworkinghour formData,
             BindingResult result,
             Model model) {
 
         if (result.hasErrors()) {
-            model.addAttribute("members", memberService.findAll());
+            model.addAttribute("employees", employeeService.findAll());
             model.addAttribute("employeeworkinghourtypes", employeeworkinghourtypeService.findAll());
             return "/employeeworkinghour/form";
         }
 
+        Member member = memberService.findOneByUsername(principal.getName());
+        formData.setMember(member);
+        
         Employeeworkinghour employeeworkinghour = employeeworkinghourService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");
         return "redirect:/employeeworkinghour/show/" + employeeworkinghour.getId();
@@ -113,7 +121,7 @@ public class EmployeeworkinghourController {
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public String reportAction(Model model) {
-        model.addAttribute("members", memberService.findAll());
+        model.addAttribute("employees", employeeService.findAll());
         model.addAttribute("employeeworkinghourtypes", employeeworkinghourtypeService.findAll());
         model.addAttribute("employeeworkinghourFilterByIntervalForm", new EmployeeworkinghourFilterByIntervalForm());
         return "employeeworkinghour/report";
@@ -128,7 +136,7 @@ public class EmployeeworkinghourController {
             Model model) {
 
         if (result.hasErrors()) {
-            model.addAttribute("members", memberService.findAll());
+            model.addAttribute("employees", employeeService.findAll());
             model.addAttribute("employeeworkinghourtypes", employeeworkinghourtypeService.findAll());
             return "/employeeworkinghour/report";
         }

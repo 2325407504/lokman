@@ -17,9 +17,9 @@
 <aripd:datatables datasource="/invoice/get" id="invoices" dataUrlShow="/invoice/show" dataUrlEdit="/invoice/edit">
     <aripd:datatablescolumn label="Action" field="id"/>
     <aripd:datatablescolumn label="Member" field="member.username"/>
+    <aripd:datatablescolumn label="Customer" field="customer.name"/>
     <aripd:datatablescolumn label="Document No" field="documentNo"/>
     <aripd:datatablescolumn label="Document Date" field="documentDate"/>
-    <aripd:datatablescolumn label="Customer" field="customer.name"/>
     <aripd:datatablescolumn label="Amount" field="amount"/>
 </aripd:datatables>
 

@@ -64,6 +64,14 @@ public class Employee extends BaseEntity {
     @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Payment> payments;
+    @JsonIgnore
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Employeeleave> employeeleaves;
+    @JsonIgnore
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Employeeworkinghour> employeeworkinghours;
 
     @Override
     public String toString() {
@@ -159,5 +167,21 @@ public class Employee extends BaseEntity {
 
     public void setPayments(List<Payment> payments) {
         this.payments = payments;
+    }
+
+    public List<Employeeleave> getEmployeeleaves() {
+        return employeeleaves;
+    }
+
+    public void setEmployeeleaves(List<Employeeleave> employeeleaves) {
+        this.employeeleaves = employeeleaves;
+    }
+
+    public List<Employeeworkinghour> getEmployeeworkinghours() {
+        return employeeworkinghours;
+    }
+
+    public void setEmployeeworkinghours(List<Employeeworkinghour> employeeworkinghours) {
+        this.employeeworkinghours = employeeworkinghours;
     }
 }

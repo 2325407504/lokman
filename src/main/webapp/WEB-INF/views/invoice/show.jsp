@@ -18,7 +18,7 @@
     <div class="span4">
         <aripd:description id="invoice1">
             <aripd:descriptionitem label="Status" field="invoiceAttribute.submitted"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Member" field="invoiceAttribute.member.employee.fullname"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Member" field="invoiceAttribute.member.username"></aripd:descriptionitem>
         </aripd:description>
     </div>
     <div class="span4">

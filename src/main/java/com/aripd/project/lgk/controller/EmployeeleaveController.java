@@ -29,6 +29,7 @@ import com.aripd.project.lgk.model.EmployeeleaveFilterByIntervalForm;
 import com.aripd.project.lgk.service.EmployeeService;
 import com.aripd.project.lgk.service.EmployeeleaveService;
 import com.aripd.project.lgk.service.EmployeeleavetypeService;
+import java.security.Principal;
 import org.springframework.validation.annotation.Validated;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN') or hasRole('ROLE_ADMIN')")
@@ -82,6 +83,7 @@ public class EmployeeleaveController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveAction(
             final RedirectAttributes redirectAttributes,
+            Principal principal,
             @ModelAttribute("employeeleaveAttribute") @Valid Employeeleave formData,
             BindingResult result,
             Model model) {
@@ -91,6 +93,9 @@ public class EmployeeleaveController {
             model.addAttribute("employeeleavetypes", employeeleavetypeService.findAll());
             return "/employeeleave/form";
         }
+        
+        Member member = memberService.findOneByUsername(principal.getName());
+        formData.setMember(member);
 
         Employeeleave employeeleave = employeeleaveService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");

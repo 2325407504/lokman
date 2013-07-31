@@ -16,7 +16,7 @@
 
 <aripd:datatables datasource="/employeeworkinghour/get" id="employeeworkinghours" dataUrlShow="/employeeworkinghour/show" dataUrlEdit="/employeeworkinghour/edit">
     <aripd:datatablescolumn label="Action" field="id"/>
-    <aripd:datatablescolumn label="Member" field="member.employee.fullname"/>
+    <aripd:datatablescolumn label="Employee" field="employee.fullname"/>
     <aripd:datatablescolumn label="Employee Working Hour Type" field="employeeworkinghourtype.name"/>
     <aripd:datatablescolumn label="Starting Time" field="startingTime"/>
     <aripd:datatablescolumn label="Ending Time" field="endingTime"/>

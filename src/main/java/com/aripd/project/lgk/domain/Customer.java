@@ -38,10 +38,12 @@ public class Customer extends BaseEntity {
     private Double shippingcost;
     @JsonIgnore
     @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Shippingcost> shippingcosts;
     private Double disposalcost;
     @JsonIgnore
     @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Disposalcost> disposalcosts;
 
     @Override

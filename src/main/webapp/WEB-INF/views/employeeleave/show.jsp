@@ -18,7 +18,7 @@
     <div class="span12">
         <aripd:description id="employeeleave">
             <aripd:descriptionitem label="Submit" field="employeeleaveAttribute.submitted"></aripd:descriptionitem>
-            <aripd:descriptionitem label="Member" field="employeeleaveAttribute.member.employee.fullname"></aripd:descriptionitem>
+            <aripd:descriptionitem label="Employee" field="employeeleaveAttribute.employee.fullname"></aripd:descriptionitem>
             <aripd:descriptionitem label="Employee Leave Type" field="employeeleaveAttribute.employeeleavetype.name"></aripd:descriptionitem>
             <aripd:descriptionitem label="Starting Date" field="employeeleaveAttribute.startingDate"></aripd:descriptionitem>
             <aripd:descriptionitem label="Ending Date" field="employeeleaveAttribute.endingDate"></aripd:descriptionitem>

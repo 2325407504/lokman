@@ -66,7 +66,7 @@ public class UatfController {
         return "redirect:/forwarding/edit/" + forwarding_id;
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete/{id}", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE})
     public String delete(
             final RedirectAttributes redirectAttributes,
             HttpServletRequest request,

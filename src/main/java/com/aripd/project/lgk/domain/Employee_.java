@@ -5,6 +5,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
 import com.aripd.common.entity.BaseEntity_;
+import javax.persistence.metamodel.ListAttribute;
 import org.joda.time.DateTime;
 
 /**
@@ -24,4 +25,7 @@ public class Employee_ extends BaseEntity_ {
     public static volatile SingularAttribute<Employee, String> tckimlikno;
     public static volatile SingularAttribute<Employee, Member> member;
     public static volatile SingularAttribute<Employee, Region> region;
+    public static volatile ListAttribute<Employee, Payment> payments;
+    public static volatile ListAttribute<Employee, Employeeleave> employeeleaves;
+    public static volatile ListAttribute<Employee, Employeeworkinghour> employeeworkinghours;
 }

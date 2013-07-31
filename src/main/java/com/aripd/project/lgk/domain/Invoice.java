@@ -30,6 +30,8 @@ public class Invoice extends BaseEntity {
     @ManyToOne
     @JoinColumn(nullable = false, insertable = true, updatable = true)
     private Member member;
+    @ManyToOne
+    private Customer customer;
     private String documentNo;
     @NotNull
     @Past
@@ -37,8 +39,6 @@ public class Invoice extends BaseEntity {
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
     private Date documentDate;
-    @ManyToOne
-    private Customer customer;
     @Column(nullable = false)
     @NotNull
     private BigDecimal amount;
