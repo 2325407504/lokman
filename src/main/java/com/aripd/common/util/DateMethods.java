@@ -3,9 +3,6 @@ package com.aripd.common.util;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import org.joda.time.DateTime;
-import org.joda.time.Days;
-import org.joda.time.Hours;
 
 /**
  *

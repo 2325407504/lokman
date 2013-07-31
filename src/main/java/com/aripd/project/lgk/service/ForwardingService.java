@@ -20,6 +20,8 @@ public interface ForwardingService {
 
     public Forwarding findOneByWaybillNo(String waybillNo);
 
+    public boolean isExistByWaybillNoExceptId(String waybillNo, Long id);
+
     public List<Forwarding> findByInterval(DateTime startingTime, DateTime endingTime);
 
     public Forwarding save(Forwarding formData);

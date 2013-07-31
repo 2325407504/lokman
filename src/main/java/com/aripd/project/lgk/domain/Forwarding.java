@@ -1,5 +1,6 @@
 package com.aripd.project.lgk.domain;
 
+import com.aripd.common.annotation.Plate;
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -38,6 +39,7 @@ public class Forwarding extends BaseEntity {
     @NotEmpty
     private String driver;
     @NotEmpty
+    @Plate
     private String plate;
     @NotNull
     @JsonSerialize(using = ARIPDJodaDateTimeSerializer.class)

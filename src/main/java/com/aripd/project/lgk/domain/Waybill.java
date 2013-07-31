@@ -1,5 +1,6 @@
 package com.aripd.project.lgk.domain;
 
+import com.aripd.common.annotation.Plate;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -20,6 +21,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -45,6 +47,8 @@ public class Waybill extends BaseEntity {
     private String documentNo;
     private String company;
     private String driver;
+    @NotEmpty
+    @Plate
     private String plate;
     @JsonIgnore
     @OneToMany(mappedBy = "waybill", cascade = CascadeType.REMOVE)

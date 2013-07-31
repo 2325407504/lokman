@@ -1,5 +1,6 @@
 package com.aripd.project.lgk.domain;
 
+import com.aripd.common.annotation.Plate;
 import com.aripd.member.domain.Member;
 import com.aripd.common.entity.BaseEntity;
 import com.aripd.common.util.ARIPDJodaDateTimeSerializer;
@@ -17,7 +18,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
 
 @Entity
@@ -30,7 +31,8 @@ public class Weighbridge extends BaseEntity {
     @JoinColumn(nullable = false, insertable = true, updatable = true)
     private Member member;
     private String clerk;
-    @NotBlank
+    @NotEmpty
+    @Plate
     private String plate;
     private String driver;
     @Column(nullable = true)

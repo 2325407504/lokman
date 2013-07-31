@@ -84,6 +84,22 @@ public class ForwardingServiceImpl implements ForwardingService {
         return repository.findOneByMemberAndId(member, id);
     }
 
+    public boolean isExistByWaybillNoExceptId(String waybillNo, Long id) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Forwarding> cq = cb.createQuery(Forwarding.class);
+        Root<Forwarding> root = cq.from(Forwarding.class);
+
+        Predicate predicate1 = cb.notEqual(root.get(Forwarding_.id), id);
+        Predicate predicate2 = cb.equal(root.get(Forwarding_.waybillNo), waybillNo);
+        Predicate predicate = cb.and(predicate1, predicate2);
+
+        cq.where(predicate);
+
+        TypedQuery<Forwarding> typedQuery = em.createQuery(cq);
+        List<Forwarding> resultList = typedQuery.getResultList();
+        return (resultList.isEmpty()) ? false : true;
+    }
+
     public List<Forwarding> findByInterval(DateTime startingTime, DateTime endingTime) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Forwarding> cq = cb.createQuery(Forwarding.class);

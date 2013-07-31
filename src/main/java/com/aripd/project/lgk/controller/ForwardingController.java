@@ -31,9 +31,14 @@ import com.aripd.project.lgk.service.QuotaService;
 import com.aripd.project.lgk.service.StartingpointService;
 import com.aripd.project.lgk.service.SubcontractorService;
 import com.aripd.project.lgk.service.TruckService;
+import java.util.Locale;
 import javax.validation.Valid;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_ADMIN') and hasRole('ROLE_OTL'))")
@@ -41,6 +46,8 @@ import org.springframework.validation.annotation.Validated;
 @RequestMapping("/forwarding")
 public class ForwardingController {
 
+    @Autowired
+    private MessageSource messageSource;
     @Resource(name = "forwardingService")
     private ForwardingService forwardingService;
     @Resource(name = "truckService")
@@ -108,6 +115,19 @@ public class ForwardingController {
             BindingResult result,
             Model model) {
 
+        String message = messageSource.getMessage("com.aripd.annotation.NotDuplicateForwardingWaybillno.message", null, LocaleContextHolder.getLocale());
+        if (formData.getId() == null) {
+            Forwarding check1 = forwardingService.findOneByWaybillNo(formData.getWaybillNo());
+            if (check1 != null) {
+                result.addError(new ObjectError("waybillNo", message));
+            }
+        } else {
+            boolean check2 = forwardingService.isExistByWaybillNoExceptId(formData.getWaybillNo(), formData.getId());
+            if (check2) {
+                result.addError(new ObjectError("waybillNo", message));
+            }
+        }
+
         if (result.hasErrors()) {
             model.addAttribute("uatfAttribute", new Uatf());
             model.addAttribute("members", memberService.findAll());
@@ -117,6 +137,7 @@ public class ForwardingController {
             model.addAttribute("endingpoints", endingpointService.findAll());
             return "/forwarding/form";
         }
+
 
         Forwarding forwarding = forwardingService.save(formData);
         redirectAttributes.addFlashAttribute("message", "message.completed.save");

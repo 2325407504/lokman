@@ -1,5 +1,6 @@
 package com.aripd.project.lgk.domain;
 
+import com.aripd.common.annotation.Plate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -7,7 +8,7 @@ import javax.persistence.Table;
 
 import com.aripd.common.entity.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "truck")
@@ -16,8 +17,9 @@ public class Truck extends BaseEntity {
     private boolean active;
     @ManyToOne
     private Region region;
-    @NotBlank
     @Column(unique = true)
+    @NotEmpty
+    @Plate
     private String plate;
 
     @Override
