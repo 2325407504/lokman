@@ -27,7 +27,7 @@
                 </div>
                 <div class="control-group">
                     <form:label path="member"><spring:message code="Member" /></form:label>
-                    <form:select multiple="false" path="member.id" items="${members}" itemLabel="employee.fullname" itemValue="id" />
+                    <form:select multiple="false" path="member.id" items="${members}" itemLabel="username" itemValue="id" />
                     <form:errors cssClass="text-error" path="member" />
                 </div>
                 <div class="control-group">

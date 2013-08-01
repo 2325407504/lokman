@@ -35,8 +35,8 @@
             </div>
             <div class="control-group">
                 <form:label path="plate">${plate}</form:label>
-                <spring:url var="gettruckplates" value="/truck/getplates" />
-                <form:input path="plate" placeholder="${plate}" data-provide="typeahead" data-items="4" data-link="${gettruckplates}" cssClass="input-medium" />
+                <spring:url var="getTruckPlates" value="/userforwarding/getTruckPlates" />
+                <form:input path="plate" placeholder="${plate}" data-provide="typeahead" data-items="4" data-link="${getTruckPlates}" cssClass="input-medium" />
             </div>
             <div class="control-group">
                 <form:label path="startingpoint">${startingpoint} - ${endingpoint}</form:label>

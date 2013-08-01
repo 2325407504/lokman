@@ -70,7 +70,7 @@
                             </sec:authorize>
                             <sec:authorize access="isAnonymous()">
                             </sec:authorize>
-                            <li class="dropdown">
+                            <li class="dropdown hide">
                                 <aripd:language title="Language" />
                             </li>
                         </ul>

@@ -29,7 +29,7 @@
             </div>
             <div class="control-group">
                 <form:label path="member"><spring:message code="Member" /></form:label>
-                <form:select multiple="false" path="member.id" cssClass="input-medium" items="${members}" itemLabel="employee.fullname" itemValue="id" />
+                <form:select multiple="false" path="member.id" cssClass="input-medium" items="${members}" itemLabel="username" itemValue="id" />
             </div>
             <div class="control-group">
                 <button class="btn" type="submit">

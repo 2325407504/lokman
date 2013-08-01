@@ -27,7 +27,7 @@
                 </div>
                 <div class="control-group">
                     <form:label path="member"><spring:message code="Member" /></form:label>
-                    <form:select multiple="false" path="member.id" items="${members}" itemLabel="employee.fullname" itemValue="id" />
+                    <form:select multiple="false" path="member.id" items="${members}" itemLabel="username" itemValue="id" />
                     <form:errors cssClass="text-error" path="member" />
                 </div>
                 <div class="control-group">
@@ -37,14 +37,14 @@
                 </div>
                 <div class="control-group">
                     <form:label path="driver"><spring:message code="Driver" /></form:label>
-                    <spring:url var="getdrivernames" value="/driver/getnames" />
-                    <form:input path="driver" data-provide="typeahead" data-items="4" data-link="${getdrivernames}" />
+                    <spring:url var="getDriverNames" value="/forwarding/getDriverNames" />
+                    <form:input path="driver" data-provide="typeahead" data-items="4" data-link="${getDriverNames}" />
                     <form:errors cssClass="text-error" path="driver" />
                 </div>
                 <div class="control-group">
                     <form:label path="plate"><spring:message code="Plate" /></form:label>
-                    <spring:url var="gettruckplates" value="/truck/getplates" />
-                    <form:input path="plate" data-provide="typeahead" data-items="4" data-link="${gettruckplates}" />
+                    <spring:url var="getTruckPlates" value="/forwarding/getTruckPlates" />
+                    <form:input path="plate" data-provide="typeahead" data-items="4" data-link="${getTruckPlates}" />
                     <form:errors cssClass="text-error" path="plate" />
                 </div>
             </fieldset>
@@ -168,10 +168,10 @@
 </c:if>
 
 <script type="text/javascript">
-    function findAndSetKilometer(plate, startingKm, endingKm) {
+    function getKilometerByPlate(plate, startingKm, endingKm) {
         $.ajax({
             type: "get",
-            url: "truck/getkilometerbyplate",
+            url: "forwarding/getKilometerByPlate",
             data: {q: plate},
             beforeSend: function() {
             },
@@ -238,7 +238,7 @@
                         if (data.length > 0) {
                             self.data('typeahead').updater = function(e) {
                                 console.log(e);
-                                findAndSetKilometer(e, startingKm, endingKm);
+                                getKilometerByPlate(e, startingKm, endingKm);
                                 return e;
                             }
                         }

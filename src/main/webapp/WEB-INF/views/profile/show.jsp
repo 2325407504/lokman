@@ -14,8 +14,6 @@
 <aripd:description id="profile">
     <aripd:descriptionitem label="Username" field="profileAttribute.username"></aripd:descriptionitem>
     <aripd:descriptionitem label="E-mail Address" field="profileAttribute.email"></aripd:descriptionitem>
-    <aripd:descriptionitem label="Fullname" field="profileAttribute.employee.fullname"></aripd:descriptionitem>
-    <aripd:descriptionitem label="Roles" field="profileAttribute.rolesAsString"></aripd:descriptionitem>
 </aripd:description>
 
 <div class="form-actions">

@@ -25,6 +25,7 @@ import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Uatf;
 import com.aripd.project.lgk.model.ForwardingFilterByIntervalForm;
+import com.aripd.project.lgk.service.DriverService;
 import com.aripd.project.lgk.service.EndingpointService;
 import com.aripd.project.lgk.service.ForwardingService;
 import com.aripd.project.lgk.service.QuotaService;
@@ -59,12 +60,32 @@ public class ForwardingController {
     private StartingpointService startingpointService;
     @Resource(name = "endingpointService")
     private EndingpointService endingpointService;
+    @Resource(name = "driverService")
+    private DriverService driverService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
     WebResultSet<Forwarding> datatablesAction(@DatatablesParam DatatablesCriteria criteria) {
         DatatablesResultSet<Forwarding> resultset = this.forwardingService.getRecords(criteria);
         return ControllerUtils.getDatatablesResultSet(criteria, resultset);
+    }
+
+    @RequestMapping(value = "/getDriverNames", method = RequestMethod.GET)
+    public @ResponseBody
+    String[] getDriverNames(@RequestParam(value = "q") String q) {
+        return driverService.getNames(q);
+    }
+
+    @RequestMapping(value = "/getKilometerByPlate", method = RequestMethod.GET)
+    public @ResponseBody
+    Integer getKilometerByPlate(@RequestParam(value = "q") String plate) {
+        return truckService.getKilometer(plate);
+    }
+
+    @RequestMapping(value = "/getTruckPlates", method = RequestMethod.GET)
+    public @ResponseBody
+    String[] getTruckPlates(@RequestParam(value = "q") String q) {
+        return truckService.getPlates(q);
     }
 
     @RequestMapping(value = "/list")

@@ -26,11 +26,13 @@ import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Uatf;
 import com.aripd.project.lgk.model.ForwardingFilterByIntervalForm;
+import com.aripd.project.lgk.service.DriverService;
 import com.aripd.project.lgk.service.EndingpointService;
 import com.aripd.project.lgk.service.ForwardingService;
 import com.aripd.project.lgk.service.QuotaService;
 import com.aripd.project.lgk.service.StartingpointService;
 import com.aripd.project.lgk.service.SubcontractorService;
+import com.aripd.project.lgk.service.TruckService;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,8 @@ public class UserForwardingController {
     private MessageSource messageSource;
     @Resource(name = "forwardingService")
     private ForwardingService forwardingService;
+    @Resource(name = "truckService")
+    private TruckService truckService;
     @Resource(name = "quotaService")
     private QuotaService quotaService;
     @Resource(name = "subcontractorService")
@@ -57,6 +61,8 @@ public class UserForwardingController {
     private StartingpointService startingpointService;
     @Resource(name = "endingpointService")
     private EndingpointService endingpointService;
+    @Resource(name = "driverService")
+    private DriverService driverService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public @ResponseBody
@@ -65,6 +71,24 @@ public class UserForwardingController {
             @DatatablesParam DatatablesCriteria criteria) {
         DatatablesResultSet<Forwarding> resultset = this.forwardingService.getRecords(principal, criteria);
         return ControllerUtils.getDatatablesResultSet(criteria, resultset);
+    }
+
+    @RequestMapping(value = "/getDriverNames", method = RequestMethod.GET)
+    public @ResponseBody
+    String[] getDriverNames(@RequestParam(value = "q") String q) {
+        return driverService.getNames(q);
+    }
+
+    @RequestMapping(value = "/getKilometerByPlate", method = RequestMethod.GET)
+    public @ResponseBody
+    Integer getKilometerByPlate(@RequestParam(value = "q") String plate) {
+        return truckService.getKilometer(plate);
+    }
+
+    @RequestMapping(value = "/getTruckPlates", method = RequestMethod.GET)
+    public @ResponseBody
+    String[] getTruckPlates(@RequestParam(value = "q") String q) {
+        return truckService.getPlates(q);
     }
 
     @RequestMapping(value = "/list")
@@ -93,9 +117,15 @@ public class UserForwardingController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newAction(
+            final RedirectAttributes redirectAttributes,
             Principal principal,
             Model model) {
         Member member = memberService.findOneByUsername(principal.getName());
+
+        if (member.getEmployee() == null) {
+            redirectAttributes.addFlashAttribute("message", "message.employee.not.assigned");
+            return "redirect:/userforwarding/list";
+        }
 
         model.addAttribute("quotas", quotaService.findAll());
         model.addAttribute("subcontractors", subcontractorService.findByRegion(member.getEmployee().getRegion()));
