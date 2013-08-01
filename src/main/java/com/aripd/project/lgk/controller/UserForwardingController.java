@@ -25,18 +25,26 @@ import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.dto.ControllerUtils;
 import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Uatf;
+import com.aripd.project.lgk.model.ForwardingFilterByIntervalForm;
 import com.aripd.project.lgk.service.EndingpointService;
 import com.aripd.project.lgk.service.ForwardingService;
 import com.aripd.project.lgk.service.QuotaService;
 import com.aripd.project.lgk.service.StartingpointService;
 import com.aripd.project.lgk.service.SubcontractorService;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.validation.ObjectError;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_USER') and hasRole('ROLE_OTL'))")
 @Controller
 @RequestMapping("/userforwarding")
 public class UserForwardingController {
 
+    @Autowired
+    private MessageSource messageSource;
     @Resource(name = "forwardingService")
     private ForwardingService forwardingService;
     @Resource(name = "quotaService")
@@ -129,9 +137,23 @@ public class UserForwardingController {
             BindingResult result,
             Model model) {
 
+        String message = messageSource.getMessage("message.duplicated.waybillNo", null, LocaleContextHolder.getLocale());
+        if (formData.getId() == null) {
+            Forwarding check1 = forwardingService.findOneByWaybillNo(formData.getWaybillNo());
+            if (check1 != null) {
+                result.addError(new ObjectError("waybillNo", message));
+            }
+        } else {
+            boolean check2 = forwardingService.isExistByWaybillNoExceptId(formData.getWaybillNo(), formData.getId());
+            if (check2) {
+                result.addError(new ObjectError("waybillNo", message));
+            }
+        }
+
         Member member = memberService.findOneByUsername(principal.getName());
 
         if (result.hasErrors()) {
+            model.addAttribute("useruatfAttribute", new Uatf());
             model.addAttribute("quotas", quotaService.findAll());
             model.addAttribute("subcontractors", subcontractorService.findByRegion(member.getEmployee().getRegion()));
             model.addAttribute("startingpoints", startingpointService.findAll());
@@ -185,5 +207,31 @@ public class UserForwardingController {
             forwardingService.delete(forwarding);
             return "redirect:/userforwarding/list";
         }
+    }
+
+    @RequestMapping(value = "/report", method = RequestMethod.GET)
+    public String reportAction(Model model) {
+        model.addAttribute("userforwardingFilterByIntervalForm", new ForwardingFilterByIntervalForm());
+        model.addAttribute("startingpoints", startingpointService.findAll());
+        model.addAttribute("endingpoints", endingpointService.findAll());
+        return "/userforwarding/report";
+    }
+
+    @RequestMapping(value = "/report", method = RequestMethod.POST)
+    public String reportAction(
+            final RedirectAttributes redirectAttributes,
+            @ModelAttribute("userforwardingFilterByIntervalForm") @Valid ForwardingFilterByIntervalForm formData,
+            BindingResult result,
+            HttpServletResponse response,
+            Model model) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("startingpoints", startingpointService.findAll());
+            model.addAttribute("endingpoints", endingpointService.findAll());
+            return "/forwarding/report";
+        }
+
+        forwardingService.export(response, formData);
+        return "redirect:/userforwarding/report";
     }
 }

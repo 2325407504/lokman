@@ -8,6 +8,7 @@ import com.aripd.member.domain.Member;
 import com.aripd.common.dto.datatables.DatatablesCriteria;
 import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.project.lgk.domain.Forwarding;
+import com.aripd.project.lgk.model.ForwardingFilterByIntervalForm;
 import java.util.List;
 import org.joda.time.DateTime;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,5 +37,5 @@ public interface ForwardingService {
 
     public void importData(MultipartFile file);
 
-    public void export(HttpServletResponse response, DateTime startingTime, DateTime endingTime, String plate, Long startingpoint_id, Long endingpoint_id);
+    public void export(HttpServletResponse response, ForwardingFilterByIntervalForm formData);
 }

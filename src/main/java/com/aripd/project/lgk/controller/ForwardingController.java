@@ -31,13 +31,10 @@ import com.aripd.project.lgk.service.QuotaService;
 import com.aripd.project.lgk.service.StartingpointService;
 import com.aripd.project.lgk.service.SubcontractorService;
 import com.aripd.project.lgk.service.TruckService;
-import java.util.Locale;
 import javax.validation.Valid;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 
@@ -72,7 +69,7 @@ public class ForwardingController {
 
     @RequestMapping(value = "/list")
     public String listAction(Model model) {
-        return "forwarding/list";
+        return "/forwarding/list";
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
@@ -80,7 +77,7 @@ public class ForwardingController {
             @PathVariable Long id,
             Model model) {
         model.addAttribute("forwardingAttribute", forwardingService.findOne(id));
-        return "forwarding/show";
+        return "/forwarding/show";
     }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
@@ -91,7 +88,7 @@ public class ForwardingController {
         model.addAttribute("startingpoints", startingpointService.findAll());
         model.addAttribute("endingpoints", endingpointService.findAll());
         model.addAttribute("forwardingAttribute", new Forwarding());
-        return "forwarding/form";
+        return "/forwarding/form";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
@@ -105,7 +102,7 @@ public class ForwardingController {
         model.addAttribute("startingpoints", startingpointService.findAll());
         model.addAttribute("endingpoints", endingpointService.findAll());
         model.addAttribute("forwardingAttribute", forwardingService.findOne(id));
-        return "forwarding/form";
+        return "/forwarding/form";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -115,7 +112,7 @@ public class ForwardingController {
             BindingResult result,
             Model model) {
 
-        String message = messageSource.getMessage("com.aripd.annotation.NotDuplicateForwardingWaybillno.message", null, LocaleContextHolder.getLocale());
+        String message = messageSource.getMessage("message.duplicated.waybillNo", null, LocaleContextHolder.getLocale());
         if (formData.getId() == null) {
             Forwarding check1 = forwardingService.findOneByWaybillNo(formData.getWaybillNo());
             if (check1 != null) {
@@ -166,7 +163,7 @@ public class ForwardingController {
         model.addAttribute("forwardingFilterByIntervalForm", new ForwardingFilterByIntervalForm());
         model.addAttribute("startingpoints", startingpointService.findAll());
         model.addAttribute("endingpoints", endingpointService.findAll());
-        return "forwarding/report";
+        return "/forwarding/report";
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.POST)
@@ -174,11 +171,6 @@ public class ForwardingController {
             final RedirectAttributes redirectAttributes,
             @ModelAttribute("forwardingFilterByIntervalForm") @Valid ForwardingFilterByIntervalForm formData,
             BindingResult result,
-            @RequestParam("startingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime startingTime,
-            @RequestParam("endingTime") @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm") DateTime endingTime,
-            @RequestParam("plate") String plate,
-            @RequestParam("startingpoint.id") Long startingpoint_id,
-            @RequestParam("endingpoint.id") Long endingpoint_id,
             HttpServletResponse response,
             Model model) {
 
@@ -188,14 +180,14 @@ public class ForwardingController {
             return "/forwarding/report";
         }
 
-        forwardingService.export(response, startingTime, endingTime, plate, startingpoint_id, endingpoint_id);
+        forwardingService.export(response, formData);
         return "redirect:/forwarding/report";
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String importAction(Model model) {
         model.addAttribute("forwardingImportAttribute", new FileUploadBean());
-        return "forwarding/import";
+        return "/forwarding/import";
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)

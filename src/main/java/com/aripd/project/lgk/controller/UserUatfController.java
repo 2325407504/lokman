@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aripd.common.dto.datatables.DatatablesCriteria;
-import com.aripd.common.dto.datatables.DatatablesResultSet;
 import com.aripd.common.dto.datatables.DatatablesParam;
 import com.aripd.common.dto.WebResultSet;
 import com.aripd.common.dto.ControllerUtils;
@@ -23,12 +22,18 @@ import com.aripd.project.lgk.domain.Uatf;
 import com.aripd.project.lgk.service.ForwardingService;
 import com.aripd.project.lgk.service.UatfService;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.validation.ObjectError;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_USER') and hasRole('ROLE_OTL'))")
 @Controller
 @RequestMapping("/useruatf")
 public class UserUatfController {
 
+    @Autowired
+    private MessageSource messageSource;
     @Resource(name = "forwardingService")
     private ForwardingService forwardingService;
     @Resource(name = "uatfService")
@@ -54,6 +59,13 @@ public class UserUatfController {
             return "redirect:/userforwarding/show/" + forwarding.getId();
         }
 
+        String message = messageSource.getMessage("message.duplicated.uatfCode", null, LocaleContextHolder.getLocale());
+        Uatf check1 = uatfService.findOneByCode(formData.getCode());
+        if (check1 != null) {
+            redirectAttributes.addFlashAttribute("message", message);
+            return "redirect:/userforwarding/edit/" + forwarding_id;
+        }
+        
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("message", "message.required.all");
             return "redirect:/userforwarding/edit/" + forwarding_id;
@@ -65,7 +77,7 @@ public class UserUatfController {
         return "redirect:/userforwarding/edit/" + forwarding_id;
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete/{id}", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE})
     public String delete(
             final RedirectAttributes redirectAttributes,
             @PathVariable Long id) {

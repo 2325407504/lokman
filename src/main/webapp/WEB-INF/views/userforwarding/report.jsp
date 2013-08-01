@@ -6,9 +6,8 @@
 
 <jsp:include page="/WEB-INF/views/subnav.jsp" >
     <jsp:param name="title" value="Forwardings" />
-    <jsp:param name="property" value="forwarding" />
+    <jsp:param name="property" value="userforwarding" />
     <jsp:param name="new" value="true" />
-    <jsp:param name="import" value="true" />
     <jsp:param name="report" value="true" />
     <jsp:param name="submit" value="true" />
     <jsp:param name="active" value="report" />
@@ -22,8 +21,8 @@
 <spring:message code="All" var="all" />
 
 <p class="lead"><spring:message code="Forwarding" /></p>
-<spring:url var="report" value="/forwarding/report" />
-<form:form modelAttribute="forwardingFilterByIntervalForm" action="${report}" method="post">
+<spring:url var="report" value="/userforwarding/report" />
+<form:form modelAttribute="userforwardingFilterByIntervalForm" action="${report}" method="post">
     <form:errors path="*" cssClass="alert alert-error" element="div" />
     <div class="row-fluid">
         <div class="span12">

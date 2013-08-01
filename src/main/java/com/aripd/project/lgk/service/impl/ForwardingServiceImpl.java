@@ -41,6 +41,7 @@ import com.aripd.project.lgk.domain.Forwarding;
 import com.aripd.project.lgk.domain.Forwarding_;
 import com.aripd.project.lgk.domain.Startingpoint;
 import com.aripd.project.lgk.domain.Startingpoint_;
+import com.aripd.project.lgk.model.ForwardingFilterByIntervalForm;
 import com.aripd.project.lgk.report.forwarding.FillManager;
 import com.aripd.project.lgk.report.forwarding.Layouter;
 import com.aripd.project.lgk.report.forwarding.Writer;
@@ -114,24 +115,24 @@ public class ForwardingServiceImpl implements ForwardingService {
         return resultList;
     }
 
-    public List<Forwarding> findByInterval(DateTime startingTime, DateTime endingTime, String plate, Long startingpoint_id, Long endingpoint_id) {
+    public List<Forwarding> findByInterval(ForwardingFilterByIntervalForm formData) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Forwarding> cq = cb.createQuery(Forwarding.class);
         Root<Forwarding> root = cq.from(Forwarding.class);
 
         List<Predicate> predicateList = new ArrayList<Predicate>();
-        Predicate predicate1 = cb.between(root.get(Forwarding_.startingTime), startingTime, endingTime);
+        Predicate predicate1 = cb.between(root.get(Forwarding_.startingTime), formData.getStartingTime(), formData.getEndingTime());
         Predicate predicate2 = null, predicate3 = null, predicate4 = null;
-        if (plate.equalsIgnoreCase("") == false) {
-            predicate2 = cb.equal(root.get(Forwarding_.plate), plate);
+        if (formData.getPlate().equalsIgnoreCase("") == false) {
+            predicate2 = cb.equal(root.get(Forwarding_.plate), formData.getPlate());
         }
-        if (startingpoint_id != null) {
+        if (formData.getStartingpoint().getId() != null) {
             Join<Forwarding, Startingpoint> startingpoint = root.join(Forwarding_.startingpoint);
-            predicate3 = cb.equal(startingpoint.get(Startingpoint_.id), startingpoint_id);
+            predicate3 = cb.equal(startingpoint.get(Startingpoint_.id), formData.getStartingpoint().getId());
         }
-        if (endingpoint_id != null) {
+        if (formData.getEndingpoint().getId() != null) {
             Join<Forwarding, Endingpoint> endingpoint = root.join(Forwarding_.endingpoint);
-            predicate4 = cb.equal(endingpoint.get(Endingpoint_.id), endingpoint_id);
+            predicate4 = cb.equal(endingpoint.get(Endingpoint_.id), formData.getEndingpoint().getId());
         }
 
         Predicate predicate = predicate1;
@@ -335,7 +336,7 @@ public class ForwardingServiceImpl implements ForwardingService {
         repository.save(forwardings);
     }
 
-    public void export(HttpServletResponse response, DateTime startingTime, DateTime endingTime, String plate, Long startingpoint_id, Long endingpoint_id) {
+    public void export(HttpServletResponse response, ForwardingFilterByIntervalForm formData) {
         // 1. Create new workbook
         HSSFWorkbook workbook = new HSSFWorkbook();
 
@@ -351,7 +352,7 @@ public class ForwardingServiceImpl implements ForwardingService {
         Layouter.buildReport(worksheet, startRowIndex, startColIndex);
 
         // 5. Fill report
-        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByInterval(startingTime, endingTime, plate, startingpoint_id, endingpoint_id));
+        FillManager.fillReport(worksheet, startRowIndex, startColIndex, this.findByInterval(formData));
 
         // 6. Set the response properties
         String fileName = "ForwardingReport.xls";

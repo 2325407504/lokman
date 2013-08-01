@@ -23,12 +23,18 @@ import com.aripd.project.lgk.domain.Uatf;
 import com.aripd.project.lgk.service.ForwardingService;
 import com.aripd.project.lgk.service.UatfService;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.validation.ObjectError;
 
 @PreAuthorize("hasRole('ROLE_SUPERADMIN') or (hasRole('ROLE_ADMIN') and hasRole('ROLE_OTL'))")
 @Controller
 @RequestMapping("/uatf")
 public class UatfController {
 
+    @Autowired
+    private MessageSource messageSource;
     @Resource(name = "forwardingService")
     private ForwardingService forwardingService;
     @Resource(name = "uatfService")
@@ -53,6 +59,13 @@ public class UatfController {
         if (forwarding.isSubmitted() && request.isUserInRole("ROLE_USER")) {
             redirectAttributes.addFlashAttribute("message", "message.record.not.editable");
             return "redirect:/forwarding/list";
+        }
+
+        String message = messageSource.getMessage("message.duplicated.uatfCode", null, LocaleContextHolder.getLocale());
+        Uatf check1 = uatfService.findOneByCode(formData.getCode());
+        if (check1 != null) {
+            redirectAttributes.addFlashAttribute("message", message);
+            return "redirect:/forwarding/edit/" + forwarding_id;
         }
 
         if (result.hasErrors()) {

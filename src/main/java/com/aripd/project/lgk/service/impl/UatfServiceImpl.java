@@ -1,9 +1,6 @@
 package com.aripd.project.lgk.service.impl;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -58,6 +55,10 @@ public class UatfServiceImpl implements UatfService {
 
     public Uatf findOne(Long id) {
         return repository.findOne(id);
+    }
+
+    public Uatf findOneByCode(String code) {
+        return repository.findOneByCode(code);
     }
 
     public List<Uatf> findAll() {

@@ -4,11 +4,14 @@ import com.aripd.project.lgk.domain.Endingpoint;
 import com.aripd.project.lgk.domain.Startingpoint;
 import javax.validation.constraints.NotNull;
 import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class ForwardingFilterByIntervalForm {
 
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
     @NotNull
     private DateTime startingTime;
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
     @NotNull
     private DateTime endingTime;
     private String plate;

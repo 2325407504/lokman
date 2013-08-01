@@ -8,6 +8,7 @@
     <jsp:param name="title" value="Forwardings" />
     <jsp:param name="property" value="userforwarding" />
     <jsp:param name="new" value="true" />
+    <jsp:param name="report" value="true" />
     <jsp:param name="submit" value="true" />
     <jsp:param name="active" value="form" />
 </jsp:include>

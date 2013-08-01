@@ -14,6 +14,8 @@ public interface UatfService {
 
     public Uatf findOne(Long id);
 
+    public Uatf findOneByCode(String code);
+
     public List<Uatf> findAll();
 
     public List<Uatf> findByInterval(DateTime startingTime, DateTime endingTime);
